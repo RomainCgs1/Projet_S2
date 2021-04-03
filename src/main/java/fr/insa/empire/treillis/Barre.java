@@ -2,26 +2,13 @@ package fr.insa.empire.treillis;
 
 import java.util.Set;
 
-/**
- * 
- */
 public class Barre {
 
-    /**
-     * Default constructor
-     */
+    public int identificateur;
+    public Set<Noeuds> extrémités;
+
     public Barre() {
     }
-
-    /**
-     * 
-     */
-    public int identificateur;
-
-    /**
-     * 
-     */
-    public Set<Noeuds> extrémités;
 
 
 

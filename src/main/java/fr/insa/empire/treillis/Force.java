@@ -1,25 +1,12 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Force {
 
-    /**
-     * Default constructor
-     */
+    public double fx;
+    public double fy;
+
     public Force() {
     }
-
-    /**
-     * 
-     */
-    public double fx;
-
-    /**
-     * 
-     */
-    public double fy;
 
 
 }
