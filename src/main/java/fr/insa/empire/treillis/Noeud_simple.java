@@ -35,7 +35,7 @@ public class Noeud_simple extends Noeuds {
     //fonctions de test
     public static void testCreationPt()
     {
-        System.out.println("Veuiller indiquer les coordonées de vôtre noeud :");
+        System.out.println("Veuiller indiquer les coordonées de votre noeud :");
         System.out.println("px = ");
         double px = Lire.d();
         System.out.println("py = ");
