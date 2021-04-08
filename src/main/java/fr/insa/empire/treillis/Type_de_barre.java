@@ -8,9 +8,14 @@ public class Type_de_barre {
     private double longMax;
     private double resMaxTens;
     private double resMaxComp;
-    private Catalogue contenu;
 
-    public Type_de_barre() {
+    public Type_de_barre(int id, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression) {
+        this.identificateur = id;
+        this.coutAuMetre = coutAuMetre;
+        this.longMax = longMax;
+        this.longMin = longMin;
+        this.resMaxComp = resMaxCompression;
+        this.resMaxTens = resMaxTension;
     }
 
 }
