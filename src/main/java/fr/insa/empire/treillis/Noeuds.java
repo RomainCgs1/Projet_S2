@@ -7,9 +7,14 @@ public class Noeuds {
     protected int identificateur;
     private Set<Barre> extremites;
 
-    public Noeuds() {
+    public Noeuds() 
+    {
+        
     }
 
-
+    public int getID()
+    {
+        return this.identificateur;
+    }
 
 }
