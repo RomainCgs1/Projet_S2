@@ -7,6 +7,7 @@ public class Appui_encastre extends Noeud_appui {
     private double force;
 
     public Appui_encastre() {
+        super();
     }
 
 }

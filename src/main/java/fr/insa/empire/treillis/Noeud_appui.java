@@ -7,6 +7,11 @@ public class Noeud_appui extends Noeuds {
     private Segment_terrain segment_appui;
 
     //Constructeur
+    public Noeud_appui()
+    {
+
+    }
+
     public Noeud_appui(double position_alpha, Segment_terrain segment_appui) {
         this.position_alpha = position_alpha;
         this.segment_appui = segment_appui;

@@ -26,9 +26,30 @@ public class Noeud_simple extends Noeuds {
     public double getPyNoeudSimple (Noeud_simple N){ //Get Py
         return this.py;
     }
-    
-    public String toString(Noeud_simple N){ //Méthode ToString
-        return this.identificateur + "( " + this.px +" ; " + this.py + " ) ";
+
+    public String toString(){ //Méthode ToString
+        return this.identificateur + " ( " + this.px + " ; " + this.py + " )";
+    }
+
+
+    //fonctions de test
+    public static void testCreationPt()
+    {
+        System.out.println("Veuiller indiquer les coordonées de vôtre noeud :");
+        System.out.println("px = ");
+        double px = Lire.d();
+        System.out.println("py = ");
+        double py = Lire.d();
+
+        Noeud_simple monNoeud = new Noeud_simple(px, py);
+
+        System.out.println("Votre point à été créé : " + monNoeud);
+    }
+
+
+    public static void main(String[] args)
+    {
+        testCreationPt();
     }
 
 }

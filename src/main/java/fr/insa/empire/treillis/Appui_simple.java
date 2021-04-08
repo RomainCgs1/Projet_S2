@@ -6,6 +6,7 @@ public class Appui_simple extends Noeud_appui {
     private double py;
 
     public Appui_simple() {
+        super();
     }
 
 
