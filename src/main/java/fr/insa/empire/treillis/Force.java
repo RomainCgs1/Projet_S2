@@ -2,8 +2,8 @@ package fr.insa.empire.treillis;
 
 public class Force {
 
-    public double fx;
-    public double fy;
+    private double fx;
+    private double fy;
 
     public Force() {
     }

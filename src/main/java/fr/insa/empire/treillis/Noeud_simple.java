@@ -2,7 +2,7 @@ package fr.insa.empire.treillis;
 
 public class Noeud_simple extends Noeuds {
 
-    private final double px;
+    private double px;
     private double py;
 
     public Noeud_simple(double px, double py) {  //constructeur

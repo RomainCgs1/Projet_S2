@@ -4,8 +4,8 @@ import java.util.Set;
 
 public class Barre {
 
-    public int identificateur;
-    public Set<Noeuds> extrémités;
+    private int identificateur;
+    private Set<Noeuds> extrémités;
 
     public Barre() {
     }

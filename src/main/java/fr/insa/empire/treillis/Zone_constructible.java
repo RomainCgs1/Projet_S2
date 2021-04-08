@@ -4,11 +4,11 @@ import java.util.Set;
 
 public class Zone_constructible {
 
-    public double xMin;
-    public double xMax;
-    public double yMin;
-    public double yMax;
-    public Treillis contient;
+    private double xMin;
+    private double xMax;
+    private double yMin;
+    private double yMax;
+    private Treillis contient;
     //public Set<Triangle_terrain> contient;
 
     public Zone_constructible() {
