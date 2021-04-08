@@ -2,8 +2,8 @@ package fr.insa.empire.treillis;
 
 public class Point {
 
-    public double px;
-    public double py;
+    private double px;
+    private double py;
 
     public Point() {
     }

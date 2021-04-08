@@ -2,13 +2,13 @@ package fr.insa.empire.treillis;
 
 public class Type_de_barre {
 
-    public int identificateur;
-    public double coutAuMetre;
-    public double longMin;
-    public double longMax;
-    public double resMaxTens;
-    public double resMaxComp;
-    public Catalogue contenu;
+    private int identificateur;
+    private double coutAuMetre;
+    private double longMin;
+    private double longMax;
+    private double resMaxTens;
+    private double resMaxComp;
+    private Catalogue contenu;
 
     public Type_de_barre() {
     }
