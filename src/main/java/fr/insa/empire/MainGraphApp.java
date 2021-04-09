@@ -1,6 +1,5 @@
 package fr.insa.empire;
 
-import com.sun.webkit.dom.XPathResultImpl;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
