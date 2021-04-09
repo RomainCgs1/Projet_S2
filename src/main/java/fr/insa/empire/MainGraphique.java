@@ -3,6 +3,7 @@ package fr.insa.empire;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class MainGraphique extends BorderPane
 {
@@ -11,7 +12,9 @@ public class MainGraphique extends BorderPane
 
     public MainGraphique()
     {
+        String font = "Helvetica Neue";
         this.tbNoeud = new ToggleButton("Noeud");
+        this.tbNoeud.setFont(Font.font(font));
         this.vbIcones = new VBox(this.tbNoeud);
         this.setLeft(this.vbIcones);
     }
