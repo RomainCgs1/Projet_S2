@@ -1,24 +1,55 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Noeud_simple extends Noeuds {
 
-    /**
-     * Default constructor
-     */
-    public Noeud_simple() {
+    private double px;
+    private double py;
+
+    public Noeud_simple(double px, double py) {  //constructeur
+        this.px = px;
+        this.py = py;
+    }
+    
+    
+    private void setPx(Noeud_simple N, double Px){
+        this.px = Px;
+    }
+    private void SetPy(Noeud_simple N, double Py){
+        this.py = Py;
+    }
+    
+    
+    public double getPxNoeudSimple(Noeud_simple N){  //Get Px
+        return this.px;
+    }
+    
+    public double getPyNoeudSimple (Noeud_simple N){ //Get Py
+        return this.py;
     }
 
-    /**
-     * 
-     */
-    public double px;
+    public String toString(){ //Méthode ToString
+        return this.identificateur + " ( " + this.px + " ; " + this.py + " )";
+    }
 
-    /**
-     * 
-     */
-    public double py;
+
+    //fonctions de test
+    public static void testCreationPt()
+    {
+        System.out.println("Veuiller indiquer les coordonées de votre noeud :");
+        System.out.println("px = ");
+        double px = Lire.d();
+        System.out.println("py = ");
+        double py = Lire.d();
+
+        Noeud_simple monNoeud = new Noeud_simple(px, py);
+
+        System.out.println("Votre point à été créé : " + monNoeud);
+    }
+
+
+    public static void main(String[] args)
+    {
+        testCreationPt();
+    }
 
 }

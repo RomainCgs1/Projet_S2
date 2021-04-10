@@ -1,25 +1,13 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Appui_simple extends Noeud_appui {
 
-    /**
-     * Default constructor
-     */
+    private double px;
+    private double py;
+
     public Appui_simple() {
+        super();
     }
-
-    /**
-     * 
-     */
-    public double px;
-
-    /**
-     * 
-     */
-    public double py;
 
 
 }

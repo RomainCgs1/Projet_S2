@@ -1,24 +1,30 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Point {
 
-    /**
-     * Default constructor
-     */
+    private double px;
+    private double py;
+
     public Point() {
     }
+    
+    public double getPx()
+    {
+        return this.px;
+    }
+    
+    public double getPy()
+    {
+        return this.py;
+    }
+    
+    private void setPx(double px)
+    {
+        this.px = px;
+    }
 
-    /**
-     * 
-     */
-    public double px;
-
-    /**
-     * 
-     */
-    public double py;
-
+    private void setPy(double py)
+    {
+        this.py = py;
+    }
 }

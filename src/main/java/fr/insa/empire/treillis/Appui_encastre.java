@@ -1,29 +1,13 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Appui_encastre extends Noeud_appui {
 
-    /**
-     * Default constructor
-     */
+    private double px;
+    private int nbDeBarres;
+    private double force;
+
     public Appui_encastre() {
+        super();
     }
-
-    /**
-     * 
-     */
-    public double px;
-
-    /**
-     * 
-     */
-    public int nbDeBarres;
-
-    /**
-     * 
-     */
-    public double force;
 
 }

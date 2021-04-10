@@ -1,22 +1,12 @@
 package fr.insa.empire.treillis;
 
-/**
- * 
- */
 public class Treillis {
 
-    /**
-     * Default constructor
-     */
+    private Zone_constructible appartient;
+
     public Treillis() {
     }
 
-
-
-    /**
-     * 
-     */
-    public Zone_constructible appartient;
 
 
 }

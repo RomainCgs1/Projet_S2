@@ -2,30 +2,12 @@ package fr.insa.empire.treillis;
 
 import java.util.Set;
 
-/**
- * 
- */
 public class Catalogue {
 
-    /**
-     * Default constructor
-     */
-    public Catalogue() {
-    }
-
-    /**
-     * 
-     */
-
-    /**
-     * 
-     */
+    public Set<Type_de_barre> contient;
     //public Arraytlist catalogue;
 
-
-    /**
-     * 
-     */
-    public Set<Type_de_barre> contient;
+    public Catalogue() {
+    }
 
 }
