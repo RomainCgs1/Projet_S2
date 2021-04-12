@@ -1,4 +1,4 @@
-package fr.insa.empire;
+package fr.insa.empire.graphique;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
