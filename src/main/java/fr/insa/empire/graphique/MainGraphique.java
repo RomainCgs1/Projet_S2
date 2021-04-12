@@ -1,4 +1,4 @@
-package fr.insa.empire;
+package fr.insa.empire.graphique;
 
 import javafx.geometry.Orientation;
 import javafx.geometry.VerticalDirection;
@@ -14,6 +14,7 @@ public class MainGraphique extends BorderPane {
     private MyTB mtbBarre;
     private MyTB mtbTerrain;
     private MyTB mtbSelection;
+    private MyTB  test;
     private MyB mbLancerCalculs;
     private MyB mbReglages;
     private HBox hbConstruction;
