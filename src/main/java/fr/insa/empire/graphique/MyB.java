@@ -1,4 +1,4 @@
-package fr.insa.empire;
+package fr.insa.empire.graphique;
 
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;

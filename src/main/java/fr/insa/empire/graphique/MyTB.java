@@ -1,4 +1,4 @@
-package fr.insa.empire;
+package fr.insa.empire.graphique;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.text.Font;
