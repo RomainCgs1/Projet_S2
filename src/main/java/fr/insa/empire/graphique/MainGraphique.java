@@ -35,7 +35,7 @@ public class MainGraphique extends BorderPane {
     private HBox hbIcones;
     //private VBox vbIcones;
     private Canvas canvas;
-    int etatNoeud;
+    private int etatNoeud;
 
     MenuItem choix1;
     MenuItem choix2;
