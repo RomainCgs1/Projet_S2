@@ -8,6 +8,8 @@ public class Noeud_simple extends Noeuds {
     public Noeud_simple(double px, double py) {  //constructeur
         this.px = px;
         this.py = py;
+
+        System.out.println("Votre point à été créé : " + this);
     }
     
     
@@ -42,8 +44,6 @@ public class Noeud_simple extends Noeuds {
         double py = Lire.d();
 
         Noeud_simple monNoeud = new Noeud_simple(px, py);
-
-        System.out.println("Votre point à été créé : " + monNoeud);
     }
 
 

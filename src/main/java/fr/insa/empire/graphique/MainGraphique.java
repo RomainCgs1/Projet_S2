@@ -52,5 +52,9 @@ public class MainGraphique extends BorderPane {
                 }
             }
         });
+
+        //création noeud avec bouton Noeud Simple
+
+
     }
 }
