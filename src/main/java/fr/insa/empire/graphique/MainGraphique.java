@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -89,6 +90,20 @@ public class MainGraphique extends BorderPane {
                tbNoeud.setText("Noeud Appui");
             }
         });
+
+        //tests action souris
+        this.mtbSelection.setOnMouseEntered(
+                mouseEvent -> {
+                    mtbSelection.setTextFill(Color.RED);
+                }
+        );
+
+        //tests action souris
+        this.mtbSelection.setOnMouseExited(
+                mouseEvent -> {
+                    mtbSelection.setTextFill(Color.BLACK);
+                }
+        );
 
 
     }
