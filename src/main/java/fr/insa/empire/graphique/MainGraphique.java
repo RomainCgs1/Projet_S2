@@ -32,7 +32,7 @@ public class MainGraphique extends BorderPane {
 
         this.mtbSelection = new MyTB("Selection");
         
-        //Set up du slitButton
+        //Set up du splitMenuButton
         this.tbNoeud = new SplitMenuButton();
         this.tbNoeud.setText("Noeud");
         MenuItem choix1 = new MenuItem("Noeud simple");
@@ -51,10 +51,18 @@ public class MainGraphique extends BorderPane {
         //this.vbIcones.setSpacing(20);
         this.setTop(this.hbIcones);
 
-        this.tbNoeud.setOnAction(new EventHandler<ActionEvent>() {
+        //Set up des actions du splitMenuButton
+        choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               
+               tbNoeud.setText("Noeud Simple");
+            }
+        });
+        
+        choix2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               tbNoeud.setText("Noeud Appui");
             }
         });
 
