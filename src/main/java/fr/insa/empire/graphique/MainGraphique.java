@@ -1,11 +1,19 @@
 package fr.insa.empire.graphique;
 
+import fr.insa.empire.treillis.Noeud_simple;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.scene.control.MenuItem;
@@ -31,7 +39,22 @@ public class MainGraphique extends BorderPane {
         Separator separator2 = new Separator(Orientation.VERTICAL);
 
         this.mtbSelection = new MyTB("Selection");
-        
+
+        //set du Canvas
+        Canvas canvas = new Canvas();
+        canvas.setHeight(512);
+        canvas.setWidth(512);
+
+        GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
+
+        graphicsContext2D.setFill(Color.BLUE);
+        graphicsContext2D.fillRect(100, 100, 200, 200);
+
+        graphicsContext2D.setStroke(Color.ORANGE);
+        graphicsContext2D.strokeRect(100,100,200,200);
+
+        this.setCenter(canvas);
+
         //Set up du splitMenuButton
         this.tbNoeud = new SplitMenuButton();
         this.tbNoeud.setText("Noeud");
@@ -56,6 +79,7 @@ public class MainGraphique extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
                tbNoeud.setText("Noeud Simple");
+                Noeud_simple.testCreationPt();
             }
         });
         
@@ -65,8 +89,6 @@ public class MainGraphique extends BorderPane {
                tbNoeud.setText("Noeud Appui");
             }
         });
-
-        //création noeud avec bouton Noeud Simple
 
 
     }
