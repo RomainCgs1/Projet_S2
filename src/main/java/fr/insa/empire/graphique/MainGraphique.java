@@ -1,20 +1,21 @@
 package fr.insa.empire.graphique;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.geometry.VerticalDirection;
 import javafx.scene.control.Separator;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class MainGraphique extends BorderPane {
+
     private MyTB tbNoeud;
     private MyTB mtbBarre;
     private MyTB mtbTerrain;
     private MyTB mtbSelection;
-    private MyTB  test;
+    private MyTB test;
     private MyB mbLancerCalculs;
     private MyB mbReglages;
     private HBox hbConstruction;
@@ -22,8 +23,7 @@ public class MainGraphique extends BorderPane {
     private HBox hbIcones;
     //private VBox vbIcones;
 
-    public MainGraphique()
-    {
+    public MainGraphique() throws IOException {
         Separator separator = new Separator(Orientation.VERTICAL);
         Separator separator1 = new Separator(Orientation.VERTICAL);
         Separator separator2 = new Separator(Orientation.VERTICAL);
@@ -41,5 +41,16 @@ public class MainGraphique extends BorderPane {
         this.hbIcones.setSpacing(10);
         //this.vbIcones.setSpacing(20);
         this.setTop(this.hbIcones);
+
+        this.tbNoeud.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (tbNoeud.isSelected()) {
+                    tbNoeud.setText("Prout");
+                } else {
+                    tbNoeud.setText("Noeud");
+                }
+            }
+        });
     }
 }
