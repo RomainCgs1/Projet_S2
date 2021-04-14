@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,6 +34,11 @@ public class MainGraphique extends BorderPane {
     //private VBox vbConstruction;
     private HBox hbIcones;
     //private VBox vbIcones;
+    private Canvas canvas;
+    int etatNoeud;
+
+    MenuItem choix1;
+    MenuItem choix2;
 
     public MainGraphique() throws IOException {
         Separator separator = new Separator(Orientation.VERTICAL);
@@ -42,13 +48,22 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
-        Canvas canvas = new Canvas();
+        this.canvas = new Canvas();
         canvas.setHeight(512);
         canvas.setWidth(512);
+        canvas.setOnMouseClicked(
+                canvasMouseEvent -> {
+                    System.out.println("Canvas cliqué en " + canvasMouseEvent.getX() + " " + canvasMouseEvent.getY());
+                    if(etatNoeud == 1)
+                    {
+                        Noeud_simple noeud_simple = new Noeud_simple(canvasMouseEvent.getX(), canvasMouseEvent.getY());
+                    }
+                }
+        );
 
         GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
 
-        graphicsContext2D.setFill(Color.BLUE);
+        graphicsContext2D.setFill(Color.TRANSPARENT);
         graphicsContext2D.fillRect(100, 100, 200, 200);
 
         graphicsContext2D.setStroke(Color.ORANGE);
@@ -59,8 +74,8 @@ public class MainGraphique extends BorderPane {
         //Set up du splitMenuButton
         this.tbNoeud = new SplitMenuButton();
         this.tbNoeud.setText("Noeud");
-        MenuItem choix1 = new MenuItem("Noeud simple");
-        MenuItem choix2 = new MenuItem("Noeud Appui");
+        this.choix1 = new MenuItem("Noeud simple");
+        this.choix2 = new MenuItem("Noeud Appui");
         this.tbNoeud.getItems().addAll(choix1, choix2);
         
         this.mtbBarre = new MyTB("Barre");
@@ -80,7 +95,8 @@ public class MainGraphique extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
                tbNoeud.setText("Noeud Simple");
-                Noeud_simple.testCreationPt();
+                //Noeud_simple.testCreationPt();
+                etatNoeud = 1;
             }
         });
         
@@ -88,6 +104,7 @@ public class MainGraphique extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
                tbNoeud.setText("Noeud Appui");
+               etatNoeud = 2;
             }
         });
 
