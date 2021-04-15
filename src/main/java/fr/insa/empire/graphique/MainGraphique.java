@@ -36,6 +36,8 @@ public class MainGraphique extends BorderPane {
     //private VBox vbIcones;
     private Canvas canvas;
     private int etatNoeud;
+    private double testPX;
+    private double testPY;
 
     MenuItem choix1;
     MenuItem choix2;
@@ -53,21 +55,22 @@ public class MainGraphique extends BorderPane {
         canvas.setWidth(512);
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
-                    System.out.println("Canvas cliqué en " + canvasMouseEvent.getX() + " " + canvasMouseEvent.getY());
+                    testPX = canvasMouseEvent.getX();
+                    testPY = canvasMouseEvent.getY();
+                    System.out.println("Canvas cliqué en " + testPX + " " + testPY);
                     if(etatNoeud == 1)
                     {
-                        Noeud_simple noeud_simple = new Noeud_simple(canvasMouseEvent.getX(), canvasMouseEvent.getY());
+                        Noeud_simple noeud_simple = new Noeud_simple(testPX, testPY);
+                        canvas.getGraphicsContext2D().setStroke(Color.RED);
+                        canvas.getGraphicsContext2D().strokeOval(testPX-5, testPY-5, 10,10);
                     }
                 }
         );
 
         GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
 
-        graphicsContext2D.setFill(Color.TRANSPARENT);
-        graphicsContext2D.fillRect(100, 100, 200, 200);
-
-        graphicsContext2D.setStroke(Color.ORANGE);
-        graphicsContext2D.strokeRect(100,100,200,200);
+        graphicsContext2D.setStroke(Color.GRAY);
+        graphicsContext2D.strokeRect(0,0,512,512);
 
         this.setCenter(canvas);
 
