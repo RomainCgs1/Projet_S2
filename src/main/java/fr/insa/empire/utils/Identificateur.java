@@ -7,7 +7,7 @@ package fr.insa.empire.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import jdk.vm.ci.meta.PlatformKind.Key;
+
 
 /**
  * but : permets d'attribuer une clef a un objet et inversement
@@ -16,13 +16,13 @@ import jdk.vm.ci.meta.PlatformKind.Key;
  */
 public class Identificateur {
 
-    private int valCur;
+    private Integer valCur;
     private Map<Key, Object> ketToObject;
     private Map<Object, Key> objectToKey;
 
-    public Identificateur(int valCur, Object o) {
+    public Identificateur(Integer valCur, Object o) {
         this.valCur = valCur;
-        //this.ketToObject = new HashMap<this.valCur,> ();
-       // this.objectToKey = new HashMap<o, this.valCur > ();
+        this.ketToObject = new HashMap<this.valCur,o > ();
+        this.objectToKey = new HashMap<o, this.valCur > ();
     }
 }
