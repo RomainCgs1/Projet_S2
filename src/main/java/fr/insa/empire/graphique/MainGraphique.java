@@ -31,7 +31,7 @@ public class MainGraphique extends BorderPane {
     private HBox hbConstruction;
     private VBox vbUp;
     private HBox hbIcones;
-    private Canvas canvas;
+    private ResizableCanvas canvas;
     private int etatNoeud;
     private double PX;
     private double PY;
@@ -49,7 +49,7 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
-        this.canvas = new Canvas();
+        this.canvas = new ResizableCanvas();
         canvas.setHeight(512);
         canvas.setWidth(512);
         canvas.setOnMouseClicked(
@@ -68,10 +68,6 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
-        GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
-
-        graphicsContext2D.setStroke(Color.GRAY);
-        graphicsContext2D.strokeRect(0, 0, 512, 512);
 
         this.setCenter(canvas);
 

@@ -15,8 +15,10 @@ public class MainGraphApp extends Application {
     public void start(Stage stage) throws Exception
     {
         stage.setTitle("TestGraph");
-        Scene scene = new Scene(new MainGraphique(), 600, 600);
+        Scene scene = new Scene(new MainGraphique());
         stage.setScene(scene);
+        stage.setWidth(600);
+        stage.setHeight(600);
         stage.centerOnScreen();
         stage.show();
     }
