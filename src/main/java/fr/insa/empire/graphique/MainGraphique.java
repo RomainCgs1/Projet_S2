@@ -24,9 +24,11 @@ public class MainGraphique extends BorderPane {
     private final MyTB mtbBarre;
     private final MyTB mtbTerrain;
     private final MyTB mtbSelection;
+    private MyTB mtbGomme;
     private MyTB test;
     private final MyB mbLancerCalculs;
     private final MyB mbReglages;
+    private final MyB mbTypeBarre;
     private final HBox hbConstruction;
     //private VBox vbConstruction;
     private final HBox hbIcones;
@@ -79,11 +81,13 @@ public class MainGraphique extends BorderPane {
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
+        this.mtbGomme = new MyTB("Gomme");
         this.mbLancerCalculs = new MyB("Lancer les calculs");
+        this.mbTypeBarre = new MyB ("Type de Barre");
         this.mbReglages = new MyB("Réglages");
         this.hbConstruction = new HBox(this.tbNoeud, this.mtbBarre);
         //this.vbConstruction = new VBox(this.tbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1, this.mtbSelection, separator2, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mtbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
         //this.vbIcones = new VBox(this.vbConstruction, this.mtbTerrain, this.mtbSelection, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
         //this.vbIcones.setSpacing(20);
