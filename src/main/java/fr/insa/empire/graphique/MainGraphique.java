@@ -4,44 +4,37 @@ import fr.insa.empire.treillis.Noeud_simple;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
 
 public class MainGraphique extends BorderPane {
 
-    private SplitMenuButton tbNoeud;
-    private MyTB mtbBarre;
-    private MyTB mtbTerrain;
-    private MyTB mtbSelection;
+    private MenuItem choix1;
+    private MenuItem choix2;
+    private final SplitMenuButton tbNoeud;
+    private final MyTB mtbBarre;
+    private final MyTB mtbTerrain;
+    private final MyTB mtbSelection;
     private MyTB test;
-    private MyB mbLancerCalculs;
-    private MyB mbReglages;
-    private HBox hbConstruction;
+    private final MyB mbLancerCalculs;
+    private final MyB mbReglages;
+    private final HBox hbConstruction;
     //private VBox vbConstruction;
-    private HBox hbIcones;
+    private final HBox hbIcones;
     //private VBox vbIcones;
-    private Canvas canvas;
+    private final Canvas canvas;
     private int etatNoeud;
     private double PX;
     private double PY;
-
-    MenuItem choix1;
-    MenuItem choix2;
 
     public MainGraphique() throws IOException {
         Separator separator = new Separator(Orientation.VERTICAL);
@@ -56,16 +49,14 @@ public class MainGraphique extends BorderPane {
         canvas.setWidth(512);
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
-                    if(canvasMouseEvent.getButton() == MouseButton.PRIMARY)
-                    {
+                    if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
                         PX = canvasMouseEvent.getX();
                         PY = canvasMouseEvent.getY();
                         System.out.println("Canvas cliqué en " + PX + " " + PY);
-                        if(etatNoeud == 1)
-                        {
+                        if (etatNoeud == 1) {
                             Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
                             canvas.getGraphicsContext2D().setStroke(Color.RED);
-                            canvas.getGraphicsContext2D().strokeOval(PX-5, PY-5, 10,10);
+                            canvas.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
                         }
                     }
 
@@ -75,7 +66,7 @@ public class MainGraphique extends BorderPane {
         GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
 
         graphicsContext2D.setStroke(Color.GRAY);
-        graphicsContext2D.strokeRect(0,0,512,512);
+        graphicsContext2D.strokeRect(0, 0, 512, 512);
 
         this.setCenter(canvas);
 
@@ -85,7 +76,7 @@ public class MainGraphique extends BorderPane {
         this.choix1 = new MenuItem("Noeud simple");
         this.choix2 = new MenuItem("Noeud Appui");
         this.tbNoeud.getItems().addAll(choix1, choix2);
-        
+
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
         this.mbLancerCalculs = new MyB("Lancer les calculs");
@@ -102,17 +93,17 @@ public class MainGraphique extends BorderPane {
         choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               tbNoeud.setText("Noeud Simple");
+                tbNoeud.setText("Noeud Simple");
                 //Noeud_simple.testCreationPt();
                 etatNoeud = 1;
             }
         });
-        
+
         choix2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               tbNoeud.setText("Noeud Appui");
-               etatNoeud = 2;
+                tbNoeud.setText("Noeud Appui");
+                etatNoeud = 2;
             }
         });
 
@@ -130,6 +121,11 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
+        this.mbLancerCalculs.setOnAction(
+                event -> {
+                    System.out.println("test");
+                }
+        );
 
     }
 }
