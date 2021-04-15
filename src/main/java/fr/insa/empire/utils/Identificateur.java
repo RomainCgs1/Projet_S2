@@ -8,7 +8,6 @@ package fr.insa.empire.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * but : permets d'attribuer une clef a un objet et inversement
  *
@@ -16,13 +15,39 @@ import java.util.Map;
  */
 public class Identificateur {
 
-    private Integer valCur;
-    private Map<Key, Object> ketToObject;
-    private Map<Object, Key> objectToKey;
+    private int valCur;
+    private Map<Integer, Object> ketToObject;
+    private Map<Object, Integer> objectToKey;
 
-    public Identificateur(Integer valCur, Object o) {
+    public Identificateur(int valCur, Object o) {
         this.valCur = valCur;
-        this.ketToObject = new HashMap<this.valCur,o > ();
-        this.objectToKey = new HashMap<o, this.valCur > ();
+
+        this.ketToObject = new HashMap<Integer, Object>();
+        this.ketToObject.put(valCur, o);
+
+        this.objectToKey = new HashMap<Object, Integer>();
+        this.objectToKey.put(o, valCur);
     }
+    
+    public Identificateur (Object o){
+        this.ketToObject = new HashMap<Integer, Object>();
+        this.ketToObject.put(valCur, o);
+
+        this.objectToKey = new HashMap<Object, Integer>();
+        this.objectToKey.put(o, valCur);
+    }
+
+    public int getValCur() {
+        return valCur;
+    }
+
+    public Map<Integer, Object> getKetToObject() {
+        return ketToObject;
+    }
+
+    public Map<Object, Integer> getObjectToKey() {
+        return objectToKey;
+    }
+    
+    //TODO Méthode pour set un identificateur à un objet s'il en a pas et check s'il en a un 
 }

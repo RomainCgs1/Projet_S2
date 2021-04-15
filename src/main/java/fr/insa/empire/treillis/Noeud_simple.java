@@ -1,5 +1,7 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Lire;
+
 public class Noeud_simple extends Noeuds {
 
     private double px;

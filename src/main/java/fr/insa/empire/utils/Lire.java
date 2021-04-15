@@ -1,4 +1,4 @@
-package fr.insa.empire.treillis;
+package fr.insa.empire.utils;
 
 import java.io.IOException;
 
