@@ -97,7 +97,7 @@ public class MainGraphique extends BorderPane {
         this.mbTypeBarre = new MyB ("Type de Barre");
         this.mbReglages = new MyB("Réglages");
         this.hbConstruction = new HBox(this.tbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1, this.mtbSelection, separator2, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mtbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
