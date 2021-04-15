@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -55,15 +56,19 @@ public class MainGraphique extends BorderPane {
         canvas.setWidth(512);
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
-                    PX = canvasMouseEvent.getX();
-                    PY = canvasMouseEvent.getY();
-                    System.out.println("Canvas cliqué en " + PX + " " + PY);
-                    if(etatNoeud == 1)
+                    if(canvasMouseEvent.getButton() == MouseButton.PRIMARY)
                     {
-                        Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
-                        canvas.getGraphicsContext2D().setStroke(Color.RED);
-                        canvas.getGraphicsContext2D().strokeOval(PX-5, PY-5, 10,10);
+                        PX = canvasMouseEvent.getX();
+                        PY = canvasMouseEvent.getY();
+                        System.out.println("Canvas cliqué en " + PX + " " + PY);
+                        if(etatNoeud == 1)
+                        {
+                            Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
+                            canvas.getGraphicsContext2D().setStroke(Color.RED);
+                            canvas.getGraphicsContext2D().strokeOval(PX-5, PY-5, 10,10);
+                        }
                     }
+
                 }
         );
 
