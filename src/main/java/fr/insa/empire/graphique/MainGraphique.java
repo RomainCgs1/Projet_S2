@@ -6,12 +6,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Separator;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
@@ -20,23 +19,27 @@ public class MainGraphique extends BorderPane {
 
     private MenuItem choix1;
     private MenuItem choix2;
-    private final SplitMenuButton tbNoeud;
-    private final MyTB mtbBarre;
-    private final MyTB mtbTerrain;
-    private final MyTB mtbSelection;
+    private SplitMenuButton tbNoeud;
+    private MyTB mtbBarre;
+    private MyTB mtbTerrain;
+    private MyTB mtbSelection;
     private MyTB mtbGomme;
     private MyTB test;
-    private final MyB mbLancerCalculs;
-    private final MyB mbReglages;
+    private MyB mbLancerCalculs;
+    private MyB mbReglages;
     private final MyB mbTypeBarre;
-    private final HBox hbConstruction;
-    //private VBox vbConstruction;
-    private final HBox hbIcones;
-    //private VBox vbIcones;
-    private final Canvas canvas;
+    private HBox hbConstruction;
+    private VBox vbUp;
+    private HBox hbIcones;
+    private Canvas canvas;
     private int etatNoeud;
     private double PX;
     private double PY;
+
+    private MenuBar menuBar;
+    private Menu mFichier;
+    private Menu mParametre;
+    private Menu mAide;
 
     public MainGraphique() throws IOException {
         Separator separator = new Separator(Orientation.VERTICAL);
@@ -79,6 +82,14 @@ public class MainGraphique extends BorderPane {
         this.choix2 = new MenuItem("Noeud Appui");
         this.tbNoeud.getItems().addAll(choix1, choix2);
 
+        //menuBar
+        this.menuBar = new MenuBar();
+        this.mFichier = new Menu("Fichier");
+        this.mParametre = new Menu("Paramètres");
+        this.mAide = new Menu("Aide");
+
+        menuBar.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
+
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
         this.mtbGomme = new MyTB("Gomme");
@@ -86,12 +97,11 @@ public class MainGraphique extends BorderPane {
         this.mbTypeBarre = new MyB ("Type de Barre");
         this.mbReglages = new MyB("Réglages");
         this.hbConstruction = new HBox(this.tbNoeud, this.mtbBarre);
-        //this.vbConstruction = new VBox(this.tbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mtbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
-        //this.vbIcones = new VBox(this.vbConstruction, this.mtbTerrain, this.mtbSelection, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1, this.mtbSelection, separator2, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
-        //this.vbIcones.setSpacing(20);
-        this.setTop(this.hbIcones);
+        this.vbUp = new VBox(this.menuBar, this.hbIcones);
+        this.setTop(this.vbUp);
+        vbUp.setSpacing(5);
 
         //Set up des actions du splitMenuButton
         choix1.setOnAction(new EventHandler<ActionEvent>() {
