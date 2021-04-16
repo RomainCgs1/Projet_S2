@@ -19,35 +19,29 @@ public class Identificateur {
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
 
-    public Identificateur(int valCur, Object o) {
+    public Identificateur(int valCur) {
         this.valCur = valCur;
-
         this.ketToObject = new HashMap<Integer, Object>();
-        this.ketToObject.put(valCur, o);
-
         this.objectToKey = new HashMap<Object, Integer>();
-        this.objectToKey.put(o, valCur);
     }
     
     public Identificateur (Object o){
-        this.ketToObject = new HashMap<Integer, Object>();
-        this.ketToObject.put(valCur, o);
-
-        this.objectToKey = new HashMap<Object, Integer>();
-        this.objectToKey.put(o, valCur);
+        this.valCur =0;
     }
 
-    public int getValCur() {
-        return valCur;
-    }
-
-    public Map<Integer, Object> getKetToObject() {
-        return ketToObject;
-    }
-
-    public Map<Object, Integer> getObjectToKey() {
-        return objectToKey;
+    public int getOrSetKey (Object o){
+        
+        Integer val = this.objectToKey.get(o);
+        if (val != null){
+            return val; //Car cela signifie que la clé existe déjà
+        }
+        else{
+            this.objectToKey.put(o, this.valCur);
+            this.ketToObject.put(this.valCur, o);
+            this.valCur++;
+            return this.valCur-1;
+        }
     }
     
-    //TODO Méthode pour set un identificateur à un objet s'il en a pas et check s'il en a un 
+    
 }
