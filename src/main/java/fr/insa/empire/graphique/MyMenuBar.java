@@ -22,7 +22,7 @@ public class MyMenuBar extends MenuBar {
         this.miOuvrir = new MenuItem("Ouvrir");
         mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir);
 
-        this.mParametre = new Menu("Paramètres");
+        this.mParametre = new Menu("Paramètres ");
         this.miLangue = new MenuItem("Langue");
         this.miTheme = new MenuItem("Thème");
         this.mParametre.getItems().setAll(miLangue, miTheme);
