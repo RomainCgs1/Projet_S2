@@ -110,6 +110,15 @@ public class MainGraphique extends BorderPane {
         );
 
 
+        //actione de barre
+        this.mtbBarre.setOnAction(
+                Action -> {
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                }
+        );
+
+
         //Set up des actions du splitMenuButton
         choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
