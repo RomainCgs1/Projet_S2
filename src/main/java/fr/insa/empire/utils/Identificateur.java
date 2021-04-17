@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insa.empire.utils;
+package fr.insa.empire.treillis;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * but : permets d'attribuer une clef a un objet et inversement
  *
- * @author romain
+ * @author romai
  */
 public class Identificateur {
 
@@ -19,10 +19,14 @@ public class Identificateur {
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
 
-    public Identificateur() {
-        this.valCur = 0;
+    public Identificateur(int valCur) {
+        this.valCur = valCur;
         this.ketToObject = new HashMap<Integer, Object>();
         this.objectToKey = new HashMap<Object, Integer>();
+    }
+    
+    public Identificateur (Object o){
+        this.valCur =0;
     }
 
     public int getOrSetKey (Object o){
@@ -38,7 +42,11 @@ public class Identificateur {
             return this.valCur-1;
         }
     }
-
+    
+    public boolean objetPresent (Object o){
+        return this.objectToKey.get(o) != null;
+    }
+    
     //toString
     public String toString()
     {
@@ -49,6 +57,5 @@ public class Identificateur {
         }
         return s;
     }
-    
     
 }
