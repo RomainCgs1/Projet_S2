@@ -1,7 +1,7 @@
 package fr.insa.empire.graphique;
 
 import fr.insa.empire.treillis.Noeud_simple;
-import fr.insa.empire.utils.Identificateur;
+//import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class MainGraphique extends BorderPane {
 
-    private Identificateur id;
+    //private Identificateur id;
 
     private MenuItem choix1;
     private MenuItem choix2;
@@ -42,7 +42,7 @@ public class MainGraphique extends BorderPane {
 
     public MainGraphique() throws IOException {
 
-        this.id = new Identificateur();
+        //this.id = new Identificateur();
 
         Separator separator = new Separator(Orientation.VERTICAL);
         Separator separator1 = new Separator(Orientation.VERTICAL);
@@ -60,7 +60,7 @@ public class MainGraphique extends BorderPane {
                         System.out.println("Canvas cliqué en " + PX + " " + PY);
                         if (etatNoeud == 1) {
                             Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
-                            noeud_simple.setID(id.getOrSetKey(noeud_simple));
+                            //noeud_simple.setID(id.getOrSetKey(noeud_simple));
                             System.out.println(noeud_simple.getID());
                             canvas.getGraphicsContext2D().setStroke(Color.RED);
                             canvas.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
