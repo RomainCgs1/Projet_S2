@@ -1,5 +1,6 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
 import fr.insa.empire.utils.Lire;
 import java.io.BufferedWriter;
 import java.io.IOException;
