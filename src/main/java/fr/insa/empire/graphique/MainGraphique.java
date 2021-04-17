@@ -94,12 +94,18 @@ public class MainGraphique extends BorderPane {
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
         vbUp.setSpacing(5);
+        this.hbConstruction.setSpacing(5);
 
         //actione de barre
         this.mtbBarre.setOnAction(
                 Action -> {
+
+                    //reset
                     etatNoeud = 0;
                     tbNoeud.setText("Noeud");
+                    mtbTerrain.setSelected(false);
+                    mtbGomme.setSelected(false);
+                    mtbSelection.setSelected(false);
                 }
         );
 
@@ -109,8 +115,13 @@ public class MainGraphique extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
                 tbNoeud.setText("Noeud Simple");
-                //Noeud_simple.testCreationPt();
                 etatNoeud = 1;
+
+                //reset
+                mtbTerrain.setSelected(false);
+                mtbBarre.setSelected(false);
+                mtbGomme.setSelected(false);
+                mtbSelection.setSelected(false);
             }
         });
 
@@ -119,8 +130,20 @@ public class MainGraphique extends BorderPane {
             public void handle(ActionEvent event) {
                 tbNoeud.setText("Noeud Appui");
                 etatNoeud = 2;
+
+                //reset
+                mtbTerrain.setSelected(false);
+                mtbBarre.setSelected(false);
+                mtbGomme.setSelected(false);
+                mtbSelection.setSelected(false);
             }
         });
+
+        this.mtbTerrain.setOnAction(
+                action -> {
+
+                }
+        );
 
         //tests action souris
         this.mtbSelection.setOnMouseEntered(
