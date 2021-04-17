@@ -1,8 +1,10 @@
 package fr.insa.empire.treillis;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Set;
 
-public class Noeuds {
+public abstract class Noeuds {
 
     protected int identificateur;
     private Set<Barre> extremites;
@@ -16,8 +18,6 @@ public class Noeuds {
     {
         return this.identificateur;
     }
-    public void setID(int ID) {
-        this.identificateur = ID;
-    }
 
+    public abstract void save (BufferedWriter bW, Identificateur idNum)throws IOException;
 }
