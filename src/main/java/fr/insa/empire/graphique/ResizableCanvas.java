@@ -27,7 +27,7 @@ public class ResizableCanvas extends Canvas {
     @Override
     public double minWidth(double height)
     {
-        return 0;
+        return 64;
     }
 
     @Override
@@ -45,14 +45,16 @@ public class ResizableCanvas extends Canvas {
     @Override
     public void resize(double width, double height)
     {
-        super.setWidth(width);
-        super.setHeight(height);
+        super.setWidth(width-10);
+        super.setHeight(height-10);
 
         GraphicsContext graphicsContext2D = this.getGraphicsContext2D();
         graphicsContext2D.clearRect(0, 0, width, height);
 
         graphicsContext2D.setStroke(Color.GRAY);
-        graphicsContext2D.strokeRect(5, 5, width-10, height-10);
+        graphicsContext2D.strokeRect(0, 0, width-10, height-10);
+
+        System.out.println(width + " " + height);
 
         //redraw ce qui a été ajouté
     }

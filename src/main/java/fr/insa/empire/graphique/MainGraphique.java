@@ -1,12 +1,13 @@
 package fr.insa.empire.graphique;
 
 import fr.insa.empire.treillis.Noeud_simple;
+import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +18,8 @@ import java.io.IOException;
 
 public class MainGraphique extends BorderPane {
 
+    private Identificateur id;
+
     private MenuItem choix1;
     private MenuItem choix2;
     private SplitMenuButton tbNoeud;
@@ -24,7 +27,6 @@ public class MainGraphique extends BorderPane {
     private MyTB mtbTerrain;
     private MyTB mtbSelection;
     private MyTB mtbGomme;
-    private MyTB test;
     private MyB mbLancerCalculs;
     private MyB mbReglages;
     private final MyB mbTypeBarre;
@@ -36,12 +38,12 @@ public class MainGraphique extends BorderPane {
     private double PX;
     private double PY;
 
-    private MenuBar menuBar;
-    private Menu mFichier;
-    private Menu mParametre;
-    private Menu mAide;
+    private MyMenuBar menuBar;
 
     public MainGraphique() throws IOException {
+
+        this.id = new Identificateur();
+
         Separator separator = new Separator(Orientation.VERTICAL);
         Separator separator1 = new Separator(Orientation.VERTICAL);
         Separator separator2 = new Separator(Orientation.VERTICAL);
@@ -50,8 +52,6 @@ public class MainGraphique extends BorderPane {
 
         //set du Canvas
         this.canvas = new ResizableCanvas();
-        canvas.setHeight(512);
-        canvas.setWidth(512);
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
                     if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -60,6 +60,8 @@ public class MainGraphique extends BorderPane {
                         System.out.println("Canvas cliqué en " + PX + " " + PY);
                         if (etatNoeud == 1) {
                             Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
+                            noeud_simple.setID(id.getOrSetKey(noeud_simple));
+                            System.out.println(noeud_simple.getID());
                             canvas.getGraphicsContext2D().setStroke(Color.RED);
                             canvas.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
                         }
@@ -67,7 +69,6 @@ public class MainGraphique extends BorderPane {
 
                 }
         );
-
 
         this.setCenter(canvas);
 
@@ -79,12 +80,7 @@ public class MainGraphique extends BorderPane {
         this.tbNoeud.getItems().addAll(choix1, choix2);
 
         //menuBar
-        this.menuBar = new MenuBar();
-        this.mFichier = new Menu("Fichier");
-        this.mParametre = new Menu("Paramètres");
-        this.mAide = new Menu("Aide");
-
-        menuBar.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
+        this.menuBar = new MyMenuBar();
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
@@ -98,6 +94,15 @@ public class MainGraphique extends BorderPane {
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
         vbUp.setSpacing(5);
+
+        //actione de barre
+        this.mtbBarre.setOnAction(
+                Action -> {
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                }
+        );
+
 
         //Set up des actions du splitMenuButton
         choix1.setOnAction(new EventHandler<ActionEvent>() {

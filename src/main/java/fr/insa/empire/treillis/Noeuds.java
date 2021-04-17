@@ -18,6 +18,9 @@ public abstract class Noeuds {
     {
         return this.identificateur;
     }
+    public void setID(int ID) {
+        this.identificateur = ID;
+    }
 
     public abstract void save (BufferedWriter bW, Identificateur idNum)throws IOException;
 }

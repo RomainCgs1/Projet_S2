@@ -17,7 +17,7 @@ public class MainGraphApp extends Application {
         stage.setTitle("TestGraph");
         Scene scene = new Scene(new MainGraphique());
         stage.setScene(scene);
-        stage.setWidth(600);
+        stage.setWidth(800);
         stage.setHeight(600);
         stage.centerOnScreen();
         stage.show();
