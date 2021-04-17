@@ -1,6 +1,8 @@
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Lire;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Noeud_simple extends Noeuds {
 
@@ -48,7 +50,17 @@ public class Noeud_simple extends Noeuds {
         Noeud_simple monNoeud = new Noeud_simple(px, py);
     }
 
-
+    //Sauvegarde
+    @Override
+    public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
+        //Format : NOEUD_SIMPLE/id/px/py
+        bW.append("Noeud_Simple/");
+        int id = idNum.getOrSetKey(this);
+        bW.append(id +"/");
+        bW.append(this.px+"/");
+        bW.append(this.py+"/");
+    }
+    
     public static void main(String[] args)
     {
         testCreationPt();
