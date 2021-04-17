@@ -16,5 +16,8 @@ public class Noeuds {
     {
         return this.identificateur;
     }
+    public void setID(int ID) {
+        this.identificateur = ID;
+    }
 
 }

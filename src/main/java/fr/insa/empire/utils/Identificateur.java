@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * but : permets d'attribuer une clef a un objet et inversement
  *
- * @author romai
+ * @author romain
  */
 public class Identificateur {
 
@@ -19,14 +19,10 @@ public class Identificateur {
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
 
-    public Identificateur(int valCur) {
-        this.valCur = valCur;
+    public Identificateur() {
+        this.valCur = 0;
         this.ketToObject = new HashMap<Integer, Object>();
         this.objectToKey = new HashMap<Object, Integer>();
-    }
-    
-    public Identificateur (Object o){
-        this.valCur =0;
     }
 
     public int getOrSetKey (Object o){
@@ -41,6 +37,17 @@ public class Identificateur {
             this.valCur++;
             return this.valCur-1;
         }
+    }
+
+    //toString
+    public String toString()
+    {
+        String s = "";
+        for(int i=0; i<this.valCur; i++)
+        {
+            s = s + this.objectToKey.get(i) + "\n";
+        }
+        return s;
     }
     
     
