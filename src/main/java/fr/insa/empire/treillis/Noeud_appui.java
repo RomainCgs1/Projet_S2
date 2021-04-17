@@ -1,5 +1,8 @@
 package fr.insa.empire.treillis;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Noeud_appui extends Noeuds {
 
     //Attributs
@@ -41,4 +44,9 @@ public class Noeud_appui extends Noeuds {
         
         return s;
     }
+    
+    public void save (BufferedWriter bW, Identificateur idNum){
+        //TODO
+    }
+    
 }

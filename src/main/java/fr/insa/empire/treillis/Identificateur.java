@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.insa.empire.utils;
+package fr.insa.empire.treillis;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +41,10 @@ public class Identificateur {
             this.valCur++;
             return this.valCur-1;
         }
+    }
+    
+    public boolean objetPresent (Object o){
+        return this.objectToKey.get(o) != null;
     }
     
     
