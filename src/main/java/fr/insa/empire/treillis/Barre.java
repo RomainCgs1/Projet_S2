@@ -1,5 +1,7 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Set;
@@ -59,7 +61,7 @@ public class Barre {
 
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : BARRE/id/type/idpdébut/idpfin
-        if (!idNum.objetPresent(this.noeudDebut)) {
+        /*if (!idNum.objetPresent(this.noeudDebut)) {
             this.noeudDebut.save(bW, idNum);
         }
         if (!idNum.objetPresent(this.noeudFin)) {
@@ -71,7 +73,7 @@ public class Barre {
         Type_de_barre type = this.getType();
         bW.append(type+"/");
         bW.append(this.noeudDebut + "/");
-        bW.append(this.noeudFin + "/");
+        bW.append(this.noeudFin + "/");*/
     }
 
 }

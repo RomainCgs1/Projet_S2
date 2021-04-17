@@ -139,9 +139,69 @@ public class MainGraphique extends BorderPane {
             }
         });
 
+        //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
 
+                    //reset
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                    mtbBarre.setSelected(false);
+                    mtbGomme.setSelected(false);
+                    mtbSelection.setSelected(false);
+                }
+        );
+
+        //action de Gomme
+        this.mtbGomme.setOnAction(
+                action -> {
+
+                    //reset
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                    mtbTerrain.setSelected(false);
+                    mtbBarre.setSelected(false);
+                    mtbSelection.setSelected(false);
+                }
+        );
+
+        //action de Selection
+        this.mtbSelection.setOnAction(
+                action -> {
+
+                    //reset
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                    mtbTerrain.setSelected(false);
+                    mtbGomme.setSelected(false);
+                    mtbBarre.setSelected(false);
+                }
+        );
+
+        //action de Type de Barre
+        this.mbTypeBarre.setOnAction(
+                action -> {
+
+                    //reset
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                    mtbTerrain.setSelected(false);
+                    mtbGomme.setSelected(false);
+                    mtbSelection.setSelected(false);
+                }
+        );
+
+        //action de Lancer les calculs
+        this.mbLancerCalculs.setOnAction(
+                action -> {
+
+                    //reset
+                    etatNoeud = 0;
+                    tbNoeud.setText("Noeud");
+                    mtbBarre.setSelected(false);
+                    mtbTerrain.setSelected(false);
+                    mtbGomme.setSelected(false);
+                    mtbSelection.setSelected(false);
                 }
         );
 
@@ -156,12 +216,6 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection.setOnMouseExited(
                 mouseEvent -> {
                     mtbSelection.setTextFill(Color.BLACK);
-                }
-        );
-
-        this.mbLancerCalculs.setOnAction(
-                event -> {
-                    System.out.println("test");
                 }
         );
 
