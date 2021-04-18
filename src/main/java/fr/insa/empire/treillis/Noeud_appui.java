@@ -18,11 +18,13 @@ public class Noeud_appui extends Noeuds {
 
     public Noeud_appui(double px, double py, Segment_terrain segment_appui)
     {
-        //utiliser les poins de départ et d'arrivée du segement appui lorsqu'on aura défini les get
-        double px1 = 1;
-        double py1 = 1;
-        double px2 = 1;
-        double py2 = 1;
+        Point p1 = segment_appui.getPointDebut();
+        Point p2 = segment_appui.getPointFin();
+        double px1 = p1.getPx();
+        double py1 = p1.getPy();
+
+        double px2 = p2.getPx();
+        double py2 = p2.getPy();
 
         this.segment_appui = segment_appui;
         this.position_alpha = Math.sqrt(Math.pow(px-px1, 2) + Math.pow(py-py1, 2)) / Math.sqrt(Math.pow(px2-px1, 2) + Math.pow(py2-py1, 2));

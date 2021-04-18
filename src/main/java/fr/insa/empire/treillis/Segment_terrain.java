@@ -19,6 +19,17 @@ public class Segment_terrain {
         this.pointFin = pointFin;
     }
 
+    //get
+    public Point getPointDebut()
+    {
+        return this.pointDebut;
+    }
+
+    public Point getPointFin()
+    {
+        return this.pointFin;
+    }
+
     //Save
      public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : SEGMENT_TERRAIN/id/idpdébut/idpfin
