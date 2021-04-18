@@ -1,5 +1,9 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 public class Triangle_terrain {
 
     private int identifiant;
@@ -22,4 +26,23 @@ public class Triangle_terrain {
         return identifiant;
     }
     
+    public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
+        //Format : Debut_Triangle_terrain/id/Segment1/id/Segment2/id/Segment3/id/Fin_Traingle_terrain
+        if (!idNum.objetPresent(this.segment1)) {
+            this.segment1.save(bW, idNum);
+        }
+        if (!idNum.objetPresent(this.segment2)) {
+            this.segment2.save(bW, idNum);
+        }
+        if (!idNum.objetPresent(this.segment3)) {
+            this.segment3.save(bW, idNum);
+        }
+        bW.append("Debut_Triangle_terrain/");
+        bW.append(this.identifiant+"/");
+        bW.append("Segment1/");
+        bW.append(idNum.getOrSetKey(this.segment1)+"/");
+        bW.append(idNum.getOrSetKey(this.segment2)+"/");
+        bW.append(idNum.getOrSetKey(this.segment3)+"/");
+        bW.append("Fin_Triangle_terrain");
+    }
 }
