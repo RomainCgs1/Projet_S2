@@ -60,6 +60,12 @@ public class Noeud_simple extends Noeuds {
         bW.append(this.py+"/");
     }
 
+    @Override
+    public double getDistanceAuClick(double px, double py) {
+        double test = Math.sqrt(Math.pow(4,2)); //racine de 4^2
+        return 0;
+    }
+
     public static void main(String[] args)
     {
         testCreationPt();

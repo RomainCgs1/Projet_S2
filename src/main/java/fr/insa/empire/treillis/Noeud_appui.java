@@ -61,5 +61,10 @@ public class Noeud_appui extends Noeuds {
     public void save (BufferedWriter bW, Identificateur idNum){
         //TODO
     }
-    
+
+    @Override
+    public double getDistanceAuClick(double px, double py) {
+        return 0;
+    }
+
 }
