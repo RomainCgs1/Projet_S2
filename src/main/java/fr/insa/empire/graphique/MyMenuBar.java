@@ -1,9 +1,8 @@
 package fr.insa.empire.graphique;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+
+import java.util.Optional;
 
 public class MyMenuBar extends MenuBar {
 
@@ -28,16 +27,32 @@ public class MyMenuBar extends MenuBar {
         this.miTheme = new MenuItem("Thème");
         this.mParametre.getItems().setAll(miLangue, miTheme);
 
-        this.mAide = new Menu("Aide");
-        this.mAide.setOnAction(
+        this.miLangue.setOnAction(
                 event -> {
-                    Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-                    dialog.setTitle("An information dialog-box");
-                    dialog.setHeaderText("An information dialog with header");
-                    dialog.setContentText("Le message d'information\n" + "(une deuxième ligne)") ;
-                    dialog.showAndWait();
+                    Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
+                    dBox.setTitle("A confirmation dialog-box with custom actions");
+                    dBox.setHeaderText("Java-Pizza : The Very Best in Town !");
+                    dBox.setContentText("Choose your pizza size :");
+                    ButtonType btnSmall  = new ButtonType("Small");
+                    ButtonType btnMedium = new ButtonType("Medium");
+                    ButtonType btnBig    = new ButtonType("Big");
+                    ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    dBox.getButtonTypes().setAll(btnSmall, btnMedium, btnBig, btnCancel);
+                    Optional<ButtonType> choice = dBox.showAndWait();
+                    if (choice.get() == btnSmall) {
+                        System.out.println("User chose Small");
+                    }
+                    else if (choice.get() == btnMedium) {
+                        System.out.println("User chose Medium");
+                    }
+                    else if (choice.get() == btnBig) {
+                        System.out.println("User chose Big");
+                    } else {
+                        System.out.println("Cancel or Close"); }
                 }
         );
+
+        this.mAide = new Menu("Aide");
 
         final String os = System.getProperty("os.name");
         if(os != null && os.startsWith("Mac"))

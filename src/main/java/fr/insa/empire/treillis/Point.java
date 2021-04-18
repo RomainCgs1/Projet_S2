@@ -12,7 +12,6 @@ public class Point {
 
     public Point() {
     }
-    
     public double getPx()
     {
         return this.px;
@@ -23,12 +22,12 @@ public class Point {
         return this.py;
     }
     
-    private void setPx(double px)
+    public void setPx(double px)
     {
         this.px = px;
     }
 
-    private void setPy(double py)
+    public void setPy(double py)
     {
         this.py = py;
     }

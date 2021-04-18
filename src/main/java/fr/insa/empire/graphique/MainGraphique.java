@@ -1,7 +1,6 @@
 package fr.insa.empire.graphique;
 
-import fr.insa.empire.treillis.Noeud_simple;
-import fr.insa.empire.treillis.Zone_constructible;
+import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
 //import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
@@ -36,12 +35,18 @@ public class MainGraphique extends BorderPane {
     private HBox hbIcones;
     private Zone_constructible zone_constructible;
     private int etatNoeud;
-    private double PX;
-    private double PY;
+    private double px;
+    private double py;
+    private int nbDeClick;
 
     private MyMenuBar menuBar;
 
     public MainGraphique() throws IOException {
+
+        //point pour triangle terrain
+        Point p1 = new Point();
+        Point p2 = new Point();
+        Point p3 = new Point();
 
         this.identificateur = new Identificateur();
 
@@ -56,15 +61,40 @@ public class MainGraphique extends BorderPane {
         zone_constructible.setOnMouseClicked(
                 canvasMouseEvent -> {
                     if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
-                        PX = canvasMouseEvent.getX();
-                        PY = canvasMouseEvent.getY();
-                        System.out.println("Canvas cliqué en " + PX + " " + PY);
+                        px = canvasMouseEvent.getX();
+                        py = canvasMouseEvent.getY();
+                        System.out.println("Canvas cliqué en " + px + " " + py);
                         if (etatNoeud == 1) {
-                            Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
+                            Noeud_simple noeud_simple = new Noeud_simple(px, py);
                             noeud_simple.setIdentifiant(this.identificateur.getOrSetKey(noeud_simple));
                             System.out.println(noeud_simple.getID());
                             zone_constructible.getGraphicsContext2D().setStroke(Color.RED);
-                            zone_constructible.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
+                            zone_constructible.getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                        }
+                        else if(mtbTerrain.isSelected())
+                        {
+                            if(nbDeClick == 0)
+                            {
+                                p1.setPx(px);
+                                p1.setPy(py);
+                                nbDeClick++;
+                                System.out.printf("point 1");
+                            }
+                            else if(nbDeClick == 1)
+                            {
+                                p2.setPx(px);
+                                p2.setPy(py);
+                                nbDeClick++;
+                                System.out.printf("point 2");
+                            }
+                            else if(nbDeClick == 2)
+                            {
+                                p3.setPx(px);
+                                p3.setPy(py);
+                                System.out.printf("point 3");
+                                Triangle_terrain triangle_terrain = creationTriangleTerrain(p1, p2, p3);
+                                nbDeClick = 0;
+                            }
                         }
                     }
 
@@ -143,6 +173,7 @@ public class MainGraphique extends BorderPane {
         //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
+                    nbDeClick = 0;
 
                     //reset
                     etatNoeud = 0;
@@ -239,5 +270,21 @@ public class MainGraphique extends BorderPane {
                     mtbSelection.setTextFill(Color.BLACK);
                 }
         );
+    }
+
+    private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
+    {
+        Segment_terrain seg1 = new Segment_terrain(p1, p2);
+        Segment_terrain seg2 = new Segment_terrain(p2, p3);
+        Segment_terrain seg3 = new Segment_terrain(p3, p1);
+        Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
+        triangle_terrain.setIdentifiant(this.identificateur.getOrSetKey(triangle_terrain));
+
+        this.zone_constructible.getGraphicsContext2D().setStroke(Color.BLACK);
+        this.zone_constructible.getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
+        this.zone_constructible.getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
+        this.zone_constructible.getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
+
+        return triangle_terrain;
     }
 }
