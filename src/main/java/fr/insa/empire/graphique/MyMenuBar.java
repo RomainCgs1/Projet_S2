@@ -29,9 +29,11 @@ public class MyMenuBar extends MenuBar {
 
         this.mAide = new Menu("Aide");
 
-
-
-
+        final String os = System.getProperty("os.name");
+        if(os != null && os.startsWith("Mac"))
+        {
+            this.useSystemMenuBarProperty().set(true);
+        }
 
         this.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
     }
