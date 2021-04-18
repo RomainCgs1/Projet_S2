@@ -25,7 +25,7 @@ public class Identificateur {
         this.objectToKey = new HashMap<Object, Integer>();
     }
     
-    public Identificateur (Object o){
+    public Identificateur (){
         this.valCur =0;
     }
 

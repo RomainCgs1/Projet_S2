@@ -12,6 +12,8 @@ public class Zone_constructible {
     //public Set<Triangle_terrain> contient;
 
     public Zone_constructible() {
+        
     }
 
+    
 }

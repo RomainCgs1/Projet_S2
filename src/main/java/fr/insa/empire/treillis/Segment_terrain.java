@@ -10,7 +10,7 @@ public class Segment_terrain {
     private Triangle_terrain appartient;
     private Point pointDebut;
     private Point pointFin;
-    private Identificateur idNum;
+    private Identificateur idNum = 
     
 
     public Segment_terrain (){
