@@ -71,18 +71,24 @@ public class Noeud_appui extends Noeuds {
 
     @Override
     public double getDistanceAuClick(double px, double py) {
-        Segment_terrain Seg = this.segment_appui;
-        Point DebSeg = Seg.getPointDebut();
-        Point FinSeg = Seg.getPointFin();
         
-        double XSeg = FinSeg.getPx()-DebSeg.getPx();
-        double YSeg = FinSeg.getPy()-DebSeg.getPy();
-        
-        double PX = DebSeg.getPx()+this.position_alpha*XSeg;
-        double PY = DebSeg.getPy()+this.position_alpha*YSeg;
+        double PX = this.getPx();
+        double PY = this.getPy();
         
         return Math.sqrt(Math.pow(PX-px,2)+Math.pow(PY-py, 2));     
                        
+    }
+
+    public double getPx()
+    {
+        double xSeg = this.segment_appui.getPointFin().getPx() - this.segment_appui.getPointDebut().getPx();
+        return this.segment_appui.getPointDebut().getPx() + this.position_alpha * xSeg;
+    }
+
+    public double getPy()
+    {
+        double ySeg = this.segment_appui.getPointFin().getPy() - this.segment_appui.getPointDebut().getPy();
+        return this.segment_appui.getPointDebut().getPy() + this.position_alpha * ySeg;
     }
 
 }

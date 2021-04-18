@@ -107,5 +107,39 @@ public class Zone_constructible extends Canvas {
 
         return (Noeud_simple) s;
     }
-    
+
+    public Noeud_appui getNoeud_appuiPlusProche(double px, double py, Identificateur identificateur)
+    {
+        Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Noeud_appui.class)
+                {
+                    distAct = ((Noeud_appui) val).getDistanceAuClick(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+
+                if(distance >= distMax)
+                {
+                    s = null;
+                }
+            }
+        }
+
+        return (Noeud_appui) s;
+    }
 }
