@@ -1,5 +1,6 @@
 package fr.insa.empire.graphique;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -28,6 +29,15 @@ public class MyMenuBar extends MenuBar {
         this.mParametre.getItems().setAll(miLangue, miTheme);
 
         this.mAide = new Menu("Aide");
+        this.mAide.setOnAction(
+                event -> {
+                    Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+                    dialog.setTitle("An information dialog-box");
+                    dialog.setHeaderText("An information dialog with header");
+                    dialog.setContentText("Le message d'information\n" + "(une deuxième ligne)") ;
+                    dialog.showAndWait();
+                }
+        );
 
         final String os = System.getProperty("os.name");
         if(os != null && os.startsWith("Mac"))

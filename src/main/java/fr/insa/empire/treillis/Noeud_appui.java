@@ -19,6 +19,11 @@ public class Noeud_appui extends Noeuds {
 
     public Noeud_appui(double px, double py, Segment_terrain segment_appui)
     {
+        this.segment_appui = segment_appui;
+        this.position_alpha = calcPosAlpha(px, py, segment_appui);
+    }
+
+    private static double calcPosAlpha(double px, double py,Segment_terrain segment_appui) {
         Point p1 = segment_appui.getPointDebut();
         Point p2 = segment_appui.getPointFin();
         double px1 = p1.getPx();
@@ -27,8 +32,7 @@ public class Noeud_appui extends Noeuds {
         double px2 = p2.getPx();
         double py2 = p2.getPy();
 
-        this.segment_appui = segment_appui;
-        this.position_alpha = Math.sqrt(Math.pow(px-px1, 2) + Math.pow(py-py1, 2)) / Math.sqrt(Math.pow(px2-px1, 2) + Math.pow(py2-py1, 2));
+        return Math.sqrt(Math.pow(px-px1, 2) + Math.pow(py-py1, 2)) / Math.sqrt(Math.pow(px2-px1, 2) + Math.pow(py2-py1, 2));
     }
 
     public Noeud_appui(double position_alpha, Segment_terrain segment_appui) {
@@ -52,7 +56,7 @@ public class Noeud_appui extends Noeuds {
     private void setSegment_appui(Segment_terrain segment_appui) {
         this.segment_appui = segment_appui;
     }
-    
+
     public String toString(){
         String s="";
         s=s+"Position du noeud appui : "+this.position_alpha+"\n";

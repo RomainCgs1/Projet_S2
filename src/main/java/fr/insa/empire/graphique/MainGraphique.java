@@ -7,9 +7,7 @@ import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Separator;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MainGraphique extends BorderPane {
 
@@ -196,6 +195,26 @@ public class MainGraphique extends BorderPane {
         //action de Lancer les calculs
         this.mbLancerCalculs.setOnAction(
                 action -> {
+                    Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
+                    dBox.setTitle("A confirmation dialog-box with custom actions");
+                    dBox.setHeaderText("Java-Pizza : The Very Best in Town !");
+                    dBox.setContentText("Choose your pizza size :");
+                    ButtonType btnSmall  = new ButtonType("Small");
+                    ButtonType btnMedium = new ButtonType("Medium");
+                    ButtonType btnBig    = new ButtonType("Big");
+                    ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    dBox.getButtonTypes().setAll(btnSmall, btnMedium, btnBig, btnCancel);
+                    Optional<ButtonType> choice = dBox.showAndWait();
+                    if (choice.get() == btnSmall) {
+                        System.out.println("User chose Small");
+                    }
+                    else if (choice.get() == btnMedium) {
+                        System.out.println("User chose Medium");
+                    }
+                    else if (choice.get() == btnBig) {
+                        System.out.println("User chose Big");
+                    } else {
+                        System.out.println("Cancel or Close"); }
 
                     //reset
                     etatNoeud = 0;
@@ -220,6 +239,5 @@ public class MainGraphique extends BorderPane {
                     mtbSelection.setTextFill(Color.BLACK);
                 }
         );
-
     }
 }
