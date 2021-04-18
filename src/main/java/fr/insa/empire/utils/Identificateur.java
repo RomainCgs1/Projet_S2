@@ -27,6 +27,8 @@ public class Identificateur {
     
     public Identificateur (){
         this.valCur =0;
+        this.ketToObject = new HashMap<Integer, Object>();
+        this.objectToKey = new HashMap<Object, Integer>();
     }
 
     public int getOrSetKey (Object o){
