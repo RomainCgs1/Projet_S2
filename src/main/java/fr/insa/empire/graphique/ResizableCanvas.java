@@ -54,8 +54,6 @@ public class ResizableCanvas extends Canvas {
         graphicsContext2D.setStroke(Color.GRAY);
         graphicsContext2D.strokeRect(0, 0, width-10, height-10);
 
-        System.out.println(width + " " + height);
-
         //redraw ce qui a été ajouté
     }
 }
