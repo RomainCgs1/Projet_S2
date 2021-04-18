@@ -1,6 +1,7 @@
 package fr.insa.empire.graphique;
 
 import fr.insa.empire.treillis.Noeud_simple;
+import fr.insa.empire.treillis.Zone_constructible;
 import fr.insa.empire.utils.Identificateur;
 //import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
@@ -34,7 +35,7 @@ public class MainGraphique extends BorderPane {
     private HBox hbConstruction;
     private VBox vbUp;
     private HBox hbIcones;
-    private ResizableCanvas canvas;
+    private Zone_constructible zone_constructible;
     private int etatNoeud;
     private double PX;
     private double PY;
@@ -52,8 +53,8 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
-        this.canvas = new ResizableCanvas();
-        canvas.setOnMouseClicked(
+        this.zone_constructible = new Zone_constructible();
+        zone_constructible.setOnMouseClicked(
                 canvasMouseEvent -> {
                     if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
                         PX = canvasMouseEvent.getX();
@@ -63,15 +64,15 @@ public class MainGraphique extends BorderPane {
                             Noeud_simple noeud_simple = new Noeud_simple(PX, PY);
                             noeud_simple.setIdentifiant(this.identificateur.getOrSetKey(noeud_simple));
                             System.out.println(noeud_simple.getID());
-                            canvas.getGraphicsContext2D().setStroke(Color.RED);
-                            canvas.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
+                            zone_constructible.getGraphicsContext2D().setStroke(Color.RED);
+                            zone_constructible.getGraphicsContext2D().strokeOval(PX - 5, PY - 5, 10, 10);
                         }
                     }
 
                 }
         );
 
-        this.setCenter(canvas);
+        this.setCenter(zone_constructible);
 
         //Set up du splitMenuButton
         this.tbNoeud = new SplitMenuButton();

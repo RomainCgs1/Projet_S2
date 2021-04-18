@@ -59,7 +59,7 @@ public class Noeud_simple extends Noeuds {
         bW.append(this.px+"/");
         bW.append(this.py+"/");
     }
-    
+
     public static void main(String[] args)
     {
         testCreationPt();

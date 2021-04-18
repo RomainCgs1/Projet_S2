@@ -34,7 +34,6 @@ public class MyMenuBar extends MenuBar {
         {
             this.useSystemMenuBarProperty().set(true);
         }
-
         this.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
     }
 }
