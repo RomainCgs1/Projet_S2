@@ -14,4 +14,12 @@ public class Triangle_terrain {
         this.segment3 = seg3;
     }
 
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public int getIdentifiant() {
+        return identifiant;
+    }
+    
 }

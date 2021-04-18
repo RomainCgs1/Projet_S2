@@ -8,7 +8,7 @@ import java.util.Set;
 
 public abstract class Noeuds {
 
-    protected int identificateur;
+    protected int identifiant;
     private Set<Barre> extremites;
 
     public Noeuds() 
@@ -18,7 +18,11 @@ public abstract class Noeuds {
 
     public int getID()
     {
-        return this.identificateur;
+        return this.identifiant;
+    }
+
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
     }
 
     public abstract void save (BufferedWriter bW, Identificateur idNum)throws IOException;

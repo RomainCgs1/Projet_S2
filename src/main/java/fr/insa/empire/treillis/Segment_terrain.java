@@ -10,21 +10,15 @@ public class Segment_terrain {
     private Triangle_terrain appartient;
     private Point pointDebut;
     private Point pointFin;
-    private Identificateur idNum = 
+    private int identifiant;
     
-
-    public Segment_terrain (){
-        Integer val = this.pointDebut.objectToKey.get(o);
-        if (val != null){
-            return val; //Car cela signifie que la clé existe déjà
-        }
-    }
-    
+    //Constructeur
     public Segment_terrain(Point pointDebut, Point pointFin) {
         this.pointDebut = pointDebut;
         this.pointFin = pointFin;
     }
 
+    
 /*
      public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : BARRE/id/type/idpdébut/idpfin
@@ -42,4 +36,8 @@ public class Segment_terrain {
         bW.append(idNum.getOrSetKey(this.noeudDebut)+ "/");
         bW.append(idNum.getOrSetKey(this.noeudFin) + "/");
     } */
+
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
 }

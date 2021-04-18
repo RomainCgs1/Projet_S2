@@ -3,7 +3,7 @@ package fr.insa.empire.treillis;
 public class Type_de_barre {
 
     //Attributs
-    private int identificateur;
+    private int identifiant;
     private double coutAuMetre;
     private double longMin;
     private double longMax;
@@ -11,8 +11,7 @@ public class Type_de_barre {
     private double resMaxComp;
 
     //Constructeur
-    public Type_de_barre(int id, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression) {
-        this.identificateur = id;
+    public Type_de_barre(double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression) {
         this.coutAuMetre = coutAuMetre;
         this.longMax = longMax;
         this.longMin = longMin;
@@ -23,11 +22,11 @@ public class Type_de_barre {
     //Encapsulation
 
     public int getIdentificateur() {
-        return identificateur;
+        return identifiant;
     }
 
     private void setIdentificateur(int identificateur) {
-        this.identificateur = identificateur;
+        this.identifiant = identificateur;
     }
 
     public double getCoutAuMetre() {
@@ -74,7 +73,7 @@ public class Type_de_barre {
     //toString
     public String toString(){
         String s = "";
-        s=s+"Identificateur : "+this.identificateur+"\n";
+        s=s+"Identificateur : "+this.identifiant+"\n";
         s=s+"Coût au mètre : "+this.coutAuMetre+"\n";
         s=s+"La longueur max est : "+this.longMax+"\n";
         s=s+"La longueur min est : "+this.longMin+"\n";

@@ -10,15 +10,18 @@ import java.io.IOException;
 public class Barre {
 
     //Attributs
-    private int identificateur;
+    private int identifiant;
+
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
     private Noeuds noeudDebut;
     private Noeuds noeudFin;
     private Type_de_barre type;
     // private Set<Noeuds> extrémités;
 
     //Constructeur
-    public Barre(int id, Noeuds noeudDebut, Noeuds noeudFin, Type_de_barre type) {
-        this.identificateur = id;
+    public Barre(Noeuds noeudDebut, Noeuds noeudFin, Type_de_barre type) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.type = type;
@@ -52,7 +55,7 @@ public class Barre {
     //to String 
     public String toString() {
         String s = "";
-        s = s + "Barre selectionnee : " + this.identificateur + "\n";
+        s = s + "Barre selectionnee : " + this.identifiant + "\n";
         s = s + "Type de la barre : " + this.type + "\n";
         s = s + "Noeud du debut " + this.noeudDebut + "\n";
         s = s + "Noeud du fin " + this.noeudFin + "\n";

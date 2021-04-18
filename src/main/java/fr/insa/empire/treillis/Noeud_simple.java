@@ -17,7 +17,6 @@ public class Noeud_simple extends Noeuds {
         System.out.println("Votre point à été créé : " + this);
     }
     
-    
     private void setPx(Noeud_simple N, double Px){
         this.px = Px;
     }
@@ -35,7 +34,7 @@ public class Noeud_simple extends Noeuds {
     }
 
     public String toString(){ //Méthode ToString
-        return this.identificateur + " ( " + this.px + " ; " + this.py + " )";
+        return super.identifiant + " ( " + this.px + " ; " + this.py + " )";
     }
 
 
