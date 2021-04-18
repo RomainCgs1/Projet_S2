@@ -65,6 +65,7 @@ public class MainGraphique extends BorderPane {
                         py = canvasMouseEvent.getY();
                         System.out.println("Canvas cliqué en " + px + " " + py);
                         if (etatNoeud == 1) {
+                            System.out.println("Noeud le plus proche : " + zone_constructible.getNoeud_simplePlusProche(px, py, identificateur));
                             Noeud_simple noeud_simple = new Noeud_simple(px, py);
                             noeud_simple.setIdentifiant(this.identificateur.getOrSetKey(noeud_simple));
                             System.out.println(noeud_simple.getID());
@@ -78,20 +79,20 @@ public class MainGraphique extends BorderPane {
                                 p1.setPx(px);
                                 p1.setPy(py);
                                 nbDeClick++;
-                                System.out.printf("point 1");
+                                System.out.println("point 1");
                             }
                             else if(nbDeClick == 1)
                             {
                                 p2.setPx(px);
                                 p2.setPy(py);
                                 nbDeClick++;
-                                System.out.printf("point 2");
+                                System.out.println("point 2");
                             }
                             else if(nbDeClick == 2)
                             {
                                 p3.setPx(px);
                                 p3.setPy(py);
-                                System.out.printf("point 3");
+                                System.out.println("point 3");
                                 Triangle_terrain triangle_terrain = creationTriangleTerrain(p1, p2, p3);
                                 nbDeClick = 0;
                             }

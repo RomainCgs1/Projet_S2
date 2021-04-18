@@ -1,6 +1,8 @@
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
+import javafx.scene.canvas.Canvas;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 

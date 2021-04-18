@@ -17,19 +17,19 @@ public class Noeud_simple extends Noeuds {
         System.out.println("Votre point à été créé : " + this);
     }
     
-    private void setPx(Noeud_simple N, double Px){
+    private void setPx(double Px){
         this.px = Px;
     }
-    private void SetPy(Noeud_simple N, double Py){
+    private void SetPy(double Py){
         this.py = Py;
     }
     
     
-    public double getPxNoeudSimple(Noeud_simple N){  //Get Px
+    public double getPxNoeudSimple(){  //Get Px
         return this.px;
     }
     
-    public double getPyNoeudSimple (Noeud_simple N){ //Get Py
+    public double getPyNoeudSimple (){ //Get Py
         return this.py;
     }
 

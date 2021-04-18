@@ -1,9 +1,12 @@
 package fr.insa.empire.treillis;
 
 
+import fr.insa.empire.utils.Identificateur;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import java.util.Map;
 
 public class Zone_constructible extends Canvas {
 
@@ -12,6 +15,7 @@ public class Zone_constructible extends Canvas {
     private double yMin;
     private double yMax;
     private Treillis contient;
+    private double distMax = 10;
     //public Set<Triangle_terrain> contient;
 
     public Zone_constructible() {
@@ -67,6 +71,41 @@ public class Zone_constructible extends Canvas {
         graphicsContext2D.strokeRect(0, 0, width-10, height-10);
 
         //redraw ce qui a été ajouté
+    }
+
+    public Noeud_simple getNoeud_simplePlusProche(double px, double py, Identificateur identificateur)
+    {
+        Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Noeud_simple.class)
+                {
+                    distAct = ((Noeud_simple) val).getDistanceAuClick(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+
+                if(distance >= distMax)
+                {
+                    s = null;
+                }
+            }
+        }
+
+        return (Noeud_simple) s;
     }
     
 }
