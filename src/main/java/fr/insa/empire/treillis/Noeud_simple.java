@@ -61,14 +61,14 @@ public class Noeud_simple extends Noeuds {
     }
 
     @Override
-    public double getDistanceAuClick(double px, double py) {
-        double test = Math.sqrt(Math.pow(4,2)); //racine de 4^2
-        return 0;
+    public double getDistanceAuClick(double X, double Y) {
+        double distance = Math.sqrt(Math.pow(this.px-X,2)+Math.pow(this.py-Y, 2));
+        return distance;
     }
 
     public static void main(String[] args)
     {
         testCreationPt();
     }
-
+    
 }
