@@ -19,6 +19,14 @@ public class Identificateur {
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
 
+    public Map<Integer, Object> getKetToObject() {
+        return ketToObject;
+    }
+
+    public Map<Object, Integer> getObjectToKey() {
+        return objectToKey;
+    }
+
     public Identificateur(int valCur) {
         this.valCur = valCur;
         this.ketToObject = new HashMap<Integer, Object>();
