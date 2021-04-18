@@ -1,5 +1,6 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Set;
@@ -18,24 +19,20 @@ public class Segment_terrain {
         this.pointFin = pointFin;
     }
 
-    
-/*
+    //Save
      public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
-        //Format : BARRE/id/type/idpdébut/idpfin
-        if (!idNum.objetPresent(this.)) {
-            this.noeudDebut.save(bW, idNum);
+        //Format : SEGMENT_TERRAIN/id/idpdébut/idpfin
+        if (!idNum.objetPresent(this.pointDebut)) {
+            this.pointDebut.save(bW, idNum);
         }
-        if (!idNum.objetPresent(this.noeudFin)) {
-            this.noeudFin.save(bW, idNum);
+        if (!idNum.objetPresent(this.pointFin)) {
+            this.pointFin.save(bW, idNum);
         }
-        bW.append("Barre/");
-        int id = idNum.getOrSetKey(this);
-        bW.append(id + "/");
-        Type_de_barre type = this.getType();
-        bW.append(type+"/");
-        bW.append(idNum.getOrSetKey(this.noeudDebut)+ "/");
-        bW.append(idNum.getOrSetKey(this.noeudFin) + "/");
-    } */
+        bW.append("Segment_terrain/");
+        bW.append(this.identifiant + "/");
+        bW.append(idNum.getOrSetKey(this.pointDebut)+ "/");
+        bW.append(idNum.getOrSetKey(this.pointFin) + "/");
+    }
 
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;

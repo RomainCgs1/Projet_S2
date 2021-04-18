@@ -55,8 +55,7 @@ public class Noeud_simple extends Noeuds {
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : NOEUD_SIMPLE/id/px/py
         bW.append("Noeud_Simple/");
-        int id = idNum.getOrSetKey(this);
-        bW.append(id +"/");
+        bW.append(this.identifiant +"/");
         bW.append(this.px+"/");
         bW.append(this.py+"/");
     }

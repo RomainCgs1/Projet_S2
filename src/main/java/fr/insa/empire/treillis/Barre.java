@@ -72,8 +72,7 @@ public class Barre {
             this.noeudFin.save(bW, idNum);
         }
         bW.append("Barre/");
-        int id = idNum.getOrSetKey(this);
-        bW.append(id + "/");
+        bW.append(this.identifiant + "/");
         Type_de_barre type = this.getType();
         bW.append(type+"/");
         bW.append(this.noeudDebut + "/");
