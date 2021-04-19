@@ -29,6 +29,24 @@ public class Segment_terrain {
     {
         return this.pointFin;
     }
+    
+     //Calcul de la longueur
+    public double calculLongueurSegmentT(double pxNoeudAppui, double pyNoeudAppui) {
+        
+        double pxDeb = this.pointDebut.getPx();
+        double pyDeb = this.pointDebut.getPy();
+        double pxFin = this.pointFin.getPx();
+        double pyFin = this.pointFin.getPy();
+        
+        //On calcul les coordonnées du vecteur donné par les deux noeuds
+        double segpX = pxFin-pxDeb;
+        double segPy = pyFin-pyDeb;
+        
+        //On calcul la norme de ce vecteur
+        double longeur = Math.sqrt(segpX*segpX+segPy*segPy);
+        
+        return longeur;
+    }
 
     //Save
      public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
