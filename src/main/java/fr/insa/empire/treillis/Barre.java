@@ -17,6 +17,8 @@ public class Barre {
     private Noeuds noeudDebut;
     private Noeuds noeudFin;
     private Type_de_barre type;
+    private double longueur;
+    private double prix;
     // private Set<Noeuds> extrémités;
 
     //Constructeur
@@ -50,6 +52,23 @@ public class Barre {
     public void setType(Type_de_barre type) {
         this.type = type;
     }
+    
+    public void setLongueur(double longueur) {
+        this.longueur = longueur;
+    }
+    
+    public double getLongueur() {
+        return this.longueur;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+    
 
     //to String 
     public String toString() {
