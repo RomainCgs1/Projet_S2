@@ -97,6 +97,11 @@ public class Barre {
         
         return longeur;
     }
+    
+    //Calcul du prix barre
+    public double calculPrixBarre(double prixMetre, double longueur){
+        return prixMetre*longueur;
+    }
 
     //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
