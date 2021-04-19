@@ -1,7 +1,6 @@
 package fr.insa.empire.treillis;
 
 //import fr.insa.empire.utils.Identificateur;
-
 import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
@@ -63,6 +62,43 @@ public class Barre {
         return s;
     }
 
+    //Calcul de la longueur
+    public double calculLongueur(double pxNoeudAppui, double pyNoeudAppui) {
+        double pxDeb = 0;
+        double pyDeb = 0;
+        double pxFin = 0;
+        double pyFin = 0;
+
+        //On set les valeurs des coordonnées en fonction du type de noeud
+        //Car les infos ne sont pas disponibles de la même façon
+        if (this.noeudDebut.getClass() == Noeud_simple.class) {
+            pxDeb = ((Noeud_simple) this.noeudDebut).getPxNoeudSimple();
+            pyDeb = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
+        }
+        if (this.noeudDebut.getClass() == Noeud_appui.class) {
+            pxDeb = pxNoeudAppui;
+            pyDeb = pyNoeudAppui;
+        }
+        if (this.noeudFin.getClass() == Noeud_simple.class) {
+            pxFin = ((Noeud_simple) this.noeudDebut).getPxNoeudSimple();
+            pyFin = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
+        }
+        if (this.noeudFin.getClass() == Noeud_appui.class) {
+            pxFin = pxNoeudAppui;
+            pyFin = pyNoeudAppui;
+        }
+        
+        //On calcul les coordonnées du vecteur donné par les deux noeuds
+        double bX = pxFin-pxDeb;
+        double bY = pyFin-pyDeb;
+        
+        //On calcul la norme de ce vecteur
+        double longeur = Math.sqrt(bX*bX+bY*bY);
+        
+        return longeur;
+    }
+
+    //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : BARRE/id/type/idpdébut/idpfin
         if (!idNum.objetPresent(this.noeudDebut)) {
@@ -74,7 +110,7 @@ public class Barre {
         bW.append("Barre/");
         bW.append(this.identifiant + "/");
         Type_de_barre type = this.getType();
-        bW.append(type+"/");
+        bW.append(type + "/");
         bW.append(this.noeudDebut + "/");
         bW.append(this.noeudFin + "/");
     }
