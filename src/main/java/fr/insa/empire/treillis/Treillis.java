@@ -18,37 +18,33 @@ public class Treillis {
         //Format : TREILLIS
         //<objets contenus dans le treillis, 1 barre par ligne>
         //Fin Treillis
-        
-        bW.append("Treillis \n");
-        Map<Integer, Object> map = idNum.getKetToObject();
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Integer> entry = (Map.Entry) it.next();
-            boolean bns = entry.getClass().isInstance(Noeud_simple.class);
-            boolean bna = entry.getClass().isInstance(Noeud_appui.class);
-            boolean bbarre = entry.getClass().isInstance(Barre.class);
-            boolean bSegT = entry.getClass().isInstance(Segment_terrain.class);
-            boolean bTriangleT = entry.getClass().isInstance(Triangle_terrain.class);
+
+        bW.append("debut Treillis \n");
+        for (Map.Entry mapentry : idNum.getKetToObject().entrySet()) {
+            Object key = mapentry.getKey();
+            Object objectClass = mapentry.getClass();
             
-            if (bns==true){
-              //TODO  
+            if (objectClass == Noeud_simple.class) {
+                ((Noeud_simple) objectClass).save(bW, idNum);
             }
-            if (bna==true){
-                //TODO  
+            
+            if (objectClass == Noeud_appui.class) {
+                ((Noeud_appui) objectClass).save(bW, idNum);
             }
-            if (bbarre==true){
-                //TODO  
+            
+            if (objectClass == Barre.class) {
+                ((Barre) objectClass).save(bW, idNum);
             }
-            if (bSegT==true){
-                //TODO  
+            
+            if (objectClass == Segment_terrain.class) {
+                ((Segment_terrain) objectClass).save(bW, idNum);
             }
-            if (bTriangleT==true){
-                //TODO  
+            
+            if (objectClass == Triangle_terrain.class) {
+                ((Triangle_terrain) objectClass).save(bW, idNum);
             }
         }
-
+        bW.append("Fin Treilli");
     }
 
-   
-    
 }
