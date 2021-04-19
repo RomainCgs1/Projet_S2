@@ -18,7 +18,7 @@ public class Barre {
     private Noeuds noeudFin;
     private Type_de_barre type;
     private double longueur;
-    private double prix;
+    private double prix = this.type.getCoutAuMetre();
     // private Set<Noeuds> extrémités;
 
     //Constructeur
@@ -63,10 +63,6 @@ public class Barre {
 
     public double getPrix() {
         return prix;
-    }
-
-    public void setPrix(double prix) {
-        this.prix = prix;
     }
     
 
