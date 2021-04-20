@@ -55,7 +55,7 @@ public class MainGraphique extends BorderPane {
         Separator separator2 = new Separator(Orientation.VERTICAL);
 
         this.mtbSelection = new MyTB("Selection");
-
+        
         //set du Canvas
         this.zone_constructible = new Zone_constructible();
         zone_constructible.setOnMouseClicked(

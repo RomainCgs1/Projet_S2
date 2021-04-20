@@ -51,6 +51,29 @@ public class MyMenuBar extends MenuBar {
                         System.out.println("Cancel or Close"); }
                 }
         );
+        
+        //Action enregistrer 
+        this.miEnregistrer.setOnAction(
+                Action ->{
+                   Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
+                    dBox.setTitle("Enregistrer sous...");
+                    dBox.setHeaderText("Sauvegarde : Entrez le nom de votre fichier");
+                    TextField tfNomFichier = new TextField();
+                    tfNomFichier.setMinWidth(50);
+                    ButtonType btnValide = new ButtonType("Sauvegarder");
+                    ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    dBox.getButtonTypes().setAll(btnValide,btnCancel);
+                    //AFFICHER LE TEXT FIELD
+                    Optional<ButtonType> choice = dBox.showAndWait();
+                    if (choice.get() == btnCancel) {
+                        System.out.println("Cancel or Close");
+                    }
+                    else if (choice.get() == btnValide) {
+                        System.out.println("Sauvegarde en cours");
+                        //TODO ACTION NON TERMINEE
+                    }
+                }
+        );
 
         this.mAide = new Menu("Aide");
 
