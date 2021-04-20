@@ -2,6 +2,8 @@ package fr.insa.empire.graphique;
 
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 //import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -291,5 +293,13 @@ public class MainGraphique extends BorderPane {
         this.zone_constructible.getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
 
         return triangle_terrain;
+    }
+    
+    protected static void saveGenerale(String nomFichier){
+        try (BufferedWriter bf = new BufferedWriter (new FileWriter(nomFichier))){
+                         //Treillis.save(bf,this.identificateur);
+                       } catch (IOException ex) {
+                           System.out.println("Erreur"+ex+ ", la sauvegarde n'a pas pu etre effectuee");
+                       }
     }
 }
