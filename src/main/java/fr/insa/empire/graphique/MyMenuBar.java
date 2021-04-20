@@ -1,8 +1,12 @@
 package fr.insa.empire.graphique;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import javafx.scene.control.*;
 
 import java.util.Optional;
+import fr.insa.empire.treillis.Treillis;
 
 public class MyMenuBar extends MenuBar {
 
@@ -70,7 +74,11 @@ public class MyMenuBar extends MenuBar {
                     }
                     else if (choice.get() == btnValide) {
                         System.out.println("Sauvegarde en cours");
-                        //TODO ACTION NON TERMINEE
+                       try (BufferedWriter bf = new BufferedWriter (new FileWriter(tfNomFichier.getText()))){
+                         // Treillis.save(bf,MainGraphique.getIdentificateur());
+                       } catch (IOException ex) {
+                           System.out.println("Erreur"+ex+ ", la sauvegarde n'a pas pu etre effectuee");
+                       }
                     }
                 }
         );

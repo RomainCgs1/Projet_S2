@@ -273,6 +273,10 @@ public class MainGraphique extends BorderPane {
         );
     }
 
+    public Identificateur getIdentificateur() {
+        return identificateur;
+    }
+
     private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
     {
         Segment_terrain seg1 = new Segment_terrain(p1, p2);
