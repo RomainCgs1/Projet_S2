@@ -3,6 +3,7 @@ package fr.insa.empire.graphique;
 import javafx.scene.control.*;
 
 import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.util.Optional;
 
@@ -26,8 +27,12 @@ public class MyMenuBar extends MenuBar {
 
     private MenuItem miLangue;
     private MenuItem miTheme;
+    private MainGraphique mainGraphique;
 
-    public MyMenuBar() {
+    public MyMenuBar(MainGraphique mainGraphique) {
+
+        this.mainGraphique = mainGraphique;
+
         this.mFichier = new Menu("Fichier");
         this.miEnregistrer = new MenuItem("Enregistrer");
         this.miOuvrir = new MenuItem("Ouvrir");
@@ -97,6 +102,7 @@ public class MyMenuBar extends MenuBar {
                     if (textIn.isPresent()) {
                         System.out.println("Nom du fichier : " + textIn.get());
                         System.out.println("Sauvegarde en cours");
+                        this.mainGraphique.getTreillis().save();
                         //MainGraphique.saveGenerale(tfNomFichier.getText());
                         System.out.println("Sauvegarde terminee");
                     }

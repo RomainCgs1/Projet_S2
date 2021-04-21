@@ -116,7 +116,7 @@ public class MainGraphique extends BorderPane {
         this.tbNoeud.getItems().addAll(choix1, choix2);
 
         //menuBar
-        this.menuBar = new MyMenuBar();
+        this.menuBar = new MyMenuBar(this);
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
@@ -296,7 +296,11 @@ public class MainGraphique extends BorderPane {
 
         return triangle_terrain;
     }
-    
+
+    public Treillis getTreillis() {
+        return treillis;
+    }
+
     protected static void saveGenerale(String nomFichier){
         try (BufferedWriter bf = new BufferedWriter (new FileWriter(nomFichier))){
                          //Treillis.save(bf,this.treillis.identificateur);
