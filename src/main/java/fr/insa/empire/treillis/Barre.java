@@ -77,7 +77,7 @@ public class Barre {
     }
 
     //Calcul de la longueur
-    public double calculLongueur(double pxNoeudAppui, double pyNoeudAppui) {
+    public double calculLongueur() {
         double pxDeb = 0;
         double pyDeb = 0;
         double pxFin = 0;
@@ -90,16 +90,16 @@ public class Barre {
             pyDeb = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
         }
         if (this.noeudDebut.getClass() == Noeud_appui.class) {
-            pxDeb = pxNoeudAppui;
-            pyDeb = pyNoeudAppui;
+            pxDeb = ((Noeud_appui) this.noeudDebut).getPx();
+            pyDeb = ((Noeud_appui) this.noeudDebut).getPy();
         }
         if (this.noeudFin.getClass() == Noeud_simple.class) {
             pxFin = ((Noeud_simple) this.noeudDebut).getPxNoeudSimple();
             pyFin = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
         }
         if (this.noeudFin.getClass() == Noeud_appui.class) {
-            pxFin = pxNoeudAppui;
-            pyFin = pyNoeudAppui;
+            pxFin = ((Noeud_appui) this.noeudDebut).getPx();
+            pyFin = ((Noeud_appui) this.noeudDebut).getPy();
         }
         
         //On calcul les coordonnées du vecteur donné par les deux noeuds
