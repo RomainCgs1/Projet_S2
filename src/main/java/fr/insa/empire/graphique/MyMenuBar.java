@@ -97,9 +97,11 @@ public class MyMenuBar extends MenuBar {
                     Optional<String> textIn = inDialog.showAndWait();
                     //Renvoie un boolean true si OK et ferme si false
                     if (textIn.isPresent()) {
+                        String fichier = selectedFile + "/" + textIn.get() + ".txt";
                         System.out.println("Nom du fichier : " + textIn.get());
+                        System.out.println(fichier);
                         System.out.println("Sauvegarde en cours");
-                        try ( BufferedWriter bf = new BufferedWriter(new FileWriter(textIn.get()))) {
+                        try (BufferedWriter bf = new BufferedWriter(new FileWriter(fichier))) {
                             this.mainGraphique.getTreillis().save(bf);
                         } catch (IOException ex) {
                             System.out.println("Erreur " + ex + "impossible d'effectuer la sauvegarde");
