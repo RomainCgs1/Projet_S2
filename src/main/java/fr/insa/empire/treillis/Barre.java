@@ -113,8 +113,8 @@ public class Barre {
     }
     
     //Calcul du prix barre
-    public double calculPrixBarre(double prixMetre, double longueur){
-        return prixMetre*longueur;
+    public double calculPrixBarre(){
+        return this.type.getCoutAuMetre()*this.longueur;
     }
 
     //Sauvegarde
