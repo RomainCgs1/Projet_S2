@@ -300,12 +300,4 @@ public class MainGraphique extends BorderPane {
     public Treillis getTreillis() {
         return treillis;
     }
-
-    protected static void saveGenerale(String nomFichier){
-        try (BufferedWriter bf = new BufferedWriter (new FileWriter(nomFichier))){
-                         //Treillis.save(bf,this.treillis.identificateur);
-                       } catch (IOException ex) {
-                           System.out.println("Erreur" + ex + ", la sauvegarde n'a pas pu etre effectuee");
-                       }
-    }
 }

@@ -100,7 +100,7 @@ public class MyMenuBar extends MenuBar {
                         System.out.println("Nom du fichier : " + textIn.get());
                         System.out.println("Sauvegarde en cours");
                         try ( BufferedWriter bf = new BufferedWriter(new FileWriter(textIn.get()))) {
-                            this.mainGraphique.getTreillis().save(bf,mainGraphique.getIdentificateur());
+                            this.mainGraphique.getTreillis().save(bf);
                         } catch (IOException ex) {
                             System.out.println("Erreur " + ex + "impossible d'effectuer la sauvegarde");
                         }
