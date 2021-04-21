@@ -23,7 +23,7 @@ public class Treillis {
             Object objectClass = mapentry.getClass();
 
             if (objectClass == Barre.class) {
-                prixTreilli = prixTreilli + ((Barre) objectClass).calculPrixBarre(((Barre) objectClass).getPrix(), ((Barre) objectClass).getLongueur());
+                prixTreilli = prixTreilli + ((Barre) objectClass).calculPrixBarre();
             }
         }
         return prixTreilli;
