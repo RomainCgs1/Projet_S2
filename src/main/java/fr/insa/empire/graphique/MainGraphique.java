@@ -3,6 +3,7 @@ package fr.insa.empire.graphique;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 //import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
@@ -14,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;

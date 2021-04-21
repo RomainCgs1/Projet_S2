@@ -2,8 +2,19 @@ package fr.insa.empire.graphique;
 
 import javafx.scene.control.*;
 
+import java.awt.*;
+import java.io.File;
 import java.util.Optional;
+
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import javax.swing.plaf.FileChooserUI;
 
 public class MyMenuBar extends MenuBar {
 
@@ -54,7 +65,7 @@ public class MyMenuBar extends MenuBar {
         //Action enregistrer PAS FINIE
         this.miEnregistrer.setOnAction(
                 Action -> {
-                    TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
+                    /*TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
                     inDialog.setTitle("Enregistrer mon beau Treilli");
                     inDialog.setHeaderText(null);
                     inDialog.setContentText("Nom du fichier :");
@@ -66,8 +77,29 @@ public class MyMenuBar extends MenuBar {
                         System.out.println("Sauvegarde en cours");
                         //MainGraphique.saveGenerale(tfNomFichier.getText());
                         System.out.println("Sauvegarde terminee");
-                    }
+                    }*/
 
+                    //choisir un dossier pour l'enregistrement
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
+                    directoryChooser.setTitle("Enregistrer mon beau Treilli");
+                    directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                    File selectedFile = directoryChooser.showDialog(new Stage());
+                    System.out.println(selectedFile);
+
+                    //saisie du nom de fichier
+                    TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
+                    inDialog.setTitle("Veuillez entrer le nom de votre treilli");
+                    inDialog.setHeaderText(null);
+                    inDialog.setContentText("Nom du fichier :");
+                    //inDialog.setGraphic(new ImageView("C:/Users/romai/OneDrive/Bureau/save.png"));
+                    Optional<String> textIn = inDialog.showAndWait();
+                    //Renvoie un boolean true si OK et ferme si false
+                    if (textIn.isPresent()) {
+                        System.out.println("Nom du fichier : " + textIn.get());
+                        System.out.println("Sauvegarde en cours");
+                        //MainGraphique.saveGenerale(tfNomFichier.getText());
+                        System.out.println("Sauvegarde terminee");
+                    }
                 }
         );
 
