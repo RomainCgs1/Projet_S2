@@ -29,6 +29,11 @@ public class Segment_terrain {
     {
         return this.pointFin;
     }
+
+    public int getIdentifiant() {
+        return identifiant;
+    }
+    
     
      //Calcul de la longueur
     public double calculLongueurSegmentT(double pxNoeudAppui, double pyNoeudAppui) {

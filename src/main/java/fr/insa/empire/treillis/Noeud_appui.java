@@ -3,6 +3,7 @@ package fr.insa.empire.treillis;
 import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Noeud_appui extends Noeuds {
 
@@ -65,8 +66,13 @@ public class Noeud_appui extends Noeuds {
         return s;
     }
     
-    public void save (BufferedWriter bW, Identificateur idNum){
-        //TODO
+    @Override
+    public void save (BufferedWriter bW, Identificateur idNum)throws IOException{
+        //Format : NOEUD_Appui/id/alpha/Lié à idSEGT
+        bW.append("Noeud_Appui/");
+        bW.append(this.identifiant +"/");
+        bW.append(this.getPosition_alpha()+"/");
+        bW.append(this.segment_appui.getIdentifiant()+"\n");
     }
 
     @Override
