@@ -2,20 +2,17 @@ package fr.insa.empire.graphique;
 
 import javafx.scene.control.*;
 
-import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.swing.plaf.FileChooserUI;
 
 public class MyMenuBar extends MenuBar {
 
@@ -102,8 +99,11 @@ public class MyMenuBar extends MenuBar {
                     if (textIn.isPresent()) {
                         System.out.println("Nom du fichier : " + textIn.get());
                         System.out.println("Sauvegarde en cours");
-                        this.mainGraphique.getTreillis().save();
-                        //MainGraphique.saveGenerale(tfNomFichier.getText());
+                        try ( BufferedWriter bf = new BufferedWriter(new FileWriter(textIn.get()))) {
+                            this.mainGraphique.getTreillis().save(bf,mainGraphique.getIdentificateur());
+                        } catch (IOException ex) {
+                            System.out.println("Erreur " + ex + "impossible d'effectuer la sauvegarde");
+                        }
                         System.out.println("Sauvegarde terminee");
                     }
                 }
