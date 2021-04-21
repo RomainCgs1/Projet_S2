@@ -9,9 +9,10 @@ import java.util.Map;
 public class Treillis {
 
     private Zone_constructible appartient;
+    public Identificateur identificateur;
 
     public Treillis() {
-
+        this.identificateur = new Identificateur();
     }
 
     //Calcul prix treilli

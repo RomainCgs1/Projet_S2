@@ -19,7 +19,6 @@ public class Zone_constructible extends Canvas {
     //public Set<Triangle_terrain> contient;
 
     public Zone_constructible() {
-        
     }
 
     @Override

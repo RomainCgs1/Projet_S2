@@ -20,8 +20,7 @@ import java.util.Optional;
 
 public class MainGraphique extends BorderPane {
 
-    private Identificateur identificateur;
-
+    private Treillis treillis;
     private MenuItem choix1;
     private MenuItem choix2;
     private SplitMenuButton tbNoeud;
@@ -50,14 +49,14 @@ public class MainGraphique extends BorderPane {
         Point p2 = new Point();
         Point p3 = new Point();
 
-        this.identificateur = new Identificateur();
+        this.treillis = new Treillis();
 
         Separator separator = new Separator(Orientation.VERTICAL);
         Separator separator1 = new Separator(Orientation.VERTICAL);
         Separator separator2 = new Separator(Orientation.VERTICAL);
 
         this.mtbSelection = new MyTB("Selection");
-        
+
         //set du Canvas
         this.zone_constructible = new Zone_constructible();
         zone_constructible.setOnMouseClicked(
@@ -67,9 +66,9 @@ public class MainGraphique extends BorderPane {
                         py = canvasMouseEvent.getY();
                         System.out.println("Canvas cliqué en " + px + " " + py);
                         if (etatNoeud == 1) {
-                            System.out.println("Noeud le plus proche : " + zone_constructible.getNoeud_simplePlusProche(px, py, identificateur));
+                            System.out.println("Noeud le plus proche : " + zone_constructible.getNoeud_simplePlusProche(px, py, this.treillis.identificateur));
                             Noeud_simple noeud_simple = new Noeud_simple(px, py);
-                            noeud_simple.setIdentifiant(this.identificateur.getOrSetKey(noeud_simple));
+                            noeud_simple.setIdentifiant(this.treillis.identificateur.getOrSetKey(noeud_simple));
                             System.out.println(noeud_simple.getID());
                             zone_constructible.getGraphicsContext2D().setStroke(Color.RED);
                             zone_constructible.getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
@@ -276,7 +275,7 @@ public class MainGraphique extends BorderPane {
     }
 
     public Identificateur getIdentificateur() {
-        return identificateur;
+        return this.treillis.identificateur;
     }
 
     private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
@@ -285,7 +284,7 @@ public class MainGraphique extends BorderPane {
         Segment_terrain seg2 = new Segment_terrain(p2, p3);
         Segment_terrain seg3 = new Segment_terrain(p3, p1);
         Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
-        triangle_terrain.setIdentifiant(this.identificateur.getOrSetKey(triangle_terrain));
+        triangle_terrain.setIdentifiant(this.treillis.identificateur.getOrSetKey(triangle_terrain));
 
         this.zone_constructible.getGraphicsContext2D().setStroke(Color.BLACK);
         this.zone_constructible.getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
@@ -297,9 +296,9 @@ public class MainGraphique extends BorderPane {
     
     protected static void saveGenerale(String nomFichier){
         try (BufferedWriter bf = new BufferedWriter (new FileWriter(nomFichier))){
-                         //Treillis.save(bf,this.identificateur);
+                         //Treillis.save(bf,this.treillis.identificateur);
                        } catch (IOException ex) {
-                           System.out.println("Erreur"+ex+ ", la sauvegarde n'a pas pu etre effectuee");
+                           System.out.println("Erreur" + ex + ", la sauvegarde n'a pas pu etre effectuee");
                        }
     }
 }
