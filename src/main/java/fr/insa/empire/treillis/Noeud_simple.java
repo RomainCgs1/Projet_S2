@@ -57,7 +57,7 @@ public class Noeud_simple extends Noeuds {
         bW.append("Noeud_Simple/");
         bW.append(this.identifiant +"/");
         bW.append(this.px+"/");
-        bW.append(this.py+"/");
+        bW.append(this.py+"\n");
     }
 
     @Override

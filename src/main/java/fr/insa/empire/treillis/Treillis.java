@@ -35,32 +35,32 @@ public class Treillis {
         //Format : TREILLIS
         //<objets contenus dans le treillis, 1 barre par ligne>
         //Fin Treillis
-
-        bW.append("debut Treillis \n");
+        System.out.println("Je suis passé dans sauvegarde treilli");
+        bW.append("DEBUT TREILLI \n");
         for (Map.Entry mapentry : this.identificateur.getKetToObject().entrySet()) {
-            Object objectClass = mapentry.getClass();
+            Object val = mapentry.getValue();
 
-            if (objectClass == Noeud_simple.class) {
-                ((Noeud_simple) objectClass).save(bW, this.identificateur);
+            if (val.getClass() == Noeud_simple.class) {
+                ((Noeud_simple) val).save(bW, this.identificateur);
             }
 
-            if (objectClass == Noeud_appui.class) {
-                ((Noeud_appui) objectClass).save(bW, this.identificateur);
+            if (val.getClass() == Noeud_appui.class) {
+                ((Noeud_appui) val).save(bW, this.identificateur);
             }
 
-            if (objectClass == Barre.class) {
-                ((Barre) objectClass).save(bW, this.identificateur);
+            if (val.getClass() == Barre.class) {
+                ((Barre) val).save(bW, this.identificateur);
             }
 
-            if (objectClass == Segment_terrain.class) {
-                ((Segment_terrain) objectClass).save(bW, this.identificateur);
+            if (val.getClass() == Segment_terrain.class) {
+                ((Segment_terrain) val).save(bW, this.identificateur);
             }
 
-            if (objectClass == Triangle_terrain.class) {
-                ((Triangle_terrain) objectClass).save(bW, this.identificateur);
+            if (val.getClass() == Triangle_terrain.class) {
+                ((Triangle_terrain) val).save(bW, this.identificateur);
             }
         }
-        bW.append("Fin Treilli");
+        bW.append("FIN TREILLI\n");
     }
 
 }
