@@ -11,7 +11,9 @@ public class Point {
     private double py;
 
     public Point() {
+        
     }
+    
     public double getPx()
     {
         return this.px;
@@ -42,6 +44,6 @@ public class Point {
         bW.append("Point/");
         bW.append(this.identifiant +"/");
         bW.append(this.px+"/");
-        bW.append(this.py+"/");
+        bW.append(this.py+"/\n");
     }
 }

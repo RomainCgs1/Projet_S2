@@ -51,19 +51,18 @@ public class Barre {
     public void setType(Type_de_barre type) {
         this.type = type;
     }
-    
+
     public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
-    
+
     public double getLongueur() {
         return this.longueur;
     }
 
-    public double getPrix(){
+    public double getPrix() {
         return this.type.getCoutAuMetre();
     }
-    
 
     //to String 
     public String toString() {
@@ -101,37 +100,39 @@ public class Barre {
             pxFin = ((Noeud_appui) this.noeudDebut).getPx();
             pyFin = ((Noeud_appui) this.noeudDebut).getPy();
         }
-        
+
         //On calcul les coordonnées du vecteur donné par les deux noeuds
-        double bX = pxFin-pxDeb;
-        double bY = pyFin-pyDeb;
-        
+        double bX = pxFin - pxDeb;
+        double bY = pyFin - pyDeb;
+
         //On calcul la norme de ce vecteur
-        double longeur = Math.sqrt(bX*bX+bY*bY);
-        
+        double longeur = Math.sqrt(bX * bX + bY * bY);
+
         return longeur;
     }
-    
+
     //Calcul du prix barre
-    public double calculPrixBarre(){
-        return this.type.getCoutAuMetre()*this.longueur;
+    public double calculPrixBarre() {
+        return this.type.getCoutAuMetre() * this.longueur;
     }
 
     //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : BARRE/id/type/idpdébut/idpfin
-        if (!idNum.objetPresent(this.noeudDebut)) {
-            this.noeudDebut.save(bW, idNum);
-        }
-        if (!idNum.objetPresent(this.noeudFin)) {
-            this.noeudFin.save(bW, idNum);
-        }
-        bW.append("Barre/");
+        bW.append("DEBUT_Barre/");
         bW.append(this.identifiant + "/");
         Type_de_barre type = this.getType();
         bW.append(type + "/");
-        bW.append(this.noeudDebut + "/");
-        bW.append(this.noeudFin + "/");
+        if (!idNum.objetPresent(this.noeudDebut)) {
+            this.noeudDebut.save(bW, idNum);
+        } else {
+            bW.append(this.noeudDebut + "/");
+        }
+        if (!idNum.objetPresent(this.noeudFin)) {
+            this.noeudFin.save(bW, idNum);
+        } else {
+            bW.append(this.noeudFin + "/");
+        }
+        bW.append("FIN_Barre/\n");
     }
-
 }

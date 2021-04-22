@@ -82,6 +82,7 @@ public class MainGraphique extends BorderPane {
                             {
                                 p1.setPx(px);
                                 p1.setPy(py);
+                                p1.setIdentifiant(this.treillis.identificateur.getOrSetKey(p1));
                                 nbDeClick++;
                                 System.out.println("point 1");
                             }
@@ -89,6 +90,7 @@ public class MainGraphique extends BorderPane {
                             {
                                 p2.setPx(px);
                                 p2.setPy(py);
+                                p2.setIdentifiant(this.treillis.identificateur.getOrSetKey(p2));
                                 nbDeClick++;
                                 System.out.println("point 2");
                             }
@@ -96,6 +98,7 @@ public class MainGraphique extends BorderPane {
                             {
                                 p3.setPx(px);
                                 p3.setPy(py);
+                                p3.setIdentifiant(this.treillis.identificateur.getOrSetKey(p3));
                                 System.out.println("point 3");
                                 Triangle_terrain triangle_terrain = creationTriangleTerrain(p1, p2, p3);
                                 nbDeClick = 0;
