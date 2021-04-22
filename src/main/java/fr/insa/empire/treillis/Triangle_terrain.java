@@ -12,7 +12,6 @@ public class Triangle_terrain {
     private Segment_terrain segment1;
     private Segment_terrain segment2;
     private Segment_terrain segment3;
-    
 
     public Triangle_terrain(Segment_terrain seg1, Segment_terrain seg2, Segment_terrain seg3) {
         this.segment1 = seg1;
@@ -27,24 +26,29 @@ public class Triangle_terrain {
     public int getIdentifiant() {
         return identifiant;
     }
-    
+
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : Debut_Triangle_terrain/id/Segment1/id/Segment2/id/Segment3/id/Fin_Traingle_terrain
+        bW.append("Debut_Triangle_terrain/\n");
+        bW.append(this.identifiant + "/");
+        bW.append("Segment1/");
         if (!idNum.objetPresent(this.segment1)) {
             this.segment1.save(bW, idNum);
+        } else {
+            bW.append(idNum.getOrSetKey(this.segment1) + "\n");
         }
+
         if (!idNum.objetPresent(this.segment2)) {
             this.segment2.save(bW, idNum);
+        } else {
+            bW.append(idNum.getOrSetKey(this.segment2) + "\n");
         }
+
         if (!idNum.objetPresent(this.segment3)) {
             this.segment3.save(bW, idNum);
+        } else {
+            bW.append(idNum.getOrSetKey(this.segment3) + "\n");
         }
-        bW.append("Debut_Triangle_terrain/");
-        bW.append(this.identifiant+"/");
-        bW.append("Segment1/");
-        bW.append(idNum.getOrSetKey(this.segment1)+"/");
-        bW.append(idNum.getOrSetKey(this.segment2)+"/");
-        bW.append(idNum.getOrSetKey(this.segment3)+"/");
-        bW.append("Fin_Triangle_terrain");
+        bW.append("Fin_Triangle_terrain\n");
     }
 }

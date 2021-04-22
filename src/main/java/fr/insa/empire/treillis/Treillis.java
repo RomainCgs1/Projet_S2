@@ -39,7 +39,7 @@ public class Treillis {
         bW.append("DEBUT TREILLI \n");
         for (Map.Entry mapentry : this.identificateur.getKetToObject().entrySet()) {
             Object val = mapentry.getValue();
-
+            System.out.println(val.getClass());
             if (val.getClass() == Noeud_simple.class) {
                 ((Noeud_simple) val).save(bW, this.identificateur);
             }

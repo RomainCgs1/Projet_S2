@@ -62,10 +62,11 @@ public class Segment_terrain {
         if (!idNum.objetPresent(this.pointFin)) {
             this.pointFin.save(bW, idNum);
         }
-        bW.append("Segment_terrain/");
+        bW.append("DEBUT_Segment_terrain/");
         bW.append(this.identifiant + "/");
         bW.append(idNum.getOrSetKey(this.pointDebut)+ "/");
         bW.append(idNum.getOrSetKey(this.pointFin) + "/");
+        bW.append("FIN_Segment_terrain/\n");
     }
 
     public void setIdentifiant(int identifiant) {
