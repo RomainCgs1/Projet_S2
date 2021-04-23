@@ -18,13 +18,29 @@ public class Barre {
     private Noeuds noeudFin;
     private Type_de_barre type;
     private double longueur;
-    // private Set<Noeuds> extrémités;
 
     //Constructeur
     public Barre(Noeuds noeudDebut, Noeuds noeudFin, Type_de_barre type) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.type = type;
+        
+        //On ajoute la barre dans la SET(la liste) des noeuds à ses extrémités
+        if (this.noeudDebut.getClass()==Noeud_simple.class){
+            ((Noeud_simple)this.noeudDebut).addBarreSet(this);
+        }
+        if (this.noeudDebut.getClass()==Noeud_appui.class){
+            ((Noeud_simple)this.noeudDebut).addBarreSet(this);
+        }
+        if (this.noeudFin.getClass()==Noeud_simple.class){
+            ((Noeud_simple)this.noeudFin).addBarreSet(this);
+        }
+        if (this.noeudFin.getClass()==Noeud_appui.class){
+            ((Noeud_simple)this.noeudFin).addBarreSet(this);
+        }
+        
+        //On ajoute la barre à la SET du type auquel elle appartient
+        this.type.addBarreSet(this);
     }
 
     //Encapsulation

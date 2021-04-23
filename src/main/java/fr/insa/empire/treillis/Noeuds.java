@@ -9,7 +9,6 @@ import java.util.Set;
 public abstract class Noeuds {
 
     protected int identifiant;
-    private Set<Barre> extremites;
 
     public Noeuds() 
     {

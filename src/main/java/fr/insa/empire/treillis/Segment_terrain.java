@@ -3,12 +3,14 @@ package fr.insa.empire.treillis;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Segment_terrain {
 
-    private Set<Noeud_appui> contient;
-    private Triangle_terrain appartient;
+    private Set<Noeud_appui> contientNoeudAppui;
+    private Set<Point> contientPoint;
+   // private Triangle_terrain appartient;   EN A-T-ON BESOIN ?
     private Point pointDebut;
     private Point pointFin;
     private int identifiant;
@@ -17,6 +19,10 @@ public class Segment_terrain {
     public Segment_terrain(Point pointDebut, Point pointFin) {
         this.pointDebut = pointDebut;
         this.pointFin = pointFin;
+        this.contientNoeudAppui = new HashSet<Noeud_appui>();
+        this.contientPoint = new HashSet<Point>();
+        this.contientPoint.add(this.pointDebut);
+        this.contientPoint.add(this.pointFin);
     }
 
     //get
@@ -32,6 +38,19 @@ public class Segment_terrain {
         return identifiant;
     }
 
+    
+    public void addNASet(Noeud_appui na){
+        this.contientNoeudAppui.add(na);
+    }
+    
+     public void removeNASet(Noeud_appui na){
+        this.contientNoeudAppui.remove(na);
+    }
+     
+      public void removeAllNASet(){
+        this.contientNoeudAppui.removeAll(contientNoeudAppui);
+    }
+    
     //Calcul de la longueur
     public double calculLongueurSegmentT(double pxNoeudAppui, double pyNoeudAppui) {
 

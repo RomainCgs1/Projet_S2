@@ -3,16 +3,24 @@ package fr.insa.empire.treillis;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class Treillis {
 
     private Zone_constructible appartient;
     public Identificateur identificateur;
+    private Set<Noeud_simple> treilliContientNoeudSimple;
+    private Set<Noeud_appui> treilliContientNoeudAppui;
+    private Set<Barre> treilliContientBarre;
 
     public Treillis() {
         this.identificateur = new Identificateur();
+        this.treilliContientNoeudSimple = new HashSet<Noeud_simple>();
+        this.treilliContientNoeudAppui = new HashSet<Noeud_appui>();
+        this.treilliContientBarre = new HashSet<Barre>();
     }
 
     //Calcul prix treilli
@@ -28,6 +36,43 @@ public class Treillis {
             }
         }
         return prixTreilli;
+    }
+    
+    //Méthodes pour gérer les SET
+     public void addBarreSet(Barre barre){
+        this.treilliContientBarre.add(barre);
+    }
+    
+    public void removeBarreSet(Barre barre){
+        this.treilliContientBarre.remove(barre);
+    }
+    
+    public void removeAllBarre(){
+        this.treilliContientBarre.removeAll(treilliContientBarre);
+    }
+    
+     public void addNoeudSimpleSet(Noeud_simple ns){
+        this.treilliContientNoeudSimple.add(ns);
+    }
+    
+    public void removeNoeudSimpleSet(Noeud_simple ns){
+        this.treilliContientNoeudSimple.remove(ns);
+    }
+    
+    public void removeAllNoeudSimple(){
+        this.treilliContientNoeudSimple.removeAll(treilliContientNoeudSimple);
+    }
+    
+      public void addNoeudAppuiSet(Noeud_appui na){
+        this.treilliContientNoeudAppui.add(na);
+    }
+    
+    public void removeNoeudAppuiSet(Noeud_appui na){
+        this.treilliContientNoeudAppui.remove(na);
+    }
+    
+    public void removeAllNoeudAppui(){
+        this.treilliContientNoeudAppui.removeAll(treilliContientNoeudAppui);
     }
 
     //Sauvegarde

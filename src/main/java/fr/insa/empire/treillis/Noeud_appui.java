@@ -4,24 +4,31 @@ import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Noeud_appui extends Noeuds {
 
     //Attributs
     private double position_alpha;
     private Segment_terrain segment_appui;
-    
+    private Set<Barre> appartientABarre;
+    private Set<Segment_terrain> appartientASeg;
 
     //Constructeurs
     public Noeud_appui()
     {
-
+        
     }
 
     public Noeud_appui(double px, double py, Segment_terrain segment_appui)
     {
         this.segment_appui = segment_appui;
         this.position_alpha = calcPosAlpha(px, py, segment_appui);
+        this.appartientABarre = new HashSet<Barre>();
+        this.appartientASeg= new HashSet<Segment_terrain>();
+        this.appartientASeg.add(segment_appui);
+        this.segment_appui.addNASet(this);
     }
 
     private static double calcPosAlpha(double px, double py,Segment_terrain segment_appui) {
@@ -58,6 +65,18 @@ public class Noeud_appui extends Noeuds {
         this.segment_appui = segment_appui;
     }
 
+    public void addBarreSet(Barre barre){
+        this.appartientABarre.add(barre);
+    }
+    
+    public void removeBarreSet(Barre barre){
+        this.appartientABarre.remove(barre);
+    }
+    
+    public void removeAllBarre(){
+        this.appartientABarre.removeAll(appartientABarre);
+    }
+    
     public String toString(){
         String s="";
         s=s+"Position du noeud appui : "+this.position_alpha+"\n";
