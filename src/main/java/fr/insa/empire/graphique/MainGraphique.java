@@ -3,24 +3,18 @@ package fr.insa.empire.graphique;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Controller;
 import fr.insa.empire.utils.Identificateur;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-//import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class MainGraphique extends BorderPane {
 
@@ -152,50 +146,6 @@ public class MainGraphique extends BorderPane {
 
                     Controller controller = this.controller;
                     controller.canvasClicked(canvasMouseEvent);
-
-
-                    if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
-                        px = canvasMouseEvent.getX();
-                        py = canvasMouseEvent.getY();
-                        System.out.println("Canvas cliqué en " + px + " " + py);
-                        if (etatNoeud == 1) {
-                            System.out.println("Noeud le plus proche : " + zone_constructible.getNoeud_simplePlusProche(px, py, this.treillis.identificateur));
-                            Noeud_simple noeud_simple = new Noeud_simple(px, py);
-                            noeud_simple.setIdentifiant(this.treillis.identificateur.getOrSetKey(noeud_simple));
-                            System.out.println(noeud_simple.getID());
-                            zone_constructible.getGraphicsContext2D().setStroke(Color.RED);
-                            zone_constructible.getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
-                        }
-                        else if(mtbTerrain.isSelected())
-                        {
-                            if(nbDeClick == 0)
-                            {
-                                p1.setPx(px);
-                                p1.setPy(py);
-                                p1.setIdentifiant(this.treillis.identificateur.getOrSetKey(p1));
-                                nbDeClick++;
-                                System.out.println("point 1");
-                            }
-                            else if(nbDeClick == 1)
-                            {
-                                p2.setPx(px);
-                                p2.setPy(py);
-                                p2.setIdentifiant(this.treillis.identificateur.getOrSetKey(p2));
-                                nbDeClick++;
-                                System.out.println("point 2");
-                            }
-                            else if(nbDeClick == 2)
-                            {
-                                p3.setPx(px);
-                                p3.setPy(py);
-                                p3.setIdentifiant(this.treillis.identificateur.getOrSetKey(p3));
-                                System.out.println("point 3");
-                                Triangle_terrain triangle_terrain = creationTriangleTerrain(p1, p2, p3);
-                                nbDeClick = 0;
-                            }
-                        }
-                    }
-
                 }
         );
 
@@ -225,17 +175,11 @@ public class MainGraphique extends BorderPane {
         vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
-        //
+
         //actione de barre
         this.mtbBarre.setOnAction(
                 Action -> {
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbTerrain.setSelected(false);
-                    mtbGomme.setSelected(false);
-                    mtbSelection.setSelected(false);
+                    controller.changeEtat(20);
                 }
         );
 
@@ -245,14 +189,7 @@ public class MainGraphique extends BorderPane {
         choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                tbNoeud.setText("Noeud Simple");
-                etatNoeud = 1;
-
-                //reset
-                mtbTerrain.setSelected(false);
-                mtbBarre.setSelected(false);
-                mtbGomme.setSelected(false);
-                mtbSelection.setSelected(false);
+                controller.changeEtat(12);
             }
         });
 
@@ -260,101 +197,42 @@ public class MainGraphique extends BorderPane {
         choix2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                tbNoeud.setText("Noeud Appui");
-                etatNoeud = 2;
-
-                //reset
-                mtbTerrain.setSelected(false);
-                mtbBarre.setSelected(false);
-                mtbGomme.setSelected(false);
-                mtbSelection.setSelected(false);
+                controller.changeEtat(11);
             }
         });
 
         //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
-                    nbDeClick = 0;
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbBarre.setSelected(false);
-                    mtbGomme.setSelected(false);
-                    mtbSelection.setSelected(false);
+                    controller.changeEtat(30);
                 }
         );
 
         //action de Gomme
         this.mtbGomme.setOnAction(
                 action -> {
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbTerrain.setSelected(false);
-                    mtbBarre.setSelected(false);
-                    mtbSelection.setSelected(false);
+                    controller.changeEtat(50);
                 }
         );
 
         //action de Selection
         this.mtbSelection.setOnAction(
                 action -> {
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbTerrain.setSelected(false);
-                    mtbGomme.setSelected(false);
-                    mtbBarre.setSelected(false);
+                    controller.changeEtat(40);
                 }
         );
 
         //action de Type de Barre
         this.mbTypeBarre.setOnAction(
                 action -> {
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbTerrain.setSelected(false);
-                    mtbGomme.setSelected(false);
-                    mtbSelection.setSelected(false);
+                    controller.changeEtat(60);
                 }
         );
 
         //action de Lancer les calculs
         this.mbLancerCalculs.setOnAction(
                 action -> {
-                    Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
-                    dBox.setTitle("A confirmation dialog-box with custom actions");
-                    dBox.setHeaderText("Java-Pizza : The Very Best in Town !");
-                    dBox.setContentText("Choose your pizza size :");
-                    ButtonType btnSmall  = new ButtonType("Small");
-                    ButtonType btnMedium = new ButtonType("Medium");
-                    ButtonType btnBig    = new ButtonType("Big");
-                    ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    dBox.getButtonTypes().setAll(btnSmall, btnMedium, btnBig, btnCancel);
-                    Optional<ButtonType> choice = dBox.showAndWait();
-                    if (choice.get() == btnSmall) {
-                        System.out.println("User chose Small");
-                    }
-                    else if (choice.get() == btnMedium) {
-                        System.out.println("User chose Medium");
-                    }
-                    else if (choice.get() == btnBig) {
-                        System.out.println("User chose Big");
-                    } else {
-                        System.out.println("Cancel or Close"); }
-
-                    //reset
-                    etatNoeud = 0;
-                    tbNoeud.setText("Noeud");
-                    mtbBarre.setSelected(false);
-                    mtbTerrain.setSelected(false);
-                    mtbGomme.setSelected(false);
-                    mtbSelection.setSelected(false);
+                    controller.changeEtat(70);
                 }
         );
 
@@ -377,7 +255,7 @@ public class MainGraphique extends BorderPane {
         return this.treillis.identificateur;
     }
 
-    private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
+    public Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
     {
         Segment_terrain seg1 = new Segment_terrain(p1, p2);
         Segment_terrain seg2 = new Segment_terrain(p2, p3);
@@ -390,6 +268,7 @@ public class MainGraphique extends BorderPane {
         this.zone_constructible.getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
         this.zone_constructible.getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
 
+        System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
         return triangle_terrain;
     }
 

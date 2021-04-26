@@ -61,4 +61,9 @@ public class Point {
         bW.append(this.px+"/");
         bW.append(this.py+"/\n");
     }
+
+    public String toString()
+    {
+        return "( " + this.px + " ; " + this.py + ")";
+    }
 }
