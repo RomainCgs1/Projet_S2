@@ -1,6 +1,7 @@
 package fr.insa.empire.graphique;
 
 import fr.insa.empire.treillis.*;
+import fr.insa.empire.utils.Controller;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 public class MainGraphique extends BorderPane {
 
+    private Controller controller;
     private Treillis treillis;
     private MenuItem choix1;
     private MenuItem choix2;
@@ -45,7 +47,90 @@ public class MainGraphique extends BorderPane {
 
     private MyMenuBar menuBar;
 
+    public Controller getController() {
+        return controller;
+    }
+
+    public MenuItem getChoix1() {
+        return choix1;
+    }
+
+    public MenuItem getChoix2() {
+        return choix2;
+    }
+
+    public SplitMenuButton getTbNoeud() {
+        return tbNoeud;
+    }
+
+    public MyTB getMtbBarre() {
+        return mtbBarre;
+    }
+
+    public MyTB getMtbTerrain() {
+        return mtbTerrain;
+    }
+
+    public MyTB getMtbSelection() {
+        return mtbSelection;
+    }
+
+    public MyTB getMtbGomme() {
+        return mtbGomme;
+    }
+
+    public MyB getMbLancerCalculs() {
+        return mbLancerCalculs;
+    }
+
+    public MyB getMbReglages() {
+        return mbReglages;
+    }
+
+    public MyB getMbTypeBarre() {
+        return mbTypeBarre;
+    }
+
+    public HBox getHbConstruction() {
+        return hbConstruction;
+    }
+
+    public VBox getVbUp() {
+        return vbUp;
+    }
+
+    public HBox getHbIcones() {
+        return hbIcones;
+    }
+
+    public Zone_constructible getZone_constructible() {
+        return zone_constructible;
+    }
+
+    public int getEtatNoeud() {
+        return etatNoeud;
+    }
+
+    public double getPx() {
+        return px;
+    }
+
+    public double getPy() {
+        return py;
+    }
+
+    public int getNbDeClick() {
+        return nbDeClick;
+    }
+
+    public MyMenuBar getMenuBar() {
+        return menuBar;
+    }
+
     public MainGraphique() throws IOException {
+
+        //controlleur :
+        this.controller = new Controller(this);
 
         //point pour triangle terrain
         Point p1 = new Point();
@@ -64,6 +149,11 @@ public class MainGraphique extends BorderPane {
         this.zone_constructible = new Zone_constructible();
         zone_constructible.setOnMouseClicked(
                 canvasMouseEvent -> {
+
+                    Controller controller = this.controller;
+                    controller.canvasClicked(canvasMouseEvent);
+
+
                     if (canvasMouseEvent.getButton() == MouseButton.PRIMARY) {
                         px = canvasMouseEvent.getX();
                         py = canvasMouseEvent.getY();
@@ -135,6 +225,7 @@ public class MainGraphique extends BorderPane {
         vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
+        //
         //actione de barre
         this.mtbBarre.setOnAction(
                 Action -> {
@@ -149,6 +240,7 @@ public class MainGraphique extends BorderPane {
         );
 
 
+        //
         //Set up des actions du splitMenuButton
         choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -164,6 +256,7 @@ public class MainGraphique extends BorderPane {
             }
         });
 
+        //
         choix2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
