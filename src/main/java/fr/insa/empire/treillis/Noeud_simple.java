@@ -54,6 +54,12 @@ public class Noeud_simple extends Noeuds {
         return super.identifiant + " ( " + this.px + " ; " + this.py + " )";
     }
 
+    public Set<Barre> getAppartientABarre() {
+        return appartientABarre;
+    }
+    
+    
+
     //fonctions de test
      public static void testCreationPt() {
         System.out.println("Veuiller indiquer les coordonées de votre noeud :");

@@ -6,8 +6,8 @@ public class Appui_encastre extends Noeud_appui {
     private int nbDeBarres;
     private double force;
 
-    public Appui_encastre() {
-        super();
+    public Appui_encastre(double px, double py, Segment_terrain segTerrain) {
+        super(px, py, segTerrain);
     }
 
 }

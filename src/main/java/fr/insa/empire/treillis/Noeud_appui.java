@@ -16,11 +16,6 @@ public class Noeud_appui extends Noeuds {
     private Set<Segment_terrain> appartientASeg;
 
     //Constructeurs
-    public Noeud_appui()
-    {
-        
-    }
-
     public Noeud_appui(double px, double py, Segment_terrain segment_appui)
     {
         this.segment_appui = segment_appui;

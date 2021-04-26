@@ -10,10 +10,7 @@ public class Barre {
 
     //Attributs
     private int identifiant;
-
-    public void setIdentifiant(int identifiant) {
-        this.identifiant = identifiant;
-    }
+    private Force tensionBarre;
     private Noeuds noeudDebut;
     private Noeuds noeudFin;
     private Type_de_barre type;
@@ -80,6 +77,20 @@ public class Barre {
         return this.type.getCoutAuMetre();
     }
 
+    public int getIdentifiant() {
+        return identifiant;
+    }
+    
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public Force getTensionBarre() {
+        return tensionBarre;
+    }
+    
+    
+    
     //to String 
     public String toString() {
         String s = "";

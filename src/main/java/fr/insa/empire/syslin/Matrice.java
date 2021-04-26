@@ -326,7 +326,7 @@ public class Matrice {
         ResultatSyslin res = syslin.descenteGauss();
         return res;
     }
-
+/*
     //Main
     public static void main(String[] args) {
         Matrice.testAlea();
@@ -335,5 +335,5 @@ public class Matrice {
         Matrice inversible = matInversible();
         inversible.testSyslin();
     }
-
+*/
 }

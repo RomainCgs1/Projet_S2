@@ -38,6 +38,29 @@ public class Treillis {
         return prixTreilli;
     }
     
+    //Encapsulation 
+
+    public Identificateur getIdentificateur() {
+        return identificateur;
+    }
+
+    public Zone_constructible getAppartient() {
+        return appartient;
+    }
+
+    public Set<Noeud_simple> getTreilliContientNoeudSimple() {
+        return treilliContientNoeudSimple;
+    }
+
+    public Set<Noeud_appui> getTreilliContientNoeudAppui() {
+        return treilliContientNoeudAppui;
+    }
+
+    public Set<Barre> getTreilliContientBarre() {
+        return treilliContientBarre;
+    }
+    
+    
     //Méthodes pour gérer les SET
      public void addBarreSet(Barre barre){
         this.treilliContientBarre.add(barre);
