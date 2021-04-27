@@ -149,19 +149,62 @@ public class Barre {
 
     //Calcul angle alpha
     public double calculAngleAlphaTension() {
-        Point p = new Point();
+        Point p1 = new Point();
+        Point p2 = new Point();
+
+        double alpha = 0;
+
+        if (this.getNoeudDebut().getClass() == Noeud_simple.class) {
+            p1.setPx(((Noeud_simple) this.getNoeudDebut()).getPxNoeudSimple());
+            p1.setPy(((Noeud_simple) this.getNoeudDebut()).getPyNoeudSimple());
+        }
         if (this.getNoeudFin().getClass() == Noeud_simple.class) {
-            p.setPx(((Noeud_simple) this.getNoeudFin()).getPxNoeudSimple());
-            p.setPy(((Noeud_simple) this.getNoeudFin()).getPyNoeudSimple());
+            p2.setPx(((Noeud_simple) this.getNoeudFin()).getPxNoeudSimple());
+            p2.setPy(((Noeud_simple) this.getNoeudFin()).getPyNoeudSimple());
         }
-        if (this.getNoeudDebut().getClass() == Noeud_appui.class) {
-            p.setPx(((Noeud_appui) this.getNoeudFin()).getPx());
-            p.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
+        if ((this.getNoeudDebut().getClass() == Appui_simple.class) || (this.getNoeudDebut().getClass() == Appui_double.class)) {
+            p1.setPx(((Noeud_appui) this.getNoeudDebut()).getPx());
+            p1.setPy(((Noeud_appui) this.getNoeudDebut()).getPy());
+        }
+        if ((this.getNoeudFin().getClass() == Appui_simple.class) || (this.getNoeudFin().getClass() == Appui_double.class)) {
+            p2.setPx(((Noeud_appui) this.getNoeudFin()).getPx());
+            p2.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
         }
 
-        double alpha = Math.atan2(p.getPy(), p.getPx());
+        Point p3 = new Point(p1.getPx(), p2.getPy());
 
-        return alpha = Math.toDegrees(alpha);
+//        System.out.println("DANS CALCUL ALPHA");
+//        System.out.println("p1 : " + p1.toString());
+//        System.out.println("p2 : " + p2.toString());
+//        System.out.println("p3 : " + p3.toString());
+
+        double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
+        double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
+
+        if (longeurSegP2P3 == 0) {
+            System.out.println("Impossible d'effectuer la division par 0");
+            System.out.println("La force ne possède qu'une composante sur Y");
+            if (p3.getPy() > 0) {
+                alpha = Math.PI / 2;
+                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+                return alpha;
+            } else {
+                alpha = -Math.PI / 2;
+                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+                return alpha;
+            }
+        } else {
+            alpha = Math.atan(longueurSegP1P3 / longeurSegP2P3);
+            System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+            return alpha;
+        }
+    }
+
+    public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
+        double segX = p2.getPx() - p1.getPx();
+        double segY = p2.getPy() - p1.getPy();
+
+        return Math.sqrt(segX * segX + segY * segY);
     }
 
     //Sauvegarde
