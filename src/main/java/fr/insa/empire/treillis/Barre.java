@@ -21,31 +21,31 @@ public class Barre {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.type = type;
-        
+
         //On ajoute la barre dans la SET(la liste) des noeuds à ses extrémités
-        if (this.noeudDebut.getClass()==Noeud_simple.class){
-            ((Noeud_simple)this.noeudDebut).addBarreSet(this);
+        if (this.noeudDebut.getClass() == Noeud_simple.class) {
+            ((Noeud_simple) this.noeudDebut).addBarreSet(this);
         }
-        if (this.noeudDebut.getClass()==Noeud_appui.class){
-            ((Noeud_simple)this.noeudDebut).addBarreSet(this);
+        if (this.noeudDebut.getClass() == Noeud_appui.class) {
+            ((Noeud_simple) this.noeudDebut).addBarreSet(this);
         }
-        if (this.noeudFin.getClass()==Noeud_simple.class){
-            ((Noeud_simple)this.noeudFin).addBarreSet(this);
+        if (this.noeudFin.getClass() == Noeud_simple.class) {
+            ((Noeud_simple) this.noeudFin).addBarreSet(this);
         }
-        if (this.noeudFin.getClass()==Noeud_appui.class){
-            ((Noeud_simple)this.noeudFin).addBarreSet(this);
+        if (this.noeudFin.getClass() == Noeud_appui.class) {
+            ((Noeud_simple) this.noeudFin).addBarreSet(this);
         }
-        
+
         //On ajoute la barre à la SET du type auquel elle appartient
         this.type.addBarreSet(this);
     }
 
     //Constructeur pour test des forces 
-    public Barre (Noeuds debut, Noeuds fin){
+    public Barre(Noeuds debut, Noeuds fin) {
         this.noeudDebut = debut;
         this.noeudFin = fin;
     }
-    
+
     //Encapsulation
     public Noeuds getNoeudDebut() {
         return this.noeudDebut;
@@ -86,7 +86,7 @@ public class Barre {
     public int getIdentifiant() {
         return identifiant;
     }
-    
+
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;
     }
@@ -94,9 +94,7 @@ public class Barre {
     public Force getTensionBarre() {
         return tensionBarre;
     }
-    
-    
-    
+
     //to String 
     public String toString() {
         String s = "";
@@ -147,6 +145,23 @@ public class Barre {
     //Calcul du prix barre
     public double calculPrixBarre() {
         return this.type.getCoutAuMetre() * this.longueur;
+    }
+
+    //Calcul angle alpha
+    public double calculAngleAlphaTension() {
+        Point p = new Point();
+        if (this.getNoeudFin().getClass() == Noeud_simple.class) {
+            p.setPx(((Noeud_simple) this.getNoeudFin()).getPxNoeudSimple());
+            p.setPy(((Noeud_simple) this.getNoeudFin()).getPyNoeudSimple());
+        }
+        if (this.getNoeudDebut().getClass() == Noeud_appui.class) {
+            p.setPx(((Noeud_appui) this.getNoeudFin()).getPx());
+            p.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
+        }
+
+        double alpha = Math.atan2(p.getPy(), p.getPx());
+
+        return alpha = Math.toDegrees(alpha);
     }
 
     //Sauvegarde
