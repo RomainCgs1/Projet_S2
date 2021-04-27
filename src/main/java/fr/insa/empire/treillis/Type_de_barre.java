@@ -23,6 +23,15 @@ public class Type_de_barre {
         this.resMaxTens = resMaxTension;
     }
 
+    public Type_de_barre()
+    {
+        this.coutAuMetre = 10;
+        this.longMax = 500;
+        this.longMin = 0.5;
+        this.resMaxComp = 1000;
+        this.resMaxTens = 1000;
+    }
+
     //Encapsulation
 
     public int getIdentificateur() {

@@ -6,6 +6,7 @@ import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitMenuButton;
@@ -22,6 +23,8 @@ public class MainGraphique extends BorderPane {
     private Treillis treillis;
     private MenuItem choix1;
     private MenuItem choix2;
+    private MenuItem choix3;
+    private MenuItem choix4;
     private SplitMenuButton tbNoeud;
     private MyTB mtbBarre;
     private MyTB mtbTerrain;
@@ -52,6 +55,10 @@ public class MainGraphique extends BorderPane {
     public MenuItem getChoix2() {
         return choix2;
     }
+
+    public MenuItem getChoix3() { return choix3; }
+
+    public MenuItem getChoix4() { return choix4; }
 
     public SplitMenuButton getTbNoeud() {
         return tbNoeud;
@@ -155,8 +162,10 @@ public class MainGraphique extends BorderPane {
         this.tbNoeud = new SplitMenuButton();
         this.tbNoeud.setText("Noeud");
         this.choix1 = new MenuItem("Noeud simple");
-        this.choix2 = new MenuItem("Noeud Appui");
-        this.tbNoeud.getItems().addAll(choix1, choix2);
+        this.choix2 = new MenuItem("Noeud Appui simple");
+        this.choix3 = new MenuItem("Noeud Appui double");
+        this.choix4 = new MenuItem("Noeud Appui encastré");
+        this.tbNoeud.getItems().addAll(choix1, choix2,choix3, choix4);
 
         //menuBar
         this.menuBar = new MyMenuBar(this);
@@ -200,6 +209,19 @@ public class MainGraphique extends BorderPane {
                 controller.changeEtat(11);
             }
         });
+
+        choix3.setOnAction(
+                action -> {
+                    controller.changeEtat(13);
+                }
+        );
+
+        choix4.setDisable(true);
+        choix4.setOnAction(
+                action -> {
+                    controller.changeEtat(14);
+                }
+        );
 
         //action de Terrain
         this.mtbTerrain.setOnAction(
@@ -282,5 +304,15 @@ public class MainGraphique extends BorderPane {
     public Treillis getTreillis() {
         return treillis;
     }
-    
+
+    public Barre creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
+        Barre barre = new Barre(noeudDebut, noeudFin);
+        barre.setIdentifiant(this.treillis.identificateur.getOrSetKey(barre));
+
+        this.zone_constructible.getGraphicsContext2D().setStroke(Color.BLUE);
+        this.zone_constructible.getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
+
+        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
+        return barre;
+    }
 }

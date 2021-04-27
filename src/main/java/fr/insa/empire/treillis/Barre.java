@@ -116,16 +116,16 @@ public class Barre {
         //On set les valeurs des coordonnées en fonction du type de noeud
         //Car les infos ne sont pas disponibles de la même façon
         if (this.noeudDebut.getClass() == Noeud_simple.class) {
-            pxDeb = ((Noeud_simple) this.noeudDebut).getPxNoeudSimple();
-            pyDeb = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
+            pxDeb = ((Noeud_simple) this.noeudDebut).getPx();
+            pyDeb = ((Noeud_simple) this.noeudDebut).getPy();
         }
         if (this.noeudDebut.getClass() == Noeud_appui.class) {
             pxDeb = ((Noeud_appui) this.noeudDebut).getPx();
             pyDeb = ((Noeud_appui) this.noeudDebut).getPy();
         }
         if (this.noeudFin.getClass() == Noeud_simple.class) {
-            pxFin = ((Noeud_simple) this.noeudDebut).getPxNoeudSimple();
-            pyFin = ((Noeud_simple) this.noeudDebut).getPyNoeudSimple();
+            pxFin = ((Noeud_simple) this.noeudDebut).getPx();
+            pyFin = ((Noeud_simple) this.noeudDebut).getPy();
         }
         if (this.noeudFin.getClass() == Noeud_appui.class) {
             pxFin = ((Noeud_appui) this.noeudDebut).getPx();
@@ -151,8 +151,8 @@ public class Barre {
     public double calculAngleAlphaTension() {
         Point p = new Point();
         if (this.getNoeudFin().getClass() == Noeud_simple.class) {
-            p.setPx(((Noeud_simple) this.getNoeudFin()).getPxNoeudSimple());
-            p.setPy(((Noeud_simple) this.getNoeudFin()).getPyNoeudSimple());
+            p.setPx(((Noeud_simple) this.getNoeudFin()).getPx());
+            p.setPy(((Noeud_simple) this.getNoeudFin()).getPy());
         }
         if (this.getNoeudDebut().getClass() == Noeud_appui.class) {
             p.setPx(((Noeud_appui) this.getNoeudFin()).getPx());

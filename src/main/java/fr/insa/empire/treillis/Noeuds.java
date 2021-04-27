@@ -27,4 +27,8 @@ public abstract class Noeuds {
     public abstract void save (BufferedWriter bW, Identificateur idNum)throws IOException;
 
     public abstract double getDistanceAuClick(double px, double py);
+
+    public abstract double getPx();
+
+    public abstract double getPy();
 }

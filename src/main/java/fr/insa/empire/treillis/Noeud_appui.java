@@ -99,12 +99,14 @@ public class Noeud_appui extends Noeuds {
                        
     }
 
+    @Override
     public double getPx()
     {
         double xSeg = this.segment_appui.getPointFin().getPx() - this.segment_appui.getPointDebut().getPx();
         return this.segment_appui.getPointDebut().getPx() + this.position_alpha * xSeg;
     }
 
+    @Override
     public double getPy()
     {
         double ySeg = this.segment_appui.getPointFin().getPy() - this.segment_appui.getPointDebut().getPy();

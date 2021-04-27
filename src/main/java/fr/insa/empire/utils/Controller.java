@@ -1,10 +1,7 @@
 package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
-import fr.insa.empire.treillis.Noeud_simple;
-import fr.insa.empire.treillis.Point;
-import fr.insa.empire.treillis.Triangle_terrain;
-import fr.insa.empire.treillis.Zone_constructible;
+import fr.insa.empire.treillis.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -12,6 +9,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Optional;
 
 public class Controller {
@@ -21,6 +20,8 @@ public class Controller {
     Point p1;
     Point p2;
     Point p3;
+    Noeuds noeudDebut;
+    Noeuds noeudFin;
 
     public Controller(MainGraphique vue)
     {
@@ -38,8 +39,8 @@ public class Controller {
 
         switch (newState)
         {
-            case 11 : //noeud appui
-                this.vue.getTbNoeud().setText("Noeud Appui");
+            case 11 : //noeud appui simple
+                this.vue.getTbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
@@ -47,6 +48,20 @@ public class Controller {
                 break;
             case 12 : //noeud simple
                 this.vue.getTbNoeud().setText("Noeud Simple");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                break;
+            case 13 : //noeud appui double
+                this.vue.getTbNoeud().setText("Noeud Appui double");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                break;
+            case 14 : //noeud appui encastré
+                this.vue.getTbNoeud().setText("Noeud Appui encasté");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
@@ -132,7 +147,32 @@ public class Controller {
                     this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.RED);
                     this.vue.getZone_constructible().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
                     break;
-
+                case 20 :
+                    noeudDebut = this.vue.getZone_constructible().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur); //il faudra gérer le fait qu'on peut être null
+                    if(noeudDebut == null)
+                    {
+                        this.changeEtat(12);
+                        this.canvasClicked(E);
+                        this.changeEtat(20);
+                        this.canvasClicked(E);
+                    }
+                    this.changeEtat(21);
+                    break;
+                case 21 :
+                    noeudFin = this.vue.getZone_constructible().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur); //il faudra gérer le fait qu'on peut être null
+                    if(noeudFin == null)
+                    {
+                        this.changeEtat(12);
+                        this.canvasClicked(E);
+                        this.changeEtat(21);
+                        this.canvasClicked(E);
+                    }
+                    else
+                    {
+                        Barre barre = this.vue.creationBarre(this.noeudDebut, this.noeudFin);
+                    }
+                    this.changeEtat(20);
+                    break;
                 case 30 :
                     this.p1.setPx(px);
                     this.p1.setPy(py);

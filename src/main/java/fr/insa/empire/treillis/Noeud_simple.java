@@ -42,16 +42,18 @@ public class Noeud_simple extends Noeuds {
         this.appartientABarre.removeAll(appartientABarre);
     }
 
-    public double getPxNoeudSimple() {  //Get Px
+    @Override
+    public double getPx() {  //Get Px
         return this.px;
     }
 
-    public double getPyNoeudSimple() { //Get Py
+    @Override
+    public double getPy() { //Get Py
         return this.py;
     }
 
     public String toString() { //Méthode ToString
-        return super.identifiant + " ( " + this.px + " ; " + this.py + " )";
+        return " ( " + this.px + " ; " + this.py + " )";
     }
 
     public Set<Barre> getAppartientABarre() {

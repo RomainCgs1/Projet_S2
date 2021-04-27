@@ -2,6 +2,7 @@ package fr.insa.empire.treillis;
 
 
 import fr.insa.empire.utils.Identificateur;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -64,7 +65,7 @@ public class Zone_constructible extends Canvas {
         super.setHeight(height-10);
 
         GraphicsContext graphicsContext2D = this.getGraphicsContext2D();
-        graphicsContext2D.clearRect(0, 0, width, height);
+        //graphicsContext2D.clearRect(0, 0, width, height);
 
         graphicsContext2D.setStroke(Color.GRAY);
         graphicsContext2D.strokeRect(0, 0, width-10, height-10);
@@ -140,5 +141,31 @@ public class Zone_constructible extends Canvas {
         }
 
         return (Noeud_appui) s;
+    }
+
+    public Noeuds getNoeudPlusProche(double px, double py, Identificateur identificateur)
+    {
+        Noeud_appui noeudAppuiPlusProche = getNoeud_appuiPlusProche(px, py, identificateur);
+        Noeud_simple noeudSimplePlusProche = getNoeud_simplePlusProche(px, py, identificateur);
+        if(noeudSimplePlusProche == null && noeudAppuiPlusProche != null)
+        {
+            return noeudAppuiPlusProche;
+        }
+        else if(noeudAppuiPlusProche == null && noeudSimplePlusProche != null)
+        {
+            return noeudSimplePlusProche;
+        }
+        else if(noeudSimplePlusProche == null && noeudAppuiPlusProche == null)
+        {
+            return null;
+        }
+        else if(noeudSimplePlusProche.getDistanceAuClick(px, py) > noeudAppuiPlusProche.getDistanceAuClick(px, py))
+        {
+            return noeudAppuiPlusProche;
+        }
+        else
+        {
+            return noeudSimplePlusProche;
+        }
     }
 }
