@@ -12,23 +12,24 @@ public class Force {
     private double fx;
     private double fy;
     private double norme;
-    private Treillis treilli;
-    private Identificateur identificateurForce = new Identificateur();
+    private Treillis treilli = Treillis.treillis;
     private int identifiant;
-    private Set<Integer> idBarreTensionsCreees = new HashSet<Integer>();
-    private Set<Integer> idAppuiSimpleCrees = new HashSet<Integer>();
-    private Set<Integer> idAppuiDoubleCrees = new HashSet<Integer>();
 
-    //Constructeurs
+    
     //Constructeur Tension
     public Force(Barre barre, double angle_alpha) {
         this.fx = Math.cos(angle_alpha);
         this.fy = Math.sin(angle_alpha);
-        if (this.idBarreTensionsCreees.contains(barre.getIdentifiant())) {
+        if (this.treilli.getIdBarreTensionsCreees().contains(barre.getIdentifiant())) {
+            System.out.println("La tension a déjà été rentrée");
+            System.out.println("Identifiant récupéré : " + barre.getTensionBarre().getIdentifiant());
             this.identifiant = barre.getTensionBarre().getIdentifiant();
+            System.out.println("Id réel :" + this.identifiant);
         } else {
-            this.identifiant = this.identificateurForce.getOrSetKey(this);
-            this.idBarreTensionsCreees.add(barre.getIdentifiant());
+            System.out.println("Nouvelle tension ");
+            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
+            System.out.println("Id réel :" + this.identifiant);
+            this.treilli.getIdBarreTensionsCreees().add(barre.getIdentifiant());
         }
     }
 
@@ -36,21 +37,31 @@ public class Force {
     public Force(Appui_simple appuiSimple, double angle_beta) {
         this.fx = Math.cos(angle_beta);
         this.fy = Math.sin(angle_beta);
-        if (this.idAppuiSimpleCrees.contains(appuiSimple.getID())) {
+        if (this.treilli.getIdAppuiSimpleCrees().contains(appuiSimple.getID())) {
+            System.out.println("Réaction de l'appui simple existe déjà");
+            System.out.println("Id récupéré : " + appuiSimple.getReactionAppuiSimple().getIdentifiant());
             this.identifiant = appuiSimple.getReactionAppuiSimple().getIdentifiant();
+            System.out.println("Id réel : " + this.identifiant);
         } else {
-            this.identifiant = this.identificateurForce.getOrSetKey(this);
-            this.idAppuiSimpleCrees.add(appuiSimple.getID());
+            System.out.println("Nouvelle réaction");
+            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
+            System.out.println("Id attribué : " + this.identifiant);
+            this.treilli.getIdAppuiSimpleCrees().add(appuiSimple.getID());
         }
     }
 
     //Constructeur Réaction appui-double
     public Force(Appui_double appuiDouble) {
-        if (this.idAppuiDoubleCrees.contains(appuiDouble.getID())) {
+        if (this.treilli.getIdAppuiDoubleCrees().contains(appuiDouble.getID())) {
+            System.out.println("Réaction de l'appui double existe déjà");
+            System.out.println("Id récupéré : " + appuiDouble.getReactionAppuiDouble().getIdentifiant());
             this.identifiant = appuiDouble.getReactionAppuiDouble().getIdentifiant();
+            System.out.println("Id réel : " + this.identifiant);
         } else {
-            this.identifiant = this.identificateurForce.getOrSetKey(this);
-            this.idAppuiSimpleCrees.add(appuiDouble.getID());
+            System.out.println("Nouvelle réaction appui double");
+            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
+            System.out.println("Id réel : " + this.identifiant);
+            this.treilli.getIdAppuiDoubleCrees().add(appuiDouble.getID());
         }
     }
 
@@ -59,7 +70,8 @@ public class Force {
         this.fx = fx;
         this.fy = fy;
         this.norme = this.calculNormeForce();
-        this.identifiant = this.identificateurForce.getOrSetKey(this);
+        this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
+        System.out.println("Force ajoutée créee");
     }
 
     //Encapsulation
@@ -83,16 +95,30 @@ public class Force {
         return norme;
     }
 
-    public Identificateur getIdentificateurForce() {
-        return identificateurForce;
-    }
-
     public int getIdentifiant() {
         return identifiant;
     }
 
     public double calculNormeForce() {
         return this.norme = Math.sqrt(fx * fx + fy * fy);
+    }
+
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public void setTreilli(Treillis treilli) {
+        this.treilli = treilli;
+    }
+
+    //To String
+    public String toString() {
+        String s = "";
+        s = s + "id : " + this.identifiant + "\n";
+        s = s + "fx : " + this.fx + "\n";
+        s = s + "fy : " + this.fy + "\n";
+        s = s + "norme : " + this.norme + "\n";
+        return s;
     }
 
     //Matrices et calculs
@@ -130,20 +156,20 @@ public class Force {
     }
 
     public void remplissageMatrice() {
-        
+
         Set<Integer> idNoeudVerifies = new HashSet<Integer>();
-        
+
         for (Map.Entry mapentry : treilli.getIdentificateur().getKetToObject().entrySet()) {
             Object key = mapentry.getKey();
             Object val = mapentry.getValue();
             if (val.getClass() == Noeud_simple.class) {
-                if (!idNoeudVerifies.contains(key)){
-                Iterator it = ((Noeud_simple)val).getAppartientABarre().iterator();
-                while(it.hasNext()){
-                   //TODO
-                   //Creer les forces, recupérer la barre correspondante
-                   //voir get pour SET ou passer en arraylist
-                }
+                if (!idNoeudVerifies.contains(key)) {
+                    Iterator it = ((Noeud_simple) val).getAppartientABarre().iterator();
+                    while (it.hasNext()) {
+                        //TODO
+                        //Creer les forces, recupérer la barre correspondante
+                        //voir get pour SET ou passer en arraylist
+                    }
                 }
             }
             if (val.getClass() == Appui_simple.class) {

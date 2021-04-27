@@ -19,7 +19,7 @@ public class Noeud_simple extends Noeuds {
         this.py = py;
         this.appartientABarre = new HashSet<Barre>();
         
-        System.out.println("Votre point à été créé : " + this);
+        System.out.println("Votre noeud simple a été créé : " + this);
     }
 
     private void setPx(double Px) {

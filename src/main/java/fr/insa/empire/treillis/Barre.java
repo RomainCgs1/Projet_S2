@@ -40,6 +40,12 @@ public class Barre {
         this.type.addBarreSet(this);
     }
 
+    //Constructeur pour test des forces 
+    public Barre (Noeuds debut, Noeuds fin){
+        this.noeudDebut = debut;
+        this.noeudFin = fin;
+    }
+    
     //Encapsulation
     public Noeuds getNoeudDebut() {
         return this.noeudDebut;
@@ -97,7 +103,7 @@ public class Barre {
         s = s + "Barre selectionnee : " + this.identifiant + "\n";
         s = s + "Type de la barre : " + this.type + "\n";
         s = s + "Noeud du debut " + this.noeudDebut + "\n";
-        s = s + "Noeud du fin " + this.noeudFin + "\n";
+        s = s + "Noeud de la fin " + this.noeudFin + "\n";
 
         return s;
     }

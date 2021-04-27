@@ -23,6 +23,14 @@ public class Appui_simple extends Noeud_appui {
         return reactionAppuiSimple;
     }
 
-    
+    public String toString(){
+        String s="";
+        s=s+"id : "+this.identifiant+"\n";
+        s=s+"px : "+super.getPx()+"\n";
+        s=s+"py : "+super.getPy()+"\n";
+        s=s+"pos alpha : "+super.getPosition_alpha()+"\n";
+        s=s+"id segTerrain : "+super.getSegment_appui().getIdentifiant()+"\n";
+        return s;
+    }
     
 }

@@ -17,6 +17,12 @@ public class Point {
         this.appartient = new HashSet<Segment_terrain>();
     }
     
+    //Constructeur testForce 
+    public Point (double px, double py){
+        this.px = px;
+        this.py = py;
+    }
+    
     public double getPx()
     {
         return this.px;
@@ -36,6 +42,15 @@ public class Point {
     {
         this.py = py;
     }
+
+    public int getIdentifiant() {
+        return identifiant;
+    }
+
+    public Set<Segment_terrain> getAppartient() {
+        return appartient;
+    }
+    
 
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;

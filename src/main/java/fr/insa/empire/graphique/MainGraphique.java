@@ -249,6 +249,13 @@ public class MainGraphique extends BorderPane {
                     mtbSelection.setTextFill(Color.BLACK);
                 }
         );
+        
+        //test pour force par bouton sélection
+        this.mtbSelection.setOnAction(
+                action -> {
+                    this.treillis.testForce();
+                }
+        );
     }
 
     public Identificateur getIdentificateur() {
@@ -275,4 +282,5 @@ public class MainGraphique extends BorderPane {
     public Treillis getTreillis() {
         return treillis;
     }
+    
 }

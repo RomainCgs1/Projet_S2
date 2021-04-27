@@ -14,6 +14,14 @@ public class Appui_double extends Noeud_appui {
     }
 
     
-
+    public String toString(){
+        String s="";
+        s=s+"id : "+this.identifiant+"\n";
+        s=s+"px : "+super.getPx()+"\n";
+        s=s+"py : "+super.getPy()+"\n";
+        s=s+"pos alpha : "+super.getPosition_alpha()+"\n";
+        s=s+"id segTerrain : "+super.getSegment_appui().getIdentifiant()+"\n";
+        return s;
+    }
     
 }
