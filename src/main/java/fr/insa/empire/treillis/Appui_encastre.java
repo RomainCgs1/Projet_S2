@@ -10,4 +10,5 @@ public class Appui_encastre extends Noeud_appui {
         super(px, py, segTerrain);
     }
 
+    
 }

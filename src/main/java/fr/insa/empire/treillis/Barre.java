@@ -95,6 +95,10 @@ public class Barre {
         return tensionBarre;
     }
 
+    public void setTensionBarre(Force tensionBarre) {
+        this.tensionBarre = tensionBarre;
+    }
+
     //to String 
     public String toString() {
         String s = "";

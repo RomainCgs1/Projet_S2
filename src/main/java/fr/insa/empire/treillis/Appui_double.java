@@ -13,6 +13,9 @@ public class Appui_double extends Noeud_appui {
         return reactionAppuiDouble;
     }
 
+    public void setReactionAppuiDouble(Force reactionAppuiDouble) {
+        this.reactionAppuiDouble = reactionAppuiDouble;
+    }
     
     public String toString(){
         String s="";

@@ -23,6 +23,12 @@ public class Appui_simple extends Noeud_appui {
         return reactionAppuiSimple;
     }
 
+    public void setReactionAppuiSimple(Force reactionAppuiSimple) {
+        this.reactionAppuiSimple = reactionAppuiSimple;
+    }
+    
+    
+
     public String toString(){
         String s="";
         s=s+"id : "+this.identifiant+"\n";

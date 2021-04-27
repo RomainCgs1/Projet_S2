@@ -30,6 +30,8 @@ public class Force {
             this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
             System.out.println("Id réel :" + this.identifiant);
             this.treilli.getIdBarreTensionsCreees().add(barre.getIdentifiant());
+            System.out.println("Ajout de la force à la barre");
+            barre.setTensionBarre(this);
         }
     }
 
@@ -47,6 +49,8 @@ public class Force {
             this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
             System.out.println("Id attribué : " + this.identifiant);
             this.treilli.getIdAppuiSimpleCrees().add(appuiSimple.getID());
+            System.out.println("Ajout de la force à l'appui simple");
+            appuiSimple.setReactionAppuiSimple(this);
         }
     }
 
@@ -62,6 +66,8 @@ public class Force {
             this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
             System.out.println("Id réel : " + this.identifiant);
             this.treilli.getIdAppuiDoubleCrees().add(appuiDouble.getID());
+            System.out.println("Ajout de la force à l'appui double");
+            appuiDouble.setReactionAppuiDouble(this);
         }
     }
 

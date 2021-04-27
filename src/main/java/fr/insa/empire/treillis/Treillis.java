@@ -235,5 +235,9 @@ public class Treillis {
         System.out.println("Nombre de réactions simples créees : "+this.idAppuiSimpleCrees.size());
         System.out.println("Nombre de réactions doubles créees : "+this.idAppuiDoubleCrees.size());
         
+        System.out.println("Force de la barre 1 "+b1.getTensionBarre().toString());
+        System.out.println("Force de la barre 2 "+b2.getTensionBarre().toString());
+        System.out.println("Force de la barre 3 "+b3.getTensionBarre().toString());
+        
     }
 }
