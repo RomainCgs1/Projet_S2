@@ -217,15 +217,12 @@ public class Treillis {
         System.out.println("Force ajoutée : \n"+forceAjoutee.toString());
         
         Force tensionb1 = new Force (b1,b1.calculAngleAlphaTension());
-        System.out.println("Angle alpha tension 1 : "+b1.calculAngleAlphaTension());
         System.out.println("Tension barre 1 : \n"+tensionb1.toString());
         
         Force tensionb2 = new Force (b2, b2.calculAngleAlphaTension());
-        System.out.println("Angle alpha tension 2 : "+b2.calculAngleAlphaTension());
         System.out.println("Tension barre 2 : \n"+tensionb2.toString());
         
         Force tensionb3 = new Force (b3, b3.calculAngleAlphaTension());
-        System.out.println("Angle alpha tension 3 : "+b3.calculAngleAlphaTension());
         System.out.println("Tension barre 3 : \n"+tensionb3.toString());
         
         Force reacAS = new Force (as, 40);

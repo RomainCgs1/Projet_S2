@@ -2,8 +2,8 @@ package fr.insa.empire.treillis;
 
 public class Appui_simple extends Noeud_appui {
 
-    private double px;
-    private double py;
+    private double px = super.getPx();
+    private double py = super.getPy();
     private int identificant = super.getID();
     private Force reactionAppuiSimple;
 
