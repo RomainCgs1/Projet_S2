@@ -157,6 +157,22 @@ public class Treillis {
         bW.append("FIN TREILLI\n");
     }
 
+    public static double calculAngleAlphaTension(Barre barre){
+        Point p = new Point();
+        if (barre.getNoeudFin().getClass()== Noeud_simple.class){
+            p.setPx(((Noeud_simple)barre.getNoeudFin()).getPxNoeudSimple());
+            p.setPy(((Noeud_simple)barre.getNoeudFin()).getPyNoeudSimple());
+        }
+        if (barre.getNoeudDebut().getClass()== Noeud_appui.class){
+            p.setPx(((Noeud_appui)barre.getNoeudFin()).getPx());
+            p.setPy(((Noeud_appui)barre.getNoeudFin()).getPy());
+        }
+        
+        double alpha = Math.atan2(p.getPy(), p.getPx());
+        
+        return alpha;
+    }
+    
     public void testForce(){
         Identificateur identificateurTest = new Identificateur();
        
@@ -235,5 +251,7 @@ public class Treillis {
         System.out.println("Nombre de réactions simples créees : "+this.idAppuiSimpleCrees.size());
         System.out.println("Nombre de réactions doubles créees : "+this.idAppuiDoubleCrees.size());
         
+        double testTan = Math.atan2(2,2);
+        System.out.println("Valeur angle : "+testTan);
     }
 }
