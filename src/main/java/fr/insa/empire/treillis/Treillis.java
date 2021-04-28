@@ -1,10 +1,10 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.syslin.Matrice;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -156,60 +156,73 @@ public class Treillis {
         bW.append("FIN TREILLI\n");
     }
 
+    public void lancerCalculGeneraux(Noeud_simple noeudSimple){
+        Matrice systeme = Force.creationMatrice(this);
+        Force.remplissageMatrice(noeudSimple.getID(), Force.AjoutForceManuellement(noeudSimple, 0, -10000, this), systeme, this);
+        System.out.println("Matrice obtenue :\n"+systeme.toString());
+    }
+    
     public void testForce() {
-        Identificateur identificateurTest = new Identificateur();
 
         Noeud_simple ns = new Noeud_simple(2, 0);
 
         Point p1 = new Point(-2, 0);
-        p1.setIdentifiant(identificateurTest.getOrSetKey(p1));
+        p1.setIdentifiant(identificateur.getOrSetKey(p1));
         System.out.println("Point " + p1.getIdentifiant() + " crée en (" + p1.getPx() + "," + p1.getPy() + ")");
 
         Point p2 = new Point(0, 2);
-        p2.setIdentifiant(identificateurTest.getOrSetKey(p2));
+        p2.setIdentifiant(identificateur.getOrSetKey(p2));
         System.out.println("Point " + p2.getIdentifiant() + " crée en (" + p2.getPx() + "," + p2.getPy() + ")");
 
         Point p3 = new Point(0, -2);
-        p3.setIdentifiant(identificateurTest.getOrSetKey(p3));
+        p3.setIdentifiant(identificateur.getOrSetKey(p3));
         System.out.println("Point " + p3.getIdentifiant() + " crée en (" + p3.getPx() + "," + p3.getPy() + ")");
 
         Segment_terrain seg1 = new Segment_terrain(p1, p2);
-        seg1.setIdentifiant(identificateurTest.getOrSetKey(seg1));
+        seg1.setIdentifiant(identificateur.getOrSetKey(seg1));
         System.out.println("Seg1 : \n" + seg1.toString());
 
         Segment_terrain seg2 = new Segment_terrain(p2, p3);
-        seg2.setIdentifiant(identificateurTest.getOrSetKey(seg2));
+        seg2.setIdentifiant(identificateur.getOrSetKey(seg2));
         System.out.println("Seg2 : \n" + seg2.toString());
 
         Segment_terrain seg3 = new Segment_terrain(p3, p1);
-        seg3.setIdentifiant(identificateurTest.getOrSetKey(seg3));
+        seg3.setIdentifiant(identificateur.getOrSetKey(seg3));
         System.out.println("Seg3 : \n" + seg3.toString());
 
         Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
-        triangle_terrain.setIdentifiant(identificateurTest.getOrSetKey(triangle_terrain));
+        triangle_terrain.setIdentifiant(identificateur.getOrSetKey(triangle_terrain));
 
         Appui_simple as = new Appui_simple(p2.getPx(), p2.getPy(), seg2);
-        as.setIdentifiant(identificateurTest.getOrSetKey(as));
+        as.setIdentifiant(identificateur.getOrSetKey(as));
+        seg2.addNASet(as);
         System.out.println("Appui_Simple : \n" + as.toString());
 
         Appui_double ad = new Appui_double(p3.getPx(), p3.getPy(), seg2);
-        ad.setIdentifiant(identificateurTest.getOrSetKey(ad));
+        ad.setIdentifiant(identificateur.getOrSetKey(ad));
+        seg2.addNASet(ad);
         System.out.println("Appui_double : \n" + ad.toString());
 
         Barre b1 = new Barre(as, ns);
-        b1.setIdentifiant(identificateurTest.getOrSetKey(b1));
+        b1.setIdentifiant(identificateur.getOrSetKey(b1));
+        as.addBarreArray(b1);
+        ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
         Barre b2 = new Barre(ns, ad);
-        b2.setIdentifiant(identificateurTest.getOrSetKey(b2));
+        b2.setIdentifiant(identificateur.getOrSetKey(b2));
+        ns.addBarreSet(b2);
+        ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
         Barre b3 = new Barre(ad, as);
-        b3.setIdentifiant(identificateurTest.getOrSetKey(b3));
+        b3.setIdentifiant(identificateur.getOrSetKey(b3));
+        ad.addBarreArray(b3);
+        as.addBarreArray(b3);
         System.out.println("Barre 3 : \n" + b3.toString());
         System.out.println("  ");
 
-        //Test de création de force 
+       /* //Test de création de force 
         System.out.println("TEST FORCE");
 
         Force forceAjoutee = new Force(ns, 0, -10000);
@@ -241,10 +254,11 @@ public class Treillis {
         System.out.println("Force de la barre 3 \n" + b3.getTensionBarre().toString());
         System.out.println("Id de la tension 3 : " + b3.getTensionBarre().getIdentifiant());
 
-        System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");*/
+       
+       this.lancerCalculGeneraux(ns);
         
-        Force tensionb12 = new Force(b1, b1.calculAngleAlphaTension());
-        System.out.println("Tension 12 barre 1 : \n" + tensionb1.toString());
+        
         
     }
 }

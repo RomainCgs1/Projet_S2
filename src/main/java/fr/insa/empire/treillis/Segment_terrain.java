@@ -77,10 +77,10 @@ public class Segment_terrain {
         double beta = 0;
         int abscisse0 = 0;
         
-        System.out.println("DANS CALCUL BETA");
-        System.out.println("p1 : " + p1.toString());
-        System.out.println("p2 : " + p2.toString());
-        System.out.println("p3 : " + p3.toString());
+//        System.out.println("DANS CALCUL BETA");
+//        System.out.println("p1 : " + p1.toString());
+//        System.out.println("p2 : " + p2.toString());
+//        System.out.println("p3 : " + p3.toString());
 
         double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
         double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
