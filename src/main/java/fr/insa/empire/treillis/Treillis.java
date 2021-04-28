@@ -225,7 +225,7 @@ public class Treillis {
         Force tensionb3 = new Force (b3, b3.calculAngleAlphaTension());
         System.out.println("Tension barre 3 : \n"+tensionb3.toString());
         
-        Force reacAS = new Force (as, 40);
+        Force reacAS = new Force (as, as.getSegment_appui().calculAngleBeta());
         System.out.println("Reaction AS : \n"+reacAS.toString());
         
         Force reacAD = new Force (ad);

@@ -1,5 +1,6 @@
 package fr.insa.empire.treillis;
 
+import static fr.insa.empire.treillis.Barre.calculLongueurSegmentP1P2;
 import fr.insa.empire.utils.Identificateur;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,7 +11,7 @@ public class Segment_terrain {
 
     private Set<Noeud_appui> contientNoeudAppui;
     private Set<Point> contientPoint;
-   // private Triangle_terrain appartient;   EN A-T-ON BESOIN ?
+    // private Triangle_terrain appartient;   EN A-T-ON BESOIN ?
     private Point pointDebut;
     private Point pointFin;
     private int identifiant;
@@ -38,19 +39,18 @@ public class Segment_terrain {
         return identifiant;
     }
 
-    
-    public void addNASet(Noeud_appui na){
+    public void addNASet(Noeud_appui na) {
         this.contientNoeudAppui.add(na);
     }
-    
-     public void removeNASet(Noeud_appui na){
+
+    public void removeNASet(Noeud_appui na) {
         this.contientNoeudAppui.remove(na);
     }
-     
-      public void removeAllNASet(){
+
+    public void removeAllNASet() {
         this.contientNoeudAppui.removeAll(contientNoeudAppui);
     }
-    
+
     //Calcul de la longueur
     public double calculLongueurSegmentT(double pxNoeudAppui, double pyNoeudAppui) {
 
@@ -69,8 +69,49 @@ public class Segment_terrain {
         return longeur;
     }
 
-    //Save
-    public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
+    public double calculAngleBeta() {
+        Point p1 = this.pointDebut;
+        Point p2 = this.pointFin;
+        Point p3 = new Point(p2.getPx(), p1.getPy());
+
+        double beta = 0;
+        int abscisse0 = 0;
+        
+        System.out.println("DANS CALCUL BETA");
+        System.out.println("p1 : " + p1.toString());
+        System.out.println("p2 : " + p2.toString());
+        System.out.println("p3 : " + p3.toString());
+
+        double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
+        double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
+
+        if (p1.getPx()==p2.getPx()){
+            if(p1.getPx()==0){
+                System.out.println("Les abscisses de p1 et p2 sont nulles");
+                abscisse0 =1;
+            }
+        }
+        
+        if (abscisse0==1) {
+            System.out.println("Le segment est orthogonale à l'axe des X");
+            System.out.println("Beta vaut : 0");
+            return beta =0;
+        } 
+        else if (longeurSegP2P3 == 0){
+            System.out.println("Le segment est confondu avec l'axe des X");
+            System.out.println("Beta vaut : "+Math.toDegrees(Math.PI/2));
+            return beta = Math.PI/2;
+        }
+        else {
+            beta = Math.atan(longueurSegP1P3 / longeurSegP2P3)+Math.PI/2;
+            System.out.println("Beta vaut : " + Math.toDegrees(beta));
+            return beta;
+        }
+    }
+
+
+//Save
+public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : SEGMENT_TERRAIN/id/idpdébut/idpfin
         bW.append("DEBUT_Segment_terrain/");
         bW.append(this.identifiant + "/");
