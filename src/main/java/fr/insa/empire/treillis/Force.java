@@ -1,11 +1,9 @@
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.syslin.Matrice;
-import fr.insa.empire.utils.Identificateur;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 public class Force {
 
@@ -15,7 +13,6 @@ public class Force {
     private Treillis treilli = Treillis.treillis;
     private int identifiant;
 
-    
     //Constructeur Tension
     public Force(Barre barre, double angle_alpha) {
         this.fx = Math.cos(angle_alpha);
@@ -134,7 +131,7 @@ public class Force {
      * les infos qui nous intéressent On crée une liste d'identifiant en
      * parallèle de la matrice pour pouvoir se repérer
      */
-    public void creationMatrice() {
+    public static void creationMatrice(Treillis treilli) {
 
         int nbAppuiSimple = 0;
         int nbAppuiDouble = 0;
@@ -161,20 +158,57 @@ public class Force {
         Matrice systeme = new Matrice(nbLig, nbCol);
     }
 
-    public void remplissageMatrice() {
+    public static void remplissageMatrice(int idNoeudOuForceAjoutee, Force forceAjoutee, Matrice systeme, Treillis treilli) {
 
-        Set<Integer> idNoeudVerifies = new HashSet<Integer>();
+        ArrayList<Integer> idNoeudVerifies = new ArrayList<Integer>();
+        ArrayList<Integer> idForceLinkMatrice = new ArrayList<Integer>();
 
         for (Map.Entry mapentry : treilli.getIdentificateur().getKetToObject().entrySet()) {
+
+            int tailleArrayIni = idForceLinkMatrice.size();
+
             Object key = mapentry.getKey();
             Object val = mapentry.getValue();
+            
+            //Pour les noeuds simples
             if (val.getClass() == Noeud_simple.class) {
                 if (!idNoeudVerifies.contains(key)) {
-                    Iterator it = ((Noeud_simple) val).getAppartientABarre().iterator();
-                    while (it.hasNext()) {
-                        //TODO
-                        //Creer les forces, recupérer la barre correspondante
-                        //voir get pour SET ou passer en arraylist
+                    ArrayList<Force> noeudSimpleforces = new ArrayList<Force>();
+                    //Création des tensions
+                    for (int i = 0; i < ((Noeud_simple) val).getAppartientABarre().size(); i++) {
+                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        tension.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(tension));
+                        noeudSimpleforces.add(tension);
+                        if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
+                            idForceLinkMatrice.add(tension.getIdentifiant());
+                        }
+                    }
+                    //Aujout de la force ajoutée si noeud conserné
+                    if (((Noeud_simple) val).getID() == idNoeudOuForceAjoutee) {
+                        noeudSimpleforces.add(forceAjoutee);
+                    }
+
+                    //On ajoute dans la matrice
+                    System.out.println("Ajout des forces à la matrice");
+                    System.out.println("Liste de référence : \n" + idForceLinkMatrice.toString());
+                    for (int i = 0; i < noeudSimpleforces.size(); i++) {
+                        if (idForceLinkMatrice.contains(noeudSimpleforces.get(i).getIdentifiant())) {
+                            int j = 0;
+                            while (idForceLinkMatrice.get(j) != noeudSimpleforces.get(i).getIdentifiant()) {
+                                j++;
+                            }
+                            System.out.println("Les forces à l'id " + noeudSimpleforces.get(i).getIdentifiant() + "sont rangées dans la colonne " + j);
+                            systeme.getCoeffs()[i][j] = noeudSimpleforces.get(i).getFx();
+                            systeme.getCoeffs()[i + 1][j] = noeudSimpleforces.get(i).getFy();
+                            i++;
+                        } else {
+                            System.out.println("Cette force ne possède pas de colonne");
+                            System.out.println("Ajout de la force en colonne "+tailleArrayIni);
+                            systeme.getCoeffs()[i][tailleArrayIni] = noeudSimpleforces.get(i).getFx();
+                            systeme.getCoeffs()[i + 1][tailleArrayIni] = noeudSimpleforces.get(i).getFy();
+                            tailleArrayIni++;
+                            i++;
+                        }
                     }
                 }
             }

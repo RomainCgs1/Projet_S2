@@ -156,6 +156,11 @@ public class Matrice {
         return nbrCol;
     }
 
+    public double[][] getCoeffs() {
+        return coeffs;
+    }
+    
+
     //Concaténation
     public Matrice concatLig(Matrice n) {
         if (this.nbrCol != n.nbrCol) {

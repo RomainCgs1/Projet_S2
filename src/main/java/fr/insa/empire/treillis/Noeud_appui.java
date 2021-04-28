@@ -4,6 +4,7 @@ import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Noeud_appui extends Noeuds {
     //Attributs
     private double position_alpha;
     private Segment_terrain segment_appui;
-    private Set<Barre> appartientABarre;
+    private ArrayList<Barre> appartientABarre;
     private Set<Segment_terrain> appartientASeg;
 
     //Constructeurs
@@ -20,7 +21,7 @@ public class Noeud_appui extends Noeuds {
     {
         this.segment_appui = segment_appui;
         this.position_alpha = calcPosAlpha(px, py, segment_appui);
-        this.appartientABarre = new HashSet<Barre>();
+        this.appartientABarre = new ArrayList<Barre>();
         this.appartientASeg= new HashSet<Segment_terrain>();
         this.appartientASeg.add(segment_appui);
         this.segment_appui.addNASet(this);
@@ -60,12 +61,30 @@ public class Noeud_appui extends Noeuds {
         this.segment_appui = segment_appui;
     }
 
-    public void addBarreSet(Barre barre){
-        this.appartientABarre.add(barre);
+    public ArrayList<Barre> getAppartientABarre() {
+        return appartientABarre;
+    }
+
+    public Set<Segment_terrain> getAppartientASeg() {
+        return appartientASeg;
     }
     
-    public void removeBarreSet(Barre barre){
-        this.appartientABarre.remove(barre);
+    
+
+    public void addBarreArray(Barre barre){
+        if (!this.appartientABarre.contains(barre)){
+            this.appartientABarre.add(barre);  
+        }else{
+            System.out.println("Cette barre appartient déjà au noeud");
+        }
+    }
+    
+    public void removeBarreArray(Barre barre){
+       if (this.appartientABarre.contains(barre)){
+            this.appartientABarre.remove(barre);  
+        }else{
+            System.out.println("Cette barre n'appartient pas au noeud");
+        }
     }
     
     public void removeAllBarre(){

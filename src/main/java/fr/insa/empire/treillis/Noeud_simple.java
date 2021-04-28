@@ -4,6 +4,7 @@ import fr.insa.empire.utils.Identificateur;
 import fr.insa.empire.utils.Lire;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +12,13 @@ public class Noeud_simple extends Noeuds {
 
     private double px;
     private double py;
-    private Set<Barre> appartientABarre;
+    private ArrayList <Barre> appartientABarre;
 
 
     public Noeud_simple(double px, double py) {  //constructeur
         this.px = px;
         this.py = py;
-        this.appartientABarre = new HashSet<Barre>();
+        this.appartientABarre = new ArrayList<Barre>();
         
         System.out.println("Votre noeud simple a été créé : " + this);
     }
@@ -31,11 +32,19 @@ public class Noeud_simple extends Noeuds {
     }
 
     public void addBarreSet(Barre barre) {
-        this.appartientABarre.add(barre);
+        if (!this.appartientABarre.contains(barre)){
+            this.appartientABarre.add(barre);  
+        }else{
+            System.out.println("Cette barre appartient déjà au noeud");
+        }
     }
 
     public void removeBarreSet(Barre barre) {
-        this.appartientABarre.remove(barre);
+        if (this.appartientABarre.contains(barre)){
+            this.appartientABarre.remove(barre);  
+        }else{
+            System.out.println("Cette barre n'appartient pas au noeud !");
+        }
     }
 
     public void removeAllBarre() {
@@ -56,7 +65,7 @@ public class Noeud_simple extends Noeuds {
         return " ( " + this.px + " ; " + this.py + " )";
     }
 
-    public Set<Barre> getAppartientABarre() {
+    public ArrayList<Barre> getAppartientABarre() {
         return appartientABarre;
     }
     
