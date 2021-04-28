@@ -33,7 +33,7 @@ public class Identificateur {
         this.objectToKey = new HashMap<Object, Integer>();
     }
     
-    public Identificateur (){
+    public Identificateur() {
         this.valCur =0;
         this.ketToObject = new HashMap<Integer, Object>();
         this.objectToKey = new HashMap<Object, Integer>();
@@ -67,5 +67,4 @@ public class Identificateur {
         }
         return s;
     }
-    
 }

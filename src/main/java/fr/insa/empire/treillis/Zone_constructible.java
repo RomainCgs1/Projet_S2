@@ -1,6 +1,7 @@
 package fr.insa.empire.treillis;
 
 
+import com.sun.javafx.scene.shape.RectangleHelper;
 import fr.insa.empire.utils.Identificateur;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;

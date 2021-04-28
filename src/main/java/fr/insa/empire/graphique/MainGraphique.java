@@ -6,7 +6,8 @@ import fr.insa.empire.utils.Identificateur;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Menu;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitMenuButton;
@@ -33,9 +34,11 @@ public class MainGraphique extends BorderPane {
     private MyB mbLancerCalculs;
     private MyB mbReglages;
     private final MyB mbTypeBarre;
+    private Label lPosition;
     private HBox hbConstruction;
     private VBox vbUp;
     private HBox hbIcones;
+    private HBox hbPosition;
     private Zone_constructible zone_constructible;
     private int etatNoeud;
     private double px;
@@ -128,6 +131,22 @@ public class MainGraphique extends BorderPane {
         return menuBar;
     }
 
+    public Identificateur getIdentificateur() {
+        return this.treillis.identificateur;
+    }
+
+    public Treillis getTreillis() {
+        return treillis;
+    }
+
+    public Label getlPosition() {
+        return lPosition;
+    }
+
+    public HBox getHbPosition() {
+        return hbPosition;
+    }
+
     public MainGraphique() throws IOException {
 
         //controlleur :
@@ -153,6 +172,12 @@ public class MainGraphique extends BorderPane {
 
                     Controller controller = this.controller;
                     controller.canvasClicked(canvasMouseEvent);
+                }
+        );
+
+        this.zone_constructible.setOnMouseMoved(
+                action -> {
+                    controller.canvasOver(action);
                 }
         );
 
@@ -184,6 +209,10 @@ public class MainGraphique extends BorderPane {
         vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
+        lPosition = new Label("0 ; 0");
+        this.hbPosition = new HBox(lPosition);
+        this.hbPosition.setAlignment(Pos.CENTER_RIGHT);
+        this.setBottom(hbPosition);
 
         //actione de barre
         this.mtbBarre.setOnAction(
@@ -233,7 +262,10 @@ public class MainGraphique extends BorderPane {
         //action de Gomme
         this.mtbGomme.setOnAction(
                 action -> {
-                    controller.changeEtat(50);
+                    if(mtbGomme.isSelected())
+                    {
+                        controller.changeEtat(50);
+                    }
                 }
         );
 
@@ -278,41 +310,5 @@ public class MainGraphique extends BorderPane {
                     this.treillis.testForce();
                 }
         );
-    }
-
-    public Identificateur getIdentificateur() {
-        return this.treillis.identificateur;
-    }
-
-    public Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3)
-    {
-        Segment_terrain seg1 = new Segment_terrain(p1, p2);
-        Segment_terrain seg2 = new Segment_terrain(p2, p3);
-        Segment_terrain seg3 = new Segment_terrain(p3, p1);
-        Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
-        triangle_terrain.setIdentifiant(this.treillis.identificateur.getOrSetKey(triangle_terrain));
-
-        this.zone_constructible.getGraphicsContext2D().setStroke(Color.BLACK);
-        this.zone_constructible.getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
-        this.zone_constructible.getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
-        this.zone_constructible.getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
-
-        System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
-        return triangle_terrain;
-    }
-
-    public Treillis getTreillis() {
-        return treillis;
-    }
-
-    public Barre creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
-        Barre barre = new Barre(noeudDebut, noeudFin);
-        barre.setIdentifiant(this.treillis.identificateur.getOrSetKey(barre));
-
-        this.zone_constructible.getGraphicsContext2D().setStroke(Color.BLUE);
-        this.zone_constructible.getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
-
-        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
-        return barre;
     }
 }

@@ -6,11 +6,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 public class Controller {
@@ -89,6 +89,7 @@ public class Controller {
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
+                EraseAll();
                 break;
             case 60 : //barre
                 this.vue.getTbNoeud().setText("Noeud");
@@ -169,7 +170,7 @@ public class Controller {
                     }
                     else
                     {
-                        Barre barre = this.vue.creationBarre(this.noeudDebut, this.noeudFin);
+                        Barre barre = creationBarre(this.noeudDebut, this.noeudFin);
                     }
                     this.changeEtat(20);
                     break;
@@ -192,7 +193,7 @@ public class Controller {
                     this.p3.setPy(py);
                     this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                     System.out.println("point 3");
-                    Triangle_terrain triangle_terrain = this.vue.creationTriangleTerrain(this.p1, this.p2, this.p3);
+                    Triangle_terrain triangle_terrain = creationTriangleTerrain(this.p1, this.p2, this.p3);
 
                     System.out.println(this.p1 + "\n" +
                             this.p2 + "\n" +
@@ -202,5 +203,47 @@ public class Controller {
                     break;
             }
         }
+    }
+
+    public void canvasOver(MouseEvent E) {
+        double px = E.getX();
+        double py = E.getY();
+        this.vue.getlPosition().setText(px + " ; " + py);
+    }
+
+    private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3) {
+        Segment_terrain seg1 = new Segment_terrain(p1, p2);
+        Segment_terrain seg2 = new Segment_terrain(p2, p3);
+        Segment_terrain seg3 = new Segment_terrain(p3, p1);
+        Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
+        triangle_terrain.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(triangle_terrain));
+
+        this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.BLACK);
+        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
+        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
+        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
+
+        System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
+        return triangle_terrain;
+    }
+
+    private Barre creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
+
+        Barre barre = new Barre(noeudDebut, noeudFin);
+        barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
+
+        this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.BLUE);
+        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
+
+        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
+        return barre;
+    }
+
+
+
+    private void EraseAll() {
+        this.vue.getIdentificateur().getKetToObject().clear();
+        this.vue.getIdentificateur().getObjectToKey().clear();
+        this.vue.getZone_constructible().getGraphicsContext2D().clearRect(0, 0, this.vue.getZone_constructible().getWidth(), this.vue.getZone_constructible().getHeight());
     }
 }
