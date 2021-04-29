@@ -364,4 +364,15 @@ public class Force {
         System.out.println("Nb tension : "+nbTension);
         System.out.println("Nb reaction : "+nbReaction);
     }
+    
+    public static void resSysteme(Matrice systeme){
+        Matrice vecteur = new Matrice (systeme.getNbrLig(),1);
+        Matrice resolution = systeme.concatCol(vecteur);
+        System.out.println("Matrice systeme : \n"+systeme.toString());
+        System.out.println("Matrice vecteur : \n"+vecteur.toString());
+        System.out.println("Matrice résolution : \n"+resolution.toString());
+        resolution.descenteGauss();
+        System.out.println("Resolution : \n"+resolution.toString());
+        
+    }
 }

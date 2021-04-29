@@ -163,6 +163,8 @@ public class Treillis {
         System.out.println("Force ajoutée FY : "+fAjoutee.getFy());
         Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, this);
         System.out.println("Matrice obtenue :\n"+systeme.toString());
+        System.out.println("Début de la résolution...");
+        Force.resSysteme(systeme);
     }
     
     public void testForce() {
