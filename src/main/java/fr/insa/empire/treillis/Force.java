@@ -53,6 +53,8 @@ public class Force {
 
     //Constructeur Réaction appui-double
     public Force(Appui_double appuiDouble) {
+        this.fx = 1;
+        this.fy = 1;
         if (this.treilli.getIdAppuiDoubleCrees().contains(appuiDouble.getID())) {
             System.out.println("Réaction de l'appui double existe déjà");
             System.out.println("Id récupéré : " + appuiDouble.getReactionAppuiDouble().getIdentifiant());
@@ -74,7 +76,7 @@ public class Force {
         this.fy = fy;
         this.norme = this.calculNormeForce();
         this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
-        System.out.println("Force ajoutée créee");
+        System.out.println("Force ajoutée au noeud "+noeudSimple.getID()+" créee");
     }
 
     //Encapsulation
@@ -83,14 +85,14 @@ public class Force {
     }
 
     public double getFy() {
-        return this.fx;
+        return this.fy;
     }
 
-    private void setFx(double fx) {
+    public void setFx(double fx) {
         this.fx = fx;
     }
 
-    private void setFy(double fy) {
+    public void setFy(double fy) {
         this.fy = fy;
     }
 
@@ -151,20 +153,19 @@ public class Force {
             }
         }
 
-        System.out.println("Nombre de barre : "+nbBarres);
-        System.out.println("Nombre d'Appui_simple : "+nbAppuiSimple);
-        System.out.println("Nombre d'Appui_double : "+nbAppuiDouble);
-        
+//        System.out.println("Nombre de barre : " + nbBarres);
+//        System.out.println("Nombre d'Appui_simple : " + nbAppuiSimple);
+//        System.out.println("Nombre d'Appui_double : " + nbAppuiDouble);
         int nbInconnues = nbBarres + nbAppuiSimple + 2 * nbAppuiDouble;
-        System.out.println("Nombre d'inconnues : "+nbInconnues);
+        System.out.println("Nombre d'inconnues : " + nbInconnues);
         int nbLig = nbInconnues;
-        int nbCol = nbInconnues;
+        int nbCol = nbBarres + nbAppuiDouble + nbAppuiSimple + 1;
 
         Matrice systeme = new Matrice(nbLig, nbCol);
-        System.out.println("Nouvelle matrice créee");
-        System.out.println("Nombre de lignes : "+nbLig);
-        System.out.println("Nombre de colonnes : "+nbCol);
-        
+//        System.out.println("Nouvelle matrice créee");
+//        System.out.println("Nombre de lignes : " + nbLig);
+//        System.out.println("Nombre de colonnes : " + nbCol);
+
         return systeme;
     }
 
@@ -172,6 +173,9 @@ public class Force {
 
         ArrayList<Integer> idNoeudVerifies = new ArrayList<Integer>();
         ArrayList<Integer> idForceLinkMatrice = new ArrayList<Integer>();
+        int l = 0;
+        int nbTension =0;
+        int nbReaction = 0;
 
         for (Map.Entry mapentry : treilli.getIdentificateur().getKetToObject().entrySet()) {
 
@@ -179,161 +183,185 @@ public class Force {
 
             Object key = mapentry.getKey();
             Object val = mapentry.getValue();
-            
+
             //Pour les noeuds simples
             if (val.getClass() == Noeud_simple.class) {
                 if (!idNoeudVerifies.contains(key)) {
+                    System.out.println("Nouveau Noeud_simple trouvé !");
+                    idNoeudVerifies.add(((Noeud_simple) val).getID());
                     ArrayList<Force> noeudSimpleforces = new ArrayList<Force>();
-                    
+
                     //Création des tensions
                     for (int i = 0; i < ((Noeud_simple) val).getAppartientABarre().size(); i++) {
                         Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
-                        tension.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(tension));
+                        //System.out.println("Alpha vaut \n"+((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         noeudSimpleforces.add(tension);
+                        System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
                         }
+                        nbTension++;
                     }
                     
                     //Aujout de la force ajoutée si noeud conserné
                     if (((Noeud_simple) val).getID() == idNoeudOuForceAjoutee) {
                         noeudSimpleforces.add(forceAjoutee);
+                        System.out.println("Force ICI ajoutée : \n"+forceAjoutee.toString());
+                        System.out.println("FX ICI : "+forceAjoutee.getFx());
+                        System.out.println("FY ICI : "+forceAjoutee.getFy());
+                        if (!idForceLinkMatrice.contains(forceAjoutee.getIdentifiant())) {
+                            idForceLinkMatrice.add(forceAjoutee.getIdentifiant());
+                        }
                     }
 
                     //On ajoute dans la matrice
                     System.out.println("Ajout des forces à la matrice");
                     System.out.println("Liste de référence : \n" + idForceLinkMatrice.toString());
                     for (int i = 0; i < noeudSimpleforces.size(); i++) {
-                        int l=0;
                         if (idForceLinkMatrice.contains(noeudSimpleforces.get(i).getIdentifiant())) {
                             int j = 0;
                             while (idForceLinkMatrice.get(j) != noeudSimpleforces.get(i).getIdentifiant()) {
                                 j++;
                             }
-                            System.out.println("Les forces à l'id " + noeudSimpleforces.get(i).getIdentifiant() + "sont rangées dans la colonne " + j);
+//                            System.out.println("L'id " + noeudSimpleforces.get(i).getIdentifiant() + " a été retrouvé en position " + j + "dans la liste de référence");
+//                            System.out.println("Les forces à l'id " + noeudSimpleforces.get(i).getIdentifiant() + "sont rangées dans la colonne " + j);
+                            System.out.println("Force " + noeudSimpleforces.get(i).getIdentifiant() + "ajouté en [" + l + "," + j + "], la composante " + noeudSimpleforces.get(i).getFx());
                             systeme.getCoeffs()[l][j] = noeudSimpleforces.get(i).getFx();
+                            System.out.println("Force " + noeudSimpleforces.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + j + "], la composante " + noeudSimpleforces.get(i).getFy());
                             systeme.getCoeffs()[l + 1][j] = noeudSimpleforces.get(i).getFy();
-                            l=l+2;
                         } else {
                             System.out.println("Cette force ne possède pas de colonne");
-                            System.out.println("Ajout de la force en colonne "+tailleArrayIni);
+                            System.out.println("Ajout de la force en colonne " + tailleArrayIni);
+                            System.out.println("Force " + noeudSimpleforces.get(i).getIdentifiant() + "ajouté en [" + l + "," + tailleArrayIni + "], la composante " + noeudSimpleforces.get(i).getFx());
                             systeme.getCoeffs()[l][tailleArrayIni] = noeudSimpleforces.get(i).getFx();
+                            System.out.println("Force " + noeudSimpleforces.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + tailleArrayIni + "], la composante " + noeudSimpleforces.get(i).getFy());
                             systeme.getCoeffs()[l + 1][tailleArrayIni] = noeudSimpleforces.get(i).getFy();
                             tailleArrayIni++;
-                            l=l+2;
                         }
                     }
                     tailleArrayIni = idForceLinkMatrice.size();
                     noeudSimpleforces.removeAll(noeudSimpleforces);
+                    l = l + 2;
                 }
             }
-            
+
             //Pour les appuis-simples
             if (val.getClass() == Appui_simple.class) {
-               if (!idNoeudVerifies.contains(key)) {
+                if (!idNoeudVerifies.contains(key)) {
+                    System.out.println("Nouvel Appui_simple trouvé !");
+                    idNoeudVerifies.add(((Appui_simple) val).getID());
                     ArrayList<Force> appuiSimpleforces = new ArrayList<Force>();
-                    
+
                     //Création des tensions
                     for (int i = 0; i < ((Appui_simple) val).getAppartientABarre().size(); i++) {
                         Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
-                        tension.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(tension));
+                        System.out.println("Alpha vaut \n"+((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         appuiSimpleforces.add(tension);
+                        System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
                         }
+                        nbTension++;
                     }
-                    
+
                     //Création de la force de réaction de l'appui-simple
-                    Force reactionAS = new Force (((Appui_simple)val),((Appui_simple)val).getSegment_appui().calculAngleBeta());
-                    reactionAS.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(reactionAS));
+                    Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta());
+                    nbReaction++;
                     appuiSimpleforces.add(reactionAS);
-                        if (!idForceLinkMatrice.contains(reactionAS.getIdentifiant())) {
-                            idForceLinkMatrice.add(reactionAS.getIdentifiant());
-                        }
+                    if (!idForceLinkMatrice.contains(reactionAS.getIdentifiant())) {
+                        idForceLinkMatrice.add(reactionAS.getIdentifiant());
+                    }
 
                     //On ajoute dans la matrice
                     System.out.println("Ajout des forces à la matrice");
                     System.out.println("Liste de référence : \n" + idForceLinkMatrice.toString());
                     for (int i = 0; i < appuiSimpleforces.size(); i++) {
-                        int l=0;
                         if (idForceLinkMatrice.contains(appuiSimpleforces.get(i).getIdentifiant())) {
                             int j = 0;
                             while (idForceLinkMatrice.get(j) != appuiSimpleforces.get(i).getIdentifiant()) {
                                 j++;
                             }
+                            System.out.println("L'id " + appuiSimpleforces.get(i).getIdentifiant() + " a été retrouvé en position " + j + "dans la liste de référence");
                             System.out.println("Les forces à l'id " + appuiSimpleforces.get(i).getIdentifiant() + "sont rangées dans la colonne " + j);
+                            System.out.println("Force " + appuiSimpleforces.get(i).getIdentifiant() + "ajouté en [" + l + "," + j + "], la composante " + appuiSimpleforces.get(i).getFx());
                             systeme.getCoeffs()[l][j] = appuiSimpleforces.get(i).getFx();
+                            System.out.println("Force " + appuiSimpleforces.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + j + "], la composante " + appuiSimpleforces.get(i).getFy());
                             systeme.getCoeffs()[l + 1][j] = appuiSimpleforces.get(i).getFy();
-                            l=l+2;
                         } else {
                             System.out.println("Cette force ne possède pas de colonne");
-                            System.out.println("Ajout de la force en colonne "+tailleArrayIni);
+                            System.out.println("Ajout de la force en colonne " + tailleArrayIni);
+                            System.out.println("Force " + appuiSimpleforces.get(i).getIdentifiant() + "ajouté en [" + l + "," + tailleArrayIni + "], la composante " + appuiSimpleforces.get(i).getFx());
                             systeme.getCoeffs()[l][tailleArrayIni] = appuiSimpleforces.get(i).getFx();
+                            System.out.println("Force " + appuiSimpleforces.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + tailleArrayIni + "], la composante " + appuiSimpleforces.get(i).getFy());
                             systeme.getCoeffs()[l + 1][tailleArrayIni] = appuiSimpleforces.get(i).getFy();
                             tailleArrayIni++;
-                            l=l+2;
                         }
                     }
                     tailleArrayIni = idForceLinkMatrice.size();
                     appuiSimpleforces.removeAll(appuiSimpleforces);
+                    l = l + 2;
                 }
             }
             if (val.getClass() == Appui_double.class) {
                 if (!idNoeudVerifies.contains(key)) {
+                    System.out.println("Nouvel Appui_double trouvé !");
+                    idNoeudVerifies.add(((Appui_double) val).getID());
                     ArrayList<Force> appuiDoubleForce = new ArrayList<Force>();
-                    
+
                     //Création des tensions
                     for (int i = 0; i < ((Appui_double) val).getAppartientABarre().size(); i++) {
                         Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension());
-                        tension.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(tension));
+                        System.out.println("Alpha vaut \n"+((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         appuiDoubleForce.add(tension);
+                        System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
                         }
+                        nbTension++;
                     }
-                    
+
                     //Création de la force de réaction de l'appui-simple
-                    Force reactionAD = new Force (((Appui_double)val));
-                    reactionAD.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(reactionAD));
+                    Force reactionAD = new Force(((Appui_double) val));
+                    nbReaction++;
                     appuiDoubleForce.add(reactionAD);
-                        if (!idForceLinkMatrice.contains(reactionAD.getIdentifiant())) {
-                            idForceLinkMatrice.add(reactionAD.getIdentifiant());
-                        }
+                    if (!idForceLinkMatrice.contains(reactionAD.getIdentifiant())) {
+                        idForceLinkMatrice.add(reactionAD.getIdentifiant());
+                    }
 
                     //On ajoute dans la matrice
                     System.out.println("Ajout des forces à la matrice");
                     System.out.println("Liste de référence : \n" + idForceLinkMatrice.toString());
                     for (int i = 0; i < appuiDoubleForce.size(); i++) {
-                        int l=0;
                         if (idForceLinkMatrice.contains(appuiDoubleForce.get(i).getIdentifiant())) {
                             int j = 0;
                             while (idForceLinkMatrice.get(j) != appuiDoubleForce.get(i).getIdentifiant()) {
                                 j++;
                             }
+                            System.out.println("L'id " + appuiDoubleForce.get(i).getIdentifiant() + " a été retrouvé en position " + j + "dans la liste de référence");
                             System.out.println("Les forces à l'id " + appuiDoubleForce.get(i).getIdentifiant() + "sont rangées dans la colonne " + j);
+                            System.out.println("Force " + appuiDoubleForce.get(i).getIdentifiant() + "ajouté en [" + l + "," + j + "], la composante " + appuiDoubleForce.get(i).getFx());
                             systeme.getCoeffs()[l][j] = appuiDoubleForce.get(i).getFx();
+                            System.out.println("Force " + appuiDoubleForce.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + j + "], la composante " + appuiDoubleForce.get(i).getFy());
                             systeme.getCoeffs()[l + 1][j] = appuiDoubleForce.get(i).getFy();
-                            l=l+2;
                         } else {
                             System.out.println("Cette force ne possède pas de colonne");
-                            System.out.println("Ajout de la force en colonne "+tailleArrayIni);
+                            System.out.println("Ajout de la force en colonne " + tailleArrayIni);
+                            System.out.println("Force " + appuiDoubleForce.get(i).getIdentifiant() + "ajouté en [" + l + "," + tailleArrayIni + "], la composante " + appuiDoubleForce.get(i).getFx());
                             systeme.getCoeffs()[l][tailleArrayIni] = appuiDoubleForce.get(i).getFx();
+                            System.out.println("Force " + appuiDoubleForce.get(i).getIdentifiant() + "ajouté en [" + (l + 1) + "," + tailleArrayIni + "], la composante " + appuiDoubleForce.get(i).getFy());
                             systeme.getCoeffs()[l + 1][tailleArrayIni] = appuiDoubleForce.get(i).getFy();
                             tailleArrayIni++;
-                            l=l+2;
                         }
                     }
                     tailleArrayIni = idForceLinkMatrice.size();
                     appuiDoubleForce.removeAll(appuiDoubleForce);
+                    l = l + 2;
                 }
             }
         }
+        System.out.println("Nombre de noeuds vérifiés : " + idNoeudVerifies.size());
         idNoeudVerifies.removeAll(idNoeudVerifies);
-    }
-    
-    public static Force AjoutForceManuellement(Noeud_simple noeudSimple, double fx, double fy, Treillis treilli){  
-        Force fAjoutee = new Force (noeudSimple, fx ,fy);
-        fAjoutee.setIdentifiant(treilli.getIdentificateurForce().getOrSetKey(fAjoutee));
-        return fAjoutee;
+        System.out.println("Nb tension : "+nbTension);
+        System.out.println("Nb reaction : "+nbReaction);
     }
 }

@@ -87,24 +87,24 @@ public class Segment_terrain {
 
         if (p1.getPx()==p2.getPx()){
             if(p1.getPx()==0){
-                System.out.println("Les abscisses de p1 et p2 sont nulles");
+                //System.out.println("Les abscisses de p1 et p2 sont nulles");
                 abscisse0 =1;
             }
         }
         
         if (abscisse0==1) {
-            System.out.println("Le segment est orthogonale à l'axe des X");
-            System.out.println("Beta vaut : 0");
+//            System.out.println("Le segment est orthogonale à l'axe des X");
+//            System.out.println("Beta vaut : 0");
             return beta =0;
         } 
         else if (longeurSegP2P3 == 0){
-            System.out.println("Le segment est confondu avec l'axe des X");
-            System.out.println("Beta vaut : "+Math.toDegrees(Math.PI/2));
+//            System.out.println("Le segment est confondu avec l'axe des X");
+//            System.out.println("Beta vaut : "+Math.toDegrees(Math.PI/2));
             return beta = Math.PI/2;
         }
         else {
             beta = Math.atan(longueurSegP1P3 / longeurSegP2P3)+Math.PI/2;
-            System.out.println("Beta vaut : " + Math.toDegrees(beta));
+//            System.out.println("Beta vaut : " + Math.toDegrees(beta));
             return beta;
         }
     }

@@ -44,6 +44,7 @@ public class Barre {
     public Barre(Noeuds debut, Noeuds fin) {
         this.noeudDebut = debut;
         this.noeudFin = fin;
+        this.longueur = this.calculLongueur();
     }
 
     //Encapsulation
@@ -123,17 +124,25 @@ public class Barre {
             pxDeb = ((Noeud_simple) this.noeudDebut).getPx();
             pyDeb = ((Noeud_simple) this.noeudDebut).getPy();
         }
-        if (this.noeudDebut.getClass() == Noeud_appui.class) {
-            pxDeb = ((Noeud_appui) this.noeudDebut).getPx();
-            pyDeb = ((Noeud_appui) this.noeudDebut).getPy();
+        if (this.noeudDebut.getClass() == Appui_simple.class) {
+            pxDeb = ((Appui_simple) this.noeudDebut).getPx();
+            pyDeb = ((Appui_simple) this.noeudDebut).getPy();
         }
         if (this.noeudFin.getClass() == Noeud_simple.class) {
-            pxFin = ((Noeud_simple) this.noeudDebut).getPx();
-            pyFin = ((Noeud_simple) this.noeudDebut).getPy();
+            pxFin = ((Noeud_simple) this.noeudFin).getPx();
+            pyFin = ((Noeud_simple) this.noeudFin).getPy();
         }
-        if (this.noeudFin.getClass() == Noeud_appui.class) {
-            pxFin = ((Noeud_appui) this.noeudDebut).getPx();
-            pyFin = ((Noeud_appui) this.noeudDebut).getPy();
+        if ((this.noeudFin.getClass() == Appui_simple.class)||(this.noeudFin.getClass() == Appui_double.class)) {
+            pxFin = ((Noeud_appui) this.noeudFin).getPx();
+            pyFin = ((Noeud_appui) this.noeudFin).getPy();
+        }
+        if(this.noeudDebut.getClass() == Appui_double.class){
+            pxDeb = ((Appui_double) this.noeudDebut).getPx();
+            pyDeb = ((Appui_double) this.noeudDebut).getPy();
+        }
+        if(this.noeudFin.getClass() == Appui_double.class){
+            pxFin = ((Appui_double) this.noeudFin).getPx();
+            pyFin = ((Appui_double) this.noeudFin).getPy();
         }
 
         //On calcul les coordonnées du vecteur donné par les deux noeuds
@@ -186,20 +195,21 @@ public class Barre {
         double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
 
         if (longeurSegP2P3 == 0) {
-            System.out.println("Impossible d'effectuer la division par 0");
-            System.out.println("La force ne possède qu'une composante sur Y");
+//            System.out.println("Impossible d'effectuer la division par 0");
+//            System.out.println("La force ne possède qu'une composante sur Y");
             if (p3.getPy() > 0) {
                 alpha = Math.PI / 2;
-                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
                 return alpha;
             } else {
                 alpha = -Math.PI / 2;
-                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
                 return alpha;
             }
         } else {
             alpha = Math.atan(longueurSegP1P3 / longeurSegP2P3);
-            System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+//            System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
+//            System.out.println("Alpha sin vaut : "+Math.toDegrees(Math.asin((longueurSegP1P3/this.longueur))));
             return alpha;
         }
     }
