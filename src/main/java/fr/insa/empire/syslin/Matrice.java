@@ -22,6 +22,17 @@ public class Matrice {
         }
     }
 
+    public Matrice (int nbLig, int nbCol, double[][] coeffs){
+        this.nbrLig = nbLig;
+        this.nbrCol = nbCol;
+        this.coeffs = coeffs;
+    }
+    
+    public void setCoeffs(double[][] coeffs) {
+        this.coeffs = coeffs;
+    }
+    
+
     public String toString() {
         String s;
         s = "";
@@ -322,8 +333,66 @@ public class Matrice {
         return res;
     }
     
+    //Modification de la matrice si elle possède une colonne de 0
+    public Matrice modifMatrice(){
+        double epsilon = 0.00000001;
+        int nb0 = 0;
+        int nbColNulle = 0;
+        
+        //On parcourt la matrice pour que les valeurs inférieures à epsilon deviennent nulles
+        for (int i = 0; i < this.nbrLig; i++) {
+            for (int j = 0; j < this.nbrCol; j++) {
+                    if(this.coeffs[i][j]<=epsilon){
+                        this.coeffs[i][j] =0;
+                    }
+            }
+        }
+        
+        //On parcout la matrice et on décalle les colonnes nulles vers la droite
+        for (int i = 0; i < this.nbrCol; i++) {
+            for (int j = 0; j < this.nbrLig; j++) {
+                if(this.coeffs[j][i]==0){
+                    nb0++;
+                }
+            }
+            if(nb0==this.nbrCol-1){
+                System.out.println("La colonne "+i+" est remplie de 0");
+                if(i != this.nbrCol-1){
+                    nbColNulle++;
+                    this.decalageCol(i);
+                    System.out.println("Décalage effectué");
+                    System.out.println("Matrice actuelle :\n"+this.toString());
+                }
+            }
+            nb0=0;
+        }
+        
+        System.out.println("Nombre de colonnes nulles : "+nbColNulle);
+        
+        Matrice newMatrice = new Matrice (this.nbrLig, this.nbrCol-nbColNulle);
+        for (int i = 0; i < newMatrice.getNbrLig(); i++) {
+            for (int j = 0; j < newMatrice.getNbrCol(); j++) {
+                newMatrice.getCoeffs()[i][j]=this.coeffs[i][j];
+            }
+            
+        }
+        System.out.println("Matrice modifiée : \n"+newMatrice.toString());
+        
+        return newMatrice;
+    }
     
-    
+    public void decalageCol(int i){
+        for (int k = 0; k < this.nbrLig; k++) {
+            for (int j = i; j < this.nbrCol; j++) {
+                if(j != this.nbrCol-1){
+                    this.coeffs[k][j]=this.coeffs[k][j+1];
+                }
+                else{
+                    this.coeffs[k][j] = 0;
+                }
+            }
+        }
+    }
 
     //Résolution du syslin
     public ResultatSyslin resolution(Matrice initiale, Matrice secondMembre) {

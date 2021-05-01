@@ -158,13 +158,15 @@ public class Treillis {
 
     public void lancerCalculGeneraux(Noeud_simple noeudSimple){
         Matrice systeme = Force.creationMatrice(this);
+        Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
         Force fAjoutee = new Force (noeudSimple,0,(-1000));
         System.out.println("Force ajoutée FX : "+fAjoutee.getFx());
         System.out.println("Force ajoutée FY : "+fAjoutee.getFy());
-        Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, this);
+        Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this);
         System.out.println("Matrice obtenue :\n"+systeme.toString());
+        systeme = systeme.modifMatrice();
         System.out.println("Début de la résolution...");
-        Force.resSysteme(systeme);
+        Force.resSysteme(systeme, vecteur);
     }
     
     public void testForce() {
