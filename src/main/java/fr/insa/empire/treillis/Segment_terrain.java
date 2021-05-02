@@ -108,7 +108,24 @@ public class Segment_terrain {
             return beta;
         }
     }
-
+    
+public double getDistanceBarreClic(double Px, double Py) throws Exception{
+        double X1 = this.pointDebut.getPx();
+        double Y1 = this.pointDebut.getPy();
+        double X2 = this.pointFin.getPx();
+        double Y2 = this.pointFin.getPy();
+        
+        // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
+        if(((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 > 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 < 0 )||((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 < 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 > 0 ) ){
+            
+            double D;
+            D = (Math.abs((Y1 - Y2)*Px +(X2 - X1)*Py + (Y2 - Y1)*X1 + (X1 - X2)*Y1)/(Math.sqrt((Y1 - Y2)*(Y1 - Y2) + (X2 - X1)*(X2 - X1))));
+          return D;  
+        }
+        else{
+            throw new Exception("Clic plus proche des extrémitées que du segment terrain");
+        }
+    }
 
 //Save
 public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
