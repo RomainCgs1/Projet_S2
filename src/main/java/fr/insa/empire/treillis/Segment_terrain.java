@@ -109,7 +109,7 @@ public class Segment_terrain {
         }
     }
     
-public double getDistanceBarreClic(double Px, double Py) throws Exception{
+public double getDistanceAuClic(double Px, double Py) throws Exception{
         double X1 = this.pointDebut.getPx();
         double Y1 = this.pointDebut.getPy();
         double X2 = this.pointFin.getPx();
