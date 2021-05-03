@@ -68,6 +68,14 @@ public class Point {
         this.appartient.removeAll(appartient);
     }
     
+    public double getDistanceAuClick(double Px, double Py){
+        double PX = this.px;
+        double PY = this.py;
+        
+        return Math.sqrt(Math.pow(PX-Px,2)+Math.pow(PY-Py, 2));
+    }
+    
+    
     //Save
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : POINT /id/px/py
@@ -81,4 +89,5 @@ public class Point {
     {
         return "( " + this.px + " ; " + this.py + ")";
     }
+    
 }

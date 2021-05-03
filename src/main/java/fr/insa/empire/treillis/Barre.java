@@ -221,22 +221,27 @@ public class Barre {
         return Math.sqrt(segX * segX + segY * segY);
     }
     
-    public double getDistanceBarreClic(double Px, double Py) throws Exception{
-        double X1 = this.getNoeudDebut().getPx();
-        double Y1 = this.getNoeudDebut().getPy();
-        double X2 = this.getNoeudFin().getPx();
-        double Y2 = this.getNoeudFin().getPy();
-        
+    public double getDistanceAuClic(double Px, double Py){
+        double X1 = this.noeudDebut.getPx();
+        double Y1 = this.noeudDebut.getPy();
+        double X2 = this.noeudFin.getPx();
+        double Y2 = this.noeudFin.getPy();
+          double D;
         // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
         if(((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 > 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 < 0 )||((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 < 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 > 0 ) ){
             
-            double D;
+          
             D = (Math.abs((Y1 - Y2)*Px +(X2 - X1)*Py + (Y2 - Y1)*X1 + (X1 - X2)*Y1)/(Math.sqrt((Y1 - Y2)*(Y1 - Y2) + (X2 - X1)*(X2 - X1))));
-          return D;  
+            return D;
         }
-        else{
-            throw new Exception("Clic plus proche des extrémitées que de la barre");
+        else if(this.noeudDebut.getDistanceAuClick(Px, Py) < this.noeudFin.getDistanceAuClick(Px, Py)){
+            D = this.noeudDebut.getDistanceAuClick(Px, Py) ;
+            return D;
+        }else{
+            D = this.noeudFin.getDistanceAuClick(Px, Py);
+            return D;
         }
+        
     }
 
     //Sauvegarde
