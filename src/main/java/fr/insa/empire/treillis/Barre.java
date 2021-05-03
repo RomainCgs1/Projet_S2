@@ -136,11 +136,11 @@ public class Barre {
             pxFin = ((Noeud_appui) this.noeudFin).getPx();
             pyFin = ((Noeud_appui) this.noeudFin).getPy();
         }
-        if(this.noeudDebut.getClass() == Appui_double.class){
+        if (this.noeudDebut.getClass() == Appui_double.class){
             pxDeb = ((Appui_double) this.noeudDebut).getPx();
             pyDeb = ((Appui_double) this.noeudDebut).getPy();
         }
-        if(this.noeudFin.getClass() == Appui_double.class){
+        if (this.noeudFin.getClass() == Appui_double.class){
             pxFin = ((Appui_double) this.noeudFin).getPx();
             pyFin = ((Appui_double) this.noeudFin).getPy();
         }
@@ -164,7 +164,7 @@ public class Barre {
     public double calculAngleAlphaTension() {
         Point p1 = new Point();
         Point p2 = new Point();
-
+        
         double alpha = 0;
 
         if (this.getNoeudDebut().getClass() == Noeud_simple.class) {
@@ -191,25 +191,23 @@ public class Barre {
 //        System.out.println("p2 : " + p2.toString());
 //        System.out.println("p3 : " + p3.toString());
 
-        double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
-        double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
-
-        if (longeurSegP2P3 == 0) {
-//            System.out.println("Impossible d'effectuer la division par 0");
-//            System.out.println("La force ne possède qu'une composante sur Y");
-            if (p3.getPy() > 0) {
-                alpha = Math.PI / 2;
-//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-                return alpha;
-            } else {
-                alpha = -Math.PI / 2;
-//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-                return alpha;
-            }
-        } else {
-            alpha = Math.atan(longueurSegP1P3 / longeurSegP2P3);
-//            System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-//            System.out.println("Alpha sin vaut : "+Math.toDegrees(Math.asin((longueurSegP1P3/this.longueur))));
+        double seg12X = p2.getPx() - p1.getPx();
+        double seg12Y = p2.getPy() - p1.getPy();
+        
+        double seg13X = p3.getPx() - p1.getPx();
+        double seg13Y = p3.getPy() - p1.getPy();
+        
+        double norme12 = calculNorme(seg12X, seg12Y);
+        double norme13 = calculNorme(seg13X, seg13Y);
+        
+        double scalaire = seg12X*seg13X+seg12Y*seg13Y;
+        
+        if(norme12*norme13==0){
+            System.out.println("Alpha vaut : "+alpha);
+            return alpha;
+        }else{
+            alpha = Math.acos(scalaire/(norme12*norme13));
+            System.out.println("Alpha vaut : "+alpha);
             return alpha;
         }
     }
