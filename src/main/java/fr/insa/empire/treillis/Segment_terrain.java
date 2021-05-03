@@ -109,21 +109,27 @@ public class Segment_terrain {
         }
     }
     
-public double getDistanceAuClic(double Px, double Py) throws Exception{
+public double getDistanceAuClic(double Px, double Py){
         double X1 = this.pointDebut.getPx();
         double Y1 = this.pointDebut.getPy();
         double X2 = this.pointFin.getPx();
         double Y2 = this.pointFin.getPy();
         
+        double D;
+        
         // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
         if(((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 > 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 < 0 )||((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 < 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 > 0 ) ){
             
-            double D;
+            
             D = (Math.abs((Y1 - Y2)*Px +(X2 - X1)*Py + (Y2 - Y1)*X1 + (X1 - X2)*Y1)/(Math.sqrt((Y1 - Y2)*(Y1 - Y2) + (X2 - X1)*(X2 - X1))));
           return D;  
         }
-        else{
-            throw new Exception("Clic plus proche des extrémitées que du segment terrain");
+        else if(this.pointDebut.getDistanceAuClick(Px, Py) < this.pointFin.getDistanceAuClick(Px, Py)){
+            D = this.pointDebut.getDistanceAuClick(Px, Py);
+            return D;
+        }else{
+            D = this.pointFin.getDistanceAuClick(Px,Py);
+            return D;
         }
     }
 
