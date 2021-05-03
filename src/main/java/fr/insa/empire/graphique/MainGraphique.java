@@ -39,7 +39,7 @@ public class MainGraphique extends BorderPane {
     private VBox vbUp;
     private HBox hbIcones;
     private HBox hbPosition;
-    private Zone_constructible zone_constructible;
+    private MyCanvas canvas;
     private int etatNoeud;
     private double px;
     private double py;
@@ -107,10 +107,6 @@ public class MainGraphique extends BorderPane {
         return hbIcones;
     }
 
-    public Zone_constructible getZone_constructible() {
-        return zone_constructible;
-    }
-
     public int getEtatNoeud() {
         return etatNoeud;
     }
@@ -150,7 +146,7 @@ public class MainGraphique extends BorderPane {
     public MainGraphique() throws IOException {
 
         //controlleur :
-        this.controller = new Controller(this);
+        this.controller = new Controller(this.canvas);
 
         //point pour triangle terrain
         Point p1 = new Point();
@@ -166,8 +162,8 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
-        this.zone_constructible = new Zone_constructible();
-        zone_constructible.setOnMouseClicked(
+        this.canvas = new MyCanvas();
+        canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
 
                     Controller controller = this.controller;
@@ -175,13 +171,13 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
-        this.zone_constructible.setOnMouseMoved(
+        this.canvas.setOnMouseMoved(
                 action -> {
                     controller.canvasOver(action);
                 }
         );
 
-        this.setCenter(zone_constructible);
+        this.setCenter(canvas);
 
         //Set up du splitMenuButton
         this.tbNoeud = new SplitMenuButton();
@@ -227,7 +223,7 @@ public class MainGraphique extends BorderPane {
         choix1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.changeEtat(12);
+                controller.changeEtat(120);
             }
         });
 
@@ -235,7 +231,7 @@ public class MainGraphique extends BorderPane {
         choix2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.changeEtat(11);
+                controller.changeEtat(110);
             }
         });
 

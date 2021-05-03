@@ -1,6 +1,7 @@
 package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
+import fr.insa.empire.graphique.MyCanvas;
 import fr.insa.empire.treillis.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 public class Controller {
 
-    private MainGraphique vue; //à remplacer par le canvas
+    private MyCanvas vue;
     private int etat;
     Point p1;
     Point p2;
@@ -23,7 +24,7 @@ public class Controller {
     Noeuds noeudDebut;
     Noeuds noeudFin;
 
-    public Controller(MainGraphique vue)
+    public Controller(MyCanvas vue)
     {
         this.vue = vue;
         this.etat = 0;
@@ -39,28 +40,28 @@ public class Controller {
 
         switch (newState)
         {
-            case 11 : //noeud appui simple
+            case 110 : //noeud appui simple
                 this.vue.getTbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 12 : //noeud simple
+            case 120 : //noeud simple
                 this.vue.getTbNoeud().setText("Noeud Simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 13 : //noeud appui double
+            case 130 : //noeud appui double
                 this.vue.getTbNoeud().setText("Noeud Appui double");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 14 : //noeud appui encastré
+            case 140 : //noeud appui encastré
                 this.vue.getTbNoeud().setText("Noeud Appui encasté");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
@@ -140,8 +141,12 @@ public class Controller {
         {
             switch (this.etat)
             {
-                case 12 :
-                    System.out.println("Noeud le plus proche : " + this.vue.getZone_constructible().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur));
+
+                case 110 :
+                    System.out.println("Noeud appui simple le plus proche" + this.vue.getZone_constructible().getDi);
+
+                case 120 :
+                    System.out.println("Noeud simple le plus proche : " + this.vue.getZone_constructible().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur));
                     Noeud_simple noeud_simple = new Noeud_simple(px, py);
                     noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
                     System.out.println(noeud_simple.getID());
