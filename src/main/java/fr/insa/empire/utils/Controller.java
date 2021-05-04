@@ -149,6 +149,7 @@ public class Controller {
 
             case 80 : //on donne la position manuellement
                 choixPositionManuelle();
+                changeEtat(etatPrecedent);
                 break;
         }
 
