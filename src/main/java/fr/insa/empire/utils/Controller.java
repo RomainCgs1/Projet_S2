@@ -3,14 +3,24 @@ package fr.insa.empire.utils;
 import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.graphique.MyCanvas;
 import fr.insa.empire.treillis.*;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 
+import javax.swing.text.html.ImageView;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,6 +28,7 @@ public class Controller {
 
     private MainGraphique vue;
     private int etat;
+    private int etatPrecedent;
     Point p1;
     Point p2;
     Point p3;
@@ -36,6 +47,7 @@ public class Controller {
 
     public void changeEtat(int newState)
     {
+        this.etatPrecedent = this.etat;
         this.etat = newState;
 
         switch (newState)
@@ -133,6 +145,11 @@ public class Controller {
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbGomme().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
+                break;
+
+            case 80 : //on donne la position manuellement
+                choixPositionManuelle();
+                break;
         }
 
     }
@@ -254,7 +271,7 @@ public class Controller {
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
-        this.vue.getlPosition().setText(px + " ; " + py);
+        this.vue.getbPosition().setText(px + " ; " + py);
     }
 
     private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3) {
@@ -290,5 +307,86 @@ public class Controller {
     private void EraseAll() {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
+    }
+
+    private Point choixPositionManuelle() {
+        showPopupChoixPos();
+        return null;
+    }
+
+
+
+
+
+    private Point showPopupChoixPos() {
+        /*TextInputDialog inDialog = new TextInputDialog("Choix manuel de position");
+        inDialog.setTitle("Veuillez saisir la position de votre point");
+        inDialog.setHeaderText(null);
+        inDialog.setContentText("px :");
+        Optional<String> textIn = inDialog.showAndWait();
+        inDialog.setContentText("py :");
+        Optional<String> textIn2 = inDialog.showAndWait();
+        //Renvoie un boolean true si OK et ferme si false
+        if (textIn.isPresent()) {
+            String fichier =   "/" + textIn.get() + ".txt";
+        }*/
+
+        // Create the custom dialog.
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Choix manuel de position");
+        dialog.setHeaderText("Veuillez saisir la position de votre point");
+
+    // Set the icon (must be included in the project).
+        //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
+
+    // Set the button types.
+        ButtonType validationButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(validationButtonType, ButtonType.CANCEL);
+
+    // Create the tfPYX and tfPY labels and fields.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField tfPX = new TextField();
+        tfPX.setPromptText("0");
+        TextField tfPY = new TextField();
+        tfPY.setPromptText("0");
+
+        grid.add(new Label("Px:"), 0, 0);
+        grid.add(tfPX, 1, 0);
+        grid.add(new Label("Py:"), 0, 1);
+        grid.add(tfPY, 1, 1);
+
+    // Enable/Disable login button depending on whether a tfPYX was entered.
+        Node loginButton = dialog.getDialogPane().lookupButton(validationButtonType);
+        loginButton.setDisable(true);
+
+    // Do some validation (using the Java 8 lambda syntax).
+        tfPX.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+
+    // Request focus on the tfPYX field by default.
+        Platform.runLater(() -> tfPX.requestFocus());
+
+    // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == validationButtonType) {
+                return new Pair<>(tfPX.getText(), tfPY.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        result.ifPresent(tfPYXtfPY -> {
+            System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());
+            //return new Point((double) tfPYXtfPY.getKey(), (double) tfPYXtfPY.getValue());
+        });
+        return null;
     }
 }
