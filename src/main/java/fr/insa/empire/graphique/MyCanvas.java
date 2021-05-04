@@ -6,10 +6,7 @@
 package fr.insa.empire.graphique;
 
 import com.sun.javafx.scene.shape.RectangleHelper;
-import fr.insa.empire.treillis.Noeud_appui;
-import fr.insa.empire.treillis.Noeud_simple;
-import fr.insa.empire.treillis.Noeuds;
-import fr.insa.empire.treillis.Treillis;
+import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
@@ -141,11 +138,11 @@ public class MyCanvas extends Canvas {
                         s = val;
                     }
                 }
+            }
 
-                if(distance >= distMax)
-                {
-                    s = null;
-                }
+            if(distance >= distMax)
+            {
+                s = null;
             }
         }
 
@@ -176,5 +173,75 @@ public class MyCanvas extends Canvas {
         {
             return noeudSimplePlusProche;
         }
+    }
+
+    public Segment_terrain getSegmentTerrainPlusProche(double px, double py, Identificateur identificateur) {
+        Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Segment_terrain.class)
+                {
+                    distAct = ((Segment_terrain) val).getDistanceAuClic(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+            }
+
+            if(distance >= distMax)
+            {
+                s = null;
+            }
+            System.out.println("Distance : " + distance);
+        }
+
+        return (Segment_terrain) s;
+    }
+
+    public Barre getBarrePlusProche(double px, double py, Identificateur identificateur) {
+        Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Barre.class)
+                {
+                    distAct = ((Barre) val).getDistanceAuClic(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+            }
+
+            if(distance >= distMax)
+            {
+                s = null;
+            }
+            System.out.println("Distance : " + distance);
+        }
+
+        return (Barre) s;
     }
 }

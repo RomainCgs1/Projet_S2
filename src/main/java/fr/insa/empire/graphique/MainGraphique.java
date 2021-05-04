@@ -67,6 +67,10 @@ public class MainGraphique extends BorderPane {
         return tbNoeud;
     }
 
+    public MyCanvas getCanvas() {
+        return canvas;
+    }
+
     public MyTB getMtbBarre() {
         return mtbBarre;
     }
@@ -146,7 +150,7 @@ public class MainGraphique extends BorderPane {
     public MainGraphique() throws IOException {
 
         //controlleur :
-        this.controller = new Controller(this.canvas);
+        this.controller = new Controller(this);
 
         //point pour triangle terrain
         Point p1 = new Point();
@@ -251,7 +255,14 @@ public class MainGraphique extends BorderPane {
         //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
-                    controller.changeEtat(30);
+                    if(mtbTerrain.isSelected())
+                    {
+                        controller.changeEtat(30);
+                    }
+                    else
+                    {
+                        controller.changeEtat(0);
+                    }
                 }
         );
 

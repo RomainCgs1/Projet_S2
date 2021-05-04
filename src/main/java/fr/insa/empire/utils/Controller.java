@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class Controller {
 
-    private MyCanvas vue;
+    private MainGraphique vue;
     private int etat;
     Point p1;
     Point p2;
@@ -24,7 +24,7 @@ public class Controller {
     Noeuds noeudDebut;
     Noeuds noeudFin;
 
-    public Controller(MyCanvas vue)
+    public Controller(MainGraphique vue)
     {
         this.vue = vue;
         this.etat = 0;
@@ -40,6 +40,13 @@ public class Controller {
 
         switch (newState)
         {
+            case 0: //remise à zero
+                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                break;
             case 110 : //noeud appui simple
                 this.vue.getTbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
@@ -141,34 +148,65 @@ public class Controller {
         {
             switch (this.etat)
             {
-
                 case 110 :
-                    System.out.println("Noeud appui simple le plus proche" + this.vue.getZone_constructible().getDi);
+                    Segment_terrain segment_terrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    System.out.println("Segment terrain le plus proche : " + segment_terrain);
+                    if(segment_terrain == null)
+                    {
+                        //demander si on passe en mode de création segment terrain
+                    }
+                    else
+                    {
+                        //remplacer coord par le pt le plus proche sur le segment
+                        //creer le point sur le segment
+                        Point temp = segment_terrain.getPointSegmTerrPlusProche(px, py);
+                        Appui_simple appuiSimple = new Appui_simple(temp.getPx(), temp.getPy(), segment_terrain);
+                        appuiSimple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiSimple));
+                    }
+                    break;
 
                 case 120 :
-                    System.out.println("Noeud simple le plus proche : " + this.vue.getZone_constructible().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur));
+                    System.out.println("Noeud simple le plus proche : " + this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur));
                     Noeud_simple noeud_simple = new Noeud_simple(px, py);
                     noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
                     System.out.println(noeud_simple.getID());
-                    this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.RED);
-                    this.vue.getZone_constructible().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
+                    this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                    break;
+
+                case 130 :
+                    Segment_terrain segment_terrain1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    System.out.println("Segment terrain le plus proche : " + segment_terrain1);
+                    if(segment_terrain1 == null)
+                    {
+                        //demander si on passe en mode de création segment terrain
+                    }
+                    else
+                    {
+                        //remplacer coord par le pt le plus proche sur le segment
+                        //creer le point sur le segment
+                        Point temp = segment_terrain1.getPointSegmTerrPlusProche(px, py);
+                        Appui_double appuiDouble = new Appui_double(temp.getPx(), temp.getPy(), segment_terrain1);
+                        appuiDouble.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiDouble));
+                    }
                     break;
                 case 20 :
-                    noeudDebut = this.vue.getZone_constructible().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur); //il faudra gérer le fait qu'on peut être null
+                    noeudDebut = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                     if(noeudDebut == null)
                     {
-                        this.changeEtat(12);
+                        this.changeEtat(120);
                         this.canvasClicked(E);
                         this.changeEtat(20);
                         this.canvasClicked(E);
                     }
                     this.changeEtat(21);
                     break;
+
                 case 21 :
-                    noeudFin = this.vue.getZone_constructible().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur); //il faudra gérer le fait qu'on peut être null
+                    noeudFin = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                     if(noeudFin == null)
                     {
-                        this.changeEtat(12);
+                        this.changeEtat(120);
                         this.canvasClicked(E);
                         this.changeEtat(21);
                         this.canvasClicked(E);
@@ -179,6 +217,7 @@ public class Controller {
                     }
                     this.changeEtat(20);
                     break;
+
                 case 30 :
                     this.p1.setPx(px);
                     this.p1.setPy(py);
@@ -186,6 +225,7 @@ public class Controller {
                     changeEtat(31);
                     System.out.println("point 1");
                     break;
+
                 case 31 :
                     this.p2.setPx(px);
                     this.p2.setPy(py);
@@ -193,6 +233,7 @@ public class Controller {
                     changeEtat(32);
                     System.out.println("point 2");
                     break;
+
                 case 32 :
                     this.p3.setPx(px);
                     this.p3.setPy(py);
@@ -223,10 +264,10 @@ public class Controller {
         Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
         triangle_terrain.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(triangle_terrain));
 
-        this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.BLACK);
-        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
-        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
-        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
+        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLACK);
+        this.vue.getCanvas().getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
+        this.vue.getCanvas().getGraphicsContext2D().strokeLine(p2.getPx(), p2.getPy(), p3.getPx(), p3.getPy());
+        this.vue.getCanvas().getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
 
         System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
         return triangle_terrain;
@@ -237,8 +278,8 @@ public class Controller {
         Barre barre = new Barre(noeudDebut, noeudFin);
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
 
-        this.vue.getZone_constructible().getGraphicsContext2D().setStroke(Color.BLUE);
-        this.vue.getZone_constructible().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
+        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLUE);
+        this.vue.getCanvas().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
         return barre;
@@ -247,8 +288,7 @@ public class Controller {
 
 
     private void EraseAll() {
-        this.vue.getIdentificateur().getKetToObject().clear();
-        this.vue.getIdentificateur().getObjectToKey().clear();
-        this.vue.getZone_constructible().getGraphicsContext2D().clearRect(0, 0, this.vue.getZone_constructible().getWidth(), this.vue.getZone_constructible().getHeight());
+        this.vue.getIdentificateur().clear();
+        this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
     }
 }
