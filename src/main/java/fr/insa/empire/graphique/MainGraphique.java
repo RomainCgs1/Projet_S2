@@ -34,7 +34,7 @@ public class MainGraphique extends BorderPane {
     private MyB mbLancerCalculs;
     private MyB mbReglages;
     private final MyB mbTypeBarre;
-    private Label lPosition;
+    private MyB bPosition;
     private HBox hbConstruction;
     private VBox vbUp;
     private HBox hbIcones;
@@ -65,6 +65,10 @@ public class MainGraphique extends BorderPane {
 
     public SplitMenuButton getTbNoeud() {
         return tbNoeud;
+    }
+
+    public MyCanvas getCanvas() {
+        return canvas;
     }
 
     public MyTB getMtbBarre() {
@@ -135,8 +139,8 @@ public class MainGraphique extends BorderPane {
         return treillis;
     }
 
-    public Label getlPosition() {
-        return lPosition;
+    public MyB getbPosition() {
+        return bPosition;
     }
 
     public HBox getHbPosition() {
@@ -146,7 +150,7 @@ public class MainGraphique extends BorderPane {
     public MainGraphique() throws IOException {
 
         //controlleur :
-        this.controller = new Controller(this.canvas);
+        this.controller = new Controller(this);
 
         //point pour triangle terrain
         Point p1 = new Point();
@@ -205,10 +209,15 @@ public class MainGraphique extends BorderPane {
         vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
-        lPosition = new Label("0 ; 0");
-        this.hbPosition = new HBox(lPosition);
+        bPosition = new MyB("0 ; 0");
+        this.hbPosition = new HBox(bPosition);
         this.hbPosition.setAlignment(Pos.CENTER_RIGHT);
         this.setBottom(hbPosition);
+        this.bPosition.setOnAction(
+                action -> {
+                    controller.changeEtat(80);
+                }
+        );
 
         //actione de barre
         this.mtbBarre.setOnAction(
@@ -251,7 +260,14 @@ public class MainGraphique extends BorderPane {
         //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
-                    controller.changeEtat(30);
+                    if(mtbTerrain.isSelected())
+                    {
+                        controller.changeEtat(30);
+                    }
+                    else
+                    {
+                        controller.changeEtat(0);
+                    }
                 }
         );
 

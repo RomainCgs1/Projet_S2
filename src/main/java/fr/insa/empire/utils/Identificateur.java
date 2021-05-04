@@ -67,4 +67,10 @@ public class Identificateur {
         }
         return s;
     }
+
+    public void clear() {
+        this.ketToObject.clear();
+        this.objectToKey.clear();
+        this.valCur = 0;
+    }
 }

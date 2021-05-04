@@ -342,7 +342,7 @@ public class Matrice {
         //On parcourt la matrice pour que les valeurs inférieures à epsilon deviennent nulles
         for (int i = 0; i < this.nbrLig; i++) {
             for (int j = 0; j < this.nbrCol; j++) {
-                    if(this.coeffs[i][j]<=epsilon){
+                    if(Math.abs(this.coeffs[i][j])<=epsilon){
                         this.coeffs[i][j] =0;
                     }
             }
@@ -356,18 +356,18 @@ public class Matrice {
                 }
             }
             if(nb0==this.nbrCol-1){
-                System.out.println("La colonne "+i+" est remplie de 0");
+               // System.out.println("La colonne "+i+" est remplie de 0");
                 if(i != this.nbrCol-1){
                     nbColNulle++;
                     this.decalageCol(i);
-                    System.out.println("Décalage effectué");
-                    System.out.println("Matrice actuelle :\n"+this.toString());
+//                    System.out.println("Décalage effectué");
+//                    System.out.println("Matrice actuelle :\n"+this.toString());
                 }
             }
             nb0=0;
         }
         
-        System.out.println("Nombre de colonnes nulles : "+nbColNulle);
+        //System.out.println("Nombre de colonnes nulles : "+(nbColNulle-1));
         
         Matrice newMatrice = new Matrice (this.nbrLig, this.nbrCol-nbColNulle);
         for (int i = 0; i < newMatrice.getNbrLig(); i++) {
@@ -382,13 +382,15 @@ public class Matrice {
     }
     
     public void decalageCol(int i){
-        for (int k = 0; k < this.nbrLig; k++) {
-            for (int j = i; j < this.nbrCol; j++) {
+        for (int k = i; k < this.nbrCol-1; k++) {
+            for (int j = 0; j < this.nbrLig; j++) {
                 if(j != this.nbrCol-1){
-                    this.coeffs[k][j]=this.coeffs[k][j+1];
+                    //System.out.println("La case ["+j+"]["+k+"]"+this.coeffs[j][k]+" devient ["+j+"]["+(k+1)+"]"+this.coeffs[j][k+1]);
+                    this.coeffs[j][k]=this.coeffs[j][k+1];
                 }
                 else{
-                    this.coeffs[k][j] = 0;
+                    //System.out.println("La case ["+j+"]["+k+"]"+this.coeffs[j][k]+" devient ["+j+"]["+(k+1)+"]"+this.coeffs[j][k+1]);
+                    this.coeffs[j][k] = 0;
                 }
             }
         }

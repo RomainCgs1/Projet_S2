@@ -15,6 +15,7 @@ public class Barre {
     private Noeuds noeudFin;
     private Type_de_barre type;
     private double longueur;
+    private double angleAlpha;
 
     //Constructeur
     public Barre(Noeuds noeudDebut, Noeuds noeudFin, Type_de_barre type) {
@@ -100,6 +101,14 @@ public class Barre {
         this.tensionBarre = tensionBarre;
     }
 
+    public double getAngleAlpha() {
+        return angleAlpha;
+    }
+
+    public void setAngleAlpha(double angleAlpha) {
+        this.angleAlpha = angleAlpha;
+    }
+
     //to String 
     public String toString() {
         String s = "";
@@ -113,6 +122,7 @@ public class Barre {
 
     //Calcul de la longueur
     public double calculLongueur() {
+        
         double pxDeb = 0;
         double pyDeb = 0;
         double pxFin = 0;
@@ -136,11 +146,11 @@ public class Barre {
             pxFin = ((Noeud_appui) this.noeudFin).getPx();
             pyFin = ((Noeud_appui) this.noeudFin).getPy();
         }
-        if(this.noeudDebut.getClass() == Appui_double.class){
+        if (this.noeudDebut.getClass() == Appui_double.class){
             pxDeb = ((Appui_double) this.noeudDebut).getPx();
             pyDeb = ((Appui_double) this.noeudDebut).getPy();
         }
-        if(this.noeudFin.getClass() == Appui_double.class){
+        if (this.noeudFin.getClass() == Appui_double.class){
             pxFin = ((Appui_double) this.noeudFin).getPx();
             pyFin = ((Appui_double) this.noeudFin).getPy();
         }
@@ -161,11 +171,18 @@ public class Barre {
     }
 
     //Calcul angle alpha
-    public double calculAngleAlphaTension() {
+    public double calculAngleAlphaTension(Noeuds noeudRegarde) {
+        
         Point p1 = new Point();
         Point p2 = new Point();
-
+        
         double alpha = 0;
+        double seg1X = 0; //Segment 1 correspond au seg des points alignés
+        double seg1Y = 0;
+        double seg2X = 0; //Segment 2 correspond à la barre
+        double seg2Y = 0;
+        double normeSeg1 = 0;
+        double normeSeg2 = 0;
 
         if (this.getNoeudDebut().getClass() == Noeud_simple.class) {
             p1.setPx(((Noeud_simple) this.getNoeudDebut()).getPx());
@@ -184,36 +201,90 @@ public class Barre {
             p2.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
         }
 
+        if (noeudRegarde!=this.getNoeudDebut()){
+            System.out.println("Changement des points"+p1.toString()+"et "+p2.toString());
+            Point pTampon = p1;
+            p1 = p2;
+            p2 = pTampon;
+            System.out.println("P1 : "+p1.toString());
+            System.out.println("P2 : "+p2.toString());
+        }
+        
         Point p3 = new Point(p1.getPx(), p2.getPy());
 
-//        System.out.println("DANS CALCUL ALPHA");
-//        System.out.println("p1 : " + p1.toString());
-//        System.out.println("p2 : " + p2.toString());
-//        System.out.println("p3 : " + p3.toString());
+        System.out.println("DANS CALCUL ALPHA");
+        System.out.println("p1 : " + p1.toString());
+        System.out.println("p2 : " + p2.toString());
+        System.out.println("p3 : " + p3.toString());
 
-        double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
-        double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
-
-        if (longeurSegP2P3 == 0) {
-//            System.out.println("Impossible d'effectuer la division par 0");
-//            System.out.println("La force ne possède qu'une composante sur Y");
-            if (p3.getPy() > 0) {
-                alpha = Math.PI / 2;
-//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-                return alpha;
-            } else {
-                alpha = -Math.PI / 2;
-//                System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-                return alpha;
-            }
-        } else {
-            alpha = Math.atan(longueurSegP1P3 / longeurSegP2P3);
-//            System.out.println("Alpha vaut : " + Math.toDegrees(alpha));
-//            System.out.println("Alpha sin vaut : "+Math.toDegrees(Math.asin((longueurSegP1P3/this.longueur))));
+        //On regarde si les 3 points sont alignés
+        if ((p1.getPy() == p2.getPy())){
+            System.out.println("La barre est parallèle à l'axe des abcisses, alpha vaut 0");
+            return alpha;
+        }
+        
+        if (p1.getPx()==p2.getPx()){
+            System.out.println("La barre est perpendiculaire à l'axe des abscisses, apha vaut 90");
+            alpha = Math.PI/2;
+            return alpha;
+        }
+        
+        if (p1.getPy() == p3.getPy()){
+            System.out.println("P1 et P3 alignés horizontalement");
+            //On prend comme origine le point qui appartient à la barre
+            seg1X = p3.getPx() - p1.getPx();
+            seg1Y = p3.getPy() - p1.getPy();
+            normeSeg1 = calculNorme(seg1X, seg1Y);
+            System.out.println(afficheSeg(seg1X, seg1Y, normeSeg1));
+            
+            //On prend comme origine le point p1 pour exprimer le vecteur barre
+            seg2X = p2.getPx() - p1.getPx();
+            seg2Y = p2.getPy() - p1.getPy();
+            normeSeg2 = calculNorme(seg2X, seg2Y);
+            System.out.println(afficheSeg(seg2X, seg2Y, normeSeg2));
+        }
+        
+        if (p2.getPy() == p3.getPy()){
+            System.out.println("P2 et P3 alignés horizontalement");
+            //On prend comme origine le point qui appartient à la barre
+            seg1X = p3.getPx() - p2.getPx();
+            seg1Y = p3.getPy() - p2.getPy();
+            normeSeg1 = calculNorme(seg1X, seg1Y);
+            System.out.println(afficheSeg(seg1X, seg1Y, normeSeg1));
+            
+            //On prend comme origine le point p1 pour exprimer le vecteur barre
+            seg2X = p1.getPx() - p2.getPx();
+            seg2Y = p1.getPy() - p2.getPy();
+            normeSeg2 = calculNorme(seg2X, seg2Y);
+            System.out.println(afficheSeg(seg2X, seg2Y, normeSeg2));
+        }
+        
+        double scalaire = seg1X*seg2X+seg1Y*seg2Y;
+        System.out.println("SCALAIRE = "+scalaire);
+        
+        if(normeSeg1*normeSeg2==0){
+            System.out.println("Alpha vaut : "+alpha);
+            return alpha;
+        }else{
+            System.out.println("On va fait arccos de "+(scalaire/(normeSeg1*normeSeg2)));
+            alpha = Math.acos(scalaire/(normeSeg1*normeSeg2));
+            System.out.println("Alpha vaut : "+alpha);
             return alpha;
         }
     }
-
+    
+    public String afficheSeg(double segX, double segY, double norme){
+        String s ="";
+        s = s+"seg X "+segX+"\n";
+        s = s+"seg Y "+segY+"\n";
+        s = s+"norme "+norme+"";
+        return s;
+    }
+    
+    public static double calculNorme(double fx, double fy){
+        return Math.sqrt(fx*fx+fy*fy);
+    }
+    
     public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
         double segX = p2.getPx() - p1.getPx();
         double segY = p2.getPy() - p1.getPy();

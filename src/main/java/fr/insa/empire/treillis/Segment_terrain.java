@@ -74,37 +74,30 @@ public class Segment_terrain {
         Point p2 = this.pointFin;
         Point p3 = new Point(p2.getPx(), p1.getPy());
 
-        double beta = 0;
-        int abscisse0 = 0;
+        double beta = Math.PI/2;
         
 //        System.out.println("DANS CALCUL BETA");
 //        System.out.println("p1 : " + p1.toString());
 //        System.out.println("p2 : " + p2.toString());
 //        System.out.println("p3 : " + p3.toString());
 
-        double longeurSegP2P3 = calculLongueurSegmentP1P2(p2, p3);
-        double longueurSegP1P3 = calculLongueurSegmentP1P2(p1, p3);
-
-        if (p1.getPx()==p2.getPx()){
-            if(p1.getPx()==0){
-                //System.out.println("Les abscisses de p1 et p2 sont nulles");
-                abscisse0 =1;
-            }
-        }
+        double seg12X = p2.getPx() - p1.getPx();
+        double seg12Y = p2.getPy() - p1.getPy();
         
-        if (abscisse0==1) {
-//            System.out.println("Le segment est orthogonale à l'axe des X");
-//            System.out.println("Beta vaut : 0");
-            return beta =0;
-        } 
-        else if (longeurSegP2P3 == 0){
-//            System.out.println("Le segment est confondu avec l'axe des X");
-//            System.out.println("Beta vaut : "+Math.toDegrees(Math.PI/2));
-            return beta = Math.PI/2;
-        }
-        else {
-            beta = Math.atan(longueurSegP1P3 / longeurSegP2P3)+Math.PI/2;
-//            System.out.println("Beta vaut : " + Math.toDegrees(beta));
+        double seg13X = p3.getPx() - p1.getPx();
+        double seg13Y = p3.getPy() - p1.getPy();
+        
+        double norme12 = Barre.calculNorme(seg12X, seg12Y);
+        double norme13 = Barre.calculNorme(seg13X, seg13Y);
+        
+        double scalaire = seg12X*seg13X+seg12Y*seg13Y;
+        
+        if(norme12*norme13==0){
+            System.out.println("Beta vaut : "+beta);
+            return beta;
+        }else{
+            beta = (Math.PI/2)+ Math.acos(scalaire/(norme12*norme13));
+            System.out.println("Beta vaut : "+beta);
             return beta;
         }
     }
@@ -166,5 +159,9 @@ public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
 
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;
+    }
+
+    public Point getPointSegmTerrPlusProche(double px, double py) {
+        return new Point(px, py);
     }
 }
