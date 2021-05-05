@@ -110,7 +110,7 @@ public double getDistanceAuClic(double Px, double Py){
         
         double D;
         
-        // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
+        // test si le point est entre les droite normales au segment Terrain passantes aux extrémitées du segment Terrain.
         if(((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 > 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 < 0 )||((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 < 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 > 0 ) ){
             
             
@@ -125,6 +125,18 @@ public double getDistanceAuClic(double Px, double Py){
             return D;
         }
     }
+
+public Point getPointSegmTerrPlusProche(double Px,double Py){
+    double X1 = this.pointDebut.getPx();
+    double Y1 = this.pointDebut.getPy();
+    double X2 = this.pointFin.getPx();
+    double Y2 = this.pointFin.getPy();
+    
+    double X =(-(Y1-Y2)/(X1-X2)*X1 - Y1 +((X2-X1)/(Y2-Y1)*Px)+Py)/((X1-X2)/(Y2-Y1) - (Y2-Y1)/(X2-X1));
+    double Y = (Y2-Y1)/(X2-X1)*X + (Y1-Y2)/(X2-X1)*X1 + Y1;
+    Point P = new Point(X,Y);
+    return P;
+}
 
 //Save
 public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
