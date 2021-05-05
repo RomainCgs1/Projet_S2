@@ -13,6 +13,18 @@ public class Triangle_terrain {
     private Segment_terrain segment2;
     private Segment_terrain segment3;
 
+    public Segment_terrain getSegment1() {
+        return segment1;
+    }
+
+    public Segment_terrain getSegment2() {
+        return segment2;
+    }
+
+    public Segment_terrain getSegment3() {
+        return segment3;
+    }
+
     public Triangle_terrain(Segment_terrain seg1, Segment_terrain seg2, Segment_terrain seg3) {
         this.segment1 = seg1;
         this.segment2 = seg2;

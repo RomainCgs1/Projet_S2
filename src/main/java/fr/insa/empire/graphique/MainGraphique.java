@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
@@ -17,35 +18,36 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class MainGraphique extends BorderPane {
 
-    private Controller controller;
-    private Treillis treillis;
-    private MenuItem choix1;
-    private MenuItem choix2;
-    private MenuItem choix3;
-    private MenuItem choix4;
-    private SplitMenuButton tbNoeud;
-    private MyTB mtbBarre;
-    private MyTB mtbTerrain;
-    private MyTB mtbSelection;
-    private MyTB mtbGomme;
-    private MyB mbLancerCalculs;
-    private MyB mbReglages;
+    private final Controller controller;
+    private final Treillis treillis;
+    private final MenuItem choix1;
+    private final MenuItem choix2;
+    private final MenuItem choix3;
+    private final MenuItem choix4;
+    private final SplitMenuButton tbNoeud;
+    private final MyTB mtbBarre;
+    private final MyTB mtbTerrain;
+    private final MyTB mtbSelection;
+    private final MyTB mtbGomme;
+    private final MyB mbLancerCalculs;
+    private final MyB mbReglages;
     private final MyB mbTypeBarre;
-    private MyB bPosition;
-    private HBox hbConstruction;
-    private VBox vbUp;
-    private HBox hbIcones;
-    private HBox hbPosition;
-    private MyCanvas canvas;
+    private final MyB bPosition;
+    private final HBox hbConstruction;
+    private final VBox vbUp;
+    private final HBox hbIcones;
+    private final HBox hbPosition;
+    private final MyCanvas canvas;
     private int etatNoeud;
     private double px;
     private double py;
     private int nbDeClick;
 
-    private MyMenuBar menuBar;
+    private final MyMenuBar menuBar;
 
     public Controller getController() {
         return controller;
@@ -166,7 +168,7 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
-        this.canvas = new MyCanvas();
+        this.canvas = new MyCanvas(this);
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
 
@@ -322,5 +324,46 @@ public class MainGraphique extends BorderPane {
                     this.treillis.testForce();
                 }
         );
+    }
+
+    public void recontruction()
+    {
+        GraphicsContext graphicsContext = this.canvas.getGraphicsContext2D();
+        for (Map.Entry mapentry : this.treillis.identificateur.getKetToObject().entrySet())
+        {
+            Object key = mapentry.getKey();
+            Object val = mapentry.getValue();
+            if(val.getClass() == Appui_double.class)
+            {
+                graphicsContext.setStroke(Color.RED);
+                graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
+            }
+            else if(val.getClass() == Appui_simple.class)
+            {
+                graphicsContext.setStroke(Color.RED);
+                graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
+            }
+            else if(val.getClass() == Noeud_appui.class)
+            {
+                //normalement on sera passé par appui double ou simple
+            }
+            else if(val.getClass() == Noeud_simple.class)
+            {
+                graphicsContext.setStroke(Color.RED);
+                graphicsContext.strokeOval(((Noeud_simple) val).getPx() - 5, ((Noeud_simple) val).getPy() - 5, 10, 10);
+            }
+            else if(val.getClass() == Barre.class)
+            {
+                graphicsContext.setStroke(Color.BLUE);
+                graphicsContext.strokeLine(((Barre) val).getNoeudDebut().getPx(), ((Barre) val).getNoeudDebut().getPy(), ((Barre) val).getNoeudFin().getPx(), ((Barre) val).getNoeudFin().getPy());
+            }
+            else if(val.getClass() == Triangle_terrain.class)
+            {
+                graphicsContext.setStroke(Color.BLACK);
+                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment1().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment1().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment1().getPointFin().getPx(), ((Triangle_terrain) val).getSegment1().getPointFin().getPy());
+                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment2().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment2().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment2().getPointFin().getPx(), ((Triangle_terrain) val).getSegment2().getPointFin().getPy());
+                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment3().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment3().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment3().getPointFin().getPx(), ((Triangle_terrain) val).getSegment3().getPointFin().getPy());
+            }
+        }
     }
 }

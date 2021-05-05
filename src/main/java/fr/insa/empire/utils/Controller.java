@@ -1,27 +1,17 @@
 package fr.insa.empire.utils;
 
-import fr.insa.empire.graphique.MainGraphique;
-import fr.insa.empire.graphique.MyCanvas;
+    import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.treillis.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import javax.swing.text.html.ImageView;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Optional;
 
 public class Controller {
@@ -239,7 +229,7 @@ public class Controller {
                 case 30 :
                     this.p1.setPx(px);
                     this.p1.setPy(py);
-                    this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
+                    //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                     changeEtat(31);
                     System.out.println("point 1");
                     break;
@@ -247,7 +237,7 @@ public class Controller {
                 case 31 :
                     this.p2.setPx(px);
                     this.p2.setPy(py);
-                    this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
+                    //this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
                     changeEtat(32);
                     System.out.println("point 2");
                     break;
@@ -255,7 +245,7 @@ public class Controller {
                 case 32 :
                     this.p3.setPx(px);
                     this.p3.setPy(py);
-                    this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
+                    //this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                     System.out.println("point 3");
                     Triangle_terrain triangle_terrain = creationTriangleTerrain(this.p1, this.p2, this.p3);
 
@@ -351,9 +341,10 @@ public class Controller {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField tfPX = new TextField();
-        tfPX.setPromptText("0");
+        String[] positon = this.vue.getbPosition().getText().split(" ");
+        tfPX.setPromptText(positon[0]);
         TextField tfPY = new TextField();
-        tfPY.setPromptText("0");
+        tfPY.setPromptText(positon[2]);
 
         grid.add(new Label("Px:"), 0, 0);
         grid.add(tfPX, 1, 0);

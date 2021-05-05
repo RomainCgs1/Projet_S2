@@ -14,9 +14,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Map;
+import java.util.Set;
 
 public class MyCanvas extends Canvas {
 
+    private MainGraphique mainGraphique;
     private double xMin;
     private double xMax;
     private double yMin;
@@ -25,7 +27,9 @@ public class MyCanvas extends Canvas {
     private double distMax = 10;
     //public Set<Triangle_terrain> contient;
 
-    public MyCanvas() {
+    public MyCanvas(MainGraphique mainGraphique)
+    {
+        this.mainGraphique = mainGraphique;
     }
 
     @Override
@@ -71,12 +75,14 @@ public class MyCanvas extends Canvas {
         super.setHeight(height-10);
 
         GraphicsContext graphicsContext2D = this.getGraphicsContext2D();
-        //graphicsContext2D.clearRect(0, 0, width, height);
+        graphicsContext2D.clearRect(0, 0, width, height);
 
         graphicsContext2D.setStroke(Color.GRAY);
         graphicsContext2D.strokeRect(0, 0, width-10, height-10);
 
+
         //redraw ce qui a été ajouté
+        mainGraphique.recontruction();
     }
 
     public Noeud_simple getNoeud_simplePlusProche(double px, double py, Identificateur identificateur)

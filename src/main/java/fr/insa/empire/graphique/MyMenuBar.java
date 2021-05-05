@@ -88,25 +88,28 @@ public class MyMenuBar extends MenuBar {
                     File selectedFile = directoryChooser.showDialog(new Stage());
                     System.out.println(selectedFile);
 
-                    //saisie du nom de fichier
-                    TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
-                    inDialog.setTitle("Veuillez entrer le nom de votre treilli");
-                    inDialog.setHeaderText(null);
-                    inDialog.setContentText("Nom du fichier :");
-                    //inDialog.setGraphic(new ImageView("C:/Users/romai/OneDrive/Bureau/save.png"));
-                    Optional<String> textIn = inDialog.showAndWait();
-                    //Renvoie un boolean true si OK et ferme si false
-                    if (textIn.isPresent()) {
-                        String fichier = selectedFile + "/" + textIn.get() + ".txt";
-                        System.out.println("Nom du fichier : " + textIn.get());
-                        System.out.println(fichier);
-                        System.out.println("Sauvegarde en cours");
-                        try (BufferedWriter bf = new BufferedWriter(new FileWriter(fichier))) {
-                            this.mainGraphique.getTreillis().save(bf);
-                        } catch (IOException ex) {
-                            System.out.println("Erreur " + ex + "impossible d'effectuer la sauvegarde");
+                    if(selectedFile != null)
+                    {
+                        //saisie du nom de fichier
+                        TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
+                        inDialog.setTitle("Veuillez entrer le nom de votre treilli");
+                        inDialog.setHeaderText(null);
+                        inDialog.setContentText("Nom du fichier :");
+                        //inDialog.setGraphic(new ImageView("C:/Users/romai/OneDrive/Bureau/save.png"));
+                        Optional<String> textIn = inDialog.showAndWait();
+                        //Renvoie un boolean true si OK et ferme si false
+                        if (textIn.isPresent()) {
+                            String fichier = selectedFile + "/" + textIn.get() + ".txt";
+                            System.out.println("Nom du fichier : " + textIn.get());
+                            System.out.println(fichier);
+                            System.out.println("Sauvegarde en cours");
+                            try (BufferedWriter bf = new BufferedWriter(new FileWriter(fichier))) {
+                                this.mainGraphique.getTreillis().save(bf);
+                            } catch (IOException ex) {
+                                System.out.println("Erreur " + ex + "impossible d'effectuer la sauvegarde");
+                            }
+                            System.out.println("Sauvegarde terminee");
                         }
-                        System.out.println("Sauvegarde terminee");
                     }
                 }
         );
