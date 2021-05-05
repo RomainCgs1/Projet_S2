@@ -193,8 +193,8 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Noeud_simple) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Noeud_simple) val)));
-                        //System.out.println("Alpha vaut \n"+((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        ((Noeud_simple) val).getAppartientABarre().get(i).composantesTension(((Noeud_simple) val));
                         noeudsimpleTension.add(tension);
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
@@ -254,9 +254,8 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Appui_simple) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_simple) val)));
-                        System.out.println("Alpha vaut \n"+((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_simple) val)));
-                        appuiSimpleTension.add(tension);
+                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        ((Appui_simple) val).getAppartientABarre().get(i).composantesTension(((Appui_simple) val));appuiSimpleTension.add(tension);
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
@@ -314,9 +313,8 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Appui_double) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_double) val)));
-                        System.out.println("Alpha vaut \n"+((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_double) val)));
-                        appuiDoubleForce.add(tension);
+                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        ((Appui_double) val).getAppartientABarre().get(i).composantesTension(((Appui_double) val));appuiDoubleForce.add(tension);
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx"+tension.getFx()+"\n"+"fy"+tension.getFy());
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
@@ -358,9 +356,9 @@ public class Force {
                     System.out.println("La dernière colonne remplie est "+tailleArrayIni);
                     System.out.println("Ajout de la réaction du noeud");
                     System.out.println("Force " + reactionAD.getIdentifiant() + "ajouté en [" + l + "," + (tailleArrayIni) + "], la composante " + reactionAD.getFx());
-                    systeme.getCoeffs()[l][tailleArrayIni] = -reactionAD.getFx();
+                    systeme.getCoeffs()[l][tailleArrayIni] = reactionAD.getFx();
                     System.out.println("Force " + reactionAD.getIdentifiant() + "ajouté en [" + (l+1) + "," + (tailleArrayIni+1) + "], la composante " + reactionAD.getFy());
-                    systeme.getCoeffs()[l + 1][tailleArrayIni+1] = -reactionAD.getFy();
+                    systeme.getCoeffs()[l + 1][tailleArrayIni+1] = reactionAD.getFy();
                     tailleArrayIni = idForceLinkMatrice.size();
                     appuiDoubleForce.removeAll(appuiDoubleForce);
                     l = l + 2;

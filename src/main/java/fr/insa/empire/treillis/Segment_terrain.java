@@ -161,7 +161,7 @@ public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         this.identifiant = identifiant;
     }
 
-    public Point getPointSegmTerrPlusProche(double px, double py) {
-        return new Point(px, py);
-    }
+//    public Point getPointSegmTerrPlusProche(double px, double py) {
+//        return new Point(px, py);
+//    }
 }
