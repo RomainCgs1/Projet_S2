@@ -2,6 +2,8 @@ package fr.insa.empire.treillis;
 
 import fr.insa.empire.syslin.Matrice;
 import fr.insa.empire.utils.Identificateur;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -154,6 +156,60 @@ public class Treillis {
             }
         }
         bW.append("FIN TREILLI\n");
+    }
+
+    public void open(BufferedReader bR) throws IOException
+    {
+        System.out.println("Début de la lecture");
+        String strCurrentLine;
+        while ((strCurrentLine = bR.readLine()) != null) {
+            System.out.println(strCurrentLine);
+            String[] splitStrCurrLine = strCurrentLine.split("/");
+            if(splitStrCurrLine[0].equals("DEBUT TREILLI"))
+            {
+
+            }
+            else if(splitStrCurrLine[0].equals("FIN TREILLI"))
+            {
+
+            }
+            else
+            {
+                if(splitStrCurrLine[0].equals("DEBUT_Triangle_terrain"))
+                {
+                    //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
+                    //on integrera la leture des segements qui lui appartiennent
+                }
+                else if(splitStrCurrLine[0].toLowerCase().equals("debut_barre"))
+                {
+                    for(int i=1; i<splitStrCurrLine.length; i++)
+                    {
+                        //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
+                    }
+                }
+                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_simple"))
+                {
+                    Noeud_simple noeudSimple = new Noeud_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]));
+                    identificateur.getOrSetKey(noeudSimple);
+                }
+                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_simple"))
+                {
+                    Appui_simple appuiSimple = new Appui_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
+                    identificateur.getOrSetKey(appuiSimple);
+                }
+                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_double"))
+                {
+                    Appui_double appuiDouble = new Appui_double(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
+                    identificateur.getOrSetKey(appuiDouble);
+                }
+                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_encastre"))
+                {
+                    Appui_encastre appuiEncastre = new Appui_encastre(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
+                    identificateur.getOrSetKey(appuiEncastre);
+                }
+            }
+
+        }
     }
 
     public void lancerCalculGeneraux(Noeud_simple noeudSimple){

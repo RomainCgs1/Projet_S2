@@ -39,7 +39,7 @@ public class Identificateur {
         this.objectToKey = new HashMap<Object, Integer>();
     }
 
-    public int getOrSetKey (Object o){
+    public int getOrSetKey (Object o) {
         
         Integer val = this.objectToKey.get(o);
         if (val != null){

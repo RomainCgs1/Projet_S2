@@ -41,7 +41,7 @@ public class Triangle_terrain {
 
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : Debut_Triangle_terrain/id/Segment1/id/Segment2/id/Segment3/id/Fin_Traingle_terrain
-        bW.append("Debut_Triangle_terrain/");
+        bW.append("DEBUT_Triangle_terrain/");
         bW.append(this.identifiant + "/\n");
         bW.append("Segment1/\n");
         if (!idNum.objetPresent(this.segment1)) {
@@ -61,6 +61,6 @@ public class Triangle_terrain {
         } else {
             bW.append(idNum.getOrSetKey(this.segment3) + "\n");
         }
-        bW.append("Fin_Triangle_terrain\n");
+        bW.append("FIN_Triangle_terrain\n");
     }
 }

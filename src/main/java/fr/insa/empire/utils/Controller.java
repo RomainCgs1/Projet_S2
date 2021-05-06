@@ -101,12 +101,6 @@ public class Controller {
                 this.vue.getMtbSelection().setSelected(false);
                 EraseAll();
                 break;
-            case 60 : //barre
-                this.vue.getTbNoeud().setText("Noeud");
-                this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
-                break;
             case 70 : //calculs
                 Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
                 dBox.setTitle("A confirmation dialog-box with custom actions");
@@ -221,33 +215,30 @@ public class Controller {
                     }
                     else
                     {
-                        Barre barre = creationBarre(this.noeudDebut, this.noeudFin);
+                        creationBarre(this.noeudDebut, this.noeudFin);
                     }
                     this.changeEtat(20);
                     break;
 
                 case 30 :
-                    this.p1.setPx(px);
-                    this.p1.setPy(py);
+                    p1 = new Point(px, py);
                     //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                     changeEtat(31);
                     System.out.println("point 1");
                     break;
 
                 case 31 :
-                    this.p2.setPx(px);
-                    this.p2.setPy(py);
+                    p2 = new Point(px, py);
                     //this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
                     changeEtat(32);
                     System.out.println("point 2");
                     break;
 
                 case 32 :
-                    this.p3.setPx(px);
-                    this.p3.setPy(py);
+                    p3 = new Point(px, py);
                     //this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                     System.out.println("point 3");
-                    Triangle_terrain triangle_terrain = creationTriangleTerrain(this.p1, this.p2, this.p3);
+                    creationTriangleTerrain(this.p1, this.p2, this.p3);
 
                     System.out.println(this.p1 + "\n" +
                             this.p2 + "\n" +
@@ -265,10 +256,14 @@ public class Controller {
         this.vue.getbPosition().setText(px + " ; " + py);
     }
 
-    private Triangle_terrain creationTriangleTerrain(Point p1, Point p2, Point p3) {
+    private void creationTriangleTerrain(Point p1, Point p2, Point p3) {
         Segment_terrain seg1 = new Segment_terrain(p1, p2);
+        seg1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(seg1));
         Segment_terrain seg2 = new Segment_terrain(p2, p3);
+        seg2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(seg2));
         Segment_terrain seg3 = new Segment_terrain(p3, p1);
+        seg3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(seg3));
+
         Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
         triangle_terrain.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(triangle_terrain));
 
@@ -278,10 +273,9 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
 
         System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
-        return triangle_terrain;
     }
 
-    private Barre creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
+    private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
         Barre barre = new Barre(noeudDebut, noeudFin);
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
@@ -290,7 +284,6 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
-        return barre;
     }
 
 
