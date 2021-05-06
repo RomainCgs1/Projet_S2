@@ -147,7 +147,7 @@ public class Segment_terrain {
         /*X = (-(Y1 - Y2) / (X1 - X2) * X1 - Y1 + ((X2 - X1) / (Y2 - Y1) * Px) + Py) / ((X1 - X2) / (Y2 - Y1) - (Y2 - Y1) / (X2 - X1));
         Y = (Y2 - Y1) / (X2 - X1) * X + (Y1 - Y2) / (X2 - X1) * X1 + Y1;
         Point P = new Point(X, Y);
-        System.out.println(P);*/
+        System.out.println(P); */
 
         //alternative :
         double ux = Px - X1;
