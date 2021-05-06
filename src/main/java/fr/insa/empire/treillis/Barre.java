@@ -52,59 +52,59 @@ public class Barre {
     public Noeuds getNoeudDebut() {
         return this.noeudDebut;
     }
-
+    
     public Noeuds getNoeudFin() {
         return this.noeudFin;
     }
-
+    
     public Type_de_barre getType() {
         return this.type;
     }
-
+    
     public void setNoeudDebut(Noeuds noeudDebut) {
         this.noeudDebut = noeudDebut;
     }
-
+    
     public void setNoeudFin(Noeuds noeudFin) {
         this.noeudFin = noeudFin;
     }
-
+    
     public void setType(Type_de_barre type) {
         this.type = type;
     }
-
+    
     public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
-
+    
     public double getLongueur() {
         return this.longueur;
     }
-
+    
     public double getPrix() {
         return this.type.getCoutAuMetre();
     }
-
+    
     public int getIdentifiant() {
         return identifiant;
     }
-
+    
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;
     }
-
+    
     public Force getTensionBarre() {
         return tensionBarre;
     }
-
+    
     public void setTensionBarre(Force tensionBarre) {
         this.tensionBarre = tensionBarre;
     }
-
+    
     public double getAngleAlpha() {
         return angleAlpha;
     }
-
+    
     public void setAngleAlpha(double angleAlpha) {
         this.angleAlpha = angleAlpha;
     }
@@ -116,7 +116,7 @@ public class Barre {
         s = s + "Type de la barre : " + this.type + "\n";
         s = s + "Noeud du debut " + this.noeudDebut + "\n";
         s = s + "Noeud de la fin " + this.noeudFin + "\n";
-
+        
         return s;
     }
 
@@ -142,15 +142,15 @@ public class Barre {
             pxFin = ((Noeud_simple) this.noeudFin).getPx();
             pyFin = ((Noeud_simple) this.noeudFin).getPy();
         }
-        if ((this.noeudFin.getClass() == Appui_simple.class)||(this.noeudFin.getClass() == Appui_double.class)) {
+        if ((this.noeudFin.getClass() == Appui_simple.class) || (this.noeudFin.getClass() == Appui_double.class)) {
             pxFin = ((Noeud_appui) this.noeudFin).getPx();
             pyFin = ((Noeud_appui) this.noeudFin).getPy();
         }
-        if (this.noeudDebut.getClass() == Appui_double.class){
+        if (this.noeudDebut.getClass() == Appui_double.class) {
             pxDeb = ((Appui_double) this.noeudDebut).getPx();
             pyDeb = ((Appui_double) this.noeudDebut).getPy();
         }
-        if (this.noeudFin.getClass() == Appui_double.class){
+        if (this.noeudFin.getClass() == Appui_double.class) {
             pxFin = ((Appui_double) this.noeudFin).getPx();
             pyFin = ((Appui_double) this.noeudFin).getPy();
         }
@@ -161,7 +161,7 @@ public class Barre {
 
         //On calcul la norme de ce vecteur
         double longeur = Math.sqrt(bX * bX + bY * bY);
-
+        
         return longeur;
     }
 
@@ -171,164 +171,120 @@ public class Barre {
     }
 
     //Calcul angle alpha
-    public double calculAngleAlphaTension() {
+    public double calculAngleAlphaTension(Noeuds noeudCheck) {
         
-        Point p1 = new Point();
-        Point p2 = new Point();
+        Point p1 = new Point(); //Noeud début
+        Point p2 = new Point(); //Noeud fin
         
+        //Création du segment de référence
+        double segRefX = 1;
+        double segRefY = 0;
+        double normeSegRef = 1;
+               
         double alpha = 0;
-        double seg1X = 0; //Segment 1 correspond au seg des points alignés
-        double seg1Y = 0;
-        double seg2X = 0; //Segment 2 correspond à la barre
-        double seg2Y = 0;
-        double normeSeg1 = 0;
-        double normeSeg2 = 0;
-
-        if (this.getNoeudDebut().getClass() == Noeud_simple.class) {
-            p1.setPx(((Noeud_simple) this.getNoeudDebut()).getPx());
-            p1.setPy(((Noeud_simple) this.getNoeudDebut()).getPy());
-        }
-        if (this.getNoeudFin().getClass() == Noeud_simple.class) {
-            p2.setPx(((Noeud_simple) this.getNoeudFin()).getPx());
-            p2.setPy(((Noeud_simple) this.getNoeudFin()).getPy());
-        }
-        if ((this.getNoeudDebut().getClass() == Appui_simple.class) || (this.getNoeudDebut().getClass() == Appui_double.class)) {
-            p1.setPx(((Noeud_appui) this.getNoeudDebut()).getPx());
-            p1.setPy(((Noeud_appui) this.getNoeudDebut()).getPy());
-        }
-        if ((this.getNoeudFin().getClass() == Appui_simple.class) || (this.getNoeudFin().getClass() == Appui_double.class)) {
-            p2.setPx(((Noeud_appui) this.getNoeudFin()).getPx());
-            p2.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
-        }
         
-        Point p3 = new Point(p1.getPx(), p2.getPy());
-
-        System.out.println("DANS CALCUL ALPHA");
-        System.out.println("p1 : " + p1.toString());
-        System.out.println("p2 : " + p2.toString());
-        System.out.println("p3 : " + p3.toString());
-
-        //On regarde si les 3 points sont alignés
-        if ((p1.getPy() == p2.getPy())){
-            System.out.println("La barre est parallèle à l'axe des abcisses, alpha vaut 0");
-            return alpha;
-        }
-        
-        if (p1.getPx()==p2.getPx()){
-            System.out.println("La barre est perpendiculaire à l'axe des abscisses, apha vaut 90");
-            alpha = Math.PI/2;
-            return alpha;
-        }
-        
-        if (p1.getPy() == p3.getPy()){
-            System.out.println("P1 et P3 alignés horizontalement");
-            //On prend comme origine le point qui appartient à la barre
-            seg1X = p3.getPx() - p1.getPx();
-            seg1Y = p3.getPy() - p1.getPy();
-            normeSeg1 = calculNorme(seg1X, seg1Y);
-            System.out.println(afficheSeg(seg1X, seg1Y, normeSeg1));
+        if (noeudCheck != this.getNoeudDebut()) {
+            p1.setPx(this.getNoeudFin().getPx());
+            p1.setPy(this.getNoeudFin().getPy());
             
-            //On prend comme origine le point p1 pour exprimer le vecteur barre
-            seg2X = p2.getPx() - p1.getPx();
-            seg2Y = p2.getPy() - p1.getPy();
-            normeSeg2 = calculNorme(seg2X, seg2Y);
-            System.out.println(afficheSeg(seg2X, seg2Y, normeSeg2));
-        }
-        
-        if (p2.getPy() == p3.getPy()){
-            System.out.println("P2 et P3 alignés horizontalement");
-            //On prend comme origine le point qui appartient à la barre
-            seg1X = p3.getPx() - p2.getPx();
-            seg1Y = p3.getPy() - p2.getPy();
-            normeSeg1 = calculNorme(seg1X, seg1Y);
-            System.out.println(afficheSeg(seg1X, seg1Y, normeSeg1));
+            p2.setPx(this.getNoeudDebut().getPx());
+            p2.setPy(this.getNoeudDebut().getPy());
+        } else{
+            p1.setPx(this.getNoeudDebut().getPx());
+            p1.setPy(this.getNoeudDebut().getPy());
             
-            //On prend comme origine le point p1 pour exprimer le vecteur barre
-            seg2X = p1.getPx() - p2.getPx();
-            seg2Y = p1.getPy() - p2.getPy();
-            normeSeg2 = calculNorme(seg2X, seg2Y);
-            System.out.println(afficheSeg(seg2X, seg2Y, normeSeg2));
+            p2.setPx(this.getNoeudFin().getPx());
+            p2.setPy(this.getNoeudFin().getPy());
         }
         
-        double scalaire = seg1X*seg2X+seg1Y*seg2Y;
-        System.out.println("SCALAIRE = "+scalaire);
+//        System.out.println("DANS CALCUL ALPHA");
+//        System.out.println("p1 : " + p1.toString());
+//        System.out.println("p2 : " + p2.toString());
+
+        //Seg1 correspond à la barre
+        double seg1X = p2.getPx() - p1.getPx();
+        double seg1Y = p2.getPy() - p1.getPy();
+        double normeSeg1 = calculNorme(seg1X, seg1Y);
+
         
-        if(normeSeg1*normeSeg2==0){
-            System.out.println("Alpha vaut : "+alpha);
+        double scalaire = seg1X * segRefX + seg1Y * segRefY;
+//        System.out.println("SCALAIRE = " + scalaire);
+        
+        if (normeSeg1 * normeSegRef == 0) {
+            System.out.println("Alpha vaut : " + alpha+"\n");
             return alpha;
-        }else{
-            System.out.println("On va fait arccos de "+(scalaire/(normeSeg1*normeSeg2)));
-            alpha = Math.acos(scalaire/(normeSeg1*normeSeg2));
-            System.out.println("Alpha vaut : "+alpha);
+        } else {
+//            System.out.println("On va fait arccos de " + (scalaire / (normeSeg1 * normeSegRef)));
+            alpha = Math.acos(scalaire / (normeSeg1 * normeSegRef));
+            System.out.println("Alpha vaut : " + alpha+"\n"); 
             return alpha;
         }
+        
     }
     
-    public void composantesTension (Noeuds noeudCheck){
-        
-        Point p1 = new Point(this.noeudDebut.getPx(),this.noeudDebut.getPy());
-        Point p2 = new Point(this.noeudFin.getPx(), this.noeudFin.getPy());
-        
-        if (noeudCheck != this.getNoeudDebut()){
-            System.out.println("On échange les points p1"+p1.toString()+"et"+p2.toString());
-            Point pTampon = new Point (p2.getPx(), p2.getPy());
-            p1 = p2;
-            p1 = pTampon;
-            
-            System.out.println(p1.toString());
-            System.out.println(p2.toString());
-        }
-        
-        double segX = p2.getPx()- p1.getPx();
-        double segY = p2.getPy() - p1.getPy();
-        
-        if (segX < 0){
-            System.out.println("La force est négative sur X");
-            this.getTensionBarre().setFx(-this.getTensionBarre().getFx());
-        }
-        
-         if (segY < 0){
-             System.out.println("La force est négative sur Y");
-            this.getTensionBarre().setFy(-this.getTensionBarre().getFy());
-        }
-    }
+//    public void composantesTension(Noeuds noeudCheck) {
+//        
+//        Point p1 = new Point(this.noeudDebut.getPx(), this.noeudDebut.getPy());
+//        Point p2 = new Point(this.noeudFin.getPx(), this.noeudFin.getPy());
+//        
+//        if (noeudCheck != this.getNoeudDebut()) {
+//            System.out.println("On échange les points p1" + p1.toString() + "et" + p2.toString());
+//            Point pTampon = new Point(p2.getPx(), p2.getPy());
+//            p1 = p2;
+//            p1 = pTampon;
+//            
+//            System.out.println(p1.toString());
+//            System.out.println(p2.toString());
+//        }
+//        
+//        double segX = p2.getPx() - p1.getPx();
+//        double segY = p2.getPy() - p1.getPy();
+//        
+//        if (segX < 0) {
+//            System.out.println("La force est négative sur X");
+//            this.getTensionBarre().setFx(-this.getTensionBarre().getFx());
+//        }
+//        
+//        if (segY < 0) {
+//            System.out.println("La force est négative sur Y");
+//            this.getTensionBarre().setFy(-this.getTensionBarre().getFy());
+//        }
+//    }
     
-    public String afficheSeg(double segX, double segY, double norme){
-        String s ="";
-        s = s+"seg X "+segX+"\n";
-        s = s+"seg Y "+segY+"\n";
-        s = s+"norme "+norme+"";
+    public String afficheSeg(double segX, double segY, double norme) {
+        String s = "";
+        s = s + "seg X " + segX + "\n";
+        s = s + "seg Y " + segY + "\n";
+        s = s + "norme " + norme + "";
         return s;
     }
     
-    public static double calculNorme(double fx, double fy){
-        return Math.sqrt(fx*fx+fy*fy);
+    public static double calculNorme(double fx, double fy) {
+        return Math.sqrt(fx * fx + fy * fy);
     }
     
     public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
         double segX = p2.getPx() - p1.getPx();
         double segY = p2.getPy() - p1.getPy();
-
+        
         return Math.sqrt(segX * segX + segY * segY);
     }
     
-    public double getDistanceAuClic(double Px, double Py){
+    public double getDistanceAuClic(double Px, double Py) {
         double X1 = this.noeudDebut.getPx();
         double Y1 = this.noeudDebut.getPy();
         double X2 = this.noeudFin.getPx();
         double Y2 = this.noeudFin.getPy();
-          double D;
+        double D;
         // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
-        if(((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 > 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 < 0 )||((X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X1 -(Y2 - Y1)*Y1 < 0  && (X2 - X1)*Px +(Y2 - Y1)*Py -(X2 - X1)*X2 -(Y2 - Y1)*Y2 > 0 ) ){
+        if (((X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X1 - (Y2 - Y1) * Y1 > 0 && (X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X2 - (Y2 - Y1) * Y2 < 0) || ((X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X1 - (Y2 - Y1) * Y1 < 0 && (X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X2 - (Y2 - Y1) * Y2 > 0)) {
             
-          
-            D = (Math.abs((Y1 - Y2)*Px +(X2 - X1)*Py + (Y2 - Y1)*X1 + (X1 - X2)*Y1)/(Math.sqrt((Y1 - Y2)*(Y1 - Y2) + (X2 - X1)*(X2 - X1))));
+            D = (Math.abs((Y1 - Y2) * Px + (X2 - X1) * Py + (Y2 - Y1) * X1 + (X1 - X2) * Y1) / (Math.sqrt((Y1 - Y2) * (Y1 - Y2) + (X2 - X1) * (X2 - X1))));
             return D;
-        }
-        else if(this.noeudDebut.getDistanceAuClick(Px, Py) < this.noeudFin.getDistanceAuClick(Px, Py)){
-            D = this.noeudDebut.getDistanceAuClick(Px, Py) ;
+        } else if (this.noeudDebut.getDistanceAuClick(Px, Py) < this.noeudFin.getDistanceAuClick(Px, Py)) {
+            D = this.noeudDebut.getDistanceAuClick(Px, Py);
             return D;
-        }else{
+        } else {
             D = this.noeudFin.getDistanceAuClick(Px, Py);
             return D;
         }

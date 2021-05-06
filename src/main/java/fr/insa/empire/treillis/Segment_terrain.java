@@ -1,5 +1,6 @@
 package fr.insa.empire.treillis;
 
+import static fr.insa.empire.treillis.Barre.calculNorme;
 import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
@@ -72,36 +73,42 @@ public class Segment_terrain {
 
         return longeur;
     }
+    
+    public double calculAngleBeta(Noeuds noeudCheck) {
+       
+        Point p1 = this.getPointDebut();
+        Point p2 = this.getPointFin();
+        
+        //Création du segment de référence
+        double segRefX = 1;
+        double segRefY = 0;
+        double normeSegRef = 1;
+               
+        double beta = Math.PI/2;
+        
+        System.out.println("DANS CALCUL BETA");
+        System.out.println("p1 : " + p1.toString());
+        System.out.println("p2 : " + p2.toString());
 
-    public double calculAngleBeta() {
-        Point p1 = this.pointDebut;
-        Point p2 = this.pointFin;
-        Point p3 = new Point(p2.getPx(), p1.getPy());
+        //Seg1 correspond à la barre
+        double seg1X = p2.getPx() - p1.getPx();
+        double seg1Y = p2.getPy() - p1.getPy();
+        double normeSeg1 = calculNorme(seg1X, seg1Y);
+        System.out.println("Norme : "+normeSeg1+"\n");
 
-        double beta = Math.PI / 2;
-
-//        System.out.println("DANS CALCUL BETA");
-//        System.out.println("p1 : " + p1.toString());
-//        System.out.println("p2 : " + p2.toString());
-//        System.out.println("p3 : " + p3.toString());
-
-        double seg12X = p2.getPx() - p1.getPx();
-        double seg12Y = p2.getPy() - p1.getPy();
-
-        double seg13X = p3.getPx() - p1.getPx();
-        double seg13Y = p3.getPy() - p1.getPy();
-
-        double norme12 = Barre.calculNorme(seg12X, seg12Y);
-        double norme13 = Barre.calculNorme(seg13X, seg13Y);
-
-        double scalaire = seg12X * seg13X + seg12Y * seg13Y;
-
-        if (norme12 * norme13 == 0) {
-            System.out.println("Beta vaut : " + beta);
+        
+        double scalaire = seg1X * segRefX + seg1Y * segRefY;
+        System.out.println("SCALAIRE = " + scalaire);
+        
+        if (normeSeg1 * normeSegRef == 0) {
+            System.out.println("BETA vaut : " + beta+"\n");
             return beta;
         } else {
-            beta = (Math.PI / 2) + Math.acos(scalaire / (norme12 * norme13));
-            System.out.println("Beta vaut : " + beta);
+//            System.out.println("On va fait arccos de " + (scalaire / (normeSeg1 * normeSegRef)));
+            beta = Math.acos(scalaire / (normeSeg1 * normeSegRef));
+            System.out.println("BETA SANS PI/2 : "+beta+"\n");
+            beta = beta + Math.PI/2;
+            System.out.println("BETA vaut : " + beta+"\n"); 
             return beta;
         }
     }
