@@ -12,6 +12,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.example.App;
 
 import java.util.Map;
 import java.util.Set;
@@ -120,9 +121,79 @@ public class MyCanvas extends Canvas {
         return (Noeud_simple) s;
     }
 
-    public Noeud_appui getNoeud_appuiPlusProche(double px, double py, Identificateur identificateur)
+    public Appui_simple getNoeud_appui_simplePlusProche(double px, double py, Identificateur identificateur)
     {
         Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Appui_simple.class)
+                {
+                    distAct = ((Appui_simple) val).getDistanceAuClick(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+            }
+
+            if(distance >= distMax)
+            {
+                s = null;
+            }
+        }
+
+        return (Appui_simple) s;
+    }
+
+    public Appui_double getNoeud_appui_doublePlusProche(double px, double py, Identificateur identificateur)
+    {
+        Object s = new Object();
+        if(identificateur.getKetToObject().isEmpty())
+        {
+            return null;
+        }
+        else
+        {
+            double distance = 100000000;
+            double distAct;
+            for (Map.Entry mapentry : identificateur.getKetToObject().entrySet())
+            {
+                Object key = mapentry.getKey();
+                Object val = mapentry.getValue();
+                if(val.getClass() == Appui_double.class)
+                {
+                    distAct = ((Appui_double) val).getDistanceAuClick(px, py);
+                    if(distAct < distance)
+                    {
+                        distance = distAct;
+                        s = val;
+                    }
+                }
+            }
+
+            if(distance >= distMax)
+            {
+                s = null;
+            }
+        }
+
+        return (Appui_double) s;
+    }
+
+    public Noeud_appui getNoeud_appuiPlusProche(double px, double py, Identificateur identificateur)
+    {
+        /*Object s = new Object();
         if(identificateur.getKetToObject().isEmpty())
         {
             return null;
@@ -152,7 +223,29 @@ public class MyCanvas extends Canvas {
             }
         }
 
-        return (Noeud_appui) s;
+        return (Noeud_appui) s;*/
+
+        Appui_double appuiDouble = getNoeud_appui_doublePlusProche(px, py, identificateur);
+        Appui_simple appuiSimple = getNoeud_appui_simplePlusProche(px, py, identificateur);
+        if(appuiDouble != null && appuiSimple != null)
+        {
+            if(appuiDouble.getDistanceAuClick(px, py) >= appuiSimple.getDistanceAuClick(px, py))
+            {
+                return appuiDouble;
+            }
+            else
+            {
+                return appuiSimple;
+            }
+        }
+        else if(appuiDouble == null && appuiSimple != null)
+        {
+            return appuiSimple;
+        }
+        else
+        {
+            return appuiDouble;
+        }
     }
 
     public Noeuds getNoeudPlusProche(double px, double py, Identificateur identificateur)

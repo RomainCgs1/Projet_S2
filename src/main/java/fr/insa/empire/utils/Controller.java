@@ -164,16 +164,27 @@ public class Controller {
                         Point temp = segment_terrain.getPointSegmTerrPlusProche(px, py);
                         Appui_simple appuiSimple = new Appui_simple(temp.getPx(), temp.getPy(), segment_terrain);
                         appuiSimple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiSimple));
+                        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.ORANGE);
+                        this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiSimple.getPx() - 5, appuiSimple.getPy() - 5, 10, 10);
+                        System.out.println("Noeud appui simple créé !");
                     }
                     break;
 
                 case 120 :
-                    System.out.println("Noeud simple le plus proche : " + this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur));
-                    Noeud_simple noeud_simple = new Noeud_simple(px, py);
-                    noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
-                    System.out.println(noeud_simple.getID());
-                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
-                    this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                    Noeud_simple noeud_simple = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    System.out.println("Noeud simple le plus proche : " + noeud_simple);
+                    if(noeud_simple == null)
+                    {
+                        noeud_simple = new Noeud_simple(px, py);
+                        noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
+                        System.out.println(noeud_simple.getID());
+                        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
+                        this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                    }
+                    else
+                    {
+                        System.out.println("noeud déjà créé : " + noeud_simple);
+                    }
                     break;
 
                 case 130 :
@@ -188,8 +199,13 @@ public class Controller {
                         //remplacer coord par le pt le plus proche sur le segment
                         //creer le point sur le segment
                         Point temp = segment_terrain1.getPointSegmTerrPlusProche(px, py);
+                        System.out.println("Point temporaire : " + temp);
                         Appui_double appuiDouble = new Appui_double(temp.getPx(), temp.getPy(), segment_terrain1);
                         appuiDouble.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiDouble));
+                        System.out.println("test : " + appuiDouble);
+                        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.SILVER);
+                        this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
+                        System.out.println("Noeud appui double créé !");
                     }
                     break;
                 case 20 :

@@ -134,11 +134,36 @@ public class Segment_terrain {
         double Y1 = this.pointDebut.getPy();
         double X2 = this.pointFin.getPx();
         double Y2 = this.pointFin.getPy();
+        double X;
+        double Y;
 
-        double X = (-(Y1 - Y2) / (X1 - X2) * X1 - Y1 + ((X2 - X1) / (Y2 - Y1) * Px) + Py) / ((X1 - X2) / (Y2 - Y1) - (Y2 - Y1) / (X2 - X1));
-        double Y = (Y2 - Y1) / (X2 - X1) * X + (Y1 - Y2) / (X2 - X1) * X1 + Y1;
+        /*X = (-(Y1 - Y2) / (X1 - X2) * X1 - Y1 + ((X2 - X1) / (Y2 - Y1) * Px) + Py) / ((X1 - X2) / (Y2 - Y1) - (Y2 - Y1) / (X2 - X1));
+        Y = (Y2 - Y1) / (X2 - X1) * X + (Y1 - Y2) / (X2 - X1) * X1 + Y1;
         Point P = new Point(X, Y);
-        return P;
+        System.out.println(P);*/
+
+        //alternative :
+        double ux = Px - X1;
+        double uy = Py - Y1;
+
+        double vx = X2 - X1;
+        double vy = Y2 - Y1;
+
+        double longueurU = Math.sqrt(Math.pow(Px - X1, 2) + Math.pow(Py - Y1, 2));
+        double longueurV = Math.sqrt(Math.pow(X2 - X1, 2) + Math.pow(Y2 - Y1, 2));
+
+        double cosAlpha = ((Px - X1)*(X2 - X1) + (Py - Y1)*(Y2 - Y1)) / (longueurU * longueurV);
+
+        double x0 = cosAlpha * (Px - X1);
+        double y0 = cosAlpha * (Py - Y1);
+
+        X = x0 + X1;
+        Y = y0 + Y1;
+
+        Point P1 = new Point(X, Y);
+        System.out.println(P1);
+
+        return P1;
     }
 
     //Save

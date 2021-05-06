@@ -248,14 +248,14 @@ public class MainGraphique extends BorderPane {
 
         choix3.setOnAction(
                 action -> {
-                    controller.changeEtat(13);
+                    controller.changeEtat(130);
                 }
         );
 
         choix4.setDisable(true);
         choix4.setOnAction(
                 action -> {
-                    controller.changeEtat(14);
+                    controller.changeEtat(140);
                 }
         );
 
@@ -335,13 +335,13 @@ public class MainGraphique extends BorderPane {
             Object val = mapentry.getValue();
             if(val.getClass() == Appui_double.class)
             {
-                graphicsContext.setStroke(Color.RED);
+                graphicsContext.setStroke(Color.SILVER);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
             }
             else if(val.getClass() == Appui_simple.class)
             {
-                graphicsContext.setStroke(Color.RED);
-                graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
+                graphicsContext.setStroke(Color.ORANGE);
+                graphicsContext.strokeOval(((Appui_simple) val).getPx() - 5, ((Appui_simple) val).getPy() - 5, 10, 10);
             }
             else if(val.getClass() == Noeud_appui.class)
             {
