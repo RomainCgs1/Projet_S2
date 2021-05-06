@@ -171,7 +171,7 @@ public class Barre {
     }
 
     //Calcul angle alpha
-    public double calculAngleAlphaTension(Noeuds noeudRegarde) {
+    public double calculAngleAlphaTension() {
         
         Point p1 = new Point();
         Point p2 = new Point();
@@ -199,15 +199,6 @@ public class Barre {
         if ((this.getNoeudFin().getClass() == Appui_simple.class) || (this.getNoeudFin().getClass() == Appui_double.class)) {
             p2.setPx(((Noeud_appui) this.getNoeudFin()).getPx());
             p2.setPy(((Noeud_appui) this.getNoeudFin()).getPy());
-        }
-
-        if (noeudRegarde!=this.getNoeudDebut()){
-            System.out.println("Changement des points"+p1.toString()+"et "+p2.toString());
-            Point pTampon = p1;
-            p1 = p2;
-            p2 = pTampon;
-            System.out.println("P1 : "+p1.toString());
-            System.out.println("P2 : "+p2.toString());
         }
         
         Point p3 = new Point(p1.getPx(), p2.getPy());
@@ -270,6 +261,35 @@ public class Barre {
             alpha = Math.acos(scalaire/(normeSeg1*normeSeg2));
             System.out.println("Alpha vaut : "+alpha);
             return alpha;
+        }
+    }
+    
+    public void composantesTension (Noeuds noeudCheck){
+        
+        Point p1 = new Point(this.noeudDebut.getPx(),this.noeudDebut.getPy());
+        Point p2 = new Point(this.noeudFin.getPx(), this.noeudFin.getPy());
+        
+        if (noeudCheck != this.getNoeudDebut()){
+            System.out.println("On échange les points p1"+p1.toString()+"et"+p2.toString());
+            Point pTampon = new Point (p2.getPx(), p2.getPy());
+            p1 = p2;
+            p1 = pTampon;
+            
+            System.out.println(p1.toString());
+            System.out.println(p2.toString());
+        }
+        
+        double segX = p2.getPx()- p1.getPx();
+        double segY = p2.getPy() - p1.getPy();
+        
+        if (segX < 0){
+            System.out.println("La force est négative sur X");
+            this.getTensionBarre().setFx(-this.getTensionBarre().getFx());
+        }
+        
+         if (segY < 0){
+             System.out.println("La force est négative sur Y");
+            this.getTensionBarre().setFy(-this.getTensionBarre().getFy());
         }
     }
     

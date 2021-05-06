@@ -159,4 +159,12 @@ public class Segment_terrain {
         }
         bW.append("FIN_Segment_terrain/\n");
     }
+
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+//    public Point getPointSegmTerrPlusProche(double px, double py) {
+//        return new Point(px, py);
+//    }
 }
