@@ -22,13 +22,14 @@ public class Controller {
     Point p1;
     Point p2;
     Point p3;
+    Point p4;
     Noeuds noeudDebut;
     Noeuds noeudFin;
 
     public Controller(MainGraphique vue)
     {
         this.vue = vue;
-        this.etat = 0;
+        this.etat = -10;
 
         this.p1 = new Point();
         this.p2 = new Point();
@@ -42,6 +43,13 @@ public class Controller {
 
         switch (newState)
         {
+            case -10: // initialisation zone_constructible
+                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                break;
             case 0: //remise à zero
                 this.vue.getTbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
@@ -150,6 +158,41 @@ public class Controller {
         {
             switch (this.etat)
             {
+                case -10:
+                    p4 = new Point(px,py);
+                    this.changeEtat(-11);
+                    break;
+                case -11:
+                    
+                    double Xmax;
+                    double Xmin;
+                    double Ymax;
+                    double Ymin;
+                    if(px>p4.getPx()){
+                        Xmax = px;
+                        Xmin = p4.getPx();
+                    }else{
+                        Xmax = p4.getPx();
+                        Xmin = px;
+                    }
+                    if(py>p4.getPy()){
+                        Ymax = py;
+                        Ymin = p4.getPy();
+                    }else{
+                        Ymax = p4.getPy();
+                        Ymin = py;
+                    }
+                    Zone_constructible ZoneConstructible = new Zone_constructible(Xmin, Xmax, Ymin, Ymax);
+                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.GREEN);
+                    this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmax, Ymin, Xmax, Ymax);
+                    this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmin, Ymin, Xmin, Ymax);
+                    this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmax, Ymax, Xmin, Ymax);
+                    this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmax, Ymin, Xmin, Ymin);
+                    
+                   ZoneConstructible.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(ZoneConstructible));
+                   this.changeEtat(0);
+                    break;
+                    
                 case 110 :
                     Segment_terrain segment_terrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
                     System.out.println("Segment terrain le plus proche : " + segment_terrain);

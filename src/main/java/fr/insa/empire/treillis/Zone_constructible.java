@@ -1,11 +1,14 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
+
 
 public class Zone_constructible {
     private double Xmin;
     private double Xmax;
     private double Ymin;
     private double Ymax;
+    private int identifiant;
     
      public Zone_constructible(double Xmin,double Xmax, double Ymin, double Ymax){
          this.Xmin = Xmin;
@@ -26,5 +29,9 @@ public class Zone_constructible {
      public double getYmax(){
          return this.Ymax;
      }
+     public void setIdentifiant(int identifiant){
+         this.identifiant = identifiant;
+     }
+     
      
 }
