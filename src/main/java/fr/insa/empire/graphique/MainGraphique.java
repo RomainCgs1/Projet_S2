@@ -8,10 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Separator;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,11 +25,15 @@ public class MainGraphique extends BorderPane {
     private final MenuItem choix2;
     private final MenuItem choix3;
     private final MenuItem choix4;
-    private final SplitMenuButton tbNoeud;
+    private final MenuButton mbNoeud;
     private final MyTB mtbBarre;
     private final MyTB mtbTerrain;
     private final MyTB mtbSelection;
-    private final MyTB mtbGomme;
+    private final MenuButton mbGomme;
+    private final MenuItem miGommeNoeud;
+    private final MenuItem miGommeBarre;
+    private final MenuItem miGommeTriangleTerrain;
+    private final MenuItem miGommeAll;
     private final MyB mbLancerCalculs;
     private final MyB mbReglages;
     private final MyB mbTypeBarre;
@@ -65,8 +66,8 @@ public class MainGraphique extends BorderPane {
 
     public MenuItem getChoix4() { return choix4; }
 
-    public SplitMenuButton getTbNoeud() {
-        return tbNoeud;
+    public MenuButton getMbNoeud() {
+        return mbNoeud;
     }
 
     public MyCanvas getCanvas() {
@@ -85,8 +86,8 @@ public class MainGraphique extends BorderPane {
         return mtbSelection;
     }
 
-    public MyTB getMtbGomme() {
-        return mtbGomme;
+    public MenuButton getMbGomme() {
+        return mbGomme;
     }
 
     public MyB getMbLancerCalculs() {
@@ -186,25 +187,25 @@ public class MainGraphique extends BorderPane {
         this.setCenter(canvas);
 
         //Set up du splitMenuButton
-        this.tbNoeud = new SplitMenuButton();
-        this.tbNoeud.setText("Noeud");
+        this.mbNoeud = new MenuButton();
+        this.mbNoeud.setText("Noeud");
         this.choix1 = new MenuItem("Noeud simple");
         this.choix2 = new MenuItem("Noeud Appui simple");
         this.choix3 = new MenuItem("Noeud Appui double");
         this.choix4 = new MenuItem("Noeud Appui encastré");
-        this.tbNoeud.getItems().addAll(choix1, choix2,choix3, choix4);
+        this.mbNoeud.getItems().addAll(choix1, choix2,choix3, choix4);
 
         //menuBar
         this.menuBar = new MyMenuBar(this);
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
-        this.mtbGomme = new MyTB("Gomme");
         this.mbLancerCalculs = new MyB("Lancer les calculs");
         this.mbTypeBarre = new MyB ("Type de Barre");
         this.mbReglages = new MyB("Réglages");
-        this.hbConstruction = new HBox(this.tbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mtbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
+        mbGomme = new MenuButton("Gomme");
+        this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
@@ -274,14 +275,36 @@ public class MainGraphique extends BorderPane {
         );
 
         //action de Gomme
-        this.mtbGomme.setOnAction(
+        miGommeNoeud = new MenuItem("Gomme : noeuds");
+        miGommeBarre = new MenuItem("Gomme : Barre");
+        miGommeTriangleTerrain = new MenuItem("Gomme : terrain");
+        miGommeAll = new MenuItem("Tout effacer");
+        mbGomme.getItems().addAll(miGommeNoeud, miGommeBarre, miGommeTriangleTerrain, miGommeAll);
+
+        miGommeNoeud.setOnAction(
                 action -> {
-                    if(mtbGomme.isSelected())
-                    {
-                        controller.changeEtat(50);
-                    }
+                    controller.changeEtat(50);
                 }
         );
+
+        this.miGommeTriangleTerrain.setOnAction(
+                action -> {
+                    controller.changeEtat(51);
+                }
+        );
+
+        this.miGommeBarre.setOnAction(
+                action -> {
+                    controller.changeEtat(52);
+                }
+        );
+
+        this.miGommeAll.setOnAction(
+                action -> {
+                    controller.changeEtat(53);
+                }
+        );
+
 
         //action de Selection
         this.mtbSelection.setOnAction(
@@ -363,6 +386,14 @@ public class MainGraphique extends BorderPane {
                 graphicsContext.strokeLine(((Triangle_terrain) val).getSegment1().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment1().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment1().getPointFin().getPx(), ((Triangle_terrain) val).getSegment1().getPointFin().getPy());
                 graphicsContext.strokeLine(((Triangle_terrain) val).getSegment2().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment2().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment2().getPointFin().getPx(), ((Triangle_terrain) val).getSegment2().getPointFin().getPy());
                 graphicsContext.strokeLine(((Triangle_terrain) val).getSegment3().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment3().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment3().getPointFin().getPx(), ((Triangle_terrain) val).getSegment3().getPointFin().getPy());
+            }
+            else if(val.getClass() == Zone_constructible.class)
+            {
+                graphicsContext.setStroke(Color.GREEN);
+                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmax());
+                graphicsContext.strokeLine(((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmax());
+                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmax(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmax());
+                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmin());
             }
         }
     }

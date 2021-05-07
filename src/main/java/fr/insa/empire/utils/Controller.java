@@ -44,70 +44,91 @@ public class Controller {
         switch (newState)
         {
             case -10: // initialisation zone_constructible
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 break;
             case 0: //remise à zero
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 break;
             case 110 : //noeud appui simple
-                this.vue.getTbNoeud().setText("Noeud Appui simple");
+                this.vue.getMbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
             case 120 : //noeud simple
-                this.vue.getTbNoeud().setText("Noeud Simple");
+                this.vue.getMbNoeud().setText("Noeud Simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
             case 130 : //noeud appui double
-                this.vue.getTbNoeud().setText("Noeud Appui double");
+                this.vue.getMbNoeud().setText("Noeud Appui double");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
             case 140 : //noeud appui encastré
-                this.vue.getTbNoeud().setText("Noeud Appui encasté");
+                this.vue.getMbNoeud().setText("Noeud Appui encasté");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
             case 20 : //barre
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
             case 30 : //terrain
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
             case 40 : //selection
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbBarre().setSelected(false);
                 break;
-            case 50 : //gomme
-                this.vue.getTbNoeud().setText("Noeud");
+            case 50 : //gomme noeuds
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMbGomme().setText("Gomme : noeuds");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
-                EraseAll();
+                break;
+            case 51 : //gomme terrain
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMbGomme().setText("Gomme : terrain");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                break;
+            case 52 : //gomme barre
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMbGomme().setText("Gomme : barre");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                break;
+            case 53 : //gomme : tout effacer
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                eraseAll();
                 break;
             case 70 : //calculs
                 Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
@@ -132,10 +153,10 @@ public class Controller {
                     System.out.println("Cancel or Close"); }
 
                 //reset
-                this.vue.getTbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMtbGomme().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
 
@@ -305,6 +326,9 @@ public class Controller {
 
                     changeEtat(30);
                     break;
+
+                case 50 :
+
             }
         }
     }
@@ -347,7 +371,7 @@ public class Controller {
 
 
 
-    private void EraseAll() {
+    private void eraseAll() {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
     }
