@@ -12,7 +12,7 @@ public class Segment_terrain {
 
     private final Set<Noeud_appui> contientNoeudAppui;
     private final Set<Point> contientPoint;
-    // private Triangle_terrain appartient;   EN A-T-ON BESOIN ?
+    private Triangle_terrain appartient;   //EN A-T-ON BESOIN ?
     private final Point pointDebut;
     private final Point pointFin;
     private int identifiant;
@@ -28,6 +28,10 @@ public class Segment_terrain {
     }
 
     //get
+    public Triangle_terrain getAppartient() {
+        return appartient;
+    }
+
     public Point getPointDebut() {
         return this.pointDebut;
     }
@@ -38,6 +42,10 @@ public class Segment_terrain {
 
     public int getIdentifiant() {
         return identifiant;
+    }
+
+    public void setAppartient(Triangle_terrain appartient) {
+        this.appartient = appartient;
     }
 
     public void setIdentifiant(int identifiant) {

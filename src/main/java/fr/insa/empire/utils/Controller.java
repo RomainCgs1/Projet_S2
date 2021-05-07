@@ -328,10 +328,28 @@ public class Controller {
                     break;
 
                 case 50 :
+                    Noeuds noeuds = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if(noeuds != null)
+                    {
+                        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeuds);
+                        this.vue.getTreillis().identificateur.getObjectToKey().remove(noeuds);
+                        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+                        this.vue.recontruction();
+                    }
 
+                    break;
+                case 51 :
+                    Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if(segmentTerrain != null)
+                    {
+                        clearTriangleTerrain(segmentTerrain);
+                        this.vue.recontruction();
+                    }
+                    break;
             }
         }
     }
+
 
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
@@ -349,6 +367,9 @@ public class Controller {
 
         Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
         triangle_terrain.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(triangle_terrain));
+        seg1.setAppartient(triangle_terrain);
+        seg2.setAppartient(triangle_terrain);
+        seg3.setAppartient(triangle_terrain);
 
         this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLACK);
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(p1.getPx(), p1.getPy(), p2.getPx(), p2.getPy());
@@ -356,6 +377,31 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(p3.getPx(), p3.getPy(), p1.getPx(), p1.getPy());
 
         System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
+    }
+
+
+    private void clearTriangleTerrain(Segment_terrain segmentTerrain)
+    {
+        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(segmentTerrain);
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(segmentTerrain);
+        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+
+        Triangle_terrain triangle_terrain = segmentTerrain.getAppartient();
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment1());
+        this.vue.getTreillis().identificateur.getKetToObject().remove(triangle_terrain.getSegment1().getIdentifiant());
+
+        key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain.getSegment2());
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment2());
+        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+
+        key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain.getSegment3());
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment3());
+        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+
+
+        key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain);
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain);
+        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
     }
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
