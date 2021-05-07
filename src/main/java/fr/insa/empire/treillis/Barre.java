@@ -52,59 +52,59 @@ public class Barre {
     public Noeuds getNoeudDebut() {
         return this.noeudDebut;
     }
-    
+
     public Noeuds getNoeudFin() {
         return this.noeudFin;
     }
-    
+
     public Type_de_barre getType() {
         return this.type;
     }
-    
+
     public void setNoeudDebut(Noeuds noeudDebut) {
         this.noeudDebut = noeudDebut;
     }
-    
+
     public void setNoeudFin(Noeuds noeudFin) {
         this.noeudFin = noeudFin;
     }
-    
+
     public void setType(Type_de_barre type) {
         this.type = type;
     }
-    
+
     public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
-    
+
     public double getLongueur() {
         return this.longueur;
     }
-    
+
     public double getPrix() {
         return this.type.getCoutAuMetre();
     }
-    
+
     public int getIdentifiant() {
         return identifiant;
     }
-    
+
     public void setIdentifiant(int identifiant) {
         this.identifiant = identifiant;
     }
-    
+
     public Force getTensionBarre() {
         return tensionBarre;
     }
-    
+
     public void setTensionBarre(Force tensionBarre) {
         this.tensionBarre = tensionBarre;
     }
-    
+
     public double getAngleAlpha() {
         return angleAlpha;
     }
-    
+
     public void setAngleAlpha(double angleAlpha) {
         this.angleAlpha = angleAlpha;
     }
@@ -116,13 +116,13 @@ public class Barre {
         s = s + "Type de la barre : " + this.type + "\n";
         s = s + "Noeud du debut " + this.noeudDebut + "\n";
         s = s + "Noeud de la fin " + this.noeudFin + "\n";
-        
+
         return s;
     }
 
     //Calcul de la longueur
     public double calculLongueur() {
-        
+
         double pxDeb = 0;
         double pyDeb = 0;
         double pxFin = 0;
@@ -161,7 +161,7 @@ public class Barre {
 
         //On calcul la norme de ce vecteur
         double longeur = Math.sqrt(bX * bX + bY * bY);
-        
+
         return longeur;
     }
 
@@ -172,56 +172,64 @@ public class Barre {
 
     //Calcul angle alpha
     public double calculAngleAlphaTension(Noeuds noeudCheck) {
-        
+
         Point p1 = new Point(); //Noeud début
         Point p2 = new Point(); //Noeud fin
-        
+
         //Création du segment de référence
         double segRefX = 1;
         double segRefY = 0;
         double normeSegRef = 1;
-               
+
         double alpha = 0;
-        
+
+        boolean pointdebEstpointcheck = false;
+
         if (noeudCheck != this.getNoeudDebut()) {
             p1.setPx(this.getNoeudFin().getPx());
             p1.setPy(this.getNoeudFin().getPy());
-            
+
             p2.setPx(this.getNoeudDebut().getPx());
             p2.setPy(this.getNoeudDebut().getPy());
-        } else{
+        } else {
+
+            pointdebEstpointcheck = true;
+
             p1.setPx(this.getNoeudDebut().getPx());
             p1.setPy(this.getNoeudDebut().getPy());
-            
+
             p2.setPx(this.getNoeudFin().getPx());
             p2.setPy(this.getNoeudFin().getPy());
         }
-        
+
 //        System.out.println("DANS CALCUL ALPHA");
 //        System.out.println("p1 : " + p1.toString());
 //        System.out.println("p2 : " + p2.toString());
-
         //Seg1 correspond à la barre
         double seg1X = p2.getPx() - p1.getPx();
         double seg1Y = p2.getPy() - p1.getPy();
         double normeSeg1 = calculNorme(seg1X, seg1Y);
 
-        
         double scalaire = seg1X * segRefX + seg1Y * segRefY;
 //        System.out.println("SCALAIRE = " + scalaire);
-        
+
         if (normeSeg1 * normeSegRef == 0) {
-            System.out.println("Alpha vaut : " + alpha+"\n");
+            System.out.println("Alpha vaut : " + alpha + "\n");
             return alpha;
         } else {
-//            System.out.println("On va fait arccos de " + (scalaire / (normeSeg1 * normeSegRef)));
             alpha = Math.acos(scalaire / (normeSeg1 * normeSegRef));
-            System.out.println("Alpha vaut : " + alpha+"\n"); 
-            return alpha;
+            if (pointdebEstpointcheck == true) {
+                alpha = 2 * Math.PI - alpha;
+                System.out.println("Alpha vaut : " + alpha + "\n");
+                return alpha;
+            } else {
+                System.out.println("Alpha vaut : " + alpha + "\n");
+                return alpha;
+            }
         }
-        
+
     }
-    
+
 //    public void composantesTension(Noeuds noeudCheck) {
 //        
 //        Point p1 = new Point(this.noeudDebut.getPx(), this.noeudDebut.getPy());
@@ -250,7 +258,6 @@ public class Barre {
 //            this.getTensionBarre().setFy(-this.getTensionBarre().getFy());
 //        }
 //    }
-    
     public String afficheSeg(double segX, double segY, double norme) {
         String s = "";
         s = s + "seg X " + segX + "\n";
@@ -258,18 +265,18 @@ public class Barre {
         s = s + "norme " + norme + "";
         return s;
     }
-    
+
     public static double calculNorme(double fx, double fy) {
         return Math.sqrt(fx * fx + fy * fy);
     }
-    
+
     public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
         double segX = p2.getPx() - p1.getPx();
         double segY = p2.getPy() - p1.getPy();
-        
+
         return Math.sqrt(segX * segX + segY * segY);
     }
-    
+
     public double getDistanceAuClic(double Px, double Py) {
         double X1 = this.noeudDebut.getPx();
         double Y1 = this.noeudDebut.getPy();
@@ -278,7 +285,7 @@ public class Barre {
         double D;
         // test si le point est entre les droite normales à la barre passantes aux extrémitées de la barre
         if (((X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X1 - (Y2 - Y1) * Y1 > 0 && (X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X2 - (Y2 - Y1) * Y2 < 0) || ((X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X1 - (Y2 - Y1) * Y1 < 0 && (X2 - X1) * Px + (Y2 - Y1) * Py - (X2 - X1) * X2 - (Y2 - Y1) * Y2 > 0)) {
-            
+
             D = (Math.abs((Y1 - Y2) * Px + (X2 - X1) * Py + (Y2 - Y1) * X1 + (X1 - X2) * Y1) / (Math.sqrt((Y1 - Y2) * (Y1 - Y2) + (X2 - X1) * (X2 - X1))));
             return D;
         } else if (this.noeudDebut.getDistanceAuClick(Px, Py) < this.noeudFin.getDistanceAuClick(Px, Py)) {
@@ -288,7 +295,7 @@ public class Barre {
             D = this.noeudFin.getDistanceAuClick(Px, Py);
             return D;
         }
-        
+
     }
 
     //Sauvegarde
