@@ -1,5 +1,6 @@
 package fr.insa.empire.treillis;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,20 +8,24 @@ public class Type_de_barre {
 
     //Attributs
     private int identifiant;
+    private String nom;
     private double coutAuMetre;
     private double longMin;
     private double longMax;
     private double resMaxTens;
     private double resMaxComp;
+    private Color couleur;
     private Set<Barre> appartient = new HashSet<Barre>();
 
     //Constructeur
-    public Type_de_barre(double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression) {
+    public Type_de_barre(String nom, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression, Color couleur) {
+        this.nom = nom;
         this.coutAuMetre = coutAuMetre;
         this.longMax = longMax;
         this.longMin = longMin;
         this.resMaxComp = resMaxCompression;
         this.resMaxTens = resMaxTension;
+        this.couleur = couleur;
     }
 
     public Type_de_barre()
@@ -34,12 +39,12 @@ public class Type_de_barre {
 
     //Encapsulation
 
-    public int getIdentificateur() {
+    public int getIdentifiant() {
         return identifiant;
     }
 
-    private void setIdentificateur(int identificateur) {
-        this.identifiant = identificateur;
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
     }
 
     public double getCoutAuMetre() {
@@ -97,12 +102,14 @@ public class Type_de_barre {
     //toString
     public String toString(){
         String s = "";
-        s=s+"Identificateur : "+this.identifiant+"\n";
+        s=s+"Nom : "+this.nom+"\n";
+        s=s+"Identifiant : "+this.identifiant+"\n";
         s=s+"Coût au mètre : "+this.coutAuMetre+"\n";
         s=s+"La longueur max est : "+this.longMax+"\n";
         s=s+"La longueur min est : "+this.longMin+"\n";
         s=s+"La Tension Max est : "+this.resMaxTens+"\n";
         s=s+"La Compression Max est : "+this.resMaxComp+"\n";
+        s=s+"Couleur : "+this.couleur;
         
         return s;
     }

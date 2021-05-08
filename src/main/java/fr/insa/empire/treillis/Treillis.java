@@ -2,13 +2,13 @@ package fr.insa.empire.treillis;
 
 import fr.insa.empire.syslin.Matrice;
 import fr.insa.empire.utils.Identificateur;
+import java.awt.Color;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
 public class Treillis {
 
@@ -17,22 +17,27 @@ public class Treillis {
     private Zone_constructible appartient;
     public Identificateur identificateur;
     private Identificateur identificateurForce;
-    private Set<Noeud_simple> treilliContientNoeudSimple;
-    private Set<Noeud_appui> treilliContientNoeudAppui;
-    private Set<Barre> treilliContientBarre;
-    private Set<Integer> idBarreTensionsCreees = new HashSet<Integer>();
-    private Set<Integer> idAppuiSimpleCrees = new HashSet<Integer>();
-    private Set<Integer> idAppuiDoubleCrees = new HashSet<Integer>();
+    private Identificateur identificateurTypeBarre;
+    private ArrayList<Type_de_barre> treilliTypeBarre;
+    private ArrayList<Noeud_simple> treilliContientNoeudSimple;
+    private ArrayList<Noeud_appui> treilliContientNoeudAppui;
+    private ArrayList<Barre> treilliContientBarre;
+    private ArrayList<Integer> idBarreTensionsCreees = new ArrayList<Integer>();
+    private ArrayList<Integer> idAppuiSimpleCrees = new ArrayList<Integer>();
+    private ArrayList<Integer> idAppuiDoubleCrees = new ArrayList<Integer>();
 
     public Treillis() {
         this.identificateur = new Identificateur();
         this.identificateurForce = new Identificateur();
-        this.treilliContientNoeudSimple = new HashSet<Noeud_simple>();
-        this.treilliContientNoeudAppui = new HashSet<Noeud_appui>();
-        this.treilliContientBarre = new HashSet<Barre>();
-        this.idBarreTensionsCreees = new HashSet<Integer>();
-        this.idAppuiSimpleCrees = new HashSet<Integer>();
-        this.idAppuiDoubleCrees = new HashSet<Integer>();
+        this.identificateurTypeBarre = new Identificateur();
+        this.treilliTypeBarre = new ArrayList<Type_de_barre>();
+        this.creationTypeBarre();
+        this.treilliContientNoeudSimple = new ArrayList<Noeud_simple>();
+        this.treilliContientNoeudAppui = new ArrayList<Noeud_appui>();
+        this.treilliContientBarre = new ArrayList<Barre>();
+        this.idBarreTensionsCreees = new ArrayList<Integer>();
+        this.idAppuiSimpleCrees = new ArrayList<Integer>();
+        this.idAppuiDoubleCrees = new ArrayList<Integer>();
         this.treillis = this;
     }
 
@@ -51,6 +56,20 @@ public class Treillis {
         return prixTreilli;
     }
 
+    public void creationTypeBarre(){
+        
+        Color marron = new Color(163,65,0);
+        Type_de_barre bois = new Type_de_barre("bois",5,20,1,10000,10000,marron);
+        bois.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(bois));
+        this.getTreilliTypeBarre().add(bois);
+        
+        Color grisAcier = new Color(142,142,142);
+        Type_de_barre acier = new Type_de_barre("acier",7,30,1,20000,20000, grisAcier);
+        acier.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(acier));
+        this.getTreilliTypeBarre().add(acier);
+        
+    }
+    
     //Encapsulation 
     public Identificateur getIdentificateur() {
         return identificateur;
@@ -64,18 +83,28 @@ public class Treillis {
         return appartient;
     }
 
-    public Set<Noeud_simple> getTreilliContientNoeudSimple() {
+    public ArrayList<Noeud_simple> getTreilliContientNoeudSimple() {
         return treilliContientNoeudSimple;
     }
 
-    public Set<Noeud_appui> getTreilliContientNoeudAppui() {
+    public ArrayList<Noeud_appui> getTreilliContientNoeudAppui() {
         return treilliContientNoeudAppui;
     }
 
-    public Set<Barre> getTreilliContientBarre() {
+    public ArrayList<Barre> getTreilliContientBarre() {
         return treilliContientBarre;
     }
 
+    public Identificateur getIdentificateurTypeBarre() {
+        return identificateurTypeBarre;
+    }
+
+    public ArrayList<Type_de_barre> getTreilliTypeBarre() {
+        return treilliTypeBarre;
+    }
+
+    
+    
     //Méthodes pour gérer les SET
     public void addBarreSet(Barre barre) {
         this.treilliContientBarre.add(barre);
@@ -113,18 +142,20 @@ public class Treillis {
         this.treilliContientNoeudAppui.removeAll(treilliContientNoeudAppui);
     }
 
-    public Set<Integer> getIdBarreTensionsCreees() {
+    public ArrayList<Integer> getIdBarreTensionsCreees() {
         return idBarreTensionsCreees;
     }
 
-    public Set<Integer> getIdAppuiSimpleCrees() {
+    public ArrayList<Integer> getIdAppuiSimpleCrees() {
         return idAppuiSimpleCrees;
     }
 
-    public Set<Integer> getIdAppuiDoubleCrees() {
+    public ArrayList<Integer> getIdAppuiDoubleCrees() {
         return idAppuiDoubleCrees;
     }
 
+
+    
     //Sauvegarde
     public void save(BufferedWriter bW) throws IOException {
         //Format : TREILLIS
