@@ -43,10 +43,6 @@ public class MainGraphique extends BorderPane {
     private final HBox hbIcones;
     private final HBox hbPosition;
     private final MyCanvas canvas;
-    private int etatNoeud;
-    private double px;
-    private double py;
-    private int nbDeClick;
 
     private final MyMenuBar menuBar;
 
@@ -112,22 +108,6 @@ public class MainGraphique extends BorderPane {
 
     public HBox getHbIcones() {
         return hbIcones;
-    }
-
-    public int getEtatNoeud() {
-        return etatNoeud;
-    }
-
-    public double getPx() {
-        return px;
-    }
-
-    public double getPy() {
-        return py;
-    }
-
-    public int getNbDeClick() {
-        return nbDeClick;
     }
 
     public MyMenuBar getMenuBar() {
@@ -196,7 +176,7 @@ public class MainGraphique extends BorderPane {
         this.mbNoeud.getItems().addAll(choix1, choix2,choix3, choix4);
 
         //menuBar
-        this.menuBar = new MyMenuBar(this);
+        this.menuBar = new MyMenuBar(this, controller);
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");

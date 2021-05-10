@@ -130,6 +130,14 @@ public class Controller {
                 this.vue.getMtbSelection().setSelected(false);
                 eraseAll();
                 break;
+            case 54 :
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbSelection().setSelected(false);
+                recommencer();
+                changeEtat(-10);
+                break;
             case 70 : //calculs
                 Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
                 dBox.setTitle("A confirmation dialog-box with custom actions");
@@ -167,7 +175,6 @@ public class Controller {
         }
 
     }
-
 
     public void canvasClicked(MouseEvent E)
     {
@@ -418,9 +425,17 @@ public class Controller {
 
 
     private void eraseAll() {
+        Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);
+        this.vue.getIdentificateur().clear();
+        this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
+        this.vue.getIdentificateur().getOrSetKey(zone_constructible);
+    }
+
+    private void recommencer() {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
     }
+
 
     private Point choixPositionManuelle() {
         showPopupChoixPos();

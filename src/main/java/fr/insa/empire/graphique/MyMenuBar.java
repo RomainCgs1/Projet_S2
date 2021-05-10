@@ -1,5 +1,6 @@
 package fr.insa.empire.graphique;
 
+import fr.insa.empire.utils.Controller;
 import javafx.scene.control.*;
 
 import java.io.BufferedWriter;
@@ -16,24 +17,29 @@ import javafx.stage.Stage;
 
 public class MyMenuBar extends MenuBar {
 
+    private Controller controller;
+
     private Menu mFichier;
     private Menu mParametre;
     private Menu mAide;
     private MenuItem miEnregistrer;
     private MenuItem miOuvrir;
+    private MenuItem miRecommencer;
 
     private MenuItem miLangue;
     private MenuItem miTheme;
     private MainGraphique mainGraphique;
 
-    public MyMenuBar(MainGraphique mainGraphique) {
+    public MyMenuBar(MainGraphique mainGraphique, Controller controller) {
 
+        this.controller = controller;
         this.mainGraphique = mainGraphique;
 
         this.mFichier = new Menu("Fichier");
         this.miEnregistrer = new MenuItem("Enregistrer");
         this.miOuvrir = new MenuItem("Ouvrir");
-        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir);
+        this.miRecommencer = new MenuItem("Recommencer");
+        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir, this.miRecommencer);
 
         this.mParametre = new Menu("Paramètres ");
         this.miLangue = new MenuItem("Langue");
@@ -111,6 +117,12 @@ public class MyMenuBar extends MenuBar {
                             System.out.println("Sauvegarde terminee");
                         }
                     }
+                }
+        );
+
+        this.miRecommencer.setOnAction(
+                action -> {
+                    controller.changeEtat(54);
                 }
         );
 
