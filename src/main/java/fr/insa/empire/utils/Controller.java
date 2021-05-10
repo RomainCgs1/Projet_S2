@@ -247,24 +247,32 @@ public class Controller {
                     break;
 
                 case 130 :
-                    Segment_terrain segment_terrain1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    System.out.println("Segment terrain le plus proche : " + segment_terrain1);
-                    if(segment_terrain1 == null)
+                    Noeuds noeuds = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if(noeuds == null)
                     {
-                        //demander si on passe en mode de création segment terrain
+                        Segment_terrain segment_terrain1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                        System.out.println("Segment terrain le plus proche : " + segment_terrain1);
+                        if(segment_terrain1 == null)
+                        {
+                            //demander si on passe en mode de création segment terrain
+                        }
+                        else
+                        {
+                            //remplacer coord par le pt le plus proche sur le segment
+                            //creer le point sur le segment
+                            Point temp = segment_terrain1.getPointSegmTerrPlusProche(px, py);
+                            System.out.println("Point temporaire : " + temp);
+                            Appui_double appuiDouble = new Appui_double(temp.getPx(), temp.getPy(), segment_terrain1);
+                            appuiDouble.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiDouble));
+                            System.out.println("test : " + appuiDouble);
+                            this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.SILVER);
+                            this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
+                            System.out.println("Noeud appui double créé !");
+                        }
                     }
                     else
                     {
-                        //remplacer coord par le pt le plus proche sur le segment
-                        //creer le point sur le segment
-                        Point temp = segment_terrain1.getPointSegmTerrPlusProche(px, py);
-                        System.out.println("Point temporaire : " + temp);
-                        Appui_double appuiDouble = new Appui_double(temp.getPx(), temp.getPy(), segment_terrain1);
-                        appuiDouble.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiDouble));
-                        System.out.println("test : " + appuiDouble);
-                        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.SILVER);
-                        this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
-                        System.out.println("Noeud appui double créé !");
+                        System.out.println("Il y a déjà un noeud ici");
                     }
                     break;
                 case 20 :
@@ -323,11 +331,11 @@ public class Controller {
                     break;
 
                 case 50 :
-                    Noeuds noeuds = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(noeuds != null)
+                    Noeuds noeud = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if(noeud != null)
                     {
-                        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeuds);
-                        this.vue.getTreillis().identificateur.getObjectToKey().remove(noeuds);
+                        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeud);
+                        this.vue.getTreillis().identificateur.getObjectToKey().remove(noeud);
                         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
                         this.vue.recontruction();
                     }
