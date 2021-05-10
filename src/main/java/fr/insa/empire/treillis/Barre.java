@@ -171,36 +171,10 @@ public class Barre {
     }
 
     //Calcul angle alpha
-    public double calculAngleAlphaTension(Noeuds noeudCheck) {
+    public double calculAngleAlphaTension() {
 
-        Point p1 = new Point(); //Noeud début
-        Point p2 = new Point(); //Noeud fin
-
-        //Création du segment de référence
-        double segRefX = 1;
-        double segRefY = 0;
-        double normeSegRef = 1;
-
-        double alpha = 0;
-
-        boolean pointdebEstpointcheck = false;
-
-        if (noeudCheck != this.getNoeudDebut()) {
-            p1.setPx(this.getNoeudFin().getPx());
-            p1.setPy(this.getNoeudFin().getPy());
-
-            p2.setPx(this.getNoeudDebut().getPx());
-            p2.setPy(this.getNoeudDebut().getPy());
-        } else {
-
-            pointdebEstpointcheck = true;
-
-            p1.setPx(this.getNoeudDebut().getPx());
-            p1.setPy(this.getNoeudDebut().getPy());
-
-            p2.setPx(this.getNoeudFin().getPx());
-            p2.setPy(this.getNoeudFin().getPy());
-        }
+        Point p1 = new Point(this.getNoeudDebut().getPx(), this.getNoeudDebut().getPy()); //Noeud début
+        Point p2 = new Point(this.getNoeudFin().getPx(), this.getNoeudFin().getPy()); //Noeud fin
 
 //        System.out.println("DANS CALCUL ALPHA");
 //        System.out.println("p1 : " + p1.toString());
@@ -208,25 +182,11 @@ public class Barre {
         //Seg1 correspond à la barre
         double seg1X = p2.getPx() - p1.getPx();
         double seg1Y = p2.getPy() - p1.getPy();
-        double normeSeg1 = calculNorme(seg1X, seg1Y);
-
-        double scalaire = seg1X * segRefX + seg1Y * segRefY;
-//        System.out.println("SCALAIRE = " + scalaire);
-
-        if (normeSeg1 * normeSegRef == 0) {
-            System.out.println("Alpha vaut : " + alpha + "\n");
-            return alpha;
-        } else {
-            alpha = Math.acos(scalaire / (normeSeg1 * normeSegRef));
-            if (pointdebEstpointcheck == true) {
-                alpha = 2 * Math.PI - alpha;
-                System.out.println("Alpha vaut : " + alpha + "\n");
-                return alpha;
-            } else {
-                System.out.println("Alpha vaut : " + alpha + "\n");
-                return alpha;
-            }
-        }
+        double alpha = Math.atan2(seg1Y, seg1X);
+        
+        System.out.println("Alpha : "+alpha);
+        
+        return alpha;
 
     }
 

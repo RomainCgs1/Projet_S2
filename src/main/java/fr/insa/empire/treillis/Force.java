@@ -195,7 +195,7 @@ public class Force {
                     //Création des tensions
                     for (int i = 0; i < ((Noeud_simple) val).getAppartientABarre().size(); i++) {
                         System.out.println("Barre : "+((Noeud_simple) val).getAppartientABarre().get(i).toString());
-                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Noeud_simple) val)));
+                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         //((Noeud_simple) val).getAppartientABarre().get(i).composantesTension(((Noeud_simple) val));
                         noeudsimpleTension.add(tension);
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx :"+tension.getFx()+"\n"+"fy : "+tension.getFy()+"\n");
@@ -257,7 +257,7 @@ public class Force {
                     //Création des tensions
                     for (int i = 0; i < ((Appui_simple) val).getAppartientABarre().size(); i++) {
                         System.out.println("Barre : "+((Appui_simple) val).getAppartientABarre().get(i).toString());
-                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_simple) val)));
+                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         appuiSimpleTension.add(tension);
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx : "+tension.getFx()+"\n"+"fy : "+tension.getFy()+"\n");
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
@@ -293,7 +293,7 @@ public class Force {
                     }
                     tailleArrayIni = idForceLinkMatrice.size();
                     //Création de la force de réaction de l'appui-simple
-                    Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta((Appui_simple) val));
+                    Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta());
                     nbReaction++;
                     idForceLinkMatrice.add(reactionAS.getIdentifiant());
                     idForceLinkMatrice.add(reactionAS.getIdentifiant());
@@ -316,7 +316,7 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Appui_double) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension(((Appui_double) val)));
+                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension());
                         appuiDoubleTension.add(tension);
                         System.out.println("Barre : "+((Appui_double) val).getAppartientABarre().get(i).toString());
                         System.out.println("Tension "+(i+1)+"créee \n"+"fx : "+tension.getFx()+"\n"+"fy : "+tension.getFy()+"\n");
@@ -384,7 +384,9 @@ public class Force {
         System.out.println("Matrice résolution : \n"+resolution.toString());
         resolution.descenteGauss();
         System.out.println("Resolution  après descente : \n"+resolution.toString());
+        System.out.println("prout montée");
         resolution.monterGauss();
+        System.out.println("peout montée fin");
         System.out.println("Resolution  après montée : \n"+resolution.toString());
         
     }

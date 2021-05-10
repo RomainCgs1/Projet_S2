@@ -82,43 +82,19 @@ public class Segment_terrain {
         return longeur;
     }
     
-    public double calculAngleBeta(Noeuds noeudCheck) {
+    public double calculAngleBeta() {
        
-        Point p1 = this.getPointDebut();
-        Point p2 = this.getPointFin();
-        
-        //Création du segment de référence
-        double segRefX = 1;
-        double segRefY = 0;
-        double normeSegRef = 1;
-               
-        double beta = Math.PI/2;
-        
-        System.out.println("DANS CALCUL BETA");
-        System.out.println("p1 : " + p1.toString());
-        System.out.println("p2 : " + p2.toString());
+        Point p1 = new Point(this.getPointDebut().getPx(), this.getPointDebut().getPy()); //Noeud début
+        Point p2 = new Point(this.getPointFin().getPx(), this.getPointFin().getPy()); //Noeud fin
 
         //Seg1 correspond à la barre
         double seg1X = p2.getPx() - p1.getPx();
         double seg1Y = p2.getPy() - p1.getPy();
-        double normeSeg1 = calculNorme(seg1X, seg1Y);
-        System.out.println("Norme : "+normeSeg1+"\n");
-
+        double beta = Math.atan2(seg1Y, seg1X)+ (Math.PI/2);
         
-        double scalaire = seg1X * segRefX + seg1Y * segRefY;
-        System.out.println("SCALAIRE = " + scalaire);
+        System.out.println("Beta : "+beta);
         
-        if (normeSeg1 * normeSegRef == 0) {
-            System.out.println("BETA vaut : " + beta+"\n");
-            return beta;
-        } else {
-//            System.out.println("On va fait arccos de " + (scalaire / (normeSeg1 * normeSegRef)));
-            beta = Math.acos(scalaire / (normeSeg1 * normeSegRef));
-            System.out.println("BETA SANS PI/2 : "+beta+"\n");
-            beta = beta + Math.PI/2;
-            System.out.println("BETA vaut : " + beta+"\n"); 
-            return beta;
-        }
+        return beta;
     }
 
     public double getDistanceAuClic(double Px, double Py) {
