@@ -386,7 +386,7 @@ public class Force {
         System.out.println("Resolution  après descente : \n"+resolution.toString());
         System.out.println("prout montée");
         resolution.monterGauss();
-        System.out.println("peout montée fin");
+        System.out.println("prout montée fin");
         System.out.println("Resolution  après montée : \n"+resolution.toString());
         
     }
