@@ -260,6 +260,9 @@ public class Treillis {
         
         // On résout
         Force.resSysteme(systeme, vecteur);
+        
+        //On affiche les résultats
+        Force.recupSolution(vecteur, listeRef, this);
     }
     
      public void lancerCalculTEST (Noeud_simple noeudSimple){
@@ -275,7 +278,8 @@ public class Treillis {
         System.out.println("Matrice obtenue :\n"+systeme.toString());
         systeme = systeme.modifMatrice(listeRef);
         System.out.println("Début de la résolution...");
-        Force.resSysteme(systeme, vecteur);
+        Matrice resolution = Force.resSysteme(systeme, vecteur);
+        Force.recupSolution(resolution, listeRef, this);
     }
     
     public void testForce() {

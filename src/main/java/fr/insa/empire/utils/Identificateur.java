@@ -34,7 +34,7 @@ public class Identificateur {
     }
     
     public Identificateur() {
-        this.valCur =0;
+        this.valCur =1;
         this.ketToObject = new HashMap<Integer, Object>();
         this.objectToKey = new HashMap<Object, Integer>();
     }
@@ -56,6 +56,7 @@ public class Identificateur {
     public boolean objetPresent (Object o){
         return this.objectToKey.get(o) != null;
     }
+ 
     
     //toString
     public String toString()

@@ -1,6 +1,5 @@
 package fr.insa.empire.treillis;
 
-import static fr.insa.empire.treillis.Barre.calculNorme;
 import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;

@@ -226,9 +226,7 @@ public class Barre {
         return s;
     }
 
-    public static double calculNorme(double fx, double fy) {
-        return Math.sqrt(fx * fx + fy * fy);
-    }
+   
 
     public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
         double segX = p2.getPx() - p1.getPx();
