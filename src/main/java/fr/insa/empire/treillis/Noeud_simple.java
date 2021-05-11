@@ -22,6 +22,7 @@ public class Noeud_simple extends Noeuds {
         
         System.out.println("Votre noeud simple a été créé : " + this);
     }
+    
 
     private void setPx(double Px) {
         this.px = Px;

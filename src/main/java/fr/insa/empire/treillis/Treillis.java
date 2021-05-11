@@ -243,15 +243,37 @@ public class Treillis {
         }
     }
 
-    public void lancerCalculGeneraux(Noeud_simple noeudSimple){
+    public void lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee){
+        //Création des matrices
+        Matrice systeme = Force.creationMatrice(this);
+        Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
+       
+        //Création de l'Arraylist de ref
+        ArrayList<Integer> listeRef = new ArrayList<Integer>();
+        
+        //Remplissage des matrices
+        Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
+        System.out.println("Matrice obtenue :\n"+systeme.toString());
+        
+        //On supprime les colonnes de 0
+        systeme = systeme.modifMatrice(listeRef);
+        
+        // On résout
+        Force.resSysteme(systeme, vecteur);
+    }
+    
+     public void lancerCalculTEST (Noeud_simple noeudSimple){
+        
+        ArrayList<Integer> listeRef = new ArrayList<Integer>();
         Matrice systeme = Force.creationMatrice(this);
         Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
         Force fAjoutee = new Force (noeudSimple,0,(-1000));
         System.out.println("Force ajoutée FX : "+fAjoutee.getFx());
         System.out.println("Force ajoutée FY : "+fAjoutee.getFy());
-        Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this);
+        Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
+        System.out.println(listeRef.toString());
         System.out.println("Matrice obtenue :\n"+systeme.toString());
-        systeme = systeme.modifMatrice();
+        systeme = systeme.modifMatrice(listeRef);
         System.out.println("Début de la résolution...");
         Force.resSysteme(systeme, vecteur);
     }
@@ -351,7 +373,7 @@ public class Treillis {
 
         System.out.println("--------------------------------------------------");*/
        
-       this.lancerCalculGeneraux(ns);
+       this.lancerCalculTEST(ns);
         
         
         

@@ -117,6 +117,8 @@ public class Force {
         this.treilli = treilli;
     }
 
+
+    
     //To String
     public String toString() {
         String s = "";
@@ -170,10 +172,10 @@ public class Force {
         return systeme;
     }
 
-    public static void remplissageMatrice(int idNoeudOuForceAjoutee, Force forceAjoutee, Matrice systeme, Matrice vecteur, Treillis treilli) {
+    public static void remplissageMatrice(int idNoeudOuForceAjoutee, Force forceAjoutee, Matrice systeme, Matrice vecteur, Treillis treilli, ArrayList<Integer> idForceLinkMatrice) {
 
         ArrayList<Integer> idNoeudVerifies = new ArrayList<Integer>();
-        ArrayList<Integer> idForceLinkMatrice = new ArrayList<Integer>();
+       
         int l = 0;
         int nbTension =0;
         int nbReaction = 0;
@@ -295,8 +297,8 @@ public class Force {
                     //Création de la force de réaction de l'appui-simple
                     Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta());
                     nbReaction++;
-                    idForceLinkMatrice.add(reactionAS.getIdentifiant());
-                    idForceLinkMatrice.add(reactionAS.getIdentifiant());
+                    idForceLinkMatrice.add(reactionAS.getIdentifiant()*10+1); //Composante sur X
+                    idForceLinkMatrice.add(reactionAS.getIdentifiant()*10+2); //Composante sur Y 
                     System.out.println("La dernière colonne remplie est "+tailleArrayIni);
                     System.out.println("Ajout de la réaction du noeud");
                     System.out.println("Force " + reactionAS.getIdentifiant() + "ajouté en [" + l + "," + (tailleArrayIni) + "], la composante " + reactionAS.getFx());
@@ -355,8 +357,8 @@ public class Force {
                     //Création de la force de réaction de l'appui-simple
                     Force reactionAD = new Force(((Appui_double) val));
                     nbReaction++;
-                    idForceLinkMatrice.add(reactionAD.getIdentifiant());
-                    idForceLinkMatrice.add(reactionAD.getIdentifiant());
+                    idForceLinkMatrice.add(reactionAD.getIdentifiant()*10+1); //On reconnaitra les composantes sur X
+                    idForceLinkMatrice.add(reactionAD.getIdentifiant()*10+2); //On reconnaitra les composantes sur Y
                     System.out.println("La dernière colonne remplie est "+tailleArrayIni);
                     System.out.println("Ajout de la réaction du noeud");
                     System.out.println("Force " + reactionAD.getIdentifiant() + "ajouté en [" + l + "," + (tailleArrayIni) + "], la composante " + reactionAD.getFx());
@@ -384,10 +386,12 @@ public class Force {
         System.out.println("Matrice résolution : \n"+resolution.toString());
         resolution.descenteGauss();
         System.out.println("Resolution  après descente : \n"+resolution.toString());
-        System.out.println("prout montée");
         resolution.monterGauss();
-        System.out.println("prout montée fin");
-        System.out.println("Resolution  après montée : \n"+resolution.toString());
-        
+        System.out.println("Transformation diagonales");
+        resolution.transfoDiagonales1();
+    }
+    
+    public static void recupSolution (Matrice resolution, ArrayList<Integer> listeRef){
+        //La force dans la colonne 0 sera dans la ligne 0 du vecteur résultat 
     }
 }

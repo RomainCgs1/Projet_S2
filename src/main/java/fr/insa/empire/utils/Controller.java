@@ -1,6 +1,6 @@
 package fr.insa.empire.utils;
 
-    import fr.insa.empire.graphique.MainGraphique;
+import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.treillis.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -26,8 +26,7 @@ public class Controller {
     Noeuds noeudDebut;
     Noeuds noeudFin;
 
-    public Controller(MainGraphique vue)
-    {
+    public Controller(MainGraphique vue) {
         this.vue = vue;
         this.etat = -10;
 
@@ -36,13 +35,11 @@ public class Controller {
         this.p3 = new Point();
     }
 
-    public void changeEtat(int newState)
-    {
+    public void changeEtat(int newState) {
         this.etatPrecedent = this.etat;
         this.etat = newState;
 
-        switch (newState)
-        {
+        switch (newState) {
             case -10: // initialisation zone_constructible
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
@@ -57,80 +54,80 @@ public class Controller {
                 this.vue.getMtbSelection().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 break;
-            case 110 : //noeud appui simple
+            case 110: //noeud appui simple
                 this.vue.getMbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 120 : //noeud simple
+            case 120: //noeud simple
                 this.vue.getMbNoeud().setText("Noeud Simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 130 : //noeud appui double
+            case 130: //noeud appui double
                 this.vue.getMbNoeud().setText("Noeud Appui double");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 140 : //noeud appui encastré
+            case 140: //noeud appui encastré
                 this.vue.getMbNoeud().setText("Noeud Appui encasté");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 20 : //barre
+            case 20: //barre
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
-            case 30 : //terrain
+            case 30: //terrain
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 40 : //selection
+            case 40: //selection
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbBarre().setSelected(false);
                 break;
-            case 50 : //gomme noeuds
+            case 50: //gomme noeuds
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : noeuds");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 51 : //gomme terrain
+            case 51: //gomme terrain
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : terrain");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 52 : //gomme barre
+            case 52: //gomme barre
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : barre");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 53 : //gomme : tout effacer
+            case 53: //gomme : tout effacer
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbSelection().setSelected(false);
                 eraseAll();
                 break;
-            case 54 :
+            case 54:
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
@@ -138,16 +135,7 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
-            case 70 : //calculs
-                //SELECTIONNER NOEUD AVANT
-                TextInputDialog boiteDiagPX = new TextInputDialog();
-                boiteDiagPX.setTitle("Ajout de la force");
-                boiteDiagPX.setHeaderText("Entrez la composante sur X de la force");
-                boiteDiagPX.setContentText("Composante sur X :");
-                Optional<String> textIn = boiteDiagPX.showAndWait();
-                if (textIn.isPresent()) {
-                    System.out.println("Login name = " + textIn.get());
-                }
+            case 70:
                 //reset
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
@@ -156,7 +144,7 @@ public class Controller {
                 this.vue.getMtbSelection().setSelected(false);
                 break;
 
-            case 80 : //on donne la position manuellement
+            case 80: //on donne la position manuellement
                 choixPositionManuelle();
                 changeEtat(etatPrecedent);
                 break;
@@ -164,37 +152,34 @@ public class Controller {
 
     }
 
-    public void canvasClicked(MouseEvent E)
-    {
+    public void canvasClicked(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
         System.out.println("Canvas cliqué en " + px + " " + py);
 
-        if(E.getButton() == MouseButton.PRIMARY)
-        {
-            switch (this.etat)
-            {
+        if (E.getButton() == MouseButton.PRIMARY) {
+            switch (this.etat) {
                 case -10:
-                    p4 = new Point(px,py);
+                    p4 = new Point(px, py);
                     this.changeEtat(-11);
                     break;
                 case -11:
-                    
+
                     double Xmax;
                     double Xmin;
                     double Ymax;
                     double Ymin;
-                    if(px>p4.getPx()){
+                    if (px > p4.getPx()) {
                         Xmax = px;
                         Xmin = p4.getPx();
-                    }else{
+                    } else {
                         Xmax = p4.getPx();
                         Xmin = px;
                     }
-                    if(py>p4.getPy()){
+                    if (py > p4.getPy()) {
                         Ymax = py;
                         Ymin = p4.getPy();
-                    }else{
+                    } else {
                         Ymax = p4.getPy();
                         Ymin = py;
                     }
@@ -204,20 +189,17 @@ public class Controller {
                     this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmin, Ymin, Xmin, Ymax);
                     this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmax, Ymax, Xmin, Ymax);
                     this.vue.getCanvas().getGraphicsContext2D().strokeLine(Xmax, Ymin, Xmin, Ymin);
-                    
-                   ZoneConstructible.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(ZoneConstructible));
-                   this.changeEtat(0);
+
+                    ZoneConstructible.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(ZoneConstructible));
+                    this.changeEtat(0);
                     break;
-                    
-                case 110 :
+
+                case 110:
                     Segment_terrain segment_terrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
                     System.out.println("Segment terrain le plus proche : " + segment_terrain);
-                    if(segment_terrain == null)
-                    {
+                    if (segment_terrain == null) {
                         //demander si on passe en mode de création segment terrain
-                    }
-                    else
-                    {
+                    } else {
                         //remplacer coord par le pt le plus proche sur le segment
                         //creer le point sur le segment
                         Point temp = segment_terrain.getPointSegmTerrPlusProche(px, py);
@@ -229,35 +211,28 @@ public class Controller {
                     }
                     break;
 
-                case 120 :
+                case 120:
                     Noeud_simple noeud_simple = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
                     System.out.println("Noeud simple le plus proche : " + noeud_simple);
-                    if(noeud_simple == null)
-                    {
+                    if (noeud_simple == null) {
                         noeud_simple = new Noeud_simple(px, py);
                         noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
                         System.out.println(noeud_simple.getID());
                         this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
                         this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("noeud déjà créé : " + noeud_simple);
                     }
                     break;
 
-                case 130 :
+                case 130:
                     Noeuds noeuds = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(noeuds == null)
-                    {
+                    if (noeuds == null) {
                         Segment_terrain segment_terrain1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
                         System.out.println("Segment terrain le plus proche : " + segment_terrain1);
-                        if(segment_terrain1 == null)
-                        {
+                        if (segment_terrain1 == null) {
                             //demander si on passe en mode de création segment terrain
-                        }
-                        else
-                        {
+                        } else {
                             //remplacer coord par le pt le plus proche sur le segment
                             //creer le point sur le segment
                             Point temp = segment_terrain1.getPointSegmTerrPlusProche(px, py);
@@ -269,16 +244,13 @@ public class Controller {
                             this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
                             System.out.println("Noeud appui double créé !");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("Il y a déjà un noeud ici");
                     }
                     break;
-                case 20 :
+                case 20:
                     noeudDebut = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(noeudDebut == null)
-                    {
+                    if (noeudDebut == null) {
                         this.changeEtat(120);
                         this.canvasClicked(E);
                         this.changeEtat(20);
@@ -287,53 +259,49 @@ public class Controller {
                     this.changeEtat(21);
                     break;
 
-                case 21 :
+                case 21:
                     noeudFin = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(noeudFin == null)
-                    {
+                    if (noeudFin == null) {
                         this.changeEtat(120);
                         this.canvasClicked(E);
                         this.changeEtat(21);
                         this.canvasClicked(E);
-                    }
-                    else
-                    {
+                    } else {
                         creationBarre(this.noeudDebut, this.noeudFin);
                     }
                     this.changeEtat(20);
                     break;
 
-                case 30 :
+                case 30:
                     p1 = new Point(px, py);
                     //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                     changeEtat(31);
                     System.out.println("point 1");
                     break;
 
-                case 31 :
+                case 31:
                     p2 = new Point(px, py);
                     //this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
                     changeEtat(32);
                     System.out.println("point 2");
                     break;
 
-                case 32 :
+                case 32:
                     p3 = new Point(px, py);
                     //this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                     System.out.println("point 3");
                     creationTriangleTerrain(this.p1, this.p2, this.p3);
 
-                    System.out.println(this.p1 + "\n" +
-                            this.p2 + "\n" +
-                            this.p3);
+                    System.out.println(this.p1 + "\n"
+                            + this.p2 + "\n"
+                            + this.p3);
 
                     changeEtat(30);
                     break;
 
-                case 50 :
+                case 50:
                     Noeuds noeud = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(noeud != null)
-                    {
+                    if (noeud != null) {
                         int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeud);
                         this.vue.getTreillis().identificateur.getObjectToKey().remove(noeud);
                         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
@@ -341,18 +309,49 @@ public class Controller {
                     }
 
                     break;
-                case 51 :
+                case 51:
                     Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if(segmentTerrain != null)
-                    {
+                    if (segmentTerrain != null) {
                         clearTriangleTerrain(segmentTerrain);
                         this.vue.recontruction();
                     }
                     break;
+
+                case 70:
+                     //On sélectionne le noeud souhaité
+                    Noeud_simple noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    while (noeudSimpleChoisit == null){
+                        System.out.println("Recommencez");
+                        noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    }
+                    System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
+                    
+                    //On demande la valeur de la composante sur X de la force
+                    TextInputDialog boiteDiagPX = new TextInputDialog();
+                    boiteDiagPX.setTitle("Ajout de la force");
+                    boiteDiagPX.setHeaderText("Entrez la composante sur X de la force");
+                    boiteDiagPX.setContentText("Composante sur X :");
+                    Optional<String> textPX = boiteDiagPX.showAndWait();
+                    double pxForce = Double.parseDouble(textPX.get());
+                    
+                    //On demande la valeur de la composante sur Y de la force
+                    TextInputDialog boiteDiagPY = new TextInputDialog();
+                    boiteDiagPY.setTitle("Ajout de la force");
+                    boiteDiagPY.setHeaderText("Entrez la composante sur Y de la force");
+                    boiteDiagPY.setContentText("Composante sur Y :");
+                    Optional<String> textPY = boiteDiagPY.showAndWait();
+                    double pyForce = Double.parseDouble(textPY.get());
+                    
+                    //On crée la force ajoutée
+                    Force forceAjoutee = new Force (noeudSimpleChoisit, pxForce, pyForce);
+                    
+                    //Calcul
+                    System.out.println("Lancement des calculs");
+                    System.out.println("Calculs en cours...");
+                    
             }
         }
     }
-
 
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
@@ -382,9 +381,7 @@ public class Controller {
         System.out.println("Triangle n°" + triangle_terrain.getIdentifiant() + " a été créé.");
     }
 
-
-    private void clearTriangleTerrain(Segment_terrain segmentTerrain)
-    {
+    private void clearTriangleTerrain(Segment_terrain segmentTerrain) {
         int key = this.vue.getTreillis().identificateur.getObjectToKey().get(segmentTerrain);
         this.vue.getTreillis().identificateur.getObjectToKey().remove(segmentTerrain);
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
@@ -401,7 +398,6 @@ public class Controller {
         this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment3());
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
 
-
         key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain);
         this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain);
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
@@ -415,10 +411,8 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLUE);
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
 
-        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé." );
+        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
     }
-
-
 
     private void eraseAll() {
         Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);
@@ -432,15 +426,10 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
     }
 
-
     private Point choixPositionManuelle() {
         showPopupChoixPos();
         return null;
     }
-
-
-
-
 
     private Point showPopupChoixPos() {
         /*TextInputDialog inDialog = new TextInputDialog("Choix manuel de position");
@@ -460,14 +449,13 @@ public class Controller {
         dialog.setTitle("Choix manuel de position");
         dialog.setHeaderText("Veuillez saisir la position de votre point");
 
-    // Set the icon (must be included in the project).
+        // Set the icon (must be included in the project).
         //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
-
-    // Set the button types.
+        // Set the button types.
         ButtonType validationButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(validationButtonType, ButtonType.CANCEL);
 
-    // Create the tfPYX and tfPY labels and fields.
+        // Create the tfPYX and tfPY labels and fields.
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -484,21 +472,21 @@ public class Controller {
         grid.add(new Label("Py:"), 0, 1);
         grid.add(tfPY, 1, 1);
 
-    // Enable/Disable login button depending on whether a tfPYX was entered.
+        // Enable/Disable login button depending on whether a tfPYX was entered.
         Node loginButton = dialog.getDialogPane().lookupButton(validationButtonType);
         loginButton.setDisable(true);
 
-    // Do some validation (using the Java 8 lambda syntax).
+        // Do some validation (using the Java 8 lambda syntax).
         tfPX.textProperty().addListener((observable, oldValue, newValue) -> {
             loginButton.setDisable(newValue.trim().isEmpty());
         });
 
         dialog.getDialogPane().setContent(grid);
 
-    // Request focus on the tfPYX field by default.
+        // Request focus on the tfPYX field by default.
         Platform.runLater(() -> tfPX.requestFocus());
 
-    // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
+        // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == validationButtonType) {
                 return new Pair<>(tfPX.getText(), tfPY.getText());

@@ -5,6 +5,8 @@
  */
 package fr.insa.empire.syslin;
 
+import java.util.ArrayList;
+
 public class Matrice {
 
     private int nbrLig;
@@ -297,16 +299,22 @@ public class Matrice {
     }
 
     //Monté de Gauss
-    public void monterGauss() {
+    public Matrice monterGauss() {
 
-        for (int i = this.nbrCol - 1; i > -1; i--) {
-            int j = i - 1;
-            while (j > -1) {
-                transvection(i, j);
-                j--;
+        Matrice Montee = new Matrice(this.nbrLig, this.nbrCol);
+        
+        for (int i = 0; i < this.nbrLig; i++) {
+            for (int j = 0; j < this.nbrCol; j++) {
+                Montee.coeffs[i][j] = this.coeffs[i][j] / this.coeffs[i][i];
             }
         }
-        System.out.println("Montée de Gauss effectuée ");
+        for (int i = this.nbrLig - 1; i > 0; i--) {
+            for (int j = i - 1; j >= 0; j--) {
+                    Montee.transvection(i, j);
+            }
+        }
+        System.out.println("après remontée : \n" + Montee);
+        return Montee;
     }
 
     //Diagonales en 1
@@ -334,7 +342,7 @@ public class Matrice {
     }
     
     //Modification de la matrice si elle possède une colonne de 0
-    public Matrice modifMatrice(){
+    public Matrice modifMatrice(ArrayList<Integer> listeRef){
         double epsilon = 0.00000001;
         int nb0 = 0;
         int nbColNulle = 0;
@@ -358,10 +366,12 @@ public class Matrice {
             if(nb0==this.nbrCol-1){
                // System.out.println("La colonne "+i+" est remplie de 0");
                 if(i != this.nbrCol-1){
+                    listeRef.remove(i);
                     nbColNulle++;
                     this.decalageCol(i);
-//                    System.out.println("Décalage effectué");
-//                    System.out.println("Matrice actuelle :\n"+this.toString());
+                    System.out.println("Décalage effectué");
+                    System.out.println("Matrice actuelle :\n"+this.toString());
+                    System.out.println(listeRef.toString());
                 }
             }
             nb0=0;
