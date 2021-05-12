@@ -1,8 +1,7 @@
 package fr.insa.empire.treillis;
 
 import java.awt.Color;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class Type_de_barre {
 
@@ -15,7 +14,7 @@ public class Type_de_barre {
     private double resMaxTens;
     private double resMaxComp;
     private Color couleur;
-    private Set<Barre> appartient = new HashSet<Barre>();
+    private ArrayList<Barre> appartient = new ArrayList<Barre>();
 
     //Constructeur
     public Type_de_barre(String nom, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression, Color couleur) {
@@ -98,6 +97,19 @@ public class Type_de_barre {
     public void removeAllBarre(){
         this.appartient.removeAll(appartient);
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Color getCouleur() {
+        return couleur;
+    }
+
+    public ArrayList<Barre> getAppartient() {
+        return appartient;
+    }
+    
     
     //toString
     public String toString(){

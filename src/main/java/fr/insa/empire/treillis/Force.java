@@ -148,6 +148,11 @@ public class Force {
         return adAssocie;
     }
 
+    public void setTypeDeForce(String typeDeForce) {
+        this.typeDeForce = typeDeForce;
+    }
+
+    
     //To String
     public String toString() {
         String s = "";
@@ -426,10 +431,10 @@ public class Force {
         return resolution;
     }
 
-    public static void recupSolution(Matrice resolution, ArrayList<Integer> listeRef, Treillis treilli) {
+    public static String[][] recupSolution(Matrice resolution, ArrayList<Integer> listeRef, Treillis treilli) {
 
         //Création du tableau d'affichage des résultats
-        String[][] resultat = new String[resolution.getNbrLig()][2];
+        String[][] resultat = new String[resolution.getNbrLig()][3];
 
         //Création du vecteur solution
         System.out.println("Matrice résolution : \n" + resolution.toString());
@@ -449,13 +454,16 @@ public class Force {
                 System.out.println("Sa norme vaut : " + forceConcernee.getnorme());
 
                 if (solution.getCoeffs()[i][0] > 0) {
+                    forceConcernee.setTypeDeForce("Tension Traction");
                     resultat[i][0] = "Traction de la barre " + forceConcernee.getBarreAssociee().getIdentifiant();
                     resultat[i][1] = forceConcernee.getnorme() + " N";
                 } else {
+                    forceConcernee.setTypeDeForce("Tension Compression");
                     resultat[i][0] = "Compression de la barre " + forceConcernee.getBarreAssociee().getIdentifiant();
                     resultat[i][1] = forceConcernee.getnorme() + " N";
                 }
 
+                forceConcernee.verificationSiForceSupportee(resultat, i);
             }
 
             //On regarde si c'est une réaction d'appui simple
@@ -478,6 +486,7 @@ public class Force {
 
                     resultat[i][0] = "Reaction de l'Appui Simple " + forceConcernee.getAsAssocie().getID();
                     resultat[i][1] = forceConcernee.getFx() + " N";
+                    resultat[i][2] = "-";
 
                 } else {
                     System.out.println(listeRef.get(i) + " est négatif donc Y");
@@ -485,6 +494,7 @@ public class Force {
 
                     resultat[i][0] = "Reaction de l'Appui Simple " + forceConcernee.getAsAssocie().getID();
                     resultat[i][1] = forceConcernee.getFy() + " N";
+                    resultat[i][2] = "-";
                 }
 
             }
@@ -509,6 +519,7 @@ public class Force {
 
                     resultat[i][0] = "Reaction de l'Appui Double " + forceConcernee.getAdAssocie().getID();
                     resultat[i][1] = forceConcernee.getFx() + " N";
+                    resultat[i][2] = "-";
 
                 } else {
                     System.out.println(listeRef.get(i) + " est négatif donc Y");
@@ -516,13 +527,53 @@ public class Force {
 
                     resultat[i][0] = "Reaction de l'Appui Double " + forceConcernee.getAdAssocie().getID();
                     resultat[i][1] = forceConcernee.getFy() + " N";
+                    resultat[i][2] = "-";
                 }
 
             }
         }
         System.out.println("Tableau résultat : \n");
         for (int i = 0; i < resolution.getNbrLig(); i++) {
-            System.out.println(resultat[i][0] + " " + resultat[i][1]);
+            System.out.println(resultat[i][0] + " " + resultat[i][1]+" "+resultat[i][2]);
+        }
+        
+        return resultat;
+    }
+
+    public void verificationSiForceSupportee(String [][] resultat, int ligne) {
+
+        //On verifie bien qu'il s'agit d'une tension
+        if (this.typeDeForce.contains("Tension")) {
+
+            double valeurMaxSupportee = 0;
+
+            //On regarde si c'est une traction ou une compression
+            if (this.typeDeForce.contains("Compression")) {
+                System.out.println("La force est une compression");
+                valeurMaxSupportee = this.getBarreAssociee().getType().getResMaxComp();
+            } else {
+                System.out.println("La force est une traction");
+                valeurMaxSupportee = this.getBarreAssociee().getType().getResMaxTens();
+            }
+
+            // On va comparer la norme de la tension avec la valeur max
+            if (this.getnorme() > valeurMaxSupportee) {
+                System.out.println("La force est trop importante ");
+                resultat[ligne][2] = "NON SUPPORTEE";
+            }
+            
+            if (this.getnorme() == valeurMaxSupportee) {
+                System.out.println("La force est supportée, mais attention la situation est limite ");
+                resultat[ligne][2] = "ETAT LIMITE";
+            }
+            
+            if (this.getnorme() < valeurMaxSupportee) {
+                System.out.println("La force est supportée ");
+                resultat[ligne][2] = "SUPPORTEE";
+            }
+            
+        } else {
+            throw new Error("La force entrée n'est ni une compression ni une traction");
         }
     }
 }

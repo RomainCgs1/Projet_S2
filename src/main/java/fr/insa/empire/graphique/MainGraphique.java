@@ -297,9 +297,6 @@ public class MainGraphique extends BorderPane {
         this.mbTypeBarre.setOnAction(
                 action -> {
                     controller.changeEtat(60);
-                    for (int i = 0; i < this.treillis.getTreilliTypeBarre().size(); i++) {
-                        System.out.println("Type \n"+this.treillis.getTreilliTypeBarre().get(i).toString());
-                    }
                 }
         );
 

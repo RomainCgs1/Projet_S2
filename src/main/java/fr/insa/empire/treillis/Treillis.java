@@ -18,7 +18,7 @@ public class Treillis {
     public Identificateur identificateur;
     private Identificateur identificateurForce;
     private Identificateur identificateurTypeBarre;
-    private ArrayList<Type_de_barre> treilliTypeBarre;
+    private Catalogue catalogue;
     private ArrayList<Noeud_simple> treilliContientNoeudSimple;
     private ArrayList<Noeud_appui> treilliContientNoeudAppui;
     private ArrayList<Barre> treilliContientBarre;
@@ -30,7 +30,7 @@ public class Treillis {
         this.identificateur = new Identificateur();
         this.identificateurForce = new Identificateur();
         this.identificateurTypeBarre = new Identificateur();
-        this.treilliTypeBarre = new ArrayList<Type_de_barre>();
+        this.catalogue = new Catalogue();
         this.creationTypeBarre();
         this.treilliContientNoeudSimple = new ArrayList<Noeud_simple>();
         this.treilliContientNoeudAppui = new ArrayList<Noeud_appui>();
@@ -61,12 +61,12 @@ public class Treillis {
         Color marron = new Color(163,65,0);
         Type_de_barre bois = new Type_de_barre("bois",5,20,1,10000,10000,marron);
         bois.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(bois));
-        this.getTreilliTypeBarre().add(bois);
+        this.getCatalogue().getContient().add(bois);
         
         Color grisAcier = new Color(142,142,142);
         Type_de_barre acier = new Type_de_barre("acier",7,30,1,20000,20000, grisAcier);
         acier.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(acier));
-        this.getTreilliTypeBarre().add(acier);
+        this.getCatalogue().getContient().add(acier);
         
     }
     
@@ -99,8 +99,8 @@ public class Treillis {
         return identificateurTypeBarre;
     }
 
-    public ArrayList<Type_de_barre> getTreilliTypeBarre() {
-        return treilliTypeBarre;
+    public Catalogue getCatalogue() {
+        return catalogue;
     }
 
     
@@ -243,7 +243,7 @@ public class Treillis {
         }
     }
 
-    public void lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee){
+    public String [][] lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee){
         //Création des matrices
         Matrice systeme = Force.creationMatrice(this);
         Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
@@ -261,16 +261,17 @@ public class Treillis {
         // On résout
         Force.resSysteme(systeme, vecteur);
         
-        //On affiche les résultats
-        Force.recupSolution(vecteur, listeRef, this);
+        //On affiche les résultats et on les récupère par un tableau de String
+        String [][] resultats = Force.recupSolution(vecteur, listeRef, this);
+        
+        return resultats;
     }
     
-     public void lancerCalculTEST (Noeud_simple noeudSimple){
+     public String[][] lancerCalculTEST (Noeud_simple noeudSimple, Force fAjoutee){
         
         ArrayList<Integer> listeRef = new ArrayList<Integer>();
         Matrice systeme = Force.creationMatrice(this);
         Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
-        Force fAjoutee = new Force (noeudSimple,0,(-1000));
         System.out.println("Force ajoutée FX : "+fAjoutee.getFx());
         System.out.println("Force ajoutée FY : "+fAjoutee.getFy());
         Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
@@ -279,7 +280,9 @@ public class Treillis {
         systeme = systeme.modifMatrice(listeRef);
         System.out.println("Début de la résolution...");
         Matrice resolution = Force.resSysteme(systeme, vecteur);
-        Force.recupSolution(resolution, listeRef, this);
+        String [][] resultats = Force.recupSolution(vecteur, listeRef, this);
+        
+        return resultats;
     }
     
     public void testForce() {
@@ -324,19 +327,19 @@ public class Treillis {
         seg2.addNASet(ad);
         System.out.println("Appui_double : \n" + ad.toString());
 
-        Barre b1 = new Barre(as, ns);
+        Barre b1 = new Barre(as, ns, this.getCatalogue().getContient().get(0));
         b1.setIdentifiant(identificateur.getOrSetKey(b1));
         as.addBarreArray(b1);
         ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
-        Barre b2 = new Barre(ns, ad);
+        Barre b2 = new Barre(ns, ad, this.getCatalogue().getContient().get(1));
         b2.setIdentifiant(identificateur.getOrSetKey(b2));
         ns.addBarreSet(b2);
         ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
-        Barre b3 = new Barre(ad, as);
+        Barre b3 = new Barre(ad, as, this.getCatalogue().getContient().get(0));
         b3.setIdentifiant(identificateur.getOrSetKey(b3));
         ad.addBarreArray(b3);
         as.addBarreArray(b3);
@@ -377,7 +380,7 @@ public class Treillis {
 
         System.out.println("--------------------------------------------------");*/
        
-       this.lancerCalculTEST(ns);
+       
         
         
         

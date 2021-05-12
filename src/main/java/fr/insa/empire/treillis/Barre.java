@@ -22,6 +22,7 @@ public class Barre {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.type = type;
+        this.longueur = this.calculLongueur();
 
         //On ajoute la barre dans la SET(la liste) des noeuds à ses extrémités
         if (this.noeudDebut.getClass() == Noeud_simple.class) {

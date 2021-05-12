@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 import java.util.Optional;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 public class Controller {
 
@@ -135,6 +137,8 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
+            case 60:
+                System.out.println("Sélectionnez une barre");
             case 70:
                 //reset
                 this.vue.getMbNoeud().setText("Noeud");
@@ -316,16 +320,48 @@ public class Controller {
                         this.vue.recontruction();
                     }
                     break;
+                case 60:
+                    //On sélectionne la barre souhaitée
+                    Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if (barreChoisie == null) {
+                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                        diagAlertMauvaiseDonnee.setTitle("Erreur Type de barre");
+                        diagAlertMauvaiseDonnee.setHeaderText("Erreur pas top");
+                        diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
+                        diagAlertMauvaiseDonnee.showAndWait();
+                        this.changeEtat(60);
+                        break;
+                    }
+                    System.out.println("Barre la plus proche : " + barreChoisie);
 
+                    String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                    ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
+                    dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
+                    dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
+                    dialogBoxTypeDeBarre.setContentText("Types :");
+                    Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
+
+                    if (selection.get().contains("Bois")) {
+                        System.out.println("Le type " + selection.get());
+                        barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
+                    }
+
+                    if (selection.get().contains("Acier")) {
+                        System.out.println("Le type " + selection.get());
+                        barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+                    }
+
+                    System.out.println("Barre modifiée " + barreChoisie.toString());
+                    break;
                 case 70:
-                     //On sélectionne le noeud souhaité
+                    //On sélectionne le noeud souhaité
                     Noeud_simple noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
-                    while (noeudSimpleChoisit == null){
+                    while (noeudSimpleChoisit == null) {
                         System.out.println("Recommencez");
                         noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
                     }
                     System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
-                    
+
                     //On demande la valeur de la composante sur X de la force
                     TextInputDialog boiteDiagPX = new TextInputDialog();
                     boiteDiagPX.setTitle("Ajout de la force");
@@ -333,7 +369,7 @@ public class Controller {
                     boiteDiagPX.setContentText("Composante sur X :");
                     Optional<String> textPX = boiteDiagPX.showAndWait();
                     double pxForce = Double.parseDouble(textPX.get());
-                    
+
                     //On demande la valeur de la composante sur Y de la force
                     TextInputDialog boiteDiagPY = new TextInputDialog();
                     boiteDiagPY.setTitle("Ajout de la force");
@@ -341,14 +377,36 @@ public class Controller {
                     boiteDiagPY.setContentText("Composante sur Y :");
                     Optional<String> textPY = boiteDiagPY.showAndWait();
                     double pyForce = Double.parseDouble(textPY.get());
-                    
+
                     //On crée la force ajoutée
-                    Force forceAjoutee = new Force (noeudSimpleChoisit, pxForce, pyForce);
-                    
+                    Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
+
                     //Calcul
                     System.out.println("Lancement des calculs");
                     System.out.println("Calculs en cours...");
-                    
+
+                    //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
+                    String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
+
+                    //On récupère le nombre de ligne du tableau
+                    int j = 0;
+                    int nbLigne = 0;
+                    while (resultat[j][0] != null) {
+                        nbLigne++;
+                    }
+                    System.out.println("Nb ligne " + nbLigne);
+
+                    Alert dialogResultat = new Alert(AlertType.INFORMATION);
+                    dialogResultat.setTitle("Résultat Calcul");
+                    dialogResultat.setHeaderText("Analyse du treilli : ");
+                    String s = "";
+                    for (int i = 0; i < nbLigne; i++) {
+                        s = s + resultat[i][0] + " " + resultat[i][0] + " " + resultat[i][0] + "\n";
+                    }
+                    dialogResultat.setContentText(s);
+
+                    //On efface les forces créés pour effectuer à nouveau le calcul
+                    this.vue.getTreillis().getIdentificateurForce().clear();
             }
         }
     }

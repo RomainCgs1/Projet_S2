@@ -1,13 +1,22 @@
 package fr.insa.empire.treillis;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public class Catalogue {
 
-    public Set<Type_de_barre> contient;
+    public ArrayList <Type_de_barre> contient;
     //public Arraytlist catalogue;
 
     public Catalogue() {
+        
+        this.contient = new ArrayList<Type_de_barre>();
+        
     }
+
+    public ArrayList<Type_de_barre> getContient() {
+        return contient;
+    }
+    
+    
 
 }
