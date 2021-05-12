@@ -220,7 +220,7 @@ public class Matrice {
             this.coeffs[i1][i] = this.coeffs[i2][i];
             this.coeffs[i2][i] = intermediaire;
         }
-        System.out.println("Permutation de la ligne " + i1 + "avec la ligne " + i2 + " effectuée");
+        //System.out.println("Permutation de la ligne " + i1 + "avec la ligne " + i2 + " effectuée");
     }
 
     public void transvection(int lignePivot, int ligneModifiee) {
@@ -232,7 +232,7 @@ public class Matrice {
         }
 
         p = this.coeffs[ligneModifiee][lignePivot] / this.coeffs[lignePivot][lignePivot];
-        System.out.println("p vaut " + p);
+        //System.out.println("p vaut " + p);
 
         for (int j = 0; j < this.nbrCol; j++) {
             if (j == lignePivot) {
@@ -241,8 +241,8 @@ public class Matrice {
                 this.coeffs[ligneModifiee][j] = this.coeffs[ligneModifiee][j] - (p * this.coeffs[lignePivot][j]);
             }
         }
-        System.out.println("Transvection de la ligne " + ligneModifiee + " a l'aide du pivot " + this.coeffs[lignePivot][lignePivot] + " effectuée");
-        System.out.println("Transvection \n " + this);
+        //System.out.println("Transvection de la ligne " + ligneModifiee + " a l'aide du pivot " + this.coeffs[lignePivot][lignePivot] + " effectuée");
+       // System.out.println("Transvection \n " + this);
     }
 
     public int lignePlusGrandPivot(int colPivot) {
@@ -256,7 +256,7 @@ public class Matrice {
                 ligneplusGrandPivot = i;
             }
         }
-        System.out.println("Le plus grand pivot de la colonne " + colPivot + " se trouve à la ligne " + ligneplusGrandPivot);
+        //System.out.println("Le plus grand pivot de la colonne " + colPivot + " se trouve à la ligne " + ligneplusGrandPivot);
 
         return ligneplusGrandPivot;
     }
@@ -277,7 +277,7 @@ public class Matrice {
             } else {
                 if ((lignePlusGrandPivot != i) && (lignePlusGrandPivot != -1)) {
                     permuteLigne(i, lignePlusGrandPivot);
-                    System.out.println("Lignes permutées \n " + this);
+                    //System.out.println("Lignes permutées \n " + this);
                 }
                 while (j < this.nbrLig) {
                     transvection(i, j);

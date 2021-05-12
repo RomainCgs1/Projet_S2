@@ -259,10 +259,10 @@ public class Treillis {
         systeme = systeme.modifMatrice(listeRef);
         
         // On résout
-        Force.resSysteme(systeme, vecteur);
+         Matrice resolution = Force.resSysteme(systeme, vecteur);
         
         //On affiche les résultats et on les récupère par un tableau de String
-        String [][] resultats = Force.recupSolution(vecteur, listeRef, this);
+        String [][] resultats = Force.recupSolution(resolution, listeRef, this);
         
         return resultats;
     }
@@ -280,7 +280,7 @@ public class Treillis {
         systeme = systeme.modifMatrice(listeRef);
         System.out.println("Début de la résolution...");
         Matrice resolution = Force.resSysteme(systeme, vecteur);
-        String [][] resultats = Force.recupSolution(vecteur, listeRef, this);
+        String [][] resultats = Force.recupSolution(resolution, listeRef, this);
         
         return resultats;
     }
@@ -327,19 +327,19 @@ public class Treillis {
         seg2.addNASet(ad);
         System.out.println("Appui_double : \n" + ad.toString());
 
-        Barre b1 = new Barre(as, ns, this.getCatalogue().getContient().get(0));
+        Barre b1 = new Barre(as, ns);
         b1.setIdentifiant(identificateur.getOrSetKey(b1));
         as.addBarreArray(b1);
         ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
-        Barre b2 = new Barre(ns, ad, this.getCatalogue().getContient().get(1));
+        Barre b2 = new Barre(ns, ad);
         b2.setIdentifiant(identificateur.getOrSetKey(b2));
         ns.addBarreSet(b2);
         ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
-        Barre b3 = new Barre(ad, as, this.getCatalogue().getContient().get(0));
+        Barre b3 = new Barre(ad, as);
         b3.setIdentifiant(identificateur.getOrSetKey(b3));
         ad.addBarreArray(b3);
         as.addBarreArray(b3);

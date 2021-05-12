@@ -274,9 +274,9 @@ public class Force {
                         System.out.println("Type de la tension : " + forceAjoutee.getTypeDeForce());
                         System.out.println("Force MAIN ajoutée : \n" + forceAjoutee.toString());
                         System.out.println("Force " + forceAjoutee.getIdentifiant() + "ajouté en [" + l + "," + 0 + "], la composante " + forceAjoutee.getFx());
-                        vecteur.getCoeffs()[l][0] = -forceAjoutee.getFx();
+                        vecteur.getCoeffs()[l][0] = forceAjoutee.getFx();
                         System.out.println("Force " + forceAjoutee.getIdentifiant() + "ajouté en [" + (l + 1) + "," + 0 + "], la composante " + forceAjoutee.getFy());
-                        vecteur.getCoeffs()[l + 1][0] = -forceAjoutee.getFy();
+                        vecteur.getCoeffs()[l + 1][0] = forceAjoutee.getFy();
                     }
 
                     tailleArrayIni = idForceLinkMatrice.size();
@@ -434,7 +434,8 @@ public class Force {
     public static String[][] recupSolution(Matrice resolution, ArrayList<Integer> listeRef, Treillis treilli) {
 
         //Création du tableau d'affichage des résultats
-        String[][] resultat = new String[resolution.getNbrLig()][3];
+        String[][] resultat = new String[listeRef.size()][3];
+        System.out.println("Taille liste "+ listeRef.size());
 
         //Création du vecteur solution
         System.out.println("Matrice résolution : \n" + resolution.toString());
@@ -523,6 +524,7 @@ public class Force {
 
                 } else {
                     System.out.println(listeRef.get(i) + " est négatif donc Y");
+                    System.out.println("i="+i);
                     forceConcernee.setFy(solution.getCoeffs()[i][0]);
 
                     resultat[i][0] = "Reaction de l'Appui Double " + forceConcernee.getAdAssocie().getID();

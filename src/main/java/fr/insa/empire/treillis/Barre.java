@@ -18,35 +18,33 @@ public class Barre {
     private double angleAlpha;
 
     //Constructeur
-    public Barre(Noeuds noeudDebut, Noeuds noeudFin, Type_de_barre type) {
+    public Barre(Noeuds noeudDebut, Noeuds noeudFin) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
-        this.type = type;
         this.longueur = this.calculLongueur();
 
-        //On ajoute la barre dans la SET(la liste) des noeuds à ses extrémités
+        //On ajoute la barre dans l'arraylist des noeuds
         if (this.noeudDebut.getClass() == Noeud_simple.class) {
-            ((Noeud_simple) this.noeudDebut).addBarreSet(this);
+            ((Noeud_simple) this.noeudDebut).getAppartientABarre().add(this);
         }
-        if (this.noeudDebut.getClass() == Noeud_appui.class) {
-            ((Noeud_simple) this.noeudDebut).addBarreSet(this);
+        if (this.noeudDebut.getClass() == Appui_simple.class) {
+            ((Appui_simple) this.noeudDebut).getAppartientABarre().add(this);
         }
+        if (this.noeudDebut.getClass() == Appui_double.class) {
+            ((Appui_double) this.noeudDebut).getAppartientABarre().add(this);
+        }
+        
+        
         if (this.noeudFin.getClass() == Noeud_simple.class) {
-            ((Noeud_simple) this.noeudFin).addBarreSet(this);
+            ((Noeud_simple) this.noeudFin).getAppartientABarre().add(this);
         }
-        if (this.noeudFin.getClass() == Noeud_appui.class) {
-            ((Noeud_simple) this.noeudFin).addBarreSet(this);
+        if (this.noeudFin.getClass() == Appui_simple.class) {
+            ((Appui_simple) this.noeudFin).getAppartientABarre().add(this);
         }
-
-        //On ajoute la barre à la SET du type auquel elle appartient
-        this.type.addBarreSet(this);
-    }
-
-    //Constructeur pour test des forces 
-    public Barre(Noeuds debut, Noeuds fin) {
-        this.noeudDebut = debut;
-        this.noeudFin = fin;
-        this.longueur = this.calculLongueur();
+        if (this.noeudFin.getClass() == Appui_double.class) {
+            ((Appui_double) this.noeudFin).getAppartientABarre().add(this);
+        }
+        
     }
 
     //Encapsulation

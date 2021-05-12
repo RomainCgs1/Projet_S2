@@ -139,8 +139,10 @@ public class Controller {
                 break;
             case 60:
                 System.out.println("Sélectionnez une barre");
+                break;
             case 70:
                 //reset
+                System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbTerrain().setSelected(false);
@@ -350,15 +352,18 @@ public class Controller {
                         System.out.println("Le type " + selection.get());
                         barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
                     }
-
-                    System.out.println("Barre modifiée " + barreChoisie.toString());
                     break;
                 case 70:
                     //On sélectionne le noeud souhaité
                     Noeud_simple noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
-                    while (noeudSimpleChoisit == null) {
-                        System.out.println("Recommencez");
-                        noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if (noeudSimpleChoisit == null) {
+                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                        diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
+                        diagAlertMauvaiseDonnee.setHeaderText("Erreur Noeud Simple");
+                        diagAlertMauvaiseDonnee.setContentText("Erreur : aucun Noeud_simple sélectionné");
+                        diagAlertMauvaiseDonnee.showAndWait();
+                        this.changeEtat(70);
+                        break;
                     }
                     System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
 
