@@ -393,6 +393,17 @@ public class Controller {
                     //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
                     String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
 
+                    //On regarde s'il y a une erreur
+                    if (resultat[0][0].contains("erreur")){
+                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                        diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
+                        diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
+                        diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
+                        diagAlertMauvaiseDonnee.showAndWait();
+                        this.changeEtat(0);
+                        break;
+                    }
+                    
                     //On récupère le nombre de ligne du tableau
                     int j = 0;
                     int nbLigne = 0;

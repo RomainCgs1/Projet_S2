@@ -257,6 +257,11 @@ public class Treillis {
         
         //On supprime les colonnes de 0
         systeme = systeme.modifMatrice(listeRef);
+        if(systeme.getNbrLig() != systeme.getNbrCol()){
+            String[][] erreur = new String[1][1];
+            erreur[0][0] = "erreur";
+            return erreur;
+        }
         
         // On résout
          Matrice resolution = Force.resSysteme(systeme, vecteur);
@@ -270,16 +275,24 @@ public class Treillis {
      public String[][] lancerCalculTEST (Noeud_simple noeudSimple, Force fAjoutee){
         
         ArrayList<Integer> listeRef = new ArrayList<Integer>();
+        
         Matrice systeme = Force.creationMatrice(this);
         Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
-        System.out.println("Force ajoutée FX : "+fAjoutee.getFx());
-        System.out.println("Force ajoutée FY : "+fAjoutee.getFy());
+        
         Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
         System.out.println(listeRef.toString());
         System.out.println("Matrice obtenue :\n"+systeme.toString());
+       
         systeme = systeme.modifMatrice(listeRef);
+        if(systeme.getNbrLig() != systeme.getNbrCol()){
+            String[][] erreur = new String[1][1];
+            erreur[0][0] = "erreur";
+            return erreur;
+        }
+        
         System.out.println("Début de la résolution...");
         Matrice resolution = Force.resSysteme(systeme, vecteur);
+        
         String [][] resultats = Force.recupSolution(resolution, listeRef, this);
         
         return resultats;
@@ -328,18 +341,21 @@ public class Treillis {
         System.out.println("Appui_double : \n" + ad.toString());
 
         Barre b1 = new Barre(as, ns);
+        b1.setType(this.getCatalogue().getContient().get(0));
         b1.setIdentifiant(identificateur.getOrSetKey(b1));
         as.addBarreArray(b1);
         ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
         Barre b2 = new Barre(ns, ad);
+        b2.setType(this.getCatalogue().getContient().get(0));
         b2.setIdentifiant(identificateur.getOrSetKey(b2));
         ns.addBarreSet(b2);
         ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
         Barre b3 = new Barre(ad, as);
+        b3.setType(this.getCatalogue().getContient().get(1));
         b3.setIdentifiant(identificateur.getOrSetKey(b3));
         ad.addBarreArray(b3);
         as.addBarreArray(b3);
@@ -348,9 +364,6 @@ public class Treillis {
 
        /* //Test de création de force 
         System.out.println("TEST FORCE");
-
-        Force forceAjoutee = new Force(ns, 0, -10000);
-        System.out.println("Force ajoutée : \n" + forceAjoutee.toString());
 
         Force tensionb1 = new Force(b1, b1.calculAngleAlphaTension());
         System.out.println("Tension barre 1 : \n" + tensionb1.toString());
@@ -380,9 +393,15 @@ public class Treillis {
 
         System.out.println("--------------------------------------------------");*/
        
+       Force forceAjoutee = new Force(ns, 0, -10000);
+       System.out.println("Force ajoutée : \n" + forceAjoutee.toString());
+        
+       String [][] resultat = lancerCalculTEST(ns, forceAjoutee);
        
-        
-        
-        
+       if (resultat[0][0].contains("erreur")){
+           System.out.println("Erreur");
+       }
+       
+       
     }
 }
