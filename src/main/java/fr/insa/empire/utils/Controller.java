@@ -43,8 +43,7 @@ public class Controller {
 
         System.out.println(newState);
 
-        if(newState != -10 && newState != -11)
-        {
+        if (newState != -10 && newState != -11) {
             this.vue.getMbNoeud().setDisable(false);
             this.vue.getMtbTerrain().setDisable(false);
             this.vue.getMbGomme().setDisable(false);
@@ -159,7 +158,7 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
-            case 60:
+            case 601:
                 System.out.println("Sélectionnez une barre");
                 break;
             case 70:
@@ -344,7 +343,7 @@ public class Controller {
                         this.vue.recontruction();
                     }
                     break;
-                case 60:
+                case 601:
                     //On sélectionne la barre souhaitée
                     Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
                     if (barreChoisie == null) {
@@ -373,6 +372,28 @@ public class Controller {
                     if (selection.get().contains("Acier")) {
                         System.out.println("Le type " + selection.get());
                         barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+                    }
+                    break;
+                case 602:
+                    String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                    ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
+                    dialogType.setTitle("Choix Type de Barre");
+                    dialogType.setHeaderText("Selectionnez un type de barre");
+                    dialogType.setContentText("Types :");
+                    Optional<String> selectionType = dialogType.showAndWait();
+
+                    if (selectionType.get().contains("Bois")) {
+                        System.out.println("Le type " + selectionType.get());
+                        Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0);
+                        
+                    } else { //C'est acier
+                        System.out.println("Le type " + selectionType.get());
+                        Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                    }
+                    
+                    for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
+                        //this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
+                        
                     }
                     break;
                 case 70:
@@ -416,7 +437,7 @@ public class Controller {
                     String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
 
                     //On regarde s'il y a une erreur
-                    if (resultat[0][0].contains("erreur")){
+                    if (resultat[0][0].contains("erreur")) {
                         Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                         diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
                         diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
@@ -425,7 +446,7 @@ public class Controller {
                         this.changeEtat(0);
                         break;
                     }
-                    
+
                     //On récupère le nombre de ligne du tableau
                     int j = 0;
                     int nbLigne = 0;
@@ -445,6 +466,10 @@ public class Controller {
 
                     //On efface les forces créés pour effectuer à nouveau le calcul
                     this.vue.getTreillis().getIdentificateurForce().clear();
+                    break;
+                case 90:
+
+                    break;
             }
         }
     }
@@ -506,7 +531,7 @@ public class Controller {
         barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
-        
+
         //On choisit le type de la barre
         String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
         ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
@@ -525,7 +550,6 @@ public class Controller {
             barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
         }
     }
-
 
     private void eraseAll() {
         Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);

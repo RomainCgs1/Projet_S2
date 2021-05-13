@@ -328,6 +328,7 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection.setOnAction(
                 action -> {
                     this.treillis.testForce();
+                    controller.changeEtat(90);
                 }
         );
     }
