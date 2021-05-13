@@ -86,7 +86,7 @@ public class MyCanvas extends Canvas {
         mainGraphique.recontruction();
     }
 
-    public Noeud_simple getNoeud_simplePlusProche(double px, double py, Identificateur identificateur)
+     public Noeud_simple getNoeud_simplePlusProche(double px, double py, Identificateur identificateur)
     {
         Object s = new Object();
         if(identificateur.getKetToObject().isEmpty())
@@ -120,6 +120,7 @@ public class MyCanvas extends Canvas {
 
         return (Noeud_simple) s;
     }
+     
 
     public Appui_simple getNoeud_appui_simplePlusProche(double px, double py, Identificateur identificateur)
     {

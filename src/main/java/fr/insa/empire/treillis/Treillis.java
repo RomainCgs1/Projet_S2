@@ -339,21 +339,21 @@ public class Treillis {
         seg2.addNASet(ad);
         System.out.println("Appui_double : \n" + ad.toString());
 
-        Barre b1 = new Barre(as, ns);
+        Barre b1 = new Barre(as, ns, this);
         b1.setType(this.getCatalogue().getContient().get(0));
         b1.setIdentifiant(identificateur.getOrSetKey(b1));
         as.addBarreArray(b1);
         ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
-        Barre b2 = new Barre(ns, ad);
+        Barre b2 = new Barre(ns, ad, this);
         b2.setType(this.getCatalogue().getContient().get(0));
         b2.setIdentifiant(identificateur.getOrSetKey(b2));
         ns.addBarreSet(b2);
         ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
-        Barre b3 = new Barre(ad, as);
+        Barre b3 = new Barre(ad, as, this);
         b3.setType(this.getCatalogue().getContient().get(1));
         b3.setIdentifiant(identificateur.getOrSetKey(b3));
         ad.addBarreArray(b3);

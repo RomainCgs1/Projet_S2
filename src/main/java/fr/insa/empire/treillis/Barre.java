@@ -20,7 +20,7 @@ public class Barre {
     private double angleAlpha;
 
     //Constructeur
-    public Barre(Noeuds noeudDebut, Noeuds noeudFin) {
+    public Barre(Noeuds noeudDebut, Noeuds noeudFin, Treillis treilli) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.longueur = this.calculLongueur();
@@ -47,6 +47,7 @@ public class Barre {
             ((Appui_double) this.noeudFin).getAppartientABarre().add(this);
         }
         
+        treilli.getTreilliContientBarre().add(this);
     }
 
     //Encapsulation

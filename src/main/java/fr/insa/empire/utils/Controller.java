@@ -49,7 +49,7 @@ public class Controller {
             this.vue.getMbGomme().setDisable(false);
             this.vue.getMtbSelection().setDisable(false);
             this.vue.getMtbBarre().setDisable(false);
-            this.vue.getMbTypeBarre().setDisable(false);
+            this.vue.getMbTypeDeBarre().setDisable(false);
             this.vue.getMbLancerCalculs().setDisable(false);
             this.vue.getbPosition().setDisable(false);
         }
@@ -66,7 +66,7 @@ public class Controller {
                 this.vue.getMtbSelection().setDisable(true);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbBarre().setDisable(true);
-                this.vue.getMbTypeBarre().setDisable(true);
+                this.vue.getMbTypeDeBarre().setDisable(true);
                 this.vue.getMbLancerCalculs().setDisable(true);
                 this.vue.getbPosition().setDisable(true);
                 break;
@@ -161,6 +161,30 @@ public class Controller {
             case 601:
                 System.out.println("Sélectionnez une barre");
                 break;
+            case 602:
+                    String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                    ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
+                    dialogType.setTitle("Choix Type de Barre");
+                    dialogType.setHeaderText("Selectionnez un type de barre");
+                    dialogType.setContentText("Types :");
+                    Optional<String> selectionType = dialogType.showAndWait();
+
+                    Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0); //Type par défaut est le bois
+                    
+                    if (selectionType.get().contains("Bois")) {
+                        System.out.println("Le type " + selectionType.get());
+                        type = this.vue.getTreillis().getCatalogue().getContient().get(0);
+                        
+                    } else if (selectionType.get().contains("Acier")) { //C'est acier
+                        System.out.println("Le type " + selectionType.get());
+                        type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                    }
+                    
+                    for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
+                        this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
+                        this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
+                    }
+                    break;
             case 70:
                 //reset
                 System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
@@ -374,28 +398,6 @@ public class Controller {
                         barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
                     }
                     break;
-                case 602:
-                    String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
-                    ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
-                    dialogType.setTitle("Choix Type de Barre");
-                    dialogType.setHeaderText("Selectionnez un type de barre");
-                    dialogType.setContentText("Types :");
-                    Optional<String> selectionType = dialogType.showAndWait();
-
-                    if (selectionType.get().contains("Bois")) {
-                        System.out.println("Le type " + selectionType.get());
-                        Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0);
-                        
-                    } else { //C'est acier
-                        System.out.println("Le type " + selectionType.get());
-                        Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(1);
-                    }
-                    
-                    for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
-                        //this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
-                        
-                    }
-                    break;
                 case 70:
                     //On sélectionne le noeud souhaité
                     Noeud_simple noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
@@ -467,9 +469,6 @@ public class Controller {
                     //On efface les forces créés pour effectuer à nouveau le calcul
                     this.vue.getTreillis().getIdentificateurForce().clear();
                     break;
-                case 90:
-
-                    break;
             }
         }
     }
@@ -526,7 +525,7 @@ public class Controller {
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
-        Barre barre = new Barre(noeudDebut, noeudFin);
+        Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
         barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
