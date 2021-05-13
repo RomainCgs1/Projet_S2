@@ -2,6 +2,8 @@ package fr.insa.empire.treillis;
 
 //import fr.insa.empire.utils.Identificateur;
 import fr.insa.empire.utils.Identificateur;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -273,5 +275,11 @@ public class Barre {
             bW.append(this.noeudFin + "/");
         }
         bW.append("FIN_Barre/\n");
+    }
+
+    public void draw(GraphicsContext graphicsContext)
+    {
+        graphicsContext.setStroke(Color.BLUE);
+        graphicsContext.strokeLine(this.getNoeudDebut().getPx(), this.getNoeudDebut().getPy(), this.getNoeudFin().getPx(), this.getNoeudFin().getPy());
     }
 }

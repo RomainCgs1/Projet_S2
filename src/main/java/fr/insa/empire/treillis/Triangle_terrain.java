@@ -2,6 +2,8 @@ package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -62,5 +64,14 @@ public class Triangle_terrain {
             bW.append(idNum.getOrSetKey(this.segment3) + "\n");
         }
         bW.append("FIN_Triangle_terrain\n");
+    }
+
+    public void draw(GraphicsContext graphicsContext)
+    {
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.strokeLine(this.segment1.getPointDebut().getPx(), this.segment1.getPointDebut().getPy(), this.segment1.getPointFin().getPx(), this.segment1.getPointFin().getPy());
+        graphicsContext.strokeLine(this.segment2.getPointDebut().getPx(), this.segment2.getPointDebut().getPy(), this.segment2.getPointFin().getPx(), this.segment2.getPointFin().getPy());
+        graphicsContext.strokeLine(this.segment3.getPointDebut().getPx(), this.segment3.getPointDebut().getPy(), this.segment3.getPointFin().getPx(), this.segment3.getPointFin().getPy());
+
     }
 }

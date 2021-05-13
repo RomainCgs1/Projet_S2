@@ -2,6 +2,9 @@ package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
 import fr.insa.empire.utils.Lire;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,4 +106,9 @@ public class Noeud_simple extends Noeuds {
         testCreationPt();
     }
 
+    public void draw(GraphicsContext graphicsContext)
+    {
+        graphicsContext.setStroke(Color.RED);
+        graphicsContext.strokeOval(this.px - 5, this.py - 5, 10, 10);
+    }
 }

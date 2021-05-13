@@ -1,9 +1,10 @@
 package fr.insa.empire.treillis;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class Appui_simple extends Noeud_appui {
 
-    private double px = super.getPx();
-    private double py = super.getPy();
     private int identificant = super.getID();
     private Force reactionAppuiSimple;
 
@@ -11,13 +12,6 @@ public class Appui_simple extends Noeud_appui {
         super(px, py,segTerrain);
     }
 
-    public double getPx() {
-        return px;
-    }
-
-    public double getPy() {
-        return py;
-    }
 
     public Force getReactionAppuiSimple() {
         return reactionAppuiSimple;
@@ -56,5 +50,10 @@ public class Appui_simple extends Noeud_appui {
         s=s+"id segTerrain : "+super.getSegment_appui().getIdentifiant()+"\n";
         return s;
     }
-    
+
+    public void draw(GraphicsContext graphicsContext)
+    {
+        graphicsContext.setStroke(Color.ORANGE);
+        graphicsContext.strokeOval(this.getPx() - 5, this.getPy() - 5, 10, 10);
+    }
 }

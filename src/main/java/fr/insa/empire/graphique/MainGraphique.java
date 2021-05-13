@@ -338,13 +338,13 @@ public class MainGraphique extends BorderPane {
             Object val = mapentry.getValue();
             if(val.getClass() == Appui_double.class)
             {
+                ((Appui_double) val).draw(graphicsContext);
                 graphicsContext.setStroke(Color.SILVER);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
             }
             else if(val.getClass() == Appui_simple.class)
             {
-                graphicsContext.setStroke(Color.ORANGE);
-                graphicsContext.strokeOval(((Appui_simple) val).getPx() - 5, ((Appui_simple) val).getPy() - 5, 10, 10);
+                ((Appui_simple) val).draw(graphicsContext);
             }
             else if(val.getClass() == Noeud_appui.class)
             {
@@ -352,28 +352,19 @@ public class MainGraphique extends BorderPane {
             }
             else if(val.getClass() == Noeud_simple.class)
             {
-                graphicsContext.setStroke(Color.RED);
-                graphicsContext.strokeOval(((Noeud_simple) val).getPx() - 5, ((Noeud_simple) val).getPy() - 5, 10, 10);
+                ((Noeud_simple) val).draw(graphicsContext);
             }
             else if(val.getClass() == Barre.class)
             {
-                graphicsContext.setStroke(Color.BLUE);
-                graphicsContext.strokeLine(((Barre) val).getNoeudDebut().getPx(), ((Barre) val).getNoeudDebut().getPy(), ((Barre) val).getNoeudFin().getPx(), ((Barre) val).getNoeudFin().getPy());
+                ((Barre) val).draw(graphicsContext);
             }
             else if(val.getClass() == Triangle_terrain.class)
             {
-                graphicsContext.setStroke(Color.BLACK);
-                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment1().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment1().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment1().getPointFin().getPx(), ((Triangle_terrain) val).getSegment1().getPointFin().getPy());
-                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment2().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment2().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment2().getPointFin().getPx(), ((Triangle_terrain) val).getSegment2().getPointFin().getPy());
-                graphicsContext.strokeLine(((Triangle_terrain) val).getSegment3().getPointDebut().getPx(), ((Triangle_terrain) val).getSegment3().getPointDebut().getPy(), ((Triangle_terrain) val).getSegment3().getPointFin().getPx(), ((Triangle_terrain) val).getSegment3().getPointFin().getPy());
+                ((Triangle_terrain) val).draw(graphicsContext);
             }
             else if(val.getClass() == Zone_constructible.class)
             {
-                graphicsContext.setStroke(Color.GREEN);
-                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmax());
-                graphicsContext.strokeLine(((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmax());
-                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmax(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmax());
-                graphicsContext.strokeLine(((Zone_constructible) val).getXmax(), ((Zone_constructible) val).getYmin(), ((Zone_constructible) val).getXmin(), ((Zone_constructible) val).getYmin());
+                ((Zone_constructible) val).draw(graphicsContext);
             }
         }
     }
