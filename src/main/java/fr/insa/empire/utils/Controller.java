@@ -475,7 +475,26 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
+        
+        //On choisit le type de la barre
+        String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+        ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
+        dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
+        dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
+        dialogBoxTypeDeBarre.setContentText("Types :");
+        Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
+
+        if (selection.get().contains("Bois")) {
+            System.out.println("Le type " + selection.get());
+            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
+        }
+
+        if (selection.get().contains("Acier")) {
+            System.out.println("Le type " + selection.get());
+            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+        }
     }
+
 
     private void eraseAll() {
         Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);
