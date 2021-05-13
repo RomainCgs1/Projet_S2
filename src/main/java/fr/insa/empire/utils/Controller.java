@@ -41,13 +41,35 @@ public class Controller {
         this.etatPrecedent = this.etat;
         this.etat = newState;
 
+        System.out.println(newState);
+
+        if(newState != -10 && newState != -11)
+        {
+            this.vue.getMbNoeud().setDisable(false);
+            this.vue.getMtbTerrain().setDisable(false);
+            this.vue.getMbGomme().setDisable(false);
+            this.vue.getMtbSelection().setDisable(false);
+            this.vue.getMtbBarre().setDisable(false);
+            this.vue.getMbTypeBarre().setDisable(false);
+            this.vue.getMbLancerCalculs().setDisable(false);
+            this.vue.getbPosition().setDisable(false);
+        }
+
         switch (newState) {
             case -10: // initialisation zone_constructible
                 this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMbNoeud().setDisable(true);
                 this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMtbTerrain().setDisable(true);
                 this.vue.getMbGomme().setText("Gomme");
+                this.vue.getMbGomme().setDisable(true);
                 this.vue.getMtbSelection().setSelected(false);
+                this.vue.getMtbSelection().setDisable(true);
                 this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMtbBarre().setDisable(true);
+                this.vue.getMbTypeBarre().setDisable(true);
+                this.vue.getMbLancerCalculs().setDisable(true);
+                this.vue.getbPosition().setDisable(true);
                 break;
             case 0: //remise à zero
                 this.vue.getMbNoeud().setText("Noeud");

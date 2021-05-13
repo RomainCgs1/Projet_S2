@@ -202,6 +202,8 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
+        controller.changeEtat(-10);
+
         //actione de barre
         this.mtbBarre.setOnAction(
                 Action -> {
@@ -253,6 +255,7 @@ public class MainGraphique extends BorderPane {
                     }
                 }
         );
+
 
         //action de Gomme
         miGommeNoeud = new MenuItem("Gomme : noeuds");
