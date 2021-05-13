@@ -1,6 +1,6 @@
 package fr.insa.empire.treillis;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class Type_de_barre {

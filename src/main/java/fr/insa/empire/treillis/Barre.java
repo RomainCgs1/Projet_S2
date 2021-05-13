@@ -279,7 +279,14 @@ public class Barre {
 
     public void draw(GraphicsContext graphicsContext)
     {
-        graphicsContext.setStroke(Color.BLUE);
+        if(type != null)
+        {
+            graphicsContext.setStroke(type.getCouleur());
+        }
+        else
+        {
+            graphicsContext.setStroke(Color.BLUE);
+        }
         graphicsContext.strokeLine(this.getNoeudDebut().getPx(), this.getNoeudDebut().getPy(), this.getNoeudFin().getPx(), this.getNoeudFin().getPy());
     }
 }

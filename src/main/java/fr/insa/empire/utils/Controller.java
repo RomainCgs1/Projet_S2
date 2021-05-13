@@ -481,9 +481,7 @@ public class Controller {
 
         Barre barre = new Barre(noeudDebut, noeudFin);
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
-
-        this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLUE);
-        this.vue.getCanvas().getGraphicsContext2D().strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), noeudFin.getPx(), noeudFin.getPy());
+        barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
         
