@@ -343,7 +343,7 @@ public class Matrice {
     
     //Modification de la matrice si elle possède une colonne de 0
     public Matrice modifMatrice(ArrayList<Integer> listeRef){
-        double epsilon = 0.00000001;
+        double epsilon = 0.00001;
         int nb0 = 0;
         int nbColNulle = 0;
         
@@ -356,39 +356,40 @@ public class Matrice {
             }
         }
         
-        //On parcout la matrice et on décalle les colonnes nulles vers la droite
-        for (int i = 0; i < this.nbrCol; i++) {
-            for (int j = 0; j < this.nbrLig; j++) {
-                if(this.coeffs[j][i]==0){
-                    nb0++;
-                }
-            }
-            if(nb0==this.nbrCol-1){
-               // System.out.println("La colonne "+i+" est remplie de 0");
-                if(i != this.nbrCol-1){
-                    listeRef.remove(i);
-                    nbColNulle++;
-                    this.decalageCol(i);
-                    System.out.println("Décalage effectué");
-                    System.out.println("Matrice actuelle :\n"+this.toString());
-                    System.out.println(listeRef.toString());
-                }
-            }
-            nb0=0;
-        }
-        
-        //System.out.println("Nombre de colonnes nulles : "+(nbColNulle-1));
-        
-        Matrice newMatrice = new Matrice (this.nbrLig, this.nbrCol-nbColNulle);
-        for (int i = 0; i < newMatrice.getNbrLig(); i++) {
-            for (int j = 0; j < newMatrice.getNbrCol(); j++) {
-                newMatrice.getCoeffs()[i][j]=this.coeffs[i][j];
-            }
-            
-        }
-        System.out.println("Matrice modifiée : \n"+newMatrice.toString());
-        
-        return newMatrice;
+        return this;
+//        //On parcout la matrice et on décalle les colonnes nulles vers la droite
+//        for (int i = 0; i < this.nbrCol; i++) {
+//            for (int j = 0; j < this.nbrLig; j++) {
+//                if(this.coeffs[j][i]==0){
+//                    nb0++;
+//                }
+//            }
+//            if(nb0==this.nbrCol-1){
+//               // System.out.println("La colonne "+i+" est remplie de 0");
+//                if(i != this.nbrCol-1){
+//                    listeRef.remove(i);
+//                    nbColNulle++;
+//                    this.decalageCol(i);
+//                    System.out.println("Décalage effectué");
+//                    System.out.println("Matrice actuelle :\n"+this.toString());
+//                    System.out.println(listeRef.toString());
+//                }
+//            }
+//            nb0=0;
+//        }
+//        
+//        //System.out.println("Nombre de colonnes nulles : "+(nbColNulle-1));
+//        
+//        Matrice newMatrice = new Matrice (this.nbrLig, this.nbrCol-nbColNulle);
+//        for (int i = 0; i < newMatrice.getNbrLig(); i++) {
+//            for (int j = 0; j < newMatrice.getNbrCol(); j++) {
+//                newMatrice.getCoeffs()[i][j]=this.coeffs[i][j];
+//            }
+//            
+//        }
+//        System.out.println("Matrice modifiée : \n"+newMatrice.toString());
+//        
+//        return newMatrice;
     }
     
     public void decalageCol(int i){

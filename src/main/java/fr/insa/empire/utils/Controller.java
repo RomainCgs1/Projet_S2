@@ -437,21 +437,21 @@ public class Controller {
 
                         case 30:
                             p1 = new Point(px, py);
-                            //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
+                            this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                             changeEtat(31);
                             System.out.println("point 1");
                             break;
 
                         case 31:
                             p2 = new Point(px, py);
-                            //this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
+                            this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
                             changeEtat(32);
                             System.out.println("point 2");
                             break;
 
                         case 32:
                             p3 = new Point(px, py);
-                            //this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
+                            this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                             System.out.println("point 3");
                             creationTriangleTerrain(this.p1, this.p2, this.p3);
 

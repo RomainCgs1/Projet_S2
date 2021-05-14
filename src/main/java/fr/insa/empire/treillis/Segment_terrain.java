@@ -159,19 +159,18 @@ public class Segment_terrain {
     //Save
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : SEGMENT_TERRAIN/id/idpdébut/idpfin
-        bW.append("DEBUT_Segment_terrain/");
-        bW.append(this.identifiant + "/\n");
         if (!idNum.objetPresent(this.pointDebut)) {
             this.pointDebut.save(bW, idNum);
-        } else {
-            bW.append(idNum.getOrSetKey(this.pointDebut) + "/");
         }
 
         if (!idNum.objetPresent(this.pointFin)) {
             this.pointFin.save(bW, idNum);
-        } else {
-            bW.append(idNum.getOrSetKey(this.pointFin) + "/");
         }
-        bW.append("FIN_Segment_terrain/\n");
+        
+        bW.append("DEBUT_Segment_terrain/");
+        bW.append(this.identifiant + "/");
+        bW.append(idNum.getOrSetKey(this.pointDebut) + "/");
+        bW.append(idNum.getOrSetKey(this.pointFin) + "/");
+        bW.append("FIN_Segment_terrain/");
     }
 }
