@@ -43,14 +43,13 @@ public class Controller {
 
         System.out.println(newState);
 
-        if(newState != -10 && newState != -11)
-        {
+        if (newState != -10 && newState != -11) {
             this.vue.getMbNoeud().setDisable(false);
             this.vue.getMtbTerrain().setDisable(false);
             this.vue.getMbGomme().setDisable(false);
             this.vue.getMtbSelection().setDisable(false);
             this.vue.getMtbBarre().setDisable(false);
-            this.vue.getMbTypeBarre().setDisable(false);
+            this.vue.getMbTypeDeBarre().setDisable(false);
             this.vue.getMbLancerCalculs().setDisable(false);
             this.vue.getbPosition().setDisable(false);
         }
@@ -67,7 +66,7 @@ public class Controller {
                 this.vue.getMtbSelection().setDisable(true);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbBarre().setDisable(true);
-                this.vue.getMbTypeBarre().setDisable(true);
+                this.vue.getMbTypeDeBarre().setDisable(true);
                 this.vue.getMbLancerCalculs().setDisable(true);
                 this.vue.getbPosition().setDisable(true);
                 break;
@@ -159,9 +158,33 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
-            case 60:
+            case 601:
                 System.out.println("Sélectionnez une barre");
                 break;
+            case 602:
+                    String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                    ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
+                    dialogType.setTitle("Choix Type de Barre");
+                    dialogType.setHeaderText("Selectionnez un type de barre");
+                    dialogType.setContentText("Types :");
+                    Optional<String> selectionType = dialogType.showAndWait();
+
+                    Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0); //Type par défaut est le bois
+
+                    if (selectionType.get().contains("Bois")) {
+                        System.out.println("Le type " + selectionType.get());
+                        type = this.vue.getTreillis().getCatalogue().getContient().get(0);
+
+                    } else if (selectionType.get().contains("Acier")) { //C'est acier
+                        System.out.println("Le type " + selectionType.get());
+                        type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                    }
+
+                    for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
+                        this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
+                        this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
+                    }
+                    break;
             case 70:
                 //reset
                 System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
@@ -506,27 +529,27 @@ public class Controller {
                                 this.vue.recontruction();
                             }
 
-                            break;
-                        case 51:
-                            Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
-                            if (segmentTerrain != null) {
-                                clearTriangleTerrain(segmentTerrain);
-                                this.vue.recontruction();
-                            }
-                            break;
-                        case 60:
-                            //On sélectionne la barre souhaitée
-                            Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
-                            if (barreChoisie == null) {
-                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
-                                diagAlertMauvaiseDonnee.setTitle("Erreur Type de barre");
-                                diagAlertMauvaiseDonnee.setHeaderText("Erreur pas top");
-                                diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
-                                diagAlertMauvaiseDonnee.showAndWait();
-                                this.changeEtat(60);
-                                break;
-                            }
-                            System.out.println("Barre la plus proche : " + barreChoisie);
+                    break;
+                case 51:
+                    Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if (segmentTerrain != null) {
+                        clearTriangleTerrain(segmentTerrain);
+                        this.vue.recontruction();
+                    }
+                    break;
+                case 601:
+                    //On sélectionne la barre souhaitée
+                    Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
+                    if (barreChoisie == null) {
+                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                        diagAlertMauvaiseDonnee.setTitle("Erreur Type de barre");
+                        diagAlertMauvaiseDonnee.setHeaderText("Erreur pas top");
+                        diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
+                        diagAlertMauvaiseDonnee.showAndWait();
+                        this.changeEtat(60);
+                        break;
+                    }
+                    System.out.println("Barre la plus proche : " + barreChoisie);
 
                             String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
                             ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
@@ -585,24 +608,24 @@ public class Controller {
                             //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
                             String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
 
-                            //On regarde s'il y a une erreur
-                            if (resultat[0][0].contains("erreur")){
-                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
-                                diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
-                                diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
-                                diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
-                                diagAlertMauvaiseDonnee.showAndWait();
-                                this.changeEtat(0);
-                                break;
-                            }
+                    //On regarde s'il y a une erreur
+                    if (resultat[0][0].contains("erreur")) {
+                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                        diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
+                        diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
+                        diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
+                        diagAlertMauvaiseDonnee.showAndWait();
+                        this.changeEtat(0);
+                        break;
+                    }
 
-                            //On récupère le nombre de ligne du tableau
-                            int j = 0;
-                            int nbLigne = 0;
-                            while (resultat[j][0] != null) {
-                                nbLigne++;
-                            }
-                            System.out.println("Nb ligne " + nbLigne);
+                    //On récupère le nombre de ligne du tableau
+                    int j = 0;
+                    int nbLigne = 0;
+                    while (resultat[j][0] != null) {
+                        nbLigne++;
+                    }
+                    System.out.println("Nb ligne " + nbLigne);
 
                             Alert dialogResultat = new Alert(AlertType.INFORMATION);
                             dialogResultat.setTitle("Résultat Calcul");
@@ -676,12 +699,12 @@ public class Controller {
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
-        Barre barre = new Barre(noeudDebut, noeudFin);
+        Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
         barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
-        
+
         //On choisit le type de la barre
         String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
         ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);

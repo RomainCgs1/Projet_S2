@@ -20,7 +20,7 @@ public class Barre {
     private double angleAlpha;
 
     //Constructeur
-    public Barre(Noeuds noeudDebut, Noeuds noeudFin) {
+    public Barre(Noeuds noeudDebut, Noeuds noeudFin, Treillis treilli) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
         this.longueur = this.calculLongueur();
@@ -47,6 +47,7 @@ public class Barre {
             ((Appui_double) this.noeudFin).getAppartientABarre().add(this);
         }
         
+        treilli.getTreilliContientBarre().add(this);
     }
 
     //Encapsulation
@@ -262,17 +263,17 @@ public class Barre {
         //Format : BARRE/id/type/idpdébut/idpfin
         bW.append("DEBUT_Barre/");
         bW.append(this.identifiant + "/");
-        Type_de_barre type = this.getType();
+        String type = this.getType().getNom();
         bW.append(type + "/");
         if (!idNum.objetPresent(this.noeudDebut)) {
             this.noeudDebut.save(bW, idNum);
         } else {
-            bW.append(this.noeudDebut + "/");
+            bW.append(this.noeudDebut.getID() + "/");
         }
         if (!idNum.objetPresent(this.noeudFin)) {
             this.noeudFin.save(bW, idNum);
         } else {
-            bW.append(this.noeudFin + "/");
+            bW.append(this.noeudFin.getID() + "/");
         }
         bW.append("FIN_Barre/\n");
     }
@@ -281,7 +282,7 @@ public class Barre {
     {
         if(type != null)
         {
-            graphicsContext.setStroke(type.getCouleur());
+            graphicsContext.setStroke(this.getType().getCouleur());
         }
         else
         {

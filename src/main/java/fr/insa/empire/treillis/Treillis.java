@@ -61,12 +61,12 @@ public class Treillis {
     }
 
     public void creationTypeBarre(){
-        Color marron = new Color(0.163,0.065,0, 1);
+        Color marron = Color.rgb(181, 114, 0);
         Type_de_barre bois = new Type_de_barre("bois",5,20,1,10000,10000,marron);
         bois.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(bois));
         this.getCatalogue().getContient().add(bois);
         
-        Color grisAcier = new Color(0.142,0.142,0.142, 1);
+        Color grisAcier = Color.rgb(128,128,128);
         Type_de_barre acier = new Type_de_barre("acier",7,30,1,20000,20000, grisAcier);
         acier.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(acier));
         this.getCatalogue().getContient().add(acier);
@@ -343,21 +343,21 @@ public class Treillis {
         seg2.addNASet(ad);
         System.out.println("Appui_double : \n" + ad.toString());
 
-        Barre b1 = new Barre(as, ns);
+        Barre b1 = new Barre(as, ns, this);
         b1.setType(this.getCatalogue().getContient().get(0));
         b1.setIdentifiant(identificateur.getOrSetKey(b1));
         as.addBarreArray(b1);
         ns.addBarreSet(b1);
         System.out.println("Barre 1 : \n" + b1.toString());
 
-        Barre b2 = new Barre(ns, ad);
+        Barre b2 = new Barre(ns, ad, this);
         b2.setType(this.getCatalogue().getContient().get(0));
         b2.setIdentifiant(identificateur.getOrSetKey(b2));
         ns.addBarreSet(b2);
         ad.addBarreArray(b2);
         System.out.println("Barre 2 : \n" + b2.toString());
 
-        Barre b3 = new Barre(ad, as);
+        Barre b3 = new Barre(ad, as, this);
         b3.setType(this.getCatalogue().getContient().get(1));
         b3.setIdentifiant(identificateur.getOrSetKey(b3));
         ad.addBarreArray(b3);

@@ -34,9 +34,11 @@ public class MainGraphique extends BorderPane {
     private final MenuItem miGommeBarre;
     private final MenuItem miGommeTriangleTerrain;
     private final MenuItem miGommeAll;
+    private final MenuButton mbTypeDeBarre;
+    private final MenuItem miTypeBarreSolo;
+    private final MenuItem miTypeBarreTodos;
     private final MyB mbLancerCalculs;
     private final MyB mbReglages;
-    private final MyB mbTypeBarre;
     private final MyB bPosition;
     private final HBox hbConstruction;
     private final VBox vbUp;
@@ -96,10 +98,6 @@ public class MainGraphique extends BorderPane {
         return mbReglages;
     }
 
-    public MyB getMbTypeBarre() {
-        return mbTypeBarre;
-    }
-
     public HBox getHbConstruction() {
         return hbConstruction;
     }
@@ -132,6 +130,11 @@ public class MainGraphique extends BorderPane {
         return hbPosition;
     }
 
+    public MenuButton getMbTypeDeBarre() {
+        return mbTypeDeBarre;
+    }
+
+    
     public MainGraphique() throws IOException {
 
         //controlleur :
@@ -185,11 +188,11 @@ public class MainGraphique extends BorderPane {
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
         this.mbLancerCalculs = new MyB("Lancer les calculs");
-        this.mbTypeBarre = new MyB ("Type de Barre");
+        this.mbTypeDeBarre = new MenuButton("Type de Barre");
         this.mbReglages = new MyB("Réglages");
-        mbGomme = new MenuButton("Gomme");
+        this.mbGomme = new MenuButton("Gomme");
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, this.mtbSelection, separator2,this.mbTypeBarre, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, this.mtbSelection, separator2,this.mbTypeDeBarre, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
@@ -301,9 +304,18 @@ public class MainGraphique extends BorderPane {
         );
 
         //action de Type de Barre
-        this.mbTypeBarre.setOnAction(
+        //action de Gomme
+        this.miTypeBarreSolo = new MenuItem("Type : barre seule");
+        this.miTypeBarreTodos = new MenuItem("Type : Tout modifier");
+        this.mbTypeDeBarre.getItems().addAll(miTypeBarreSolo,miTypeBarreTodos);
+        this.miTypeBarreSolo.setOnAction(
                 action -> {
-                    controller.changeEtat(60);
+                    controller.changeEtat(601);
+                }
+        );
+        this.miTypeBarreTodos.setOnAction(
+                action -> {
+                    controller.changeEtat(602);
                 }
         );
 
@@ -332,6 +344,7 @@ public class MainGraphique extends BorderPane {
         this.mtbSelection.setOnAction(
                 action -> {
                     this.treillis.testForce();
+                    controller.changeEtat(90);
                 }
         );
     }

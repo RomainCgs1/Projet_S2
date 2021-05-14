@@ -173,6 +173,7 @@ public class Force {
      */
     public static Matrice creationMatrice(Treillis treilli) {
 
+        int nbNoeudSimple =0;
         int nbAppuiSimple = 0;
         int nbAppuiDouble = 0;
         int nbBarres = 0;
@@ -189,20 +190,23 @@ public class Force {
             if (val.getClass() == Barre.class) {
                 nbBarres = nbBarres + 1;
             }
+            if (val.getClass() == Noeud_simple.class) {
+                nbNoeudSimple = nbNoeudSimple + 1;
+            }
         }
 
-//        System.out.println("Nombre de barre : " + nbBarres);
-//        System.out.println("Nombre d'Appui_simple : " + nbAppuiSimple);
-//        System.out.println("Nombre d'Appui_double : " + nbAppuiDouble);
-        int nbInconnues = nbBarres + nbAppuiSimple + 2 * nbAppuiDouble;
-//        System.out.println("Nombre d'inconnues : " + nbInconnues);
-        int nbLig = nbInconnues;
-        int nbCol = nbBarres + nbAppuiDouble + nbAppuiSimple + 2;
+        System.out.println("Nombre de barre : " + nbBarres);
+        System.out.println("Nombre d'Appui_simple : " + nbAppuiSimple);
+        System.out.println("Nombre d'Appui_double : " + nbAppuiDouble);
+        int nbInconnues = nbBarres + 2*nbAppuiSimple + 2 * nbAppuiDouble;
+        System.out.println("Nombre d'inconnues : " + nbInconnues);
+        int nbLig = 2*(nbAppuiDouble+nbAppuiSimple+nbNoeudSimple);
+        int nbCol = nbInconnues;
 
         Matrice systeme = new Matrice(nbLig, nbCol);
-//        System.out.println("Nouvelle matrice créee");
-//        System.out.println("Nombre de lignes : " + nbLig);
-//        System.out.println("Nombre de colonnes : " + nbCol);
+        System.out.println("Nouvelle matrice créee");
+        System.out.println("Nombre de lignes : " + nbLig);
+        System.out.println("Nombre de colonnes : " + nbCol);
 
         return systeme;
     }
