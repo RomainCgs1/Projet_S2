@@ -261,20 +261,21 @@ public class Barre {
     //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : BARRE/id/type/idpdébut/idpfin
+        
+        if (!idNum.objetPresent(this.noeudDebut)) {
+            this.noeudDebut.save(bW, idNum);
+        } 
+        
+        if (!idNum.objetPresent(this.noeudFin)) {
+            this.noeudFin.save(bW, idNum);
+        } 
+        
         bW.append("DEBUT_Barre/");
         bW.append(this.identifiant + "/");
         String type = this.getType().getNom();
         bW.append(type + "/");
-        if (!idNum.objetPresent(this.noeudDebut)) {
-            this.noeudDebut.save(bW, idNum);
-        } else {
-            bW.append(this.noeudDebut.getID() + "/");
-        }
-        if (!idNum.objetPresent(this.noeudFin)) {
-            this.noeudFin.save(bW, idNum);
-        } else {
-            bW.append(this.noeudFin.getID() + "/");
-        }
+        bW.append(this.noeudDebut.getID() + "/");
+        bW.append(this.noeudFin.getID() + "/");
         bW.append("FIN_Barre/\n");
     }
 
