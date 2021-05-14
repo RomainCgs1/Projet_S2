@@ -70,6 +70,12 @@ public class MyMenuBar extends MenuBar {
                 }
         );
 
+        this.miTheme.setOnAction(
+                action -> {
+                    controller.changeEtat(200);
+                }
+        );
+
         //Action enregistrer PAS FINIE
         this.miEnregistrer.setOnAction(
                 Action -> {

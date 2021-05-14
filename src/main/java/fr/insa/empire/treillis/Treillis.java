@@ -26,6 +26,10 @@ public class Treillis {
     private ArrayList<Integer> idAppuiSimpleCrees = new ArrayList<Integer>();
     private ArrayList<Integer> idAppuiDoubleCrees = new ArrayList<Integer>();
 
+    public void setAppartient(Zone_constructible appartient) {
+        this.appartient = appartient;
+    }
+
     public Treillis() {
         this.identificateur = new Identificateur();
         this.identificateurForce = new Identificateur();

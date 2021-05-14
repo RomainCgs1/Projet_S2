@@ -44,6 +44,8 @@ public class MainGraphique extends BorderPane {
     private final HBox hbPosition;
     private final MyCanvas canvas;
 
+    private String theme;
+
     private final MyMenuBar menuBar;
 
     public Controller getController() {
@@ -134,6 +136,8 @@ public class MainGraphique extends BorderPane {
 
         //controlleur :
         this.controller = new Controller(this);
+
+        this.theme = "clair";
 
         //point pour triangle terrain
         Point p1 = new Point();
@@ -370,5 +374,15 @@ public class MainGraphique extends BorderPane {
                 ((Zone_constructible) val).draw(graphicsContext);
             }
         }
+    }
+
+    public String getTheme() {
+        //à coder
+        return this.theme;
+    }
+
+    public void setTheme(String theme)
+    {
+        this.theme = theme;
     }
 }
