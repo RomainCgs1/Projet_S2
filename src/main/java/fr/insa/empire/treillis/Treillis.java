@@ -173,10 +173,14 @@ public class Treillis {
                 ((Noeud_simple) val).save(bW, this.identificateur);
             }
 
-            if (val.getClass() == Noeud_appui.class) {
-                ((Noeud_appui) val).save(bW, this.identificateur);
+            if (val.getClass() == Appui_simple.class) {
+                ((Appui_simple) val).save(bW, this.identificateur);
             }
 
+             if (val.getClass() == Appui_double.class) {
+                ((Appui_double) val).save(bW, this.identificateur);
+            }
+             
             if (val.getClass() == Barre.class) {
                 ((Barre) val).save(bW, this.identificateur);
             }

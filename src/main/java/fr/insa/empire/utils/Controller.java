@@ -162,29 +162,29 @@ public class Controller {
                 System.out.println("Sélectionnez une barre");
                 break;
             case 602:
-                    String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
-                    ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
-                    dialogType.setTitle("Choix Type de Barre");
-                    dialogType.setHeaderText("Selectionnez un type de barre");
-                    dialogType.setContentText("Types :");
-                    Optional<String> selectionType = dialogType.showAndWait();
+                String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
+                dialogType.setTitle("Choix Type de Barre");
+                dialogType.setHeaderText("Selectionnez un type de barre");
+                dialogType.setContentText("Types :");
+                Optional<String> selectionType = dialogType.showAndWait();
 
-                    Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0); //Type par défaut est le bois
+                Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0); //Type par défaut est le bois
 
-                    if (selectionType.get().contains("Bois")) {
-                        System.out.println("Le type " + selectionType.get());
-                        type = this.vue.getTreillis().getCatalogue().getContient().get(0);
+                if (selectionType.get().contains("Bois")) {
+                    System.out.println("Le type " + selectionType.get());
+                    type = this.vue.getTreillis().getCatalogue().getContient().get(0);
 
-                    } else if (selectionType.get().contains("Acier")) { //C'est acier
-                        System.out.println("Le type " + selectionType.get());
-                        type = this.vue.getTreillis().getCatalogue().getContient().get(1);
-                    }
+                } else if (selectionType.get().contains("Acier")) { //C'est acier
+                    System.out.println("Le type " + selectionType.get());
+                    type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                }
 
-                    for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
-                        this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
-                        this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
-                    }
-                    break;
+                for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
+                    this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
+                    this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
+                }
+                break;
             case 70:
                 //reset
                 System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
@@ -215,8 +215,7 @@ public class Controller {
 
         if (E.getButton() == MouseButton.PRIMARY) {
 
-            if(this.vue.getTreillis().getAppartient() == null)
-            {
+            if (this.vue.getTreillis().getAppartient() == null) {
                 switch (this.etat) {
                     case -10:
                         p4 = new Point(px, py);
@@ -250,19 +249,15 @@ public class Controller {
                         this.vue.getTreillis().setAppartient(zoneConstructible);
                         break;
                 }
-            }
-            else
-            {
-                if(px > this.vue.getTreillis().getAppartient().getxMax() || px < this.vue.getTreillis().getAppartient().getxMin() || py > this.vue.getTreillis().getAppartient().getyMax() || py < this.vue.getTreillis().getAppartient().getyMin())
-                {
-                    switch (this.etat)
-                    {
+            } else {
+                if (px > this.vue.getTreillis().getAppartient().getxMax() || px < this.vue.getTreillis().getAppartient().getxMin() || py > this.vue.getTreillis().getAppartient().getyMax() || py < this.vue.getTreillis().getAppartient().getyMin()) {
+                    switch (this.etat) {
                         case 30:
-                        p1 = new Point(px, py);
-                        //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
-                        changeEtat(31);
-                        System.out.println("point 1");
-                        break;
+                            p1 = new Point(px, py);
+                            //this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
+                            changeEtat(31);
+                            System.out.println("point 1");
+                            break;
 
                         case 31:
                             p2 = new Point(px, py);
@@ -284,9 +279,7 @@ public class Controller {
                             changeEtat(30);
                             break;
                     }
-                }
-                else
-                {
+                } else {
                     switch (this.etat) {
                         case -10:
                             p4 = new Point(px, py);
@@ -339,8 +332,7 @@ public class Controller {
                         case 120:
                             Noeud_simple noeud_simple = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
                             System.out.println("Noeud simple le plus proche : " + noeud_simple);
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null) {
                                 if (noeud_simple == null) {
                                     noeud_simple = new Noeud_simple(px, py);
                                     noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
@@ -378,8 +370,7 @@ public class Controller {
                             break;
                         case 20:
                             System.out.println("noeud début");
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) != null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) != null) {
                                 noeudDebut = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                                 if (noeudDebut == null) {
                                     this.changeEtat(110);
@@ -387,9 +378,7 @@ public class Controller {
                                     this.changeEtat(20);
                                     this.canvasClicked(E);
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 noeudDebut = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                                 if (noeudDebut == null) {
                                     this.changeEtat(120);
@@ -403,32 +392,25 @@ public class Controller {
 
                         case 21:
                             System.out.println("noeud fin");
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) != null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) != null) {
                                 noeudFin = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                                 if (noeudFin == null) {
                                     this.changeEtat(110);
                                     this.canvasClicked(E);
                                     this.changeEtat(21);
                                     this.canvasClicked(E);
-                                }
-                                else
-                                {
+                                } else {
                                     creationBarre(noeudDebut, noeudFin);
                                     this.changeEtat(20);
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 noeudFin = this.vue.getCanvas().getNoeudPlusProche(px, py, this.vue.getTreillis().identificateur);
                                 if (noeudFin == null) {
                                     this.changeEtat(120);
                                     this.canvasClicked(E);
                                     this.changeEtat(21);
                                     this.canvasClicked(E);
-                                }
-                                else
-                                {
+                                } else {
                                     creationBarre(noeudDebut, noeudFin);
                                     this.changeEtat(20);
                                 }
@@ -471,27 +453,27 @@ public class Controller {
                                 this.vue.recontruction();
                             }
 
-                    break;
-                case 51:
-                    Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if (segmentTerrain != null) {
-                        clearTriangleTerrain(segmentTerrain);
-                        this.vue.recontruction();
-                    }
-                    break;
-                case 601:
-                    //On sélectionne la barre souhaitée
-                    Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
-                    if (barreChoisie == null) {
-                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
-                        diagAlertMauvaiseDonnee.setTitle("Erreur Type de barre");
-                        diagAlertMauvaiseDonnee.setHeaderText("Erreur pas top");
-                        diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
-                        diagAlertMauvaiseDonnee.showAndWait();
-                        this.changeEtat(60);
-                        break;
-                    }
-                    System.out.println("Barre la plus proche : " + barreChoisie);
+                            break;
+                        case 51:
+                            Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                            if (segmentTerrain != null) {
+                                clearTriangleTerrain(segmentTerrain);
+                                this.vue.recontruction();
+                            }
+                            break;
+                        case 601:
+                            //On sélectionne la barre souhaitée
+                            Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
+                            if (barreChoisie == null) {
+                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                diagAlertMauvaiseDonnee.setTitle("Erreur Type de barre");
+                                diagAlertMauvaiseDonnee.setHeaderText("Erreur pas top");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
+                                diagAlertMauvaiseDonnee.showAndWait();
+                                this.changeEtat(601);
+                                break;
+                            }
+                            System.out.println("Barre la plus proche : " + barreChoisie);
 
                             String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
                             ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
@@ -550,37 +532,34 @@ public class Controller {
                             //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
                             String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
 
-                    //On regarde s'il y a une erreur
-                    if (resultat[0][0].contains("erreur")) {
-                        Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
-                        diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
-                        diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
-                        diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
-                        diagAlertMauvaiseDonnee.showAndWait();
-                        this.changeEtat(0);
-                        break;
-                    }
+                            //On regarde s'il y a une erreur
+                            if (resultat[0][0].contains("erreur")) {
+                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
+                                diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
+                                diagAlertMauvaiseDonnee.showAndWait();
+                                this.changeEtat(0);
+                                break;
+                            } else {
+                                System.out.println("Pas d'erreur");
+                                Alert dialogResultat = new Alert(AlertType.INFORMATION);
+                                dialogResultat.setHeight(300);
+                                dialogResultat.setWidth(400);
+                                dialogResultat.setTitle("Résultat Calcul");
+                                dialogResultat.setHeaderText("Analyse du treilli : ");
+                                String s = "";
+                                for (int i = 0; i < resultat[0].length; i++) {
+                                    s = s + resultat[i][0] + " " + resultat[i][1] + " " + resultat[i][2] + "\n";
+                                }
+                                dialogResultat.setContentText(s);
+                                dialogResultat.showAndWait();
 
-                    //On récupère le nombre de ligne du tableau
-                    int j = 0;
-                    int nbLigne = 0;
-                    while (resultat[j][0] != null) {
-                        nbLigne++;
-                    }
-                    System.out.println("Nb ligne " + nbLigne);
-
-                            Alert dialogResultat = new Alert(AlertType.INFORMATION);
-                            dialogResultat.setTitle("Résultat Calcul");
-                            dialogResultat.setHeaderText("Analyse du treilli : ");
-                            String s = "";
-                            for (int i = 0; i < nbLigne; i++) {
-                                s = s + resultat[i][0] + " " + resultat[i][0] + " " + resultat[i][0] + "\n";
+                                //On efface les forces créés pour effectuer à nouveau le calcul
+                                this.vue.getTreillis().getIdentificateurForce().clear();
+                                break;
                             }
-                            dialogResultat.setContentText(s);
 
-                            //On efface les forces créés pour effectuer à nouveau le calcul
-                            this.vue.getTreillis().getIdentificateurForce().clear();
-                            break;
                     }
                 }
 
@@ -665,7 +644,6 @@ public class Controller {
             barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
         }
     }
-
 
     private void eraseAll() {
         Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);
@@ -756,8 +734,7 @@ public class Controller {
         return null;
     }
 
-    private void choixTheme()
-    {
+    private void choixTheme() {
         // Create the custom dialog.
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Choix du thème");
@@ -780,12 +757,9 @@ public class Controller {
         rbClair.setToggleGroup(toggleGroup);
         rbsombre.setToggleGroup(toggleGroup);
         String theme = this.vue.getTheme();
-        if(theme == "clair")
-        {
+        if (theme == "clair") {
             rbClair.setSelected(true);
-        }
-        else
-        {
+        } else {
             rbsombre.setSelected(true);
         }
         grid.add(rbClair, 0, 0);
@@ -797,7 +771,6 @@ public class Controller {
         dialog.getDialogPane().setContent(grid);
 
         // Request focus on the tfPYX field by default.
-
         // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == validationButtonType) {
@@ -806,16 +779,12 @@ public class Controller {
             return null;
         });
 
-
         Optional<Pair<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(tfPYXtfPY -> {
-            if(rbClair.isSelected())
-            {
+            if (rbClair.isSelected()) {
                 this.vue.setTheme("clair");
-            }
-            else
-            {
+            } else {
                 this.vue.setTheme("sombre");
             }
             System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());

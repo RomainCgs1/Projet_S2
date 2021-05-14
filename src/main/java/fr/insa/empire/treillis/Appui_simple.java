@@ -1,5 +1,8 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -51,6 +54,15 @@ public class Appui_simple extends Noeud_appui {
         return s;
     }
 
+    public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
+        //Format : Appui_SIMPLE/id/px/py/posAlpha
+        bW.append("Appui_Simple/");
+        bW.append(this.identifiant + "/");
+        bW.append(this.getPx() + "/");
+        bW.append(this.getPy()+ "/");
+        bW.append(this.getPosition_alpha()+"/\n");
+    }
+    
     public void draw(GraphicsContext graphicsContext)
     {
         graphicsContext.setStroke(Color.ORANGE);
