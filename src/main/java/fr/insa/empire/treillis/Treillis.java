@@ -190,7 +190,7 @@ public class Treillis {
             }
 
             if (val.getClass() == Triangle_terrain.class) {
-                ((Triangle_terrain) val).save(bW, this.identificateur);
+                //((Triangle_terrain) val).save(bW, this.identificateur);
             }
         }
         bW.append("FIN TREILLI\n");

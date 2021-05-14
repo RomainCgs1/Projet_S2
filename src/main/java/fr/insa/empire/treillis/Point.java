@@ -78,11 +78,8 @@ public class Point {
     
     //Save
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
-        //Format : POINT /id/px/py
-        bW.append("Point/");
-        bW.append(this.identifiant +"/");
-        bW.append(this.px+"/");
-        bW.append(this.py+"/\n");
+        bW.append("("+this.px+"),");
+        bW.append("("+this.py+")\n");
     }
 
     public String toString()

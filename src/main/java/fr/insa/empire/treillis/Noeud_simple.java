@@ -90,10 +90,9 @@ public class Noeud_simple extends Noeuds {
     @Override
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : NOEUD_SIMPLE/id/px/py
-        bW.append("Noeud_Simple/");
-        bW.append(this.identifiant + "/");
-        bW.append(this.px + "/");
-        bW.append(this.py + "\n");
+        bW.append("NoeudSimple;");
+        bW.append(this.identifiant + ";");
+        bW.append("("+this.px+"),("+this.py + ")\n");
     }
 
     @Override

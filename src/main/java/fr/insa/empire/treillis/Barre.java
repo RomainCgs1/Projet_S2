@@ -270,13 +270,11 @@ public class Barre {
             this.noeudFin.save(bW, idNum);
         } 
         
-        bW.append("DEBUT_Barre/");
-        bW.append(this.identifiant + "/");
-        String type = this.getType().getNom();
-        bW.append(type + "/");
-        bW.append(this.noeudDebut.getID() + "/");
-        bW.append(this.noeudFin.getID() + "/");
-        bW.append("FIN_Barre/\n");
+        bW.append("Barre;");
+        bW.append(this.identifiant + ";");
+        bW.append(this.getType().getIdentifiant() + ";");
+        bW.append(this.noeudDebut.getID() + ";");
+        bW.append(this.noeudFin.getID() + "\n");
     }
 
     public void draw(GraphicsContext graphicsContext)

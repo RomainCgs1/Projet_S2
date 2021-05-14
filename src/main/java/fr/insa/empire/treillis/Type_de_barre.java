@@ -1,5 +1,8 @@
 package fr.insa.empire.treillis;
 
+import fr.insa.empire.utils.Identificateur;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
@@ -27,8 +30,7 @@ public class Type_de_barre {
         this.couleur = couleur;
     }
 
-    public Type_de_barre()
-    {
+    public Type_de_barre() {
         this.coutAuMetre = 10;
         this.longMax = 500;
         this.longMin = 0.5;
@@ -37,7 +39,6 @@ public class Type_de_barre {
     }
 
     //Encapsulation
-
     public int getIdentifiant() {
         return identifiant;
     }
@@ -57,7 +58,7 @@ public class Type_de_barre {
     public double getLongMin() {
         return longMin;
     }
-    
+
     private void setLongMin(double longMin) {
         this.longMin = longMin;
     }
@@ -85,16 +86,16 @@ public class Type_de_barre {
     private void setResMaxComp(double resMaxComp) {
         this.resMaxComp = resMaxComp;
     }
-    
-    public void addBarreSet(Barre barre){
+
+    public void addBarreSet(Barre barre) {
         this.appartient.add(barre);
     }
-    
-    public void removeBarreSet(Barre barre){
+
+    public void removeBarreSet(Barre barre) {
         this.appartient.remove(barre);
     }
-    
-    public void removeAllBarre(){
+
+    public void removeAllBarre() {
         this.appartient.removeAll(appartient);
     }
 
@@ -109,20 +110,29 @@ public class Type_de_barre {
     public ArrayList<Barre> getAppartient() {
         return appartient;
     }
-    
-    
+
     //toString
-    public String toString(){
+    public String toString() {
         String s = "";
-        s=s+"Nom : "+this.nom+"\n";
-        s=s+"Identifiant : "+this.identifiant+"\n";
-        s=s+"Coût au mètre : "+this.coutAuMetre+"\n";
-        s=s+"La longueur max est : "+this.longMax+"\n";
-        s=s+"La longueur min est : "+this.longMin+"\n";
-        s=s+"La Tension Max est : "+this.resMaxTens+"\n";
-        s=s+"La Compression Max est : "+this.resMaxComp+"\n";
-        s=s+"Couleur : "+this.couleur;
-        
+        s = s + "Nom : " + this.nom + "\n";
+        s = s + "Identifiant : " + this.identifiant + "\n";
+        s = s + "Coût au mètre : " + this.coutAuMetre + "\n";
+        s = s + "La longueur max est : " + this.longMax + "\n";
+        s = s + "La longueur min est : " + this.longMin + "\n";
+        s = s + "La Tension Max est : " + this.resMaxTens + "\n";
+        s = s + "La Compression Max est : " + this.resMaxComp + "\n";
+        s = s + "Couleur : " + this.couleur;
+
         return s;
+    }
+
+    public void saveTypeDeBarre(BufferedWriter bW, Identificateur idNum) throws IOException {
+        //id;cout;longeur min; longeur max; resistance max trac; resistance max compression
+        bW.append("Type;");
+        bW.append(this.identifiant + ";");
+        bW.append(this.getCoutAuMetre()+";");
+        bW.append(this.getLongMax()+";");
+        bW.append(this.getResMaxTens()+";");
+        bW.append(this.getResMaxComp()+";");
     }
 }
