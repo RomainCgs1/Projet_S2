@@ -475,7 +475,11 @@ public class Controller {
                                     this.canvasClicked(E);
                                     this.changeEtat(21);
                                     this.canvasClicked(E);
+                                }
+                                else
+                                {
                                     creationBarre(noeudDebut, noeudFin);
+                                    this.changeEtat(20);
                                 }
                             }
                             else
@@ -486,11 +490,13 @@ public class Controller {
                                     this.canvasClicked(E);
                                     this.changeEtat(21);
                                     this.canvasClicked(E);
+                                }
+                                else
+                                {
                                     creationBarre(noeudDebut, noeudFin);
+                                    this.changeEtat(20);
                                 }
                             }
-
-                            this.changeEtat(20);
                             break;
 
                         case 30:
