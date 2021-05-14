@@ -208,73 +208,6 @@ public class Controller {
 
     }
 
-    private void choixTheme()
-    {
-        // Create the custom dialog.
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Choix du thème");
-        dialog.setHeaderText("Veuillez choisir votre thème favoris :");
-
-        // Set the icon (must be included in the project).
-        //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
-        // Set the button types.
-        ButtonType validationButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(validationButtonType, ButtonType.CANCEL);
-
-        // Create the tfPYX and tfPY labels and fields.
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-        RadioButton rbClair = new RadioButton("Clair");
-        RadioButton rbsombre = new RadioButton("Sombre");
-        ToggleGroup toggleGroup = new ToggleGroup();
-        rbClair.setToggleGroup(toggleGroup);
-        rbsombre.setToggleGroup(toggleGroup);
-        String theme = this.vue.getTheme();
-        if(theme == "clair")
-        {
-            rbClair.setSelected(true);
-        }
-        else
-        {
-            rbsombre.setSelected(true);
-        }
-        grid.add(rbClair, 0, 0);
-        grid.add(rbsombre, 0, 1);
-
-        // Enable/Disable login button depending on whether a tfPYX was entered.
-        Node loginButton = dialog.getDialogPane().lookupButton(validationButtonType);
-
-        dialog.getDialogPane().setContent(grid);
-
-        // Request focus on the tfPYX field by default.
-
-        // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == validationButtonType) {
-                return null;
-            }
-            return null;
-        });
-
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        result.ifPresent(tfPYXtfPY -> {
-            if(rbClair.isSelected())
-            {
-                this.vue.setTheme("clair");
-            }
-            else
-            {
-                this.vue.setTheme("sombre");
-            }
-            System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());
-            //à terminer
-        });
-    }
-
     public void canvasClicked(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
@@ -406,14 +339,17 @@ public class Controller {
                         case 120:
                             Noeud_simple noeud_simple = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
                             System.out.println("Noeud simple le plus proche : " + noeud_simple);
-                            if (noeud_simple == null) {
-                                noeud_simple = new Noeud_simple(px, py);
-                                noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
-                                System.out.println(noeud_simple.getID());
-                                this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
-                                this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
-                            } else {
-                                System.out.println("noeud déjà créé : " + noeud_simple);
+                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
+                            {
+                                if (noeud_simple == null) {
+                                    noeud_simple = new Noeud_simple(px, py);
+                                    noeud_simple.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(noeud_simple));
+                                    System.out.println(noeud_simple.getID());
+                                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.RED);
+                                    this.vue.getCanvas().getGraphicsContext2D().strokeOval(px - 5, py - 5, 10, 10);
+                                } else {
+                                    System.out.println("noeud déjà créé : " + noeud_simple);
+                                }
                             }
                             break;
 
@@ -818,5 +754,72 @@ public class Controller {
             //return new Point((double) tfPYXtfPY.getKey(), (double) tfPYXtfPY.getValue());
         });
         return null;
+    }
+
+    private void choixTheme()
+    {
+        // Create the custom dialog.
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Choix du thème");
+        dialog.setHeaderText("Veuillez choisir votre thème favoris :");
+
+        // Set the icon (must be included in the project).
+        //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
+        // Set the button types.
+        ButtonType validationButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(validationButtonType, ButtonType.CANCEL);
+
+        // Create the tfPYX and tfPY labels and fields.
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        RadioButton rbClair = new RadioButton("Clair");
+        RadioButton rbsombre = new RadioButton("Sombre");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        rbClair.setToggleGroup(toggleGroup);
+        rbsombre.setToggleGroup(toggleGroup);
+        String theme = this.vue.getTheme();
+        if(theme == "clair")
+        {
+            rbClair.setSelected(true);
+        }
+        else
+        {
+            rbsombre.setSelected(true);
+        }
+        grid.add(rbClair, 0, 0);
+        grid.add(rbsombre, 0, 1);
+
+        // Enable/Disable login button depending on whether a tfPYX was entered.
+        Node loginButton = dialog.getDialogPane().lookupButton(validationButtonType);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Request focus on the tfPYX field by default.
+
+        // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == validationButtonType) {
+                return null;
+            }
+            return null;
+        });
+
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        result.ifPresent(tfPYXtfPY -> {
+            if(rbClair.isSelected())
+            {
+                this.vue.setTheme("clair");
+            }
+            else
+            {
+                this.vue.setTheme("sombre");
+            }
+            System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());
+            //à terminer
+        });
     }
 }
