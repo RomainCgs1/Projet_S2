@@ -14,7 +14,6 @@ import javafx.util.Pair;
 
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 
 public class Controller {
 
@@ -150,7 +149,7 @@ public class Controller {
                 this.vue.getMtbSelection().setSelected(false);
                 eraseAll();
                 break;
-            case 54:
+            case 54: //recommencer
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
@@ -418,23 +417,52 @@ public class Controller {
                             break;
 
                         case 30:
-                            p1 = new Point(px, py);
-                            this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
-                            changeEtat(31);
-                            System.out.println("point 1");
+                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
+                            {
+                                p1 = new Point(px, py);
+                                this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
+                                changeEtat(31);
+                                System.out.println("point 1");
+                            }
+                            else
+                            {
+                                p1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
+                                this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
+                                changeEtat(31);
+                                System.out.println("point 1");
+                            }
                             break;
 
                         case 31:
-                            p2 = new Point(px, py);
-                            this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
-                            changeEtat(32);
-                            System.out.println("point 2");
+                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
+                            {
+                                p2 = new Point(px, py);
+                                this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
+                                changeEtat(32);
+                                System.out.println("point 2");
+                            }
+                            else
+                            {
+                                p2 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
+                                this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
+                                changeEtat(32);
+                                System.out.println("point 2");
+                            }
                             break;
 
                         case 32:
-                            p3 = new Point(px, py);
-                            this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
+                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
+                            {
+                                p3 = new Point(px, py);
+                                this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
+                            }
+                            else
+                            {
+                                p3 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
+                                this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
+                            }
                             System.out.println("point 3");
+
                             creationTriangleTerrain(this.p1, this.p2, this.p3);
 
                             System.out.println(this.p1 + "\n"
@@ -655,6 +683,7 @@ public class Controller {
     private void recommencer() {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
+        this.vue.getTreillis().setAppartient(null);
     }
 
     private Point choixPositionManuelle() {
