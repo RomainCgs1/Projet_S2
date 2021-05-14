@@ -477,7 +477,7 @@ public class Force {
                 forceConcernee.setNorme(Math.abs(solution.getCoeffs()[i][0]));
                 System.out.println("Sa norme vaut : " + forceConcernee.getnorme());
                 
-                resultat[i][0] = "Traction de la barre " + forceConcernee.getBarreAssociee().getIdentifiant();
+                resultat[i][0] = "Reaction de l'Appui-simple " + forceConcernee.getAsAssocie().getID();
                 resultat[i][1] = forceConcernee.getnorme() + " N";
                 resultat[i][2] = "--";
 
@@ -507,7 +507,6 @@ public class Force {
 
                 } else {
                     System.out.println(listeRef.get(i) + " est négatif donc Y");
-                    System.out.println("i=" + i);
                     forceConcernee.setFy(solution.getCoeffs()[i][0]);
 
                     resultat[i][0] = "Reaction de l'Appui Double " + forceConcernee.getAdAssocie().getID();

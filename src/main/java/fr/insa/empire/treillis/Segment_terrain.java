@@ -159,14 +159,8 @@ public class Segment_terrain {
     //Save
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         //Format : SEGMENT_TERRAIN/id/idpdébut/idpfin
-        if (!idNum.objetPresent(this.pointDebut)) {
-            this.pointDebut.save(bW, idNum);
-        }
-
-        if (!idNum.objetPresent(this.pointFin)) {
-            this.pointFin.save(bW, idNum);
-        }
-        
+        this.pointDebut.save(bW, idNum);
+        this.pointFin.save(bW, idNum);
         bW.append("DEBUT_Segment_terrain/");
         bW.append(this.identifiant + "/");
         bW.append(idNum.getOrSetKey(this.pointDebut) + "/");
