@@ -4,13 +4,12 @@ import fr.insa.empire.utils.Identificateur;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class Segment_terrain {
 
-    private final Set<Noeud_appui> contientNoeudAppui;
-    private final Set<Point> contientPoint;
+    private final ArrayList<Noeud_appui> contientNoeudAppui;
+    private final ArrayList<Point> contientPoint;
     private Triangle_terrain appartient;   //EN A-T-ON BESOIN ?
     private final Point pointDebut;
     private final Point pointFin;
@@ -20,8 +19,8 @@ public class Segment_terrain {
     public Segment_terrain(Point pointDebut, Point pointFin) {
         this.pointDebut = pointDebut;
         this.pointFin = pointFin;
-        this.contientNoeudAppui = new HashSet<Noeud_appui>();
-        this.contientPoint = new HashSet<Point>();
+        this.contientNoeudAppui = new ArrayList<Noeud_appui>();
+        this.contientPoint = new ArrayList<Point>();
         this.contientPoint.add(this.pointDebut);
         this.contientPoint.add(this.pointFin);
     }

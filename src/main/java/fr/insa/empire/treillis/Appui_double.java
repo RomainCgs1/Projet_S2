@@ -54,13 +54,8 @@ public class Appui_double extends Noeud_appui {
     }
 
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
-        //Format : Appui_double/id/px/py/posAlpha
         bW.append("Appui_Double/");
-        bW.append(this.identifiant + "/");
-        bW.append(this.getPx() + "/");
-        bW.append(this.getPy() + "/");
-        bW.append(this.getPosition_alpha() + "/");
-        bW.append(this.getSegment_appui().getIdentifiant() + "/\n");
+        super.save(bW, idNum);
     }
 
     public void draw(GraphicsContext graphicsContext) {

@@ -26,10 +26,6 @@ public class Treillis {
     private ArrayList<Integer> idAppuiSimpleCrees = new ArrayList<Integer>();
     private ArrayList<Integer> idAppuiDoubleCrees = new ArrayList<Integer>();
 
-    public void setAppartient(Zone_constructible appartient) {
-        this.appartient = appartient;
-    }
-
     public Treillis() {
         this.identificateur = new Identificateur();
         this.identificateurForce = new Identificateur();
@@ -60,19 +56,19 @@ public class Treillis {
         return prixTreilli;
     }
 
-    public void creationTypeBarre(){
+    public void creationTypeBarre() {
         Color marron = Color.rgb(181, 114, 0);
-        Type_de_barre bois = new Type_de_barre("bois",5,20,1,10000,10000,marron);
+        Type_de_barre bois = new Type_de_barre("bois", 5, 20, 1, 10000, 10000, marron);
         bois.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(bois));
         this.getCatalogue().getContient().add(bois);
-        
-        Color grisAcier = Color.rgb(128,128,128);
-        Type_de_barre acier = new Type_de_barre("acier",7,30,1,20000,20000, grisAcier);
+
+        Color grisAcier = Color.rgb(128, 128, 128);
+        Type_de_barre acier = new Type_de_barre("acier", 7, 30, 1, 20000, 20000, grisAcier);
         acier.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(acier));
         this.getCatalogue().getContient().add(acier);
-        
+
     }
-    
+
     //Encapsulation 
     public Identificateur getIdentificateur() {
         return identificateur;
@@ -106,9 +102,11 @@ public class Treillis {
         return catalogue;
     }
 
-    
-    
-    //Méthodes pour gérer les SET
+     public void setAppartient(Zone_constructible appartient) {
+        this.appartient = appartient;
+    }
+     
+    //Méthodes pour gérer les ArrayList
     public void addBarreSet(Barre barre) {
         this.treilliContientBarre.add(barre);
     }
@@ -157,91 +155,108 @@ public class Treillis {
         return idAppuiDoubleCrees;
     }
 
-
-    
     //Sauvegarde
     public void save(BufferedWriter bW) throws IOException {
-        //Format : TREILLIS
-        //<objets contenus dans le treillis, 1 barre par ligne>
-        //Fin Treillis
-        System.out.println("Je suis passé dans sauvegarde treilli");
-        bW.append("DEBUT TREILLI \n");
+        /*
+        On enregistre l'intégralité du treilli
+        -zone
+        -l'ensemble des triangles FINTRIANGLES
+        -catalogue FINCATALOGUE
+        -noeuds FINNOEUDS
+        -barres FINBARRES
+         */
+
+        //Créer des listes pour éviter de parcourir plusieurs fois l'indentificateur
+        ArrayList<Noeud_simple> ns = new ArrayList<Noeud_simple>();
+        ArrayList<Noeud_appui> na = new ArrayList<Noeud_appui>();
+        ArrayList<Barre> barres = new ArrayList<Barre>();
+        ArrayList<Triangle_terrain> triangles = new ArrayList<Triangle_terrain>();
+
         for (Map.Entry mapentry : this.identificateur.getKetToObject().entrySet()) {
             Object val = mapentry.getValue();
-            System.out.println(val.getClass());
+
             if (val.getClass() == Noeud_simple.class) {
-                ((Noeud_simple) val).save(bW, this.identificateur);
+                ns.add(((Noeud_simple) val));
             }
 
             if (val.getClass() == Appui_simple.class) {
-                ((Appui_simple) val).save(bW, this.identificateur);
+                na.add(((Appui_simple) val));
             }
 
-             if (val.getClass() == Appui_double.class) {
-                ((Appui_double) val).save(bW, this.identificateur);
+            if (val.getClass() == Appui_double.class) {
+                na.add(((Appui_double) val));
             }
-             
+
             if (val.getClass() == Barre.class) {
-                ((Barre) val).save(bW, this.identificateur);
-            }
-
-            if (val.getClass() == Segment_terrain.class) {
-                ((Segment_terrain) val).save(bW, this.identificateur);
+                barres.add(((Barre) val));
             }
 
             if (val.getClass() == Triangle_terrain.class) {
-                //((Triangle_terrain) val).save(bW, this.identificateur);
+                triangles.add(((Triangle_terrain) val));
             }
         }
-        bW.append("FIN TREILLI\n");
+
+        
+        
+        //SAVE DANS L'ORDRE IMPOSE
+        
+        //On save la zone constructible
+        this.getAppartient().saveZone(bW, identificateur); 
+        
+        //On sauvegarde l'ensemble des triangles terrain
+        for (int i = 0; i < triangles.size(); i++) { 
+                triangles.get(i).save(bW, identificateur, triangles.get(i).getSegment1().getPointDebut(), triangles.get(i).getSegment2().getPointDebut(), triangles.get(i).getSegment3().getPointDebut());
+        }
+        bW.append("FINTRIANGLES\n");
+        
+        //On save le catalogue
+        this.getCatalogue().saveCatalogue(bW, identificateur);
+        bW.append("FINCATALOGUE\n");
+        
+        //On save les noeuds
+        for (int i = 0; i < na.size(); i++) {
+            na.get(i).save(bW, identificateur);
+        }
+        for (int i = 0; i < ns.size(); i++) {
+            ns.get(i).save(bW, identificateur);
+        }
+        bW.append("FINNOEUDS\n");
+        
+        //On save les barres
+        for (int i = 0; i < barres.size(); i++) {
+                barres.get(i).save(bW, identificateur);
+        }
+        bW.append("FINBARRES\n");
     }
 
-    public void open(BufferedReader bR) throws IOException
-    {
+    public void open(BufferedReader bR) throws IOException {
         System.out.println("Début de la lecture");
         String strCurrentLine;
         while ((strCurrentLine = bR.readLine()) != null) {
             System.out.println(strCurrentLine);
             String[] splitStrCurrLine = strCurrentLine.split("/");
-            if(splitStrCurrLine[0].equals("DEBUT TREILLI"))
-            {
+            if (splitStrCurrLine[0].equals("DEBUT TREILLI")) {
 
-            }
-            else if(splitStrCurrLine[0].equals("FIN TREILLI"))
-            {
+            } else if (splitStrCurrLine[0].equals("FIN TREILLI")) {
 
-            }
-            else
-            {
-                if(splitStrCurrLine[0].equals("DEBUT_Triangle_terrain"))
-                {
+            } else {
+                if (splitStrCurrLine[0].equals("DEBUT_Triangle_terrain")) {
                     //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
                     //on integrera la leture des segements qui lui appartiennent
-                }
-                else if(splitStrCurrLine[0].toLowerCase().equals("debut_barre"))
-                {
-                    for(int i=1; i<splitStrCurrLine.length; i++)
-                    {
+                } else if (splitStrCurrLine[0].toLowerCase().equals("debut_barre")) {
+                    for (int i = 1; i < splitStrCurrLine.length; i++) {
                         //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
                     }
-                }
-                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_simple"))
-                {
+                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_simple")) {
                     Noeud_simple noeudSimple = new Noeud_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]));
                     identificateur.getOrSetKey(noeudSimple);
-                }
-                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_simple"))
-                {
+                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_simple")) {
                     Appui_simple appuiSimple = new Appui_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
                     identificateur.getOrSetKey(appuiSimple);
-                }
-                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_double"))
-                {
+                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_double")) {
                     Appui_double appuiDouble = new Appui_double(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
                     identificateur.getOrSetKey(appuiDouble);
-                }
-                else if(splitStrCurrLine[0].toLowerCase().equals("noeud_appui_encastre"))
-                {
+                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_encastre")) {
                     Appui_encastre appuiEncastre = new Appui_encastre(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
                     identificateur.getOrSetKey(appuiEncastre);
                 }
@@ -250,61 +265,61 @@ public class Treillis {
         }
     }
 
-    public String [][] lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee){
+    public String[][] lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee) {
         //Création des matrices
         Matrice systeme = Force.creationMatrice(this);
-        Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
-       
+        Matrice vecteur = new Matrice(systeme.getNbrLig(), 1);
+
         //Création de l'Arraylist de ref
         ArrayList<Integer> listeRef = new ArrayList<Integer>();
-        
+
         //Remplissage des matrices
         Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
-        System.out.println("Matrice obtenue :\n"+systeme.toString());
-        
+        System.out.println("Matrice obtenue :\n" + systeme.toString());
+
         //On supprime les colonnes de 0
         systeme = systeme.modifMatrice(listeRef);
-        if(systeme.getNbrLig() != systeme.getNbrCol()){
+        if (systeme.getNbrLig() != systeme.getNbrCol()) {
             String[][] erreur = new String[1][1];
             erreur[0][0] = "erreur";
             return erreur;
         }
-        
+
         // On résout
-         Matrice resolution = Force.resSysteme(systeme, vecteur);
-        
+        Matrice resolution = Force.resSysteme(systeme, vecteur);
+
         //On affiche les résultats et on les récupère par un tableau de String
-        String [][] resultats = Force.recupSolution(resolution, listeRef, this);
-        
+        String[][] resultats = Force.recupSolution(resolution, listeRef, this);
+
         return resultats;
     }
-    
-     public String[][] lancerCalculTEST (Noeud_simple noeudSimple, Force fAjoutee){
-        
+
+    public String[][] lancerCalculTEST(Noeud_simple noeudSimple, Force fAjoutee) {
+
         ArrayList<Integer> listeRef = new ArrayList<Integer>();
-        
+
         Matrice systeme = Force.creationMatrice(this);
-        Matrice vecteur = new Matrice(systeme.getNbrLig(),1);
-        
+        Matrice vecteur = new Matrice(systeme.getNbrLig(), 1);
+
         Force.remplissageMatrice(noeudSimple.getID(), fAjoutee, systeme, vecteur, this, listeRef);
         System.out.println(listeRef.toString());
-        System.out.println("Matrice obtenue :\n"+systeme.toString());
-       
+        System.out.println("Matrice obtenue :\n" + systeme.toString());
+
         systeme = systeme.modifMatrice(listeRef);
-        if(systeme.getNbrLig() != systeme.getNbrCol()){
+        if (systeme.getNbrLig() != systeme.getNbrCol()) {
             String[][] erreur = new String[1][1];
             erreur[0][0] = "erreur";
             return erreur;
         }
-        
+
         System.out.println("Début de la résolution...");
         Matrice resolution = Force.resSysteme(systeme, vecteur);
-        
-        String [][] resultats = Force.recupSolution(resolution, listeRef, this);
-        
+
+        String[][] resultats = Force.recupSolution(resolution, listeRef, this);
+
         return resultats;
     }
-    
+
     public void testForce() {
 
         Noeud_simple ns = new Noeud_simple(2, 0);
@@ -369,7 +384,7 @@ public class Treillis {
         System.out.println("Barre 3 : \n" + b3.toString());
         System.out.println("  ");
 
-       /* //Test de création de force 
+        /* //Test de création de force 
         System.out.println("TEST FORCE");
 
         Force tensionb1 = new Force(b1, b1.calculAngleAlphaTension());
@@ -399,16 +414,14 @@ public class Treillis {
         System.out.println("Id de la tension 3 : " + b3.getTensionBarre().getIdentifiant());
 
         System.out.println("--------------------------------------------------");*/
-       
-       Force forceAjoutee = new Force(ns, 0, -10000);
-       System.out.println("Force ajoutée : \n" + forceAjoutee.toString());
-        
-       String [][] resultat = lancerCalculTEST(ns, forceAjoutee);
-       
-       if (resultat[0][0].contains("erreur")){
-           System.out.println("Erreur");
-       }
-       
-       
+        Force forceAjoutee = new Force(ns, 0, -10000);
+        System.out.println("Force ajoutée : \n" + forceAjoutee.toString());
+
+        String[][] resultat = lancerCalculTEST(ns, forceAjoutee);
+
+        if (resultat[0][0].contains("erreur")) {
+            System.out.println("Erreur");
+        }
+
     }
 }

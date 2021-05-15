@@ -1,6 +1,8 @@
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -35,7 +37,15 @@ public class Zone_constructible {
          this.identifiant = identifiant;
      }
 
-
+     public void saveZone(BufferedWriter bW, Identificateur idNum) throws IOException {
+        //minX;maxX;minY;maxY
+        bW.append("ZoneConstructible;");
+        bW.append(this.xMin + ";");
+        bW.append(this.xMax + ";");
+        bW.append(this.yMin + ";");
+        bW.append(this.yMax + "\n");
+    }
+     
     public void draw(GraphicsContext graphicsContext) 
     {
         graphicsContext.setStroke(Color.GREEN);

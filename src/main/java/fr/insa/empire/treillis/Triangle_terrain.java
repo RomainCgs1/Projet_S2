@@ -14,8 +14,28 @@ public class Triangle_terrain {
     private Segment_terrain segment1;
     private Segment_terrain segment2;
     private Segment_terrain segment3;
+    
+    
+    public Triangle_terrain(Segment_terrain seg1, Segment_terrain seg2, Segment_terrain seg3) {
+        this.segment1 = seg1;
+        this.segment2 = seg2;
+        this.segment3 = seg3;
+        
+        //On set l'attribut des segs
+        this.segment1.setAppartient(this);
+        this.segment2.setAppartient(this);
+        this.segment3.setAppartient(this);
+    }
 
-    public Segment_terrain getSegment1() {
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public int getIdentifiant() {
+        return identifiant;
+    }
+
+     public Segment_terrain getSegment1() {
         return segment1;
     }
 
@@ -27,20 +47,20 @@ public class Triangle_terrain {
         return segment3;
     }
 
-    public Triangle_terrain(Segment_terrain seg1, Segment_terrain seg2, Segment_terrain seg3) {
-        this.segment1 = seg1;
-        this.segment2 = seg2;
-        this.segment3 = seg3;
+    public int numerotation(Segment_terrain seg){
+        //On regarde à quel segment du triangle correspond le segment en entrée pour donner la bonne valeur de j
+        int j ;
+        
+        //On regarde si c'est le seg 1 du triangle
+        if((this.getSegment1().getPointDebut()==seg.getPointDebut())&&(this.getSegment1().getPointFin()==seg.getPointFin())){
+            return j=0;
+        } else if ((this.getSegment2().getPointDebut()==seg.getPointDebut())&&(this.getSegment2().getPointFin()==seg.getPointFin())){ //Idem pour seg2
+            return j=1;
+        } else{ //Car si c'est ni le seg1 ni le seg2 c'est seg 3
+            return j=2;
+        }
     }
-
-    public void setIdentifiant(int identifiant) {
-        this.identifiant = identifiant;
-    }
-
-    public int getIdentifiant() {
-        return identifiant;
-    }
-
+    
     public void save(BufferedWriter bW, Identificateur idNum, Point p1, Point p2, Point p3) throws IOException {
         //Format : id/point1/point2/point3/
         bW.append("Triangle;");

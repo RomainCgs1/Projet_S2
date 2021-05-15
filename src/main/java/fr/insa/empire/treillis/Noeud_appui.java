@@ -14,16 +14,17 @@ public class Noeud_appui extends Noeuds {
     private double position_alpha;
     private Segment_terrain segment_appui;
     private ArrayList<Barre> appartientABarre;
-    private Set<Segment_terrain> appartientASeg;
+    private int j;
+    private int k;
 
     //Constructeurs
     public Noeud_appui(double px, double py, Segment_terrain segment_appui)
     {
         this.segment_appui = segment_appui;
+        this.j = this.segment_appui.getAppartient().numerotation(segment_appui);
+        this.k = (this.j+1)%3;
         this.position_alpha = calcPosAlpha(px, py, segment_appui);
         this.appartientABarre = new ArrayList<Barre>();
-        this.appartientASeg= new HashSet<Segment_terrain>();
-        this.appartientASeg.add(segment_appui);
         this.segment_appui.addNASet(this);
     }
 
@@ -65,9 +66,6 @@ public class Noeud_appui extends Noeuds {
         return appartientABarre;
     }
 
-    public Set<Segment_terrain> getAppartientASeg() {
-        return appartientASeg;
-    }
     
     
 
@@ -101,11 +99,11 @@ public class Noeud_appui extends Noeuds {
     
     @Override
     public void save (BufferedWriter bW, Identificateur idNum)throws IOException{
-        //Format : NOEUD_Appui/id/alpha/Lié à idSEGT
-        bW.append("Noeud_Appui/");
-        bW.append(this.identifiant +"/");
-        bW.append(this.getPosition_alpha()+"/");
-        bW.append(this.segment_appui.getIdentifiant()+"\n");
+        //Format : NOEUD_Appui/id appui/ id TriangleTerrain / j / pos_alpha
+        bW.append(this.identifiant +";");
+        bW.append(this.getSegment_appui().getAppartient().getIdentifiant()+";");
+        bW.append(this.j +";");
+        bW.append(this.getPosition_alpha()+"\n");
     }
 
     @Override

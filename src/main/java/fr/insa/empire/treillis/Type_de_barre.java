@@ -133,6 +133,6 @@ public class Type_de_barre {
         bW.append(this.getCoutAuMetre()+";");
         bW.append(this.getLongMax()+";");
         bW.append(this.getResMaxTens()+";");
-        bW.append(this.getResMaxComp()+";");
+        bW.append(this.getResMaxComp()+"\n");
     }
 }

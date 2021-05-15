@@ -55,12 +55,8 @@ public class Appui_simple extends Noeud_appui {
     }
 
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
-        //Format : Appui_SIMPLE/id/px/py/posAlpha
         bW.append("Appui_Simple/");
-        bW.append(this.identifiant + "/");
-        bW.append(this.getPx() + "/");
-        bW.append(this.getPy()+ "/");
-        bW.append(this.getPosition_alpha()+"/\n");
+        super.save(bW, idNum);
     }
     
     public void draw(GraphicsContext graphicsContext)
