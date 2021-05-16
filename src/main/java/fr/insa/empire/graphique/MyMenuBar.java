@@ -67,6 +67,8 @@ public class MyMenuBar extends MenuBar {
                     } else {
                         System.out.println("Cancel or Close");
                     }
+
+                    controller.changeEtat(300);
                 }
         );
 

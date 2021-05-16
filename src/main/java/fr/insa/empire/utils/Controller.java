@@ -1,6 +1,7 @@
 package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
+import fr.insa.empire.graphique.Transformation;
 import fr.insa.empire.treillis.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -10,6 +11,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 import javafx.util.Pair;
 
 import java.util.Optional;
@@ -202,6 +205,10 @@ public class Controller {
             case 200: //thème
                 choixTheme();
                 changeEtat(etatPrecedent);
+                break;
+
+            case 300: //langue mais tests de transformation
+                //pas encore de transf
                 break;
         }
 

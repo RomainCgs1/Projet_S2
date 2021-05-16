@@ -31,6 +31,8 @@ public class MyCanvas extends Canvas {
     public MyCanvas(MainGraphique mainGraphique)
     {
         this.mainGraphique = mainGraphique;
+        super.setHeight(500);
+        super.setWidth(500);
     }
 
     @Override
