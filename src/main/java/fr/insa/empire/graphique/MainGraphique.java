@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.Map;
+import javafx.scene.text.Text;
 
 public class MainGraphique extends BorderPane {
 
@@ -45,6 +46,8 @@ public class MainGraphique extends BorderPane {
     private final HBox hbIcones;
     private final HBox hbPosition;
     private final MyCanvas canvas;
+    private final HBox hbZoneText;
+    private final Text text;
 
     private String theme;
 
@@ -134,6 +137,15 @@ public class MainGraphique extends BorderPane {
         return mbTypeDeBarre;
     }
 
+    public HBox getHbZoneText() {
+        return hbZoneText;
+    }
+
+    public Text getText() {
+        return text;
+    }
+
+    
     
     public MainGraphique() throws IOException {
 
@@ -202,6 +214,12 @@ public class MainGraphique extends BorderPane {
         bPosition = new MyB("0 ; 0");
         this.hbPosition = new HBox(bPosition);
         this.hbPosition.setAlignment(Pos.CENTER_RIGHT);
+        
+        this.text = new Text("COUCOU");
+        this.hbZoneText = new HBox (this.text);
+        this.hbZoneText.setAlignment(Pos.CENTER_LEFT);
+        
+        this.setBottom(hbZoneText);
         this.setBottom(hbPosition);
         this.bPosition.setOnAction(
                 action -> {
