@@ -215,7 +215,8 @@ public class Controller {
         if (E.getButton() == MouseButton.PRIMARY) {
 
             if (this.vue.getTreillis().getAppartient() == null) {
-                switch (this.etat) {
+                switch (this.etat)
+                {
                     case -10:
                         p4 = new Point(px, py);
                         this.changeEtat(-11);
@@ -276,6 +277,14 @@ public class Controller {
                                     + this.p3);
 
                             changeEtat(30);
+                            break;
+
+                        case 51:
+                            Segment_terrain segmentTerrain = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur);
+                            if (segmentTerrain != null) {
+                                clearTriangleTerrain(segmentTerrain);
+                                this.vue.recontruction();
+                            }
                             break;
                     }
                 } else {
@@ -489,6 +498,14 @@ public class Controller {
                                 this.vue.recontruction();
                             }
                             break;
+
+                        case 52:
+                            Barre barre = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
+                            if(barre != null)
+                            {
+                                clearBarre(barre);
+                            }
+                            break;
                         case 601:
                             //On sélectionne la barre souhaitée
                             Barre barreChoisie = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
@@ -596,6 +613,7 @@ public class Controller {
         }
     }
 
+
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
@@ -625,15 +643,11 @@ public class Controller {
     }
 
     private void clearTriangleTerrain(Segment_terrain segmentTerrain) {
-        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(segmentTerrain);
-        this.vue.getTreillis().identificateur.getObjectToKey().remove(segmentTerrain);
-        this.vue.getTreillis().identificateur.getKetToObject().remove(key);
-
         Triangle_terrain triangle_terrain = segmentTerrain.getAppartient();
         this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment1());
         this.vue.getTreillis().identificateur.getKetToObject().remove(triangle_terrain.getSegment1().getIdentifiant());
 
-        key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain.getSegment2());
+        int key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain.getSegment2());
         this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain.getSegment2());
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
 
@@ -644,6 +658,13 @@ public class Controller {
         key = this.vue.getTreillis().identificateur.getObjectToKey().get(triangle_terrain);
         this.vue.getTreillis().identificateur.getObjectToKey().remove(triangle_terrain);
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+    }
+
+    private void clearBarre(Barre barre)
+    {
+        int id = this.vue.getTreillis().identificateur.getOrSetKey(barre);
+        this.vue.getTreillis().identificateur.getKetToObject().remove(id, barre);
+        this.vue.getTreillis().identificateur.getObjectToKey().remove(barre, id);
     }
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
@@ -674,15 +695,17 @@ public class Controller {
     }
 
     private void eraseAll() {
-        Zone_constructible zone_constructible = (Zone_constructible) this.vue.getIdentificateur().getKetToObject().get(0);
+        Zone_constructible zone_constructible = (Zone_constructible) this.vue.getTreillis().identificateur.getKetToObject().get(1);
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
+        this.vue.getTreillis().getIdentificateurForce().clear();
         this.vue.getIdentificateur().getOrSetKey(zone_constructible);
     }
 
     private void recommencer() {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
+        this.vue.getTreillis().getIdentificateurForce().clear();
         this.vue.getTreillis().setAppartient(null);
     }
 

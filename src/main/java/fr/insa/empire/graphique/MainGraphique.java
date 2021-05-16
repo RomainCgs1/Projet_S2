@@ -389,7 +389,8 @@ public class MainGraphique extends BorderPane {
         }
     }
 
-    public String getTheme() {
+    public String getTheme()
+    {
         //à coder
         return this.theme;
     }

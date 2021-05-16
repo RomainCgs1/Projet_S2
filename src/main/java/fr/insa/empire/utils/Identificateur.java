@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class Identificateur {
 
+    private final int valInit = 1;
     private int valCur;
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
@@ -34,7 +35,7 @@ public class Identificateur {
     }
     
     public Identificateur() {
-        this.valCur =1;
+        this.valCur = this.valInit;
         this.ketToObject = new HashMap<Integer, Object>();
         this.objectToKey = new HashMap<Object, Integer>();
     }
@@ -72,6 +73,6 @@ public class Identificateur {
     public void clear() {
         this.ketToObject.clear();
         this.objectToKey.clear();
-        this.valCur = 0;
+        this.valCur = this.valInit;
     }
 }
