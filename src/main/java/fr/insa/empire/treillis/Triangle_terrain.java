@@ -68,6 +68,7 @@ public class Triangle_terrain {
         p1.save(bW, idNum);
         p2.save(bW, idNum);
         p3.save(bW, idNum);
+        bW.append("\n");
     }
 
     public void draw(GraphicsContext graphicsContext)

@@ -79,7 +79,7 @@ public class Point {
     //Save
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         bW.append("("+this.px+"),");
-        bW.append("("+this.py+")");
+        bW.append("("+this.py+");");
     }
 
     public String toString()
