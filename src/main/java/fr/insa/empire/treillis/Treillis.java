@@ -279,7 +279,7 @@ public class Treillis {
 
         //On supprime les colonnes de 0
         systeme = systeme.modifMatrice(listeRef);
-        if (systeme.getNbrLig() != systeme.getNbrCol()) {
+        if (systeme.getNbrLig() != systeme.getNbrCol()) { //la matrice engendrée n'est pas carrée
             String[][] erreur = new String[1][1];
             erreur[0][0] = "erreur";
             return erreur;
@@ -287,9 +287,20 @@ public class Treillis {
 
         // On résout
         Matrice resolution = Force.resSysteme(systeme, vecteur);
+        
+        if(resolution.getCoeffs()[0][0]==-404.02){ //cela veut dire que la matrice n'est pas inversible
+            String[][] erreur = new String[1][1];
+            erreur[0][0] = "erreur";
+            return erreur;
+        }
 
         //On affiche les résultats et on les récupère par un tableau de String
         String[][] resultats = Force.recupSolution(resolution, listeRef, this);
+        
+        //On efface les arraylist pour pouvoir recommencer des calculs
+        this.getIdBarreTensionsCreees().clear();
+        this.getIdAppuiDoubleCrees().clear();
+        this.getIdAppuiSimpleCrees().clear();
 
         return resultats;
     }

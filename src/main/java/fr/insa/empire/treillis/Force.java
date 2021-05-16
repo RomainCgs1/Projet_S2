@@ -427,7 +427,10 @@ public class Force {
         System.out.println("Matrice systeme : \n" + systeme.toString());
         System.out.println("Matrice vecteur : \n" + vecteur.toString());
         System.out.println("Matrice résolution : \n" + resolution.toString());
-        resolution.descenteGauss();
+        resolution = resolution.descenteGauss();
+        if(resolution.getCoeffs()[0][0]==-404.02){ //cela veut dire que la matrice n'est pas inversible
+            return resolution;
+        }
         System.out.println("Resolution  après descente : \n" + resolution.toString());
         resolution = resolution.monterGauss();
 

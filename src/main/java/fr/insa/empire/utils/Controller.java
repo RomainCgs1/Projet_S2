@@ -582,7 +582,7 @@ public class Controller {
                                 Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                 diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
                                 diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
-                                diagAlertMauvaiseDonnee.setContentText("Erreur : la matrice engendrée n'est pas inversible");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : Le treilli rentré n'est pas valide");
                                 diagAlertMauvaiseDonnee.showAndWait();
                                 this.changeEtat(0);
                                 break;

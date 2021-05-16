@@ -35,6 +35,13 @@ public class Matrice {
     }
     
 
+    public Matrice() {
+        this.nbrLig = 1;
+        this.nbrCol = 1;
+        this.coeffs = new double[1][1];
+        this.coeffs[0][0] = -404.02;
+    }
+    
     public String toString() {
         String s;
         s = "";
@@ -53,104 +60,6 @@ public class Matrice {
         return s;
     }
 
-    //Generation Matrice
-    public static Matrice identite(int taille) {
-        Matrice m = new Matrice(taille, taille);
-        for (int i = 0; i < m.nbrLig; i++) {
-            m.coeffs[i][i] = 1;
-        }
-        return m;
-    }
-
-    public static int aleaUnOuDeux() {
-        double i;
-        i = Math.random();
-        if (i <= 0.5) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }
-
-    public static int aleaUnOuDeuxV2() {
-        return (int) (Math.random() * 2 + 1);
-    }
-
-    public static Matrice mataleaZeroUnDeux(int nl, int nc,
-            double p2) {
-        Matrice m = new Matrice(nl, nc);
-        double coeff;
-        for (int i = 0; i < nl; i++) {
-            for (int j = 0; j < nc; j++) {
-                coeff = Math.random();
-                if (coeff < p2) {
-                    m.coeffs[i][j] = 0;
-                } else {
-                    m.coeffs[i][j] = Matrice.aleaUnOuDeux();
-                }
-            }
-        }
-        return m;
-    }
-
-    public static Matrice matTest1() {
-        int NB = 0;
-        Matrice Test1 = new Matrice(3, 3);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Test1.coeffs[i][j] = NB;
-                NB++;
-            }
-        }
-        return Test1;
-    }
-
-    public static Matrice matInversible() {
-        int NB = 0;
-        Matrice Test1 = new Matrice(3, 3);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Test1.coeffs[i][j] = NB;
-                NB++;
-            }
-        }
-        Test1.coeffs[1][1] = -4;
-        Test1.coeffs[2][2] = -8;
-        return Test1;
-    }
-    
-    public static Matrice vecteur123(){
-        Matrice vecteur = new Matrice (3,1);
-        for (int i = 0; i < vecteur.nbrLig; i++) {
-            vecteur.coeffs[i][0]=i+1;
-        }
-        return vecteur;
-    }
-
-    //TESTS
-    public static void testAlea() {
-        Matrice m = Matrice.mataleaZeroUnDeux(4, 5, 0.33);
-        System.out.println("mat alea : \n" + m);
-
-    }
-
-    public static void testGauss() {
-        Matrice m = matInversible();
-        System.out.println("mat m initiale \n" + m);
-        ResultatSyslin res = m.descenteGauss();
-        System.out.println("mat triangulaire inf \n" + m);
-        System.out.println("res \n" + res.toString());
-        m.monterGauss();
-        System.out.println("mat triangulaire sup \n" + m);
-        m.transfoDiagonales1();
-        System.out.println("mat finale \n" + m);
-    }
-    
-    public void testSyslin (){
-        Matrice vecteur = vecteur123();
-        ResultatSyslin res = resolution(this,vecteur);
-        System.out.println(res);
-    }
 
     //Get et Set
     public int getNbrLig() {
@@ -245,57 +154,56 @@ public class Matrice {
        // System.out.println("Transvection \n " + this);
     }
 
-    public int lignePlusGrandPivot(int colPivot) {
-
-        double pivot = 0.00000001; //Correspond à epsilon_pivot
-        int ligneplusGrandPivot = -1;
-
-        for (int i = colPivot; i < this.nbrLig; i++) {
-            if (Math.abs(this.coeffs[i][colPivot]) > pivot) {
-                pivot = this.coeffs[i][colPivot];
-                ligneplusGrandPivot = i;
+   public int lignePlusGrandPivot(int e) {
+       
+       double epsilon_pivot = 0.000000001;
+       
+        if (e >= this.getNbrLig() || e >= this.getNbrCol()) {
+            throw new Error("mauvais indice de pivot : M_e,e doit exister");
+        }
+        double pivot = Math.abs(this.get(e, e));
+        int imax = e;
+        for (int i = e + 1; i < this.getNbrLig(); i++) {
+            if (Math.abs(this.get(i, e)) > pivot) {
+                pivot = Math.abs(this.get(i, e));
+                imax = i;
             }
         }
-        //System.out.println("Le plus grand pivot de la colonne " + colPivot + " se trouve à la ligne " + ligneplusGrandPivot);
+        if (pivot <= epsilon_pivot) {
+            return -1;
+        } else {
+            return imax;
+        }
 
-        return ligneplusGrandPivot;
     }
 
     //Descente de Gauss
-    public ResultatSyslin descenteGauss() {
+    public Matrice descenteGauss() {
 
-        int etape = 0;
-        ResultatSyslin res;
-
-        for (int i = 0; i < this.nbrCol; i++) {
+        for (int i = 0; i < this.nbrCol-1; i++) {
 
             int j = i + 1;
             int lignePlusGrandPivot = lignePlusGrandPivot(i);
+            System.out.println("Ligne + grand pivot "+lignePlusGrandPivot);
             if (lignePlusGrandPivot == -1) {
-                //throw new Error ("La matrice n'est pas inversible");
-                etape = etape;
+                System.out.println("Matrice non inversible");
+                Matrice matErreur = new Matrice();
+                return matErreur;
             } else {
                 if ((lignePlusGrandPivot != i) && (lignePlusGrandPivot != -1)) {
                     permuteLigne(i, lignePlusGrandPivot);
-                    //System.out.println("Lignes permutées \n " + this);
+                    System.out.println("Lignes permutées \n " + this);
                 }
                 while (j < this.nbrLig) {
                     transvection(i, j);
                     j++;
                 }
-                etape++;
+              
             }
         }
         System.out.println("Descente de Gauss effectuée ");
 
-        if (etape == this.nbrLig) {
-            Matrice rep = this.recupSolution();
-            res = new ResultatSyslin(rep);
-        } else {
-            res = new ResultatSyslin();
-        }
-
-        return res;
+       return this;
     }
 
     //Monté de Gauss
@@ -327,7 +235,7 @@ public class Matrice {
                 this.coeffs[i][j] = this.coeffs[i][j] / diviseur;
             }
         }
-        System.out.println("Diagonales trasnformées");
+        System.out.println("Diagonales transformées");
     }
 
     //Recupération de la matrice solution
@@ -407,12 +315,7 @@ public class Matrice {
         }
     }
 
-    //Résolution du syslin
-    public ResultatSyslin resolution(Matrice initiale, Matrice secondMembre) {
-        Matrice syslin = initiale.concatCol(secondMembre);
-        ResultatSyslin res = syslin.descenteGauss();
-        return res;
-    }
+    
 /*
     //Main
     public static void main(String[] args) {
