@@ -633,6 +633,11 @@ public class Controller {
                graphicsContext.strokeRect(this.p4.getPx(), this.p4.getPy(), px - this.p4.getPx(), py - this.p4.getPy());
                break;
 
+            case 21:
+                graphicsContext.setStroke(Color.BLUE);
+                graphicsContext.strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), px, py);
+                break;
+
             case 31:
                 graphicsContext.setStroke(Color.BLACK);
                 graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), px, py);
@@ -643,6 +648,7 @@ public class Controller {
                 graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), this.p2.getPx(), this.p2.getPy());
                 graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), px, py);
                 graphicsContext.strokeLine(this.p2.getPx(), this.p2.getPy(), px, py);
+                break;
         }
     }
 
