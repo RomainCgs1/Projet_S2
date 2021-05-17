@@ -3,6 +3,7 @@ package fr.insa.empire.graphique;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Controller;
 import fr.insa.empire.utils.Identificateur;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -13,11 +14,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
 import java.io.IOException;
 import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
 
 public class MainGraphique extends BorderPane {
 
@@ -138,8 +140,6 @@ public class MainGraphique extends BorderPane {
         this.text = text;
     }
 
-    
-    
     
     public MainGraphique() throws IOException {
 
