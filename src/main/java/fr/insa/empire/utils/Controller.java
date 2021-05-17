@@ -1,18 +1,16 @@
 package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
-import fr.insa.empire.graphique.Transformation;
 import fr.insa.empire.treillis.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import javafx.util.Pair;
 
 import java.util.Optional;
@@ -257,6 +255,7 @@ public class Controller {
                         break;
                 }
             } else {
+                //si on est en dehors de la zone constructible
                 if (px > this.vue.getTreillis().getAppartient().getxMax() || px < this.vue.getTreillis().getAppartient().getxMin() || py > this.vue.getTreillis().getAppartient().getyMax() || py < this.vue.getTreillis().getAppartient().getyMin()) {
                     switch (this.etat) {
                         case 30:
@@ -379,7 +378,9 @@ public class Controller {
                                     this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
                                     System.out.println("Noeud appui double créé !");
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 System.out.println("Il y a déjà un noeud ici");
                             }
                             break;
@@ -453,17 +454,14 @@ public class Controller {
                             if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
                             {
                                 p2 = new Point(px, py);
-                                this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
-                                changeEtat(32);
-                                System.out.println("point 2");
                             }
                             else
                             {
                                 p2 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
-                                this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
-                                changeEtat(32);
-                                System.out.println("point 2");
                             }
+                            this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
+                            changeEtat(32);
+                            System.out.println("point 2");
                             break;
 
                         case 32:
@@ -625,6 +623,27 @@ public class Controller {
         double px = E.getX();
         double py = E.getY();
         this.vue.getbPosition().setText(px + " ; " + py);
+
+        GraphicsContext graphicsContext = this.vue.getCanvas().getGraphicsContext2D();
+
+        switch (etat)
+        {
+            case -11:
+               graphicsContext.setStroke(Color.GREEN);
+               graphicsContext.strokeRect(this.p4.getPx(), this.p4.getPy(), px - this.p4.getPx(), py - this.p4.getPy());
+               break;
+
+            case 31:
+                graphicsContext.setStroke(Color.BLACK);
+                graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), px, py);
+                break;
+
+            case 32:
+                graphicsContext.setStroke(Color.BLACK);
+                graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), this.p2.getPx(), this.p2.getPy());
+                graphicsContext.strokeLine(this.p1.getPx(), this.p1.getPy(), px, py);
+                graphicsContext.strokeLine(this.p2.getPx(), this.p2.getPy(), px, py);
+        }
     }
 
     private void creationTriangleTerrain(Point p1, Point p2, Point p3) {

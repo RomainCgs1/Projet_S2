@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -51,6 +52,8 @@ public class MainGraphique extends BorderPane {
     private final MyCanvas canvas;
     private final HBox hbZoneText;
     private final Text text;
+
+    private ScrollBar scrollBar;
 
     private String theme;
 
@@ -187,6 +190,12 @@ public class MainGraphique extends BorderPane {
         );
 
         this.setCenter(canvas);
+        this.scrollBar = new ScrollBar();
+        this.scrollBar.setOrientation(Orientation.VERTICAL);
+        scrollBar.setMin(0);
+        scrollBar.setMax(this.canvas.getHeight());
+        //tests ... ça donne pas grand chose...
+        this.setRight(this.scrollBar);
 
         //Set up du splitMenuButton
         this.mbNoeud = new MenuButton();
