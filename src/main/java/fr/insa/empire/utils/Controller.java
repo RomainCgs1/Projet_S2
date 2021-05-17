@@ -2,24 +2,41 @@ package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.treillis.*;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
+
+import javafx.scene.media.Media;
 
 public class Controller {
 
     private MainGraphique vue;
     private int etat;
     private int etatPrecedent;
+    private int etatPreprecedent;
+    private int etatPrepreprecedent;
+    private int etatPreprepreprecedent;
+    private boolean test = true;
     Point p1;
     Point p2;
     Point p3;
@@ -53,7 +70,6 @@ public class Controller {
 
         switch (newState) {
             case -10: // initialisation zone_constructible
-                this.vue.getText().setText(" Tracez votre zone constructible");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbNoeud().setDisable(true);
                 this.vue.getMtbTerrain().setSelected(false);
@@ -537,7 +553,7 @@ public class Controller {
                                 break;
                             }
                             System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
-                            
+
                             //On demande la valeur de la composante sur X de la force
                             TextInputDialog boiteDiagPX = new TextInputDialog();
                             boiteDiagPX.setTitle("Ajout de la force");
@@ -558,7 +574,6 @@ public class Controller {
                             Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
 
                             //Calcul
-                            this.vue.getText().setText(" Calculs en cours...");
                             System.out.println("Lancement des calculs");
                             System.out.println("Calculs en cours...");
 
@@ -597,7 +612,34 @@ public class Controller {
                 }
 
             }
+            if(test)//a voir plus tard
+            {
+                File mediaFile = new File("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
+                Media media;
+                try {
+                    media = new Media(mediaFile.toURI().toURL().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
 
+                    MediaView mediaView = new MediaView(mediaPlayer);
+                    DoubleProperty mvw = mediaView.fitWidthProperty();
+                    DoubleProperty mvh = mediaView.fitHeightProperty();
+                    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+                    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+                    mediaView.setPreserveRatio(true);
+
+                    Scene scene = new Scene(new Pane(mediaView), 1024, 590);
+
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+
+                    mediaPlayer.play();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                test = false;
+            }
         }
     }
 
@@ -607,6 +649,8 @@ public class Controller {
         double py = E.getY();
 
         GraphicsContext graphicsContext = this.vue.getCanvas().getGraphicsContext2D();
+
+        this.vue.recontruction();
 
         switch (etat)
         {
@@ -632,6 +676,7 @@ public class Controller {
                 graphicsContext.strokeLine(this.p2.getPx(), this.p2.getPy(), px, py);
                 break;
         }
+
     }
 
     private void creationTriangleTerrain(Point p1, Point p2, Point p3) {

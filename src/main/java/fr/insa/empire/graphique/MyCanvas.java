@@ -77,11 +77,11 @@ public class MyCanvas extends Canvas {
         super.setWidth(width-10);
         super.setHeight(height-10);
 
-        GraphicsContext graphicsContext2D = this.getGraphicsContext2D();
+        /*GraphicsContext graphicsContext2D = this.getGraphicsContext2D();
         graphicsContext2D.clearRect(0, 0, width, height);
 
         graphicsContext2D.setStroke(Color.GRAY);
-        graphicsContext2D.strokeRect(0, 0, width-10, height-10);
+        graphicsContext2D.strokeRect(0, 0, width-10, height-10);*/
 
 
         //redraw ce qui a été ajouté

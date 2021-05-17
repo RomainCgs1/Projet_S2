@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
 
 public class MainGraphique extends BorderPane {
 
@@ -210,9 +208,9 @@ public class MainGraphique extends BorderPane {
         this.vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
+
         
-        
-        
+
         this.text = new Text();
         this.text.setFill(Color.BLACK);
         this.hbZoneText = new HBox(text);
@@ -221,7 +219,7 @@ public class MainGraphique extends BorderPane {
         this.hbBottom = new HBox(hbZoneText);
         this.hbBottom.setAlignment(Pos.CENTER_LEFT);
         this.setBottom(hbBottom);
-        
+
 
         controller.changeEtat(-10);
 
@@ -337,6 +335,9 @@ public class MainGraphique extends BorderPane {
     public void recontruction()
     {
         GraphicsContext graphicsContext = this.canvas.getGraphicsContext2D();
+
+        graphicsContext.clearRect(0,0, this.canvas.getWidth(), this.canvas.getHeight());
+
         for (Map.Entry mapentry : this.treillis.identificateur.getKetToObject().entrySet())
         {
             Object key = mapentry.getKey();
@@ -372,6 +373,10 @@ public class MainGraphique extends BorderPane {
                 ((Zone_constructible) val).draw(graphicsContext);
             }
         }
+
+        graphicsContext.setStroke(Color.GRAY);
+        graphicsContext.strokeRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
+
     }
 
     public String getTheme()
