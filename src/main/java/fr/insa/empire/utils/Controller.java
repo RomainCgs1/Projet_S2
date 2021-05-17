@@ -21,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
@@ -587,6 +586,7 @@ public class Controller {
                                 } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 }
+                                changeEtat(0);
                             }
                             else
                             {
