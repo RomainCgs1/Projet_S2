@@ -36,7 +36,6 @@ public class Controller {
     private int etatPreprecedent;
     private int etatPrepreprecedent;
     private int etatPreprepreprecedent;
-    private boolean test = true;
     Point p1;
     Point p2;
     Point p3;
@@ -560,85 +559,90 @@ public class Controller {
                             boiteDiagPX.setHeaderText("Entrez la composante sur X de la force");
                             boiteDiagPX.setContentText("Composante sur X :");
                             Optional<String> textPX = boiteDiagPX.showAndWait();
-                            double pxForce = Double.parseDouble(textPX.get());
 
-                            //On demande la valeur de la composante sur Y de la force
-                            TextInputDialog boiteDiagPY = new TextInputDialog();
-                            boiteDiagPY.setTitle("Ajout de la force");
-                            boiteDiagPY.setHeaderText("Entrez la composante sur Y de la force");
-                            boiteDiagPY.setContentText("Composante sur Y :");
-                            Optional<String> textPY = boiteDiagPY.showAndWait();
-                            double pyForce = Double.parseDouble(textPY.get());
+                            System.out.println(textPX.get());
+                            if(textPX.get().toLowerCase().contains("chat"))
+                            {
+                                File mediaFile = new File("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
+                                Media media;
+                                try {
+                                    media = new Media(mediaFile.toURI().toURL().toString());
+                                    MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-                            //On crée la force ajoutée
-                            Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
+                                    MediaView mediaView = new MediaView(mediaPlayer);
+                                    DoubleProperty mvw = mediaView.fitWidthProperty();
+                                    DoubleProperty mvh = mediaView.fitHeightProperty();
+                                    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+                                    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+                                    mediaView.setPreserveRatio(true);
 
-                            //Calcul
-                            System.out.println("Lancement des calculs");
-                            System.out.println("Calculs en cours...");
+                                    Scene scene = new Scene(new Pane(mediaView), 1024, 590);
 
-                            //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
-                            String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
+                                    Stage stage = new Stage();
+                                    stage.setScene(scene);
+                                    stage.show();
 
-                            //On regarde s'il y a une erreur
-                            if (resultat[0][0].contains("erreur")) {
-                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
-                                diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
-                                diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
-                                diagAlertMauvaiseDonnee.setContentText("Erreur : Le treilli rentré n'est pas valide");
-                                diagAlertMauvaiseDonnee.showAndWait();
-                                this.changeEtat(0);
-                                break;
-                            } else {
-                                System.out.println("Pas d'erreur");
-                                Alert dialogResultat = new Alert(AlertType.INFORMATION);
-                                dialogResultat.setHeight(300);
-                                dialogResultat.setWidth(400);
-                                dialogResultat.setTitle("Résultat Calcul");
-                                dialogResultat.setHeaderText("Analyse du treilli : ");
-                                String s = "";
-                                for (int i = 0; i < resultat[0].length; i++) {
-                                    s = s + resultat[i][0] + " " + resultat[i][1] + " " + resultat[i][2] + "\n";
+                                    mediaPlayer.play();
+
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
                                 }
-                                dialogResultat.setContentText(s);
-                                dialogResultat.showAndWait();
-
-                                //On efface les forces créés pour effectuer à nouveau le calcul
-                                this.vue.getTreillis().getIdentificateurForce().clear();
-                                break;
                             }
+                            else
+                            {
+                                double pxForce = Double.parseDouble(textPX.get());
 
+                                //On demande la valeur de la composante sur Y de la force
+                                TextInputDialog boiteDiagPY = new TextInputDialog();
+                                boiteDiagPY.setTitle("Ajout de la force");
+                                boiteDiagPY.setHeaderText("Entrez la composante sur Y de la force");
+                                boiteDiagPY.setContentText("Composante sur Y :");
+                                Optional<String> textPY = boiteDiagPY.showAndWait();
+                                double pyForce = Double.parseDouble(textPY.get());
+
+                                //On crée la force ajoutée
+                                Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
+
+                                //Calcul
+                                System.out.println("Lancement des calculs");
+                                System.out.println("Calculs en cours...");
+
+                                //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
+                                String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
+
+                                //On regarde s'il y a une erreur
+                                if (resultat[0][0].contains("erreur")) {
+                                    Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                    diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
+                                    diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
+                                    diagAlertMauvaiseDonnee.setContentText("Erreur : Le treilli rentré n'est pas valide");
+                                    diagAlertMauvaiseDonnee.showAndWait();
+                                    this.changeEtat(0);
+                                    break;
+                                } else {
+                                    System.out.println("Pas d'erreur");
+                                    Alert dialogResultat = new Alert(AlertType.INFORMATION);
+                                    dialogResultat.setHeight(300);
+                                    dialogResultat.setWidth(400);
+                                    dialogResultat.setTitle("Résultat Calcul");
+                                    dialogResultat.setHeaderText("Analyse du treilli : ");
+                                    String s = "";
+                                    for (int i = 0; i < resultat[0].length; i++) {
+                                        s = s + resultat[i][0] + " " + resultat[i][1] + " " + resultat[i][2] + "\n";
+                                    }
+                                    dialogResultat.setContentText(s);
+                                    dialogResultat.showAndWait();
+
+                                    //On efface les forces créés pour effectuer à nouveau le calcul
+                                    this.vue.getTreillis().getIdentificateurForce().clear();
+                                }
+
+
+                            }
+                            break;
                     }
                 }
 
-            }
-            if(test)//a voir plus tard
-            {
-                File mediaFile = new File("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
-                Media media;
-                try {
-                    media = new Media(mediaFile.toURI().toURL().toString());
-                    MediaPlayer mediaPlayer = new MediaPlayer(media);
-
-                    MediaView mediaView = new MediaView(mediaPlayer);
-                    DoubleProperty mvw = mediaView.fitWidthProperty();
-                    DoubleProperty mvh = mediaView.fitHeightProperty();
-                    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-                    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
-                    mediaView.setPreserveRatio(true);
-
-                    Scene scene = new Scene(new Pane(mediaView), 1024, 590);
-
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.show();
-
-                    mediaPlayer.play();
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                test = false;
             }
         }
     }
