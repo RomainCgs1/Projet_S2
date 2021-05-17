@@ -7,19 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
+
 
 import java.io.IOException;
 import java.util.Map;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainGraphique extends BorderPane {
@@ -33,7 +30,6 @@ public class MainGraphique extends BorderPane {
     private final MenuButton mbNoeud;
     private final MyTB mtbBarre;
     private final MyTB mtbTerrain;
-    private final MyTB mtbSelection;
     private final MenuButton mbGomme;
     private final MenuItem miGommeNoeud;
     private final MenuItem miGommeBarre;
@@ -44,14 +40,13 @@ public class MainGraphique extends BorderPane {
     private final MenuItem miTypeBarreTodos;
     private final MyB mbLancerCalculs;
     private final MyB mbReglages;
-    private final MyB bPosition;
     private final HBox hbConstruction;
     private final VBox vbUp;
     private final HBox hbIcones;
-    private final HBox hbPosition;
-    private final MyCanvas canvas;
+    private final HBox hbBottom;
     private final HBox hbZoneText;
-    private final Text text;
+    private final MyCanvas canvas;
+    private Text text;
 
     private ScrollBar scrollBar;
 
@@ -91,10 +86,6 @@ public class MainGraphique extends BorderPane {
         return mtbTerrain;
     }
 
-    public MyTB getMtbSelection() {
-        return mtbSelection;
-    }
-
     public MenuButton getMbGomme() {
         return mbGomme;
     }
@@ -131,26 +122,23 @@ public class MainGraphique extends BorderPane {
         return treillis;
     }
 
-    public MyB getbPosition() {
-        return bPosition;
-    }
-
     public HBox getHbPosition() {
-        return hbPosition;
+        return hbBottom;
     }
 
     public MenuButton getMbTypeDeBarre() {
         return mbTypeDeBarre;
     }
 
-    public HBox getHbZoneText() {
-        return hbZoneText;
-    }
-
     public Text getText() {
         return text;
     }
 
+    public void setText(Text text) {
+        this.text = text;
+    }
+
+    
     
     
     public MainGraphique() throws IOException {
@@ -171,7 +159,6 @@ public class MainGraphique extends BorderPane {
         Separator separator1 = new Separator(Orientation.VERTICAL);
         Separator separator2 = new Separator(Orientation.VERTICAL);
 
-        this.mtbSelection = new MyTB("Selection");
 
         //set du Canvas
         this.canvas = new MyCanvas(this);
@@ -216,32 +203,29 @@ public class MainGraphique extends BorderPane {
         this.mbReglages = new MyB("Réglages");
         this.mbGomme = new MenuButton("Gomme");
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, this.mtbSelection, separator2,this.mbTypeDeBarre, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
-        vbUp.setSpacing(5);
+        this.vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
-        bPosition = new MyB("0 ; 0");
-        this.hbPosition = new HBox(bPosition);
-        this.hbPosition.setAlignment(Pos.CENTER_RIGHT);
         
-        this.text = new Text("COUCOU");
-        this.hbZoneText = new HBox (this.text);
+        
+        
+        this.text = new Text();
+        this.text.setFill(Color.BLACK);
+        this.hbZoneText = new HBox(text);
         this.hbZoneText.setAlignment(Pos.CENTER_LEFT);
         
-        this.setBottom(hbZoneText);
-        this.setBottom(hbPosition);
-        this.bPosition.setOnAction(
-                action -> {
-                    controller.changeEtat(80);
-                }
-        );
+        this.hbBottom = new HBox(hbZoneText);
+        this.hbBottom.setAlignment(Pos.CENTER_LEFT);
+        this.setBottom(hbBottom);
+        
 
         controller.changeEtat(-10);
 
-        //actione de barre
+        //action de barre
         this.mtbBarre.setOnAction(
                 Action -> {
                     controller.changeEtat(20);
@@ -325,14 +309,6 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
-
-        //action de Selection
-        this.mtbSelection.setOnAction(
-                action -> {
-                    controller.changeEtat(40);
-                }
-        );
-
         //action de Type de Barre
         //action de Gomme
         this.miTypeBarreSolo = new MenuItem("Type : barre seule");
@@ -356,27 +332,6 @@ public class MainGraphique extends BorderPane {
                 }
         );
 
-        //tests action souris
-        this.mtbSelection.setOnMouseEntered(
-                mouseEvent -> {
-                    mtbSelection.setTextFill(Color.RED);
-                }
-        );
-
-        //tests action souris
-        this.mtbSelection.setOnMouseExited(
-                mouseEvent -> {
-                    mtbSelection.setTextFill(Color.BLACK);
-                }
-        );
-        
-        //test pour force par bouton sélection
-        this.mtbSelection.setOnAction(
-                action -> {
-                    this.treillis.testForce();
-                    controller.changeEtat(90);
-                }
-        );
     }
 
     public void recontruction()

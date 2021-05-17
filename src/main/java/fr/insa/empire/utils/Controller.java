@@ -2,7 +2,6 @@ package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.treillis.*;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
@@ -47,119 +46,107 @@ public class Controller {
             this.vue.getMbNoeud().setDisable(false);
             this.vue.getMtbTerrain().setDisable(false);
             this.vue.getMbGomme().setDisable(false);
-            this.vue.getMtbSelection().setDisable(false);
             this.vue.getMtbBarre().setDisable(false);
             this.vue.getMbTypeDeBarre().setDisable(false);
             this.vue.getMbLancerCalculs().setDisable(false);
-            this.vue.getbPosition().setDisable(false);
         }
 
         switch (newState) {
             case -10: // initialisation zone_constructible
+                this.vue.getText().setText(" Tracez votre zone constructible");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbNoeud().setDisable(true);
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbTerrain().setDisable(true);
                 this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMbGomme().setDisable(true);
-                this.vue.getMtbSelection().setSelected(false);
-                this.vue.getMtbSelection().setDisable(true);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbBarre().setDisable(true);
                 this.vue.getMbTypeDeBarre().setDisable(true);
                 this.vue.getMbLancerCalculs().setDisable(true);
-                this.vue.getbPosition().setDisable(true);
                 break;
             case 0: //remise à zero
+                this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 break;
             case 110: //noeud appui simple
+                this.vue.getText().setText(" Placez votre noeud appui simple");
                 this.vue.getMbNoeud().setText("Noeud Appui simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 120: //noeud simple
+                this.vue.getText().setText(" Placez votre noeud simple");
                 this.vue.getMbNoeud().setText("Noeud Simple");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 130: //noeud appui double
+                this.vue.getText().setText(" Placez votre noeud appui double");
                 this.vue.getMbNoeud().setText("Noeud Appui double");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 140: //noeud appui encastré
                 this.vue.getMbNoeud().setText("Noeud Appui encasté");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 20: //barre
+                this.vue.getText().setText(" Cliquer 1 fois pour le neoud début et une seconde fois pour le noeud fin");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
-            case 30: //terrain
-                this.vue.getMbNoeud().setText("Noeud");
-                this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
                 break;
-            case 40: //selection
+            case 30: //terrain
+                this.vue.getText().setText(" Trois clics sont attendus pour créer votre triangle terrain");
                 this.vue.getMbNoeud().setText("Noeud");
-                this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMbGomme().setText("Gomme");
                 this.vue.getMtbBarre().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
                 break;
             case 50: //gomme noeuds
+                this.vue.getText().setText(" Sélectionnez un noeud");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : noeuds");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 51: //gomme terrain
+                this.vue.getText().setText(" Sélectionnez un triangle terrain");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : terrain");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 52: //gomme barre
+                this.vue.getText().setText(" Sélectionnez une barre");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbGomme().setText("Gomme : barre");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
                 break;
             case 53: //gomme : tout effacer
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
                 eraseAll();
                 break;
             case 54: //recommencer
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMtbBarre().setSelected(false);
-                this.vue.getMtbSelection().setSelected(false);
                 recommencer();
                 changeEtat(-10);
                 break;
             case 601:
-                System.out.println("Sélectionnez une barre");
+                this.vue.getText().setText(" Sélectionnez une barre");
                 break;
             case 602:
                 String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
@@ -187,17 +174,12 @@ public class Controller {
                 break;
             case 70:
                 //reset
+                this.vue.getText().setText(" Sélectionnez le noeud simple sur lequel la force va s'appliquer");
                 System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbSelection().setSelected(false);
-                break;
-
-            case 80: //on donne la position manuellement
-                choixPositionManuelle();
-                changeEtat(etatPrecedent);
                 break;
 
             case 200: //thème
@@ -555,7 +537,7 @@ public class Controller {
                                 break;
                             }
                             System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
-
+                            
                             //On demande la valeur de la composante sur X de la force
                             TextInputDialog boiteDiagPX = new TextInputDialog();
                             boiteDiagPX.setTitle("Ajout de la force");
@@ -576,6 +558,7 @@ public class Controller {
                             Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
 
                             //Calcul
+                            this.vue.getText().setText(" Calculs en cours...");
                             System.out.println("Lancement des calculs");
                             System.out.println("Calculs en cours...");
 
@@ -622,7 +605,6 @@ public class Controller {
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
-        this.vue.getbPosition().setText(px + " ; " + py);
 
         GraphicsContext graphicsContext = this.vue.getCanvas().getGraphicsContext2D();
 
@@ -739,83 +721,6 @@ public class Controller {
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
         this.vue.getTreillis().getIdentificateurForce().clear();
         this.vue.getTreillis().setAppartient(null);
-    }
-
-    private Point choixPositionManuelle() {
-        showPopupChoixPos();
-        return null;
-    }
-
-    private Point showPopupChoixPos() {
-        /*TextInputDialog inDialog = new TextInputDialog("Choix manuel de position");
-        inDialog.setTitle("Veuillez saisir la position de votre point");
-        inDialog.setHeaderText(null);
-        inDialog.setContentText("px :");
-        Optional<String> textIn = inDialog.showAndWait();
-        inDialog.setContentText("py :");
-        Optional<String> textIn2 = inDialog.showAndWait();
-        //Renvoie un boolean true si OK et ferme si false
-        if (textIn.isPresent()) {
-            String fichier =   "/" + textIn.get() + ".txt";
-        }*/
-
-        // Create the custom dialog.
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Choix manuel de position");
-        dialog.setHeaderText("Veuillez saisir la position de votre point");
-
-        // Set the icon (must be included in the project).
-        //dialog.setGraphic(new ImageView(this.getClass().getResource("login.png").toString()));
-        // Set the button types.
-        ButtonType validationButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(validationButtonType, ButtonType.CANCEL);
-
-        // Create the tfPYX and tfPY labels and fields.
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField tfPX = new TextField();
-        String[] positon = this.vue.getbPosition().getText().split(" ");
-        tfPX.setPromptText(positon[0]);
-        TextField tfPY = new TextField();
-        tfPY.setPromptText(positon[2]);
-
-        grid.add(new Label("Px:"), 0, 0);
-        grid.add(tfPX, 1, 0);
-        grid.add(new Label("Py:"), 0, 1);
-        grid.add(tfPY, 1, 1);
-
-        // Enable/Disable login button depending on whether a tfPYX was entered.
-        Node loginButton = dialog.getDialogPane().lookupButton(validationButtonType);
-        loginButton.setDisable(true);
-
-        // Do some validation (using the Java 8 lambda syntax).
-        tfPX.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-
-        // Request focus on the tfPYX field by default.
-        Platform.runLater(() -> tfPX.requestFocus());
-
-        // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == validationButtonType) {
-                return new Pair<>(tfPX.getText(), tfPY.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        result.ifPresent(tfPYXtfPY -> {
-            System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());
-            //return new Point((double) tfPYXtfPY.getKey(), (double) tfPYXtfPY.getValue());
-        });
-        return null;
     }
 
     private void choixTheme() {
