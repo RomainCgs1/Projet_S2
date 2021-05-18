@@ -48,13 +48,10 @@ public class Treillis {
 
         double prixTreilli = 0;
 
-        for (Map.Entry mapentry : this.identificateur.getKetToObject().entrySet()) {
-            Object objectClass = mapentry.getClass();
-
-            if (objectClass == Barre.class) {
-                prixTreilli = prixTreilli + ((Barre) objectClass).calculPrixBarre();
-            }
+        for (int i = 0; i < this.getTreilliContientBarre().size(); i++) {
+            prixTreilli = prixTreilli + this.getTreilliContientBarre().get(i).calculPrixBarre();
         }
+        
         return prixTreilli;
     }
 
@@ -342,108 +339,5 @@ public class Treillis {
         return resultats;
     }
 
-    public void testForce() {
-
-        Noeud_simple ns = new Noeud_simple(2, 0);
-        ns.setIdentifiant(this.identificateur.getOrSetKey(ns));
-
-        Point p1 = new Point(-2, 0);
-        p1.setIdentifiant(identificateur.getOrSetKey(p1));
-        System.out.println("Point " + p1.getIdentifiant() + " crée en (" + p1.getPx() + "," + p1.getPy() + ")");
-
-        Point p2 = new Point(0, 2);
-        p2.setIdentifiant(identificateur.getOrSetKey(p2));
-        System.out.println("Point " + p2.getIdentifiant() + " crée en (" + p2.getPx() + "," + p2.getPy() + ")");
-
-        Point p3 = new Point(0, -2);
-        p3.setIdentifiant(identificateur.getOrSetKey(p3));
-        System.out.println("Point " + p3.getIdentifiant() + " crée en (" + p3.getPx() + "," + p3.getPy() + ")");
-
-        Segment_terrain seg1 = new Segment_terrain(p1, p2);
-        seg1.setIdentifiant(identificateur.getOrSetKey(seg1));
-        System.out.println("Seg1 : \n" + seg1.toString());
-
-        Segment_terrain seg2 = new Segment_terrain(p2, p3);
-        seg2.setIdentifiant(identificateur.getOrSetKey(seg2));
-        System.out.println("Seg2 : \n" + seg2.toString());
-
-        Segment_terrain seg3 = new Segment_terrain(p3, p1);
-        seg3.setIdentifiant(identificateur.getOrSetKey(seg3));
-        System.out.println("Seg3 : \n" + seg3.toString());
-
-        Triangle_terrain triangle_terrain = new Triangle_terrain(seg1, seg2, seg3);
-        triangle_terrain.setIdentifiant(identificateur.getOrSetKey(triangle_terrain));
-
-        Appui_simple as = new Appui_simple(p2.getPx(), p2.getPy(), seg2);
-        as.setIdentifiant(identificateur.getOrSetKey(as));
-        seg2.addNASet(as);
-        System.out.println("Appui_Simple : \n" + as.toString());
-
-        Appui_double ad = new Appui_double(p3.getPx(), p3.getPy(), seg2);
-        ad.setIdentifiant(identificateur.getOrSetKey(ad));
-        seg2.addNASet(ad);
-        System.out.println("Appui_double : \n" + ad.toString());
-
-        Barre b1 = new Barre(as, ns, this);
-        b1.setType(this.getCatalogue().getContient().get(0));
-        b1.setIdentifiant(identificateur.getOrSetKey(b1));
-        as.addBarreArray(b1);
-        ns.addBarreSet(b1);
-        System.out.println("Barre 1 : \n" + b1.toString());
-
-        Barre b2 = new Barre(ns, ad, this);
-        b2.setType(this.getCatalogue().getContient().get(0));
-        b2.setIdentifiant(identificateur.getOrSetKey(b2));
-        ns.addBarreSet(b2);
-        ad.addBarreArray(b2);
-        System.out.println("Barre 2 : \n" + b2.toString());
-
-        Barre b3 = new Barre(ad, as, this);
-        b3.setType(this.getCatalogue().getContient().get(1));
-        b3.setIdentifiant(identificateur.getOrSetKey(b3));
-        ad.addBarreArray(b3);
-        as.addBarreArray(b3);
-        System.out.println("Barre 3 : \n" + b3.toString());
-        System.out.println("  ");
-
-        /* //Test de création de force 
-        System.out.println("TEST FORCE");
-
-        Force tensionb1 = new Force(b1, b1.calculAngleAlphaTension());
-        System.out.println("Tension barre 1 : \n" + tensionb1.toString());
-
-        Force tensionb2 = new Force(b2, b2.calculAngleAlphaTension());
-        System.out.println("Tension barre 2 : \n" + tensionb2.toString());
-
-        Force tensionb3 = new Force(b3, b3.calculAngleAlphaTension());
-        System.out.println("Tension barre 3 : \n" + tensionb3.toString());
-
-        Force reacAS = new Force(as, as.getSegment_appui().calculAngleBeta());
-        System.out.println("Reaction AS : \n" + reacAS.toString());
-
-        Force reacAD = new Force(ad);
-        System.out.println("Reaction AD : \n" + reacAD.toString());
-
-        System.out.println("Nombre de tensions créées : " + this.idBarreTensionsCreees.size());
-        System.out.println("Nombre de réactions simples créees : " + this.idAppuiSimpleCrees.size());
-        System.out.println("Nombre de réactions doubles créees : " + this.idAppuiDoubleCrees.size());
-
-        System.out.println("Force de la barre 1 \n" + b1.getTensionBarre().toString());
-        System.out.println("Id de la tension 1 : " + b1.getTensionBarre().getIdentifiant());
-        System.out.println("Force de la barre 2 \n" + b2.getTensionBarre().toString());
-        System.out.println("Id de la tension 2 : " + b2.getTensionBarre().getIdentifiant());
-        System.out.println("Force de la barre 3 \n" + b3.getTensionBarre().toString());
-        System.out.println("Id de la tension 3 : " + b3.getTensionBarre().getIdentifiant());
-
-        System.out.println("--------------------------------------------------");*/
-        Force forceAjoutee = new Force(ns, 0, -10000);
-        System.out.println("Force ajoutée : \n" + forceAjoutee.toString());
-
-        String[][] resultat = lancerCalculTEST(ns, forceAjoutee);
-
-        if (resultat[0][0].contains("erreur")) {
-            System.out.println("Erreur");
-        }
-
-    }
+   
 }

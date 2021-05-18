@@ -65,6 +65,7 @@ public class Controller {
             this.vue.getMtbBarre().setDisable(false);
             this.vue.getMbTypeDeBarre().setDisable(false);
             this.vue.getMbLancerCalculs().setDisable(false);
+            this.vue.getMbPrix().setDisable(false);
         }
 
         switch (newState) {
@@ -79,6 +80,7 @@ public class Controller {
                 this.vue.getMtbBarre().setDisable(true);
                 this.vue.getMbTypeDeBarre().setDisable(true);
                 this.vue.getMbLancerCalculs().setDisable(true);
+                this.vue.getMbPrix().setDisable(true);
                 break;
             case 0: //remise à zero
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
@@ -160,7 +162,7 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
-            case 600 :
+            case 600:
                 String[] typeAll = {"Bois", "Acier"}; //On rentre le nom des différents types existants
                 ChoiceDialog<String> dialogTypeCurrent = new ChoiceDialog<>(typeAll[0], typeAll);
                 dialogTypeCurrent.setTitle("Choix Type de Barre");
@@ -176,6 +178,7 @@ public class Controller {
                     System.out.println("Le type " + selectionTypeCurrent.get());
                     this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(1));
                 }
+                this.changeEtat(20);
                 break;
             case 601:
                 this.vue.getText().setText(" Sélectionnez une barre");
@@ -213,7 +216,15 @@ public class Controller {
                 this.vue.getMtbTerrain().setSelected(false);
                 this.vue.getMbGomme().setText("Gomme");
                 break;
-
+            case 80:
+                Alert dialogPrix = new Alert(AlertType.INFORMATION);
+                dialogPrix.setTitle("Résultat Prix");
+                dialogPrix.setHeaderText("Prix du treilli : ");
+                String s = "";
+                s = s + this.vue.getTreillis().calculPrixTreilli()+" €";
+                dialogPrix.setContentText(s);
+                dialogPrix.showAndWait();
+                break;
             case 200: //thème
                 choixTheme();
                 changeEtat(etatPrecedent);
@@ -234,8 +245,7 @@ public class Controller {
         if (E.getButton() == MouseButton.PRIMARY) {
 
             if (this.vue.getTreillis().getAppartient() == null) {
-                switch (this.etat)
-                {
+                switch (this.etat) {
                     case -10:
                         p4 = new Point(px, py);
                         this.changeEtat(-11);
@@ -392,9 +402,7 @@ public class Controller {
                                     this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
                                     System.out.println("Noeud appui double créé !");
                                 }
-                            }
-                            else
-                            {
+                            } else {
                                 System.out.println("Il y a déjà un noeud ici");
                             }
                             break;
@@ -448,15 +456,12 @@ public class Controller {
                             break;
 
                         case 30:
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null) {
                                 p1 = new Point(px, py);
                                 this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                                 changeEtat(31);
                                 System.out.println("point 1");
-                            }
-                            else
-                            {
+                            } else {
                                 p1 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
                                 this.p1.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p1));
                                 changeEtat(31);
@@ -465,12 +470,9 @@ public class Controller {
                             break;
 
                         case 31:
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null) {
                                 p2 = new Point(px, py);
-                            }
-                            else
-                            {
+                            } else {
                                 p2 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
                             }
                             this.p2.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p2));
@@ -479,13 +481,10 @@ public class Controller {
                             break;
 
                         case 32:
-                            if(this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null)
-                            {
+                            if (this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur) == null) {
                                 p3 = new Point(px, py);
                                 this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
-                            }
-                            else
-                            {
+                            } else {
                                 p3 = this.vue.getCanvas().getSegmentTerrainPlusProche(px, py, this.vue.getTreillis().identificateur).getPointSegmTerrPlusProche(px, py);
                                 this.p3.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(this.p3));
                             }
@@ -520,8 +519,7 @@ public class Controller {
 
                         case 52:
                             Barre barre = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
-                            if(barre != null)
-                            {
+                            if (barre != null) {
                                 clearBarre(barre);
                             }
                             break;
@@ -578,8 +576,7 @@ public class Controller {
                             Optional<String> textPX = boiteDiagPX.showAndWait();
 
                             System.out.println(textPX.get());
-                            if(textPX.get().toLowerCase().contains("chat"))
-                            {
+                            if (textPX.get().toLowerCase().contains("chat")) {
                                 File mediaFile = new File("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
                                 Media media;
                                 try {
@@ -612,9 +609,7 @@ public class Controller {
                                     e.printStackTrace();
                                 }
                                 changeEtat(0);
-                            }
-                            else
-                            {
+                            } else {
                                 double pxForce = Double.parseDouble(textPX.get());
 
                                 //On demande la valeur de la composante sur Y de la force
@@ -662,7 +657,6 @@ public class Controller {
                                     this.vue.getTreillis().getIdentificateurForce().clear();
                                 }
 
-
                             }
                             break;
                     }
@@ -672,7 +666,6 @@ public class Controller {
         }
     }
 
-
     public void canvasOver(MouseEvent E) {
         double px = E.getX();
         double py = E.getY();
@@ -681,12 +674,11 @@ public class Controller {
 
         this.vue.recontruction();
 
-        switch (etat)
-        {
+        switch (etat) {
             case -11:
-               graphicsContext.setStroke(Color.GREEN);
-               graphicsContext.strokeRect(this.p4.getPx(), this.p4.getPy(), px - this.p4.getPx(), py - this.p4.getPy());
-               break;
+                graphicsContext.setStroke(Color.GREEN);
+                graphicsContext.strokeRect(this.p4.getPx(), this.p4.getPy(), px - this.p4.getPx(), py - this.p4.getPy());
+                break;
 
             case 21:
                 graphicsContext.setStroke(Color.BLUE);
@@ -748,8 +740,7 @@ public class Controller {
         this.vue.getTreillis().identificateur.getKetToObject().remove(key);
     }
 
-    private void clearBarre(Barre barre)
-    {
+    private void clearBarre(Barre barre) {
         int id = this.vue.getTreillis().identificateur.getOrSetKey(barre);
         this.vue.getTreillis().identificateur.getKetToObject().remove(id, barre);
         this.vue.getTreillis().identificateur.getObjectToKey().remove(barre, id);

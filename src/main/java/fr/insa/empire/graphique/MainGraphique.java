@@ -41,6 +41,7 @@ public class MainGraphique extends BorderPane {
     private final MenuItem miTypeBarreTodos;
     private final MenuItem miTypeBarreCurrent;
     private final MyB mbLancerCalculs;
+    private final MyB mbPrix;
     private final MyB mbReglages;
     private final HBox hbConstruction;
     private final VBox vbUp;
@@ -140,6 +141,10 @@ public class MainGraphique extends BorderPane {
         this.text = text;
     }
 
+    public MyB getMbPrix() {
+        return mbPrix;
+    }
+
     
     public MainGraphique() throws IOException {
 
@@ -202,9 +207,10 @@ public class MainGraphique extends BorderPane {
         this.mbLancerCalculs = new MyB("Lancer les calculs");
         this.mbTypeDeBarre = new MenuButton("Type de Barre");
         this.mbReglages = new MyB("Réglages");
+        this.mbPrix = new MyB("Prix");
         this.mbGomme = new MenuButton("Gomme");
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs, this.mbPrix);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
@@ -336,6 +342,13 @@ public class MainGraphique extends BorderPane {
         this.mbLancerCalculs.setOnAction(
                 action -> {
                     controller.changeEtat(70);
+                }
+        );
+        
+        //action de prix
+        this.mbPrix.setOnAction(
+                Action -> {
+                    controller.changeEtat(80);
                 }
         );
 
