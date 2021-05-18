@@ -12,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
@@ -574,12 +575,19 @@ public class Controller {
                                     mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
                                     mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
                                     mediaView.setPreserveRatio(true);
-
-                                    Scene scene = new Scene(new Pane(mediaView), 1024, 590);
+                                    BorderPane borderPane = new BorderPane();
+                                    borderPane.setCenter(mediaView);
+                                    Scene scene = new Scene(borderPane, 1024, 590);
 
                                     Stage stage = new Stage();
                                     stage.setScene(scene);
                                     stage.show();
+
+                                    stage.setOnCloseRequest(
+                                            event -> {
+                                                mediaPlayer.stop();
+                                            }
+                                    );
 
                                     mediaPlayer.play();
 
