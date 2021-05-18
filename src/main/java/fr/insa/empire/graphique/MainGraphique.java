@@ -1,5 +1,6 @@
 package fr.insa.empire.graphique;
 
+import com.sun.javafx.scene.control.skin.FXVK;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Controller;
 import fr.insa.empire.utils.Identificateur;
@@ -38,6 +39,7 @@ public class MainGraphique extends BorderPane {
     private final MenuButton mbTypeDeBarre;
     private final MenuItem miTypeBarreSolo;
     private final MenuItem miTypeBarreTodos;
+    private final MenuItem miTypeBarreCurrent;
     private final MyB mbLancerCalculs;
     private final MyB mbReglages;
     private final HBox hbConstruction;
@@ -160,6 +162,7 @@ public class MainGraphique extends BorderPane {
 
         //set du Canvas
         this.canvas = new MyCanvas(this);
+        
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
 
@@ -309,9 +312,15 @@ public class MainGraphique extends BorderPane {
 
         //action de Type de Barre
         //action de Gomme
+        this.miTypeBarreCurrent = new MenuItem("Type actif");
         this.miTypeBarreSolo = new MenuItem("Type : barre seule");
         this.miTypeBarreTodos = new MenuItem("Type : Tout modifier");
-        this.mbTypeDeBarre.getItems().addAll(miTypeBarreSolo,miTypeBarreTodos);
+        this.mbTypeDeBarre.getItems().addAll(miTypeBarreCurrent,miTypeBarreSolo,miTypeBarreTodos);
+        this.miTypeBarreCurrent.setOnAction(
+                action -> {
+                    controller.changeEtat(600);
+                }
+        );
         this.miTypeBarreSolo.setOnAction(
                 action -> {
                     controller.changeEtat(601);

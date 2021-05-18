@@ -160,6 +160,23 @@ public class Controller {
                 recommencer();
                 changeEtat(-10);
                 break;
+            case 600 :
+                String[] typeAll = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                ChoiceDialog<String> dialogTypeCurrent = new ChoiceDialog<>(typeAll[0], typeAll);
+                dialogTypeCurrent.setTitle("Choix Type de Barre");
+                dialogTypeCurrent.setHeaderText("Selectionnez un type de barre pour changer de type actif");
+                dialogTypeCurrent.setContentText("Types :");
+                Optional<String> selectionTypeCurrent = dialogTypeCurrent.showAndWait();
+
+                if (selectionTypeCurrent.get().contains("Bois")) {
+                    System.out.println("Le type " + selectionTypeCurrent.get());
+                    this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(0));
+
+                } else if (selectionTypeCurrent.get().contains("Acier")) { //C'est acier
+                    System.out.println("Le type " + selectionTypeCurrent.get());
+                    this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+                }
+                break;
             case 601:
                 this.vue.getText().setText(" Sélectionnez une barre");
                 break;
@@ -742,27 +759,28 @@ public class Controller {
 
         Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());
         barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
+        barre.setType(this.vue.getTreillis().getCurrentType());
         barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
 
-        //On choisit le type de la barre
-        String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
-        ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
-        dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
-        dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
-        dialogBoxTypeDeBarre.setContentText("Types :");
-        Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
-
-        if (selection.get().contains("Bois")) {
-            System.out.println("Le type " + selection.get());
-            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
-        }
-
-        if (selection.get().contains("Acier")) {
-            System.out.println("Le type " + selection.get());
-            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
-        }
+//        //On choisit le type de la barre
+//        String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+//        ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
+//        dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
+//        dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
+//        dialogBoxTypeDeBarre.setContentText("Types :");
+//        Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
+//
+//        if (selection.get().contains("Bois")) {
+//            System.out.println("Le type " + selection.get());
+//            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
+//        }
+//
+//        if (selection.get().contains("Acier")) {
+//            System.out.println("Le type " + selection.get());
+//            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+//        }
     }
 
     private void eraseAll() {

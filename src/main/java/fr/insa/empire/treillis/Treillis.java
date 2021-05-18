@@ -25,6 +25,7 @@ public class Treillis {
     private ArrayList<Integer> idBarreTensionsCreees = new ArrayList<Integer>();
     private ArrayList<Integer> idAppuiSimpleCrees = new ArrayList<Integer>();
     private ArrayList<Integer> idAppuiDoubleCrees = new ArrayList<Integer>();
+    private Type_de_barre currentType;
 
     public Treillis() {
         this.identificateur = new Identificateur();
@@ -32,6 +33,7 @@ public class Treillis {
         this.identificateurTypeBarre = new Identificateur();
         this.catalogue = new Catalogue();
         this.creationTypeBarre();
+        this.currentType = this.catalogue.getContient().get(0); //On set le type de référence
         this.treilliContientNoeudSimple = new ArrayList<Noeud_simple>();
         this.treilliContientNoeudAppui = new ArrayList<Noeud_appui>();
         this.treilliContientBarre = new ArrayList<Barre>();
@@ -155,6 +157,15 @@ public class Treillis {
         return idAppuiDoubleCrees;
     }
 
+    public Type_de_barre getCurrentType() {
+        return currentType;
+    }
+
+    public void setCurrentType(Type_de_barre currentType) {
+        this.currentType = currentType;
+    }
+
+    
     //Sauvegarde
     public void save(BufferedWriter bW) throws IOException {
         /*
