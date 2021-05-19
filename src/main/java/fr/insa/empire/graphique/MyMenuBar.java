@@ -21,10 +21,12 @@ public class MyMenuBar extends MenuBar {
 
     private Menu mFichier;
     private Menu mParametre;
-    private Menu mAide;
+    private Menu mAutre;
     private MenuItem miEnregistrer;
     private MenuItem miOuvrir;
     private MenuItem miRecommencer;
+    private MenuItem miAide;
+    private MenuItem miInformations;
 
     private MenuItem miLangue;
     private MenuItem miTheme;
@@ -134,12 +136,18 @@ public class MyMenuBar extends MenuBar {
                 }
         );
 
-        this.mAide = new Menu("Aide");
+        this.mAutre = new Menu("Autre");
+
+        this.miAide = new MenuItem("Aide");
+        this.miInformations = new MenuItem("Informations");
+
+        this.mAutre.getItems().addAll(this.miAide, this.miInformations);
 
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
             this.useSystemMenuBarProperty().set(true);
         }
-        this.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
+
+        this.getMenus().addAll(this.mFichier, this.mParametre, this.mAutre);
     }
 }

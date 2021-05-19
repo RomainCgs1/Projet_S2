@@ -2,7 +2,6 @@ package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.treillis.*;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;

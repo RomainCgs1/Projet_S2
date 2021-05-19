@@ -1,10 +1,8 @@
 package fr.insa.empire.graphique;
 
-import com.sun.javafx.scene.control.skin.FXVK;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Controller;
 import fr.insa.empire.utils.Identificateur;
-import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;

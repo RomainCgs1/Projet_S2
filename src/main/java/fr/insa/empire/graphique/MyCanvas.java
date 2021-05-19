@@ -5,17 +5,11 @@
  */
 package fr.insa.empire.graphique;
 
-import com.sun.javafx.scene.shape.RectangleHelper;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import org.example.App;
 
 import java.util.Map;
-import java.util.Set;
 
 public class MyCanvas extends Canvas {
 
