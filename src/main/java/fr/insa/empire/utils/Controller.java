@@ -505,7 +505,19 @@ public class Controller {
                                 int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeud);
                                 this.vue.getTreillis().identificateur.getObjectToKey().remove(noeud);
                                 this.vue.getTreillis().identificateur.getKetToObject().remove(key);
+                                if (noeud instanceof Noeud_simple){//On regarde si c'est un noeud simple
+                                    this.vue.getTreillis().getTreilliContientNoeudSimple().remove(noeud);
+                                }else{//Sinon c'est un noeud appui
+                                    this.vue.getTreillis().getTreilliContientNoeudAppui().remove(noeud);
+                                }
                                 this.vue.recontruction();
+                            }else {
+                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                diagAlertMauvaiseDonnee.setTitle("Erreur Gomme noeud");
+                                diagAlertMauvaiseDonnee.setHeaderText("Erreur noeud");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : aucun noeud sélectionné");
+                                diagAlertMauvaiseDonnee.showAndWait();
+                                this.changeEtat(50);
                             }
 
                             break;
@@ -514,13 +526,28 @@ public class Controller {
                             if (segmentTerrain != null) {
                                 clearTriangleTerrain(segmentTerrain);
                                 this.vue.recontruction();
+                            }else {
+                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                diagAlertMauvaiseDonnee.setTitle("Erreur Gomme Segment");
+                                diagAlertMauvaiseDonnee.setHeaderText("Erreur Segment");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : aucun segment sélectionné");
+                                diagAlertMauvaiseDonnee.showAndWait();
+                                this.changeEtat(51);
                             }
                             break;
 
                         case 52:
                             Barre barre = this.vue.getCanvas().getBarrePlusProche(px, py, this.vue.getTreillis().identificateur);
                             if (barre != null) {
+                                this.vue.getTreillis().getTreilliContientBarre().remove(barre);
                                 clearBarre(barre);
+                            }else {
+                                Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
+                                diagAlertMauvaiseDonnee.setTitle("Erreur Gomme barre");
+                                diagAlertMauvaiseDonnee.setHeaderText("Erreur barre");
+                                diagAlertMauvaiseDonnee.setContentText("Erreur : aucune barre sélectionnée");
+                                diagAlertMauvaiseDonnee.showAndWait();
+                                this.changeEtat(52);
                             }
                             break;
                         case 601:
@@ -779,6 +806,9 @@ public class Controller {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
         this.vue.getTreillis().getIdentificateurForce().clear();
+        this.vue.getTreillis().getTreilliContientBarre().clear();
+        this.vue.getTreillis().getTreilliContientNoeudAppui().clear();
+        this.vue.getTreillis().getTreilliContientNoeudSimple().clear();
         this.vue.getIdentificateur().getOrSetKey(zone_constructible);
     }
 
@@ -786,6 +816,9 @@ public class Controller {
         this.vue.getIdentificateur().clear();
         this.vue.getCanvas().getGraphicsContext2D().clearRect(0, 0, this.vue.getCanvas().getWidth(), this.vue.getCanvas().getHeight());
         this.vue.getTreillis().getIdentificateurForce().clear();
+        this.vue.getTreillis().getTreilliContientBarre().clear();
+        this.vue.getTreillis().getTreilliContientNoeudAppui().clear();
+        this.vue.getTreillis().getTreilliContientNoeudSimple().clear();
         this.vue.getTreillis().setAppartient(null);
     }
 
