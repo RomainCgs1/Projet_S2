@@ -681,6 +681,7 @@ public class Controller {
 
                                     //On efface les forces créés pour effectuer à nouveau le calcul
                                     this.vue.getTreillis().getIdentificateurForce().clear();
+                                    this.changeEtat(0);
                                 }
 
                             }
