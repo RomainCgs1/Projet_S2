@@ -793,7 +793,6 @@ public class Controller {
 //            System.out.println("Le type " + selection.get());
 //            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
 //        }
-//
 //        if (selection.get().contains("Acier")) {
 //            System.out.println("Le type " + selection.get());
 //            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
