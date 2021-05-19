@@ -68,6 +68,7 @@ public class Controller {
 
         switch (newState) {
             case -10: // initialisation zone_constructible
+                this.vue.getText().setText(" Dessinez votre zone de construction (2 clics sont attentus)");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMbNoeud().setDisable(true);
                 this.vue.getMtbTerrain().setSelected(false);
