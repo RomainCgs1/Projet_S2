@@ -11,10 +11,13 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
 import javafx.scene.paint.Color;
@@ -191,7 +194,15 @@ public class MainGraphique extends BorderPane {
         this.setRight(this.scrollBar);
 
         //Set up du splitMenuButton
-        this.mbNoeud = new MenuButton();
+
+        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/appuiDoubleSansFond.png");
+        Image logoAppuiDouble = new Image(inputAppuiDouble);
+        ImageView logoAppuiDoubleView = new ImageView(logoAppuiDouble);
+
+        logoAppuiDoubleView.setFitWidth(30);
+        logoAppuiDoubleView.setFitHeight(30);
+
+        this.mbNoeud = new MenuButton("Noeud", logoAppuiDoubleView);
         this.mbNoeud.setText("Noeud");
         this.choix1 = new MenuItem("Noeud simple");
         this.choix2 = new MenuItem("Noeud Appui simple");
@@ -204,11 +215,27 @@ public class MainGraphique extends BorderPane {
 
         this.mtbBarre = new MyTB("Barre");
         this.mtbTerrain = new MyTB("Terrain");
+
+        FileInputStream inputCalc = new FileInputStream("src/main/java/fr/insa/empire/autres/calculatriceSansFond.png");
+        Image logoCalc = new Image(inputCalc);
+        ImageView logoCalcView = new ImageView(logoCalc);
+
+        logoCalcView.setFitWidth(30);
+        logoCalcView.setFitHeight(30);
         this.mbLancerCalculs = new MyB("Lancer les calculs");
         this.mbTypeDeBarre = new MenuButton("Type de Barre");
         this.mbReglages = new MyB("Réglages");
         this.mbPrix = new MyB("Prix");
-        this.mbGomme = new MenuButton("Gomme");
+
+        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/noeudSansFond.png");
+        Image logoGomme = new Image(inputGomme);
+        ImageView logoGommeView = new ImageView(logoGomme);
+
+        //logoGommeView.setFitWidth(30);
+        //logoGommeView.setFitHeight(30);
+
+        this.mbGomme = new MenuButton("Gomme", logoGommeView);
+
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
         this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs, this.mbPrix);
         this.hbIcones.setSpacing(10);
