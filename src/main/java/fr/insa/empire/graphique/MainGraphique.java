@@ -52,7 +52,7 @@ public class MainGraphique extends BorderPane {
     private final MyCanvas canvas;
     private Text text;
 
-    private ScrollBar scrollBar;
+    //private ScrollBar scrollBar;
 
     private String theme;
 
@@ -184,12 +184,12 @@ public class MainGraphique extends BorderPane {
         );
 
         this.setCenter(canvas);
-        this.scrollBar = new ScrollBar();
-        this.scrollBar.setOrientation(Orientation.VERTICAL);
-        scrollBar.setMin(0);
-        scrollBar.setMax(this.canvas.getHeight());
+        //this.scrollBar = new ScrollBar();
+        //this.scrollBar.setOrientation(Orientation.VERTICAL);
+        //scrollBar.setMin(0);
+        //scrollBar.setMax(this.canvas.getHeight());
         //tests ... ça donne pas grand chose...
-        this.setRight(this.scrollBar);
+        //this.setRight(this.scrollBar);
 
         //Set up du splitMenuButton
 
