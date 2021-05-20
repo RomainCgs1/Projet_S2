@@ -1,5 +1,6 @@
 package fr.insa.empire.utils;
 
+import fr.insa.empire.graphique.AfficheInfosTypeBarre;
 import fr.insa.empire.graphique.MainGraphique;
 import fr.insa.empire.graphique.ResultatGraphique;
 import fr.insa.empire.treillis.*;
@@ -202,10 +203,45 @@ public class Controller {
                     System.out.println("Le type " + selectionType.get());
                     type = this.vue.getTreillis().getCatalogue().getContient().get(1);
                 }
+                this.changeEtat(0);
+                break;
+            case 603:
+                String[] typesInfos = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                ChoiceDialog<String> dialogInfosType = new ChoiceDialog<>(typesInfos[0], typesInfos);
+                dialogInfosType.setTitle("Choix Type de Barre");
+                dialogInfosType.setHeaderText("Selectionnez un type de barre");
+                dialogInfosType.setContentText("Types :");
+                Optional<String> slectionTypeInfos = dialogInfosType.showAndWait();
 
-                for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
-                    this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
-                    this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
+                if (slectionTypeInfos.get().contains("Bois")) {
+                    System.out.println("Le type " + slectionTypeInfos.get());
+                    try {
+                        Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(0)));
+                        Stage fenetreInfosType = new Stage();
+                        fenetreInfosType.setTitle("Infos Types MeshApp");
+                        fenetreInfosType.setScene(sceneInfosType);
+                        fenetreInfosType.setX(500);
+                        fenetreInfosType.setY(800);
+                        fenetreInfosType.showAndWait();
+
+                    } catch (IOException ie) {
+                        System.out.println("Erreur de chargement");
+                    }
+
+                } else if (slectionTypeInfos.get().contains("Acier")) { //C'est acier
+                    System.out.println("Le type " + slectionTypeInfos.get());
+                    try {
+                        Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(1)));
+                        Stage fenetreInfosType = new Stage();
+                        fenetreInfosType.setTitle("Infos Types MeshApp");
+                        fenetreInfosType.setScene(sceneInfosType);
+                        fenetreInfosType.setX(500);
+                        fenetreInfosType.setY(800);
+                        fenetreInfosType.showAndWait();
+
+                    } catch (IOException ie) {
+                        System.out.println("Erreur de chargement");
+                    }
                 }
                 break;
             case 70: //calculs
@@ -656,7 +692,7 @@ public class Controller {
 
                                 //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
                                 String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
-                                
+
                                 //On regarde s'il y a une erreur
                                 if (resultat[0][0].contains("erreur")) {
                                     Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
