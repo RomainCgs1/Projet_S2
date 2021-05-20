@@ -5,14 +5,8 @@
  */
 package fr.insa.empire.graphique;
 
-import fr.insa.empire.treillis.Appui_double;
-import fr.insa.empire.treillis.Appui_simple;
-import fr.insa.empire.treillis.Barre;
-import fr.insa.empire.treillis.Noeud_appui;
-import fr.insa.empire.treillis.Noeud_simple;
-import fr.insa.empire.treillis.Treillis;
-import fr.insa.empire.treillis.Triangle_terrain;
-import fr.insa.empire.treillis.Zone_constructible;
+import fr.insa.empire.treillis.*;
+
 import java.io.IOException;
 import java.util.Map;
 import javafx.scene.canvas.GraphicsContext;
@@ -72,10 +66,13 @@ public class ResultatGraphique extends BorderPane {
                 ((Appui_double) val).draw(graphicsContext);
                 graphicsContext.setStroke(Color.SILVER);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
+                graphicsContext.fillText(((Appui_double) val).getID() + "", ((Appui_double) val).getPx() - 20, ((Appui_double) val).getPy());
             }
             else if(val.getClass() == Appui_simple.class)
             {
                 ((Appui_simple) val).draw(graphicsContext);
+
+                graphicsContext.fillText(((Appui_simple) val).getID() + "", ((Appui_simple) val).getPx() - 20, ((Appui_simple) val).getPy());
             }
             else if(val.getClass() == Noeud_appui.class)
             {
@@ -84,10 +81,13 @@ public class ResultatGraphique extends BorderPane {
             else if(val.getClass() == Noeud_simple.class)
             {
                 ((Noeud_simple) val).draw(graphicsContext);
+                graphicsContext.fillText(((Noeud_simple) val).getID() + "", ((Noeud_simple) val).getPx() - 20, ((Noeud_simple) val).getPy());
             }
             else if(val.getClass() == Barre.class)
             {
                 ((Barre) val).draw(graphicsContext);
+                Point milieu = ((Barre) val).getMilieu();
+                graphicsContext.fillText(((Barre) val).getIdentifiant() + "", milieu.getPx() - 20, milieu.getPy());
             }
             else if(val.getClass() == Triangle_terrain.class)
             {

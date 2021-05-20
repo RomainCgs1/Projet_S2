@@ -63,6 +63,13 @@ public class Barre {
         return this.type;
     }
 
+    public Point getMilieu()
+    {
+        double px = (this.noeudFin.getPx() + this.noeudDebut.getPx()) / 2;
+        double py = (this.noeudFin.getPy() + this.noeudDebut.getPy()) / 2;
+        return new Point(px, py);
+    }
+
     public void setNoeudDebut(Noeuds noeudDebut) {
         this.noeudDebut = noeudDebut;
     }

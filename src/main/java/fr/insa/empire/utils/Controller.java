@@ -208,8 +208,7 @@ public class Controller {
                     this.vue.getTreillis().getTreilliContientBarre().get(i).draw(this.vue.getCanvas().getGraphicsContext2D());
                 }
                 break;
-            case 70:
-                //reset
+            case 70: //calculs
                 this.vue.getText().setText(" Sélectionnez le noeud simple sur lequel la force va s'appliquer");
                 System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
                 this.vue.getMbNoeud().setText("Noeud");
@@ -663,7 +662,7 @@ public class Controller {
                                     Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                     diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
                                     diagAlertMauvaiseDonnee.setHeaderText("Erreur Matrice");
-                                    diagAlertMauvaiseDonnee.setContentText("Erreur : Le treilli rentré n'est pas valide");
+                                    diagAlertMauvaiseDonnee.setContentText("Erreur : Le treilli saisi n'est pas valide");
                                     diagAlertMauvaiseDonnee.showAndWait();
                                     this.changeEtat(0);
                                     break;

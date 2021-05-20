@@ -8,13 +8,16 @@ package fr.insa.empire.graphique;
 import fr.insa.empire.treillis.*;
 import fr.insa.empire.utils.Identificateur;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class MyCanvas extends Canvas {
 
     private MainGraphique mainGraphique;
-
     private double xMin;
     private double xMax;
     private double yMin;
