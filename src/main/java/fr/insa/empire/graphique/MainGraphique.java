@@ -211,12 +211,12 @@ public class MainGraphique extends BorderPane {
 
         //Set up du splitMenuButton
 
-        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/appuiDoubleSansFond.png");
+        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/noeudSansFond.png");
         Image logoAppuiDouble = new Image(inputAppuiDouble);
         ImageView logoAppuiDoubleView = new ImageView(logoAppuiDouble);
 
-        logoAppuiDoubleView.setFitWidth(30);
-        logoAppuiDoubleView.setFitHeight(30);
+        logoAppuiDoubleView.setFitWidth(40);
+        logoAppuiDoubleView.setFitHeight(40);
 
         this.mbNoeud = new MenuButton("Noeud", logoAppuiDoubleView);
         this.mbNoeud.setText("Noeud");
@@ -228,27 +228,43 @@ public class MainGraphique extends BorderPane {
 
         //menuBar
         this.menuBar = new MyMenuBar(this, controller);
+        FileInputStream inputBarre = new FileInputStream("src/main/java/fr/insa/empire/autres/barre.png");
+        Image logoBarre = new Image(inputBarre);
+        ImageView logoBarreView = new ImageView(logoBarre);
 
-        this.mtbBarre = new MyTB("Barre");
-        this.mtbTerrain = new MyTB("Terrain");
+        logoBarreView.setFitHeight(40);
+        logoBarreView.setFitWidth(40);
+
+        this.mtbBarre = new MyTB("Barre", logoBarreView);
+
+        FileInputStream inputTerrain = new FileInputStream("src/main/java/fr/insa/empire/autres/triangleTerrain.png");
+        Image logoTerrain = new Image(inputTerrain);
+        ImageView logoTerrainView = new ImageView(logoTerrain);
+        logoTerrainView.setFitWidth(40);
+        logoTerrainView.setFitHeight(40);
+        this.mtbTerrain = new MyTB("Terrain", logoTerrainView);
 
         FileInputStream inputCalc = new FileInputStream("src/main/java/fr/insa/empire/autres/calculatriceSansFond.png");
         Image logoCalc = new Image(inputCalc);
         ImageView logoCalcView = new ImageView(logoCalc);
 
         logoCalcView.setFitWidth(30);
-        logoCalcView.setFitHeight(30);
-        this.mbLancerCalculs = new MyB("Lancer les calculs");
-        this.mbTypeDeBarre = new MenuButton("Type de Barre");
+        logoCalcView.setFitHeight(40);
+
+        this.mbLancerCalculs = new MyB("Lancer les calculs", logoCalcView);
+        ImageView logoTypeDeBarreView = new ImageView(logoBarre);
+        logoTypeDeBarreView.setFitHeight(40);
+        logoTypeDeBarreView.setFitWidth(40);
+        this.mbTypeDeBarre = new MenuButton("Type de Barre", logoTypeDeBarreView);
         this.mbReglages = new MyB("Réglages");
         this.mbPrix = new MyB("Prix");
 
-        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/noeudSansFond.png");
+        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/GommeGeneralAvecFond.png");
         Image logoGomme = new Image(inputGomme);
         ImageView logoGommeView = new ImageView(logoGomme);
 
-        //logoGommeView.setFitWidth(30);
-        //logoGommeView.setFitHeight(30);
+        logoGommeView.setFitWidth(40);
+        logoGommeView.setFitHeight(40);
 
         this.mbGomme = new MenuButton("Gomme", logoGommeView);
 
