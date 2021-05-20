@@ -14,6 +14,7 @@ import java.util.Map;
 public class MyCanvas extends Canvas {
 
     private MainGraphique mainGraphique;
+
     private double xMin;
     private double xMax;
     private double yMin;

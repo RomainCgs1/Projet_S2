@@ -1,6 +1,7 @@
 package fr.insa.empire.utils;
 
 import fr.insa.empire.graphique.MainGraphique;
+import fr.insa.empire.graphique.ResultatGraphique;
 import fr.insa.empire.treillis.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
@@ -220,7 +222,7 @@ public class Controller {
                 dialogPrix.setTitle("Résultat Prix");
                 dialogPrix.setHeaderText("Prix du treilli : ");
                 String s = "";
-                s = s + this.vue.getTreillis().calculPrixTreilli()+" €";
+                s = s + this.vue.getTreillis().calculPrixTreilli() + " €";
                 dialogPrix.setContentText(s);
                 dialogPrix.showAndWait();
                 break;
@@ -504,13 +506,13 @@ public class Controller {
                                 int key = this.vue.getTreillis().identificateur.getObjectToKey().get(noeud);
                                 this.vue.getTreillis().identificateur.getObjectToKey().remove(noeud);
                                 this.vue.getTreillis().identificateur.getKetToObject().remove(key);
-                                if (noeud instanceof Noeud_simple){//On regarde si c'est un noeud simple
+                                if (noeud instanceof Noeud_simple) {//On regarde si c'est un noeud simple
                                     this.vue.getTreillis().getTreilliContientNoeudSimple().remove(noeud);
-                                }else{//Sinon c'est un noeud appui
+                                } else {//Sinon c'est un noeud appui
                                     this.vue.getTreillis().getTreilliContientNoeudAppui().remove(noeud);
                                 }
                                 this.vue.recontruction();
-                            }else {
+                            } else {
                                 Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                 diagAlertMauvaiseDonnee.setTitle("Erreur Gomme noeud");
                                 diagAlertMauvaiseDonnee.setHeaderText("Erreur noeud");
@@ -525,7 +527,7 @@ public class Controller {
                             if (segmentTerrain != null) {
                                 clearTriangleTerrain(segmentTerrain);
                                 this.vue.recontruction();
-                            }else {
+                            } else {
                                 Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                 diagAlertMauvaiseDonnee.setTitle("Erreur Gomme Segment");
                                 diagAlertMauvaiseDonnee.setHeaderText("Erreur Segment");
@@ -540,7 +542,7 @@ public class Controller {
                             if (barre != null) {
                                 this.vue.getTreillis().getTreilliContientBarre().remove(barre);
                                 clearBarre(barre);
-                            }else {
+                            } else {
                                 Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                 diagAlertMauvaiseDonnee.setTitle("Erreur Gomme barre");
                                 diagAlertMauvaiseDonnee.setHeaderText("Erreur barre");
@@ -655,7 +657,7 @@ public class Controller {
 
                                 //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
                                 String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
-
+                                
                                 //On regarde s'il y a une erreur
                                 if (resultat[0][0].contains("erreur")) {
                                     Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
@@ -667,17 +669,22 @@ public class Controller {
                                     break;
                                 } else {
                                     System.out.println("Pas d'erreur");
-                                    Alert dialogResultat = new Alert(AlertType.INFORMATION);
-                                    dialogResultat.setHeight(300);
-                                    dialogResultat.setWidth(400);
-                                    dialogResultat.setTitle("Résultat Calcul");
-                                    dialogResultat.setHeaderText("Analyse du treilli : ");
                                     String s = "";
-                                    for (int i = 0; i < resultat[0].length; i++) {
+                                    for (int i = 0; i < resultat.length; i++) {
                                         s = s + resultat[i][0] + " " + resultat[i][1] + " " + resultat[i][2] + "\n";
                                     }
-                                    dialogResultat.setContentText(s);
-                                    dialogResultat.showAndWait();
+                                    try {
+                                        Scene sceneResultat = new Scene(new ResultatGraphique(s, this.vue.getTreillis()));
+                                        Stage fenetreResultat = new Stage();
+                                        fenetreResultat.setTitle("Résultat Calculs MeshApp");
+                                        fenetreResultat.setScene(sceneResultat);
+                                        fenetreResultat.setX(500);
+                                        fenetreResultat.setY(800);
+                                        fenetreResultat.showAndWait();
+
+                                    } catch (IOException ie) {
+                                        System.out.println("Erreur de chargement");
+                                    }
 
                                     //On efface les forces créés pour effectuer à nouveau le calcul
                                     this.vue.getTreillis().getIdentificateurForce().clear();

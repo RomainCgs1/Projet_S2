@@ -15,7 +15,7 @@ public class MainGraphApp extends Application {
     @Override
     public void start(Stage stage) throws Exception
     {
-        stage.setTitle("TestGraph");
+        stage.setTitle("MeshApp : L'application parfaite pour vos beaux treillis");
         Scene scene = new Scene(new MainGraphique());
         stage.setScene(scene);
         stage.setWidth(800);
