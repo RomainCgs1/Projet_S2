@@ -41,6 +41,7 @@ public class MainGraphique extends BorderPane {
     private final MenuItem miTypeBarreSolo;
     private final MenuItem miTypeBarreTodos;
     private final MenuItem miTypeBarreCurrent;
+    private final MenuItem miTypeBarreInfos;
     private final MyB mbLancerCalculs;
     private final MyB mbPrix;
     private final MyB mbReglages;
@@ -146,6 +147,23 @@ public class MainGraphique extends BorderPane {
         return mbPrix;
     }
 
+    public MenuItem getMiTypeBarreSolo() {
+        return miTypeBarreSolo;
+    }
+
+    public MenuItem getMiTypeBarreTodos() {
+        return miTypeBarreTodos;
+    }
+
+    public MenuItem getMiTypeBarreCurrent() {
+        return miTypeBarreCurrent;
+    }
+
+    public MenuItem getMiTypeBarreInfos() {
+        return miTypeBarreInfos;
+    }
+
+    
     
     public MainGraphique() throws IOException {
 
@@ -346,7 +364,8 @@ public class MainGraphique extends BorderPane {
         this.miTypeBarreCurrent = new MenuItem("Type actif");
         this.miTypeBarreSolo = new MenuItem("Type : barre seule");
         this.miTypeBarreTodos = new MenuItem("Type : Tout modifier");
-        this.mbTypeDeBarre.getItems().addAll(miTypeBarreCurrent,miTypeBarreSolo,miTypeBarreTodos);
+        this.miTypeBarreInfos = new MenuItem("Informations Types");
+        this.mbTypeDeBarre.getItems().addAll(miTypeBarreCurrent,miTypeBarreSolo,miTypeBarreTodos,miTypeBarreInfos);
         this.miTypeBarreCurrent.setOnAction(
                 action -> {
                     controller.changeEtat(600);
@@ -360,6 +379,11 @@ public class MainGraphique extends BorderPane {
         this.miTypeBarreTodos.setOnAction(
                 action -> {
                     controller.changeEtat(602);
+                }
+        );
+        this.miTypeBarreInfos.setOnAction(
+                action -> {
+                    controller.changeEtat(603);
                 }
         );
 
