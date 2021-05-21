@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ Cette classe permet de générer un boderPane personnalisé pour l'affichage des résultas 
+des calculs des forces
  */
 package fr.insa.empire.graphique;
 
@@ -15,10 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-/**
- *
- * @author romai
- */
+
 public class ResultatGraphique extends BorderPane {
     
     private final Treillis treillis;

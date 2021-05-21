@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *Cette classe permet de générer un borderPane personnalisé pour l'affichage des 
+informations sur le type de barre qui est sélectionné par l'utilisateur en amont
  */
 package fr.insa.empire.graphique;
 
@@ -11,10 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-/**
- *
- * @author romai
- */
+
 public class AfficheInfosTypeBarre extends BorderPane {
     
 
