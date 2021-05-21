@@ -207,7 +207,7 @@ public class Force {
     Et la valeur positive correpondra à la composante sur X
     
     De plus, une arraylist contenant les identifiants des noeuds déjà observés et mise en place pour éviter de regarder plusieurs fois le même noeud et donc pour éviter
-    de créer deux fois la même force
+    de créer deux fois la même force 
     */
     public static void remplissageMatrice(int idNoeudOuForceAjoutee, Force forceAjoutee, Matrice systeme, Matrice vecteur, Treillis treilli, ArrayList<Integer> idForceLinkMatrice) {
 
