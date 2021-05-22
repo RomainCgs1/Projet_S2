@@ -25,10 +25,10 @@ public class MainGraphique extends BorderPane {
 
     private final Controller controller;
     public final Treillis treillis;
-    private final MenuItem choix1;
-    private final MenuItem choix2;
-    private final MenuItem choix3;
-    private final MenuItem choix4;
+    private final MenuItem miNoeudSimple;
+    private final MenuItem miNoeudAppuiSimple;
+    private final MenuItem miNoeudAppuiDouble;
+    private final MenuItem miNoeudAppuiEncastre;
     private final MenuButton mbNoeud;
     private final MyTB mtbBarre;
     private final MyTB mtbTerrain;
@@ -64,16 +64,16 @@ public class MainGraphique extends BorderPane {
     }
 
     public MenuItem getChoix1() {
-        return choix1;
+        return miNoeudSimple;
     }
 
     public MenuItem getChoix2() {
-        return choix2;
+        return miNoeudAppuiSimple;
     }
 
-    public MenuItem getChoix3() { return choix3; }
+    public MenuItem getChoix3() { return miNoeudAppuiDouble; }
 
-    public MenuItem getChoix4() { return choix4; }
+    public MenuItem getChoix4() { return miNoeudAppuiEncastre; }
 
     public MenuButton getMbNoeud() {
         return mbNoeud;
@@ -220,11 +220,11 @@ public class MainGraphique extends BorderPane {
 
         this.mbNoeud = new MenuButton("Noeud", logoAppuiDoubleView);
         this.mbNoeud.setText("Noeud");
-        this.choix1 = new MenuItem("Noeud simple");
-        this.choix2 = new MenuItem("Noeud Appui simple");
-        this.choix3 = new MenuItem("Noeud Appui double");
-        this.choix4 = new MenuItem("Noeud Appui encastré");
-        this.mbNoeud.getItems().addAll(choix1, choix2,choix3, choix4);
+        this.miNoeudSimple = new MenuItem("Noeud simple");
+        this.miNoeudAppuiSimple = new MenuItem("Noeud Appui simple");
+        this.miNoeudAppuiDouble = new MenuItem("Noeud Appui double");
+        this.miNoeudAppuiEncastre = new MenuItem("Noeud Appui encastré");
+        this.mbNoeud.getItems().addAll(miNoeudSimple, miNoeudAppuiSimple,miNoeudAppuiDouble, miNoeudAppuiEncastre);
 
         //menuBar
         this.menuBar = new MyMenuBar(this, controller);
@@ -301,7 +301,7 @@ public class MainGraphique extends BorderPane {
 
         //
         //Set up des actions du splitMenuButton
-        choix1.setOnAction(new EventHandler<ActionEvent>() {
+        miNoeudSimple.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 controller.changeEtat(120);
@@ -309,21 +309,21 @@ public class MainGraphique extends BorderPane {
         });
 
         //
-        choix2.setOnAction(new EventHandler<ActionEvent>() {
+        miNoeudAppuiSimple.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 controller.changeEtat(110);
             }
         });
 
-        choix3.setOnAction(
+        miNoeudAppuiDouble.setOnAction(
                 action -> {
                     controller.changeEtat(130);
                 }
         );
 
-        choix4.setDisable(true);
-        choix4.setOnAction(
+        miNoeudAppuiEncastre.setDisable(true);
+        miNoeudAppuiEncastre.setOnAction(
                 action -> {
                     controller.changeEtat(140);
                 }

@@ -1,6 +1,10 @@
+/*
+Cette classe regroupe toutes les fonctions liées au barre 
+*/
+
+
 package fr.insa.empire.treillis;
 
-//import fr.insa.empire.utils.Identificateur;
 import fr.insa.empire.utils.Identificateur;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -23,7 +27,7 @@ public class Barre {
     public Barre(Noeuds noeudDebut, Noeuds noeudFin, Treillis treilli) {
         this.noeudDebut = noeudDebut;
         this.noeudFin = noeudFin;
-        this.longueur = this.calculLongueur();
+        this.longueur = this.calculLongueurBarre();
 
         //On ajoute la barre dans l'arraylist des noeuds
         if (this.noeudDebut.getClass() == Noeud_simple.class) {
@@ -47,6 +51,7 @@ public class Barre {
             ((Appui_double) this.noeudFin).getAppartientABarre().add(this);
         }
         
+        //On ajoute la barre à l'arraylist du treillis
         treilli.getTreilliContientBarre().add(this);
     }
 
@@ -61,13 +66,6 @@ public class Barre {
 
     public Type_de_barre getType() {
         return this.type;
-    }
-
-    public Point getMilieu()
-    {
-        double px = (this.noeudFin.getPx() + this.noeudDebut.getPx()) / 2;
-        double py = (this.noeudFin.getPy() + this.noeudDebut.getPy()) / 2;
-        return new Point(px, py);
     }
 
     public void setNoeudDebut(Noeuds noeudDebut) {
@@ -118,6 +116,14 @@ public class Barre {
         this.angleAlpha = angleAlpha;
     }
 
+    //Permet de récupérer le milieu d'une barre
+     public Point getMilieu()
+    {
+        double px = (this.noeudFin.getPx() + this.noeudDebut.getPx()) / 2;
+        double py = (this.noeudFin.getPy() + this.noeudDebut.getPy()) / 2;
+        return new Point(px, py);
+    }
+
     //to String 
     public String toString() {
         String s = "";
@@ -130,7 +136,7 @@ public class Barre {
     }
 
     //Calcul de la longueur
-    public double calculLongueur() {
+    public double calculLongueurBarre() {
 
         double pxDeb = 0;
         double pyDeb = 0;
@@ -185,48 +191,15 @@ public class Barre {
         Point p1 = new Point(this.getNoeudDebut().getPx(), this.getNoeudDebut().getPy()); //Noeud début
         Point p2 = new Point(this.getNoeudFin().getPx(), this.getNoeudFin().getPy()); //Noeud fin
 
-//        System.out.println("DANS CALCUL ALPHA");
-//        System.out.println("p1 : " + p1.toString());
-//        System.out.println("p2 : " + p2.toString());
         //Seg1 correspond à la barre
         double seg1X = p2.getPx() - p1.getPx();
         double seg1Y = p2.getPy() - p1.getPy();
         double alpha = Math.atan2(seg1Y, seg1X);
         
-        System.out.println("Alpha : "+alpha);
-        
         return alpha;
 
     }
 
-//    public void composantesTension(Noeuds noeudCheck) {
-//        
-//        Point p1 = new Point(this.noeudDebut.getPx(), this.noeudDebut.getPy());
-//        Point p2 = new Point(this.noeudFin.getPx(), this.noeudFin.getPy());
-//        
-//        if (noeudCheck != this.getNoeudDebut()) {
-//            System.out.println("On échange les points p1" + p1.toString() + "et" + p2.toString());
-//            Point pTampon = new Point(p2.getPx(), p2.getPy());
-//            p1 = p2;
-//            p1 = pTampon;
-//            
-//            System.out.println(p1.toString());
-//            System.out.println(p2.toString());
-//        }
-//        
-//        double segX = p2.getPx() - p1.getPx();
-//        double segY = p2.getPy() - p1.getPy();
-//        
-//        if (segX < 0) {
-//            System.out.println("La force est négative sur X");
-//            this.getTensionBarre().setFx(-this.getTensionBarre().getFx());
-//        }
-//        
-//        if (segY < 0) {
-//            System.out.println("La force est négative sur Y");
-//            this.getTensionBarre().setFy(-this.getTensionBarre().getFy());
-//        }
-//    }
     public String afficheSeg(double segX, double segY, double norme) {
         String s = "";
         s = s + "seg X " + segX + "\n";
@@ -234,9 +207,8 @@ public class Barre {
         s = s + "norme " + norme + "";
         return s;
     }
-
-   
-
+    
+    
     public static double calculLongueurSegmentP1P2(Point p1, Point p2) {
         double segX = p2.getPx() - p1.getPx();
         double segY = p2.getPy() - p1.getPy();
@@ -244,6 +216,7 @@ public class Barre {
         return Math.sqrt(segX * segX + segY * segY);
     }
 
+    
     public double getDistanceAuClic(double Px, double Py) {
         double X1 = this.noeudDebut.getPx();
         double Y1 = this.noeudDebut.getPy();
@@ -284,6 +257,7 @@ public class Barre {
         bW.append(this.noeudFin.getID() + "\n");
     }
 
+    //Méthode pour dessiner les barres
     public void draw(GraphicsContext graphicsContext)
     {
         if(type != null)

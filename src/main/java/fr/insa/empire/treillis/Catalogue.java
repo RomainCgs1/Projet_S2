@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Catalogue {
 
     public ArrayList <Type_de_barre> contient;
-    //public Arraytlist catalogue;
 
     public Catalogue() {
         

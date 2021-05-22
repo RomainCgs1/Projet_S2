@@ -1,3 +1,7 @@
+/*
+Cette classe comporte les fonctions liées aux appui-simples
+*/
+
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
@@ -8,9 +12,11 @@ import javafx.scene.paint.Color;
 
 public class Appui_simple extends Noeud_appui {
 
+    //Attributs
     private int identificant = super.getID();
     private Force reactionAppuiSimple;
 
+    //Constructeurs
     public Appui_simple(double px, double py, Segment_terrain segTerrain) {
         super(px, py,segTerrain);
     }
@@ -19,7 +25,7 @@ public class Appui_simple extends Noeud_appui {
         super(PositionA,segmentT);
     }
 
-
+    //Encapsulation
     public Force getReactionAppuiSimple() {
         return reactionAppuiSimple;
     }
@@ -28,6 +34,7 @@ public class Appui_simple extends Noeud_appui {
         this.reactionAppuiSimple = reactionAppuiSimple;
     }
     
+    //Gestions array
     public void addBarreArray(Barre barre){
         if (!super.getAppartientABarre().contains(barre)){
             super.getAppartientABarre().add(barre);  
@@ -48,6 +55,7 @@ public class Appui_simple extends Noeud_appui {
         super.getAppartientABarre().removeAll(super.getAppartientABarre());
     }
 
+    //Méthode toString
     public String toString(){
         String s="";
         s=s+"id : "+this.identifiant+"\n";
@@ -58,11 +66,13 @@ public class Appui_simple extends Noeud_appui {
         return s;
     }
 
+    //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         bW.append("Appui_Simple/");
         super.save(bW, idNum);
     }
     
+    //Méthode pour dessiner un appui-simple
     public void draw(GraphicsContext graphicsContext)
     {
         graphicsContext.setStroke(Color.ORANGE);

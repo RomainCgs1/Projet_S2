@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *Cette classe fait référence à des fonctions liées à l'identificateur
  */
 package fr.insa.empire.utils;
 
@@ -15,19 +13,13 @@ import java.util.Map;
  */
 public class Identificateur {
 
+    //Attributs
     private final int valInit = 1;
     private int valCur;
     private Map<Integer, Object> ketToObject;
     private Map<Object, Integer> objectToKey;
 
-    public Map<Integer, Object> getKetToObject() {
-        return ketToObject;
-    }
-
-    public Map<Object, Integer> getObjectToKey() {
-        return objectToKey;
-    }
-
+    //Constructeurs
     public Identificateur(int valCur) {
         this.valCur = valCur;
         this.ketToObject = new HashMap<Integer, Object>();
@@ -40,6 +32,24 @@ public class Identificateur {
         this.objectToKey = new HashMap<Object, Integer>();
     }
 
+    //Encapsulation
+     public Map<Integer, Object> getKetToObject() {
+        return ketToObject;
+    }
+
+    public Map<Object, Integer> getObjectToKey() {
+        return objectToKey;
+    }
+    
+     public Object getObject(int id){
+        if( ! this.idExist(id)){
+            throw new  Error("identifiant inexistant");
+        }
+        return this.ketToObject.get(id);
+    }
+    
+    //Cette méthode permet de donner à un objet un identifiant s'il n'en possède pas et de le renvoyer
+    //Si l'objet possède déjà un identifiant, la fonction le renvoie également
     public int getOrSetKey (Object o) {
         
         Integer val = this.objectToKey.get(o);
@@ -54,6 +64,7 @@ public class Identificateur {
         }
     }
     
+    //Permet de vérifier si un objet existe au sien de l'identificateur
     public boolean objetPresent (Object o){
         return this.objectToKey.get(o) != null;
     }
@@ -70,17 +81,12 @@ public class Identificateur {
         return s;
     }
     
+    //Pour savoir si un identifiant existe au sien de l'identificateur
     public boolean idExist(int id){
         return this.ketToObject.containsKey(id);
     }
     
-    public Object getObject(int id){
-        if( ! this.idExist(id)){
-            throw new  Error("identifiant inexistant");
-        }
-        return this.ketToObject.get(id);
-    }
-    
+    //Permet d'associer un identifiant précis a un objet
     public void associe(int id,Object obj){
         if(this.idExist(id)){
             throw new Error ("identificateur existant");
@@ -89,6 +95,7 @@ public class Identificateur {
         this.objectToKey.put(obj,id);
     }
 
+    //Permet de vider complètement l'identificateur
     public void clear() {
         this.ketToObject.clear();
         this.objectToKey.clear();

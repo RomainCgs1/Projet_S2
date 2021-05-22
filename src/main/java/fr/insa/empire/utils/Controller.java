@@ -31,6 +31,7 @@ import javafx.scene.media.Media;
 
 public class Controller {
 
+    //Attributs
     private MainGraphique vue;
     private int etat;
     private int etatPrecedent;
@@ -44,6 +45,7 @@ public class Controller {
     Noeuds noeudDebut;
     Noeuds noeudFin;
 
+    //Constructeur
     public Controller(MainGraphique vue) {
         this.vue = vue;
         this.etat = -10;
@@ -173,11 +175,9 @@ public class Controller {
                 Optional<String> selectionTypeCurrent = dialogTypeCurrent.showAndWait();
 
                 if (selectionTypeCurrent.get().contains("Bois")) {
-                    System.out.println("Le type " + selectionTypeCurrent.get());
                     this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(0));
 
                 } else if (selectionTypeCurrent.get().contains("Acier")) { //C'est acier
-                    System.out.println("Le type " + selectionTypeCurrent.get());
                     this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(1));
                 }
                 this.changeEtat(20);
@@ -196,12 +196,10 @@ public class Controller {
                 Type_de_barre type = this.vue.getTreillis().getCatalogue().getContient().get(0); //Type par défaut est le bois
 
                 if (selectionType.get().contains("Bois")) {
-                    System.out.println("Le type " + selectionType.get());
                     type = this.vue.getTreillis().getCatalogue().getContient().get(0);
 
                 } else if (selectionType.get().contains("Acier")) { //C'est acier
-                    System.out.println("Le type " + selectionType.get());
-                    type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                     type = this.vue.getTreillis().getCatalogue().getContient().get(1);
                 }
                 this.changeEtat(0);
                 break;
@@ -246,7 +244,6 @@ public class Controller {
                 break;
             case 70: //calculs
                 this.vue.getText().setText(" Sélectionnez le noeud simple sur lequel la force va s'appliquer");
-                System.out.println("Sélectionnez un noeud simple auquel appliqué la force");
                 this.vue.getMbNoeud().setText("Noeud");
                 this.vue.getMtbBarre().setSelected(false);
                 this.vue.getMtbTerrain().setSelected(false);
@@ -823,23 +820,6 @@ public class Controller {
         barre.draw(this.vue.getCanvas().getGraphicsContext2D());
 
         System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
-
-//        //On choisit le type de la barre
-//        String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
-//        ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
-//        dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
-//        dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
-//        dialogBoxTypeDeBarre.setContentText("Types :");
-//        Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
-//
-//        if (selection.get().contains("Bois")) {
-//            System.out.println("Le type " + selection.get());
-//            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
-//        }
-//        if (selection.get().contains("Acier")) {
-//            System.out.println("Le type " + selection.get());
-//            barre.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
-//        }
     }
 
     private void eraseAll() {

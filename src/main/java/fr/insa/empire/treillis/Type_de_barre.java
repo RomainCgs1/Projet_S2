@@ -1,3 +1,7 @@
+/*
+Cette classe fait référence aux fonctions liées au type de barre
+*/
+
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
@@ -19,7 +23,7 @@ public class Type_de_barre {
     private Color couleur;
     private ArrayList<Barre> appartient = new ArrayList<Barre>();
 
-    //Constructeur
+    //Constructeurs
     public Type_de_barre(String nom, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression, Color couleur) {
         this.nom = nom;
         this.coutAuMetre = coutAuMetre;
@@ -37,15 +41,7 @@ public class Type_de_barre {
         this.resMaxComp = resMaxCompression;
         this.resMaxTens = resMaxTension;
     }
-    
 
-    public Type_de_barre() {
-        this.coutAuMetre = 10;
-        this.longMax = 500;
-        this.longMin = 0.5;
-        this.resMaxComp = 1000;
-        this.resMaxTens = 1000;
-    }
 
     //Encapsulation
     public int getIdentifiant() {
@@ -135,6 +131,7 @@ public class Type_de_barre {
         return s;
     }
 
+    //Sauvegarde
     public void saveTypeDeBarre(BufferedWriter bW, Identificateur idNum) throws IOException {
         //id;cout;longeur min; longeur max; resistance max trac; resistance max compression
         bW.append("Type;");

@@ -1,3 +1,7 @@
+/*
+Cette classe comporte les fonctions liées aux appui-doubles
+*/
+
 package fr.insa.empire.treillis;
 
 import fr.insa.empire.utils.Identificateur;
@@ -8,9 +12,11 @@ import javafx.scene.paint.Color;
 
 public class Appui_double extends Noeud_appui {
 
+    //Attributs
     private int identifiant = super.getID();
     private Force reactionAppuiDouble;
 
+    //Constructeus
     public Appui_double(double px, double py, Segment_terrain segTerrain) {
         super(px, py, segTerrain);
     }
@@ -19,6 +25,7 @@ public class Appui_double extends Noeud_appui {
         super(PositionA,segTerrain);
     }
 
+    //Encapsulation
     public Force getReactionAppuiDouble() {
         return reactionAppuiDouble;
     }
@@ -26,7 +33,8 @@ public class Appui_double extends Noeud_appui {
     public void setReactionAppuiDouble(Force reactionAppuiDouble) {
         this.reactionAppuiDouble = reactionAppuiDouble;
     }
-
+    
+    //Gestions arraylist
     public void addBarreArray(Barre barre) {
         if (!super.getAppartientABarre().contains(barre)) {
             super.getAppartientABarre().add(barre);
@@ -47,6 +55,7 @@ public class Appui_double extends Noeud_appui {
         super.getAppartientABarre().removeAll(super.getAppartientABarre());
     }
 
+    //méthode toString
     public String toString() {
         String s = "";
         s = s + "id : " + this.identifiant + "\n";
@@ -57,11 +66,13 @@ public class Appui_double extends Noeud_appui {
         return s;
     }
 
+    //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
         bW.append("Appui_Double/");
         super.save(bW, idNum);
     }
 
+    //Fonction pour dessiner un appui-double
     public void draw(GraphicsContext graphicsContext) {
         graphicsContext.setStroke(Color.SILVER);
         graphicsContext.strokeOval(this.getPx() - 5, this.getPy() - 5, 10, 10);
