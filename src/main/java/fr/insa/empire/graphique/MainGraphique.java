@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 public class MainGraphique extends BorderPane {
 
     private final Controller controller;
-    private final Treillis treillis;
+    public final Treillis treillis;
     private final MenuItem choix1;
     private final MenuItem choix2;
     private final MenuItem choix3;
