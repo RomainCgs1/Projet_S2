@@ -1,6 +1,7 @@
 package fr.insa.empire.graphique;
 
 import fr.insa.empire.utils.Controller;
+import fr.insa.empire.utils.PickAFile;
 import javafx.scene.control.*;
 
 import java.io.BufferedWriter;
@@ -8,6 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -142,7 +145,20 @@ public class MyMenuBar extends MenuBar {
                     }
                 }
         );
-
+        this.miOuvrir.setOnAction(
+                action -> {
+                    
+                    String fichier = PickAFile.main();
+                    System.out.println(fichier);
+            try {
+                this.mainGraphique.treillis.ouvronsToutca(fichier);
+            } catch (Exception ex) {
+                throw new Error(ex);
+            }
+                    controller.changeEtat(0);
+                }
+        );
+        
         this.miRecommencer.setOnAction(
                 action -> {
                     controller.changeEtat(54);
