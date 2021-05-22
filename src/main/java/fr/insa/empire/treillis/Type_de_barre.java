@@ -29,6 +29,15 @@ public class Type_de_barre {
         this.resMaxTens = resMaxTension;
         this.couleur = couleur;
     }
+    public Type_de_barre(String nom, double coutAuMetre, double longMax, double longMin, double resMaxTension, double resMaxCompression) {
+        this.nom = nom;
+        this.coutAuMetre = coutAuMetre;
+        this.longMax = longMax;
+        this.longMin = longMin;
+        this.resMaxComp = resMaxCompression;
+        this.resMaxTens = resMaxTension;
+    }
+    
 
     public Type_de_barre() {
         this.coutAuMetre = 10;

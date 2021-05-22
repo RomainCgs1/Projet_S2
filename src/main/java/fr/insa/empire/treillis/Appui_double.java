@@ -14,6 +14,10 @@ public class Appui_double extends Noeud_appui {
     public Appui_double(double px, double py, Segment_terrain segTerrain) {
         super(px, py, segTerrain);
     }
+    
+    public Appui_double(double PositionA,Segment_terrain segTerrain){
+        super(PositionA,segTerrain);
+    }
 
     public Force getReactionAppuiDouble() {
         return reactionAppuiDouble;

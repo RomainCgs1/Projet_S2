@@ -69,6 +69,25 @@ public class Identificateur {
         }
         return s;
     }
+    
+    public boolean idExist(int id){
+        return this.ketToObject.containsKey(id);
+    }
+    
+    public Object getObject(int id){
+        if( ! this.idExist(id)){
+            throw new  Error("identifiant inexistant");
+        }
+        return this.ketToObject.get(id);
+    }
+    
+    public void associe(int id,Object obj){
+        if(this.idExist(id)){
+            throw new Error ("identificateur existant");
+        }
+        this.ketToObject.put(id,obj);
+        this.objectToKey.put(obj,id);
+    }
 
     public void clear() {
         this.ketToObject.clear();

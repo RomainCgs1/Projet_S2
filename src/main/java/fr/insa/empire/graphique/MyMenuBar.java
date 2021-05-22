@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -24,13 +22,10 @@ public class MyMenuBar extends MenuBar {
 
     private Menu mFichier;
     private Menu mParametre;
-    private Menu mAutre;
+    private Menu mAide;
     private MenuItem miEnregistrer;
     private MenuItem miOuvrir;
-    private MenuItem miNouveau;
     private MenuItem miRecommencer;
-    private MenuItem miAide;
-    private MenuItem miInformations;
 
     private MenuItem miLangue;
     private MenuItem miTheme;
@@ -44,20 +39,8 @@ public class MyMenuBar extends MenuBar {
         this.mFichier = new Menu("Fichier");
         this.miEnregistrer = new MenuItem("Enregistrer");
         this.miOuvrir = new MenuItem("Ouvrir");
-        this.miNouveau = new MenuItem("Nouveau");
         this.miRecommencer = new MenuItem("Recommencer");
-        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir,this.miNouveau, this.miRecommencer);
-
-        this.miNouveau.setOnAction(
-                action -> {
-                    MainGraphApp graphApp = new MainGraphApp();
-                    try {
-                        graphApp.start(new Stage());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-        );
+        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir, this.miRecommencer);
 
         this.mParametre = new Menu("Paramètres ");
         this.miLangue = new MenuItem("Langue");
@@ -147,15 +130,8 @@ public class MyMenuBar extends MenuBar {
         );
         this.miOuvrir.setOnAction(
                 action -> {
-                    
-                    String fichier = PickAFile.main();
-                    System.out.println(fichier);
-            try {
-                this.mainGraphique.treillis.ouvronsToutca(fichier);
-            } catch (Exception ex) {
-                throw new Error(ex);
-            }
-                    controller.changeEtat(0);
+                    String selectedFile = PickAFile.main();
+                    this.mainGraphique.treillis.ouvronsToutca(selectedFile);
                 }
         );
         
@@ -165,18 +141,12 @@ public class MyMenuBar extends MenuBar {
                 }
         );
 
-        this.mAutre = new Menu("Autre");
-
-        this.miAide = new MenuItem("Aide");
-        this.miInformations = new MenuItem("Informations");
-
-        this.mAutre.getItems().addAll(this.miAide, this.miInformations);
+        this.mAide = new Menu("Aide");
 
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
             this.useSystemMenuBarProperty().set(true);
         }
-
-        this.getMenus().addAll(this.mFichier, this.mParametre, this.mAutre);
+        this.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
     }
 }

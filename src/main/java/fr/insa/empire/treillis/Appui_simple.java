@@ -14,6 +14,10 @@ public class Appui_simple extends Noeud_appui {
     public Appui_simple(double px, double py, Segment_terrain segTerrain) {
         super(px, py,segTerrain);
     }
+    
+    public Appui_simple(double PositionA, Segment_terrain segmentT){
+        super(PositionA,segmentT);
+    }
 
 
     public Force getReactionAppuiSimple() {

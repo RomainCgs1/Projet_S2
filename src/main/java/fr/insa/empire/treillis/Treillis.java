@@ -6,9 +6,12 @@ import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+
 
 public class Treillis {
 
@@ -237,42 +240,6 @@ public class Treillis {
         bW.append("FINBARRES\n");
     }
 
-    public void open(BufferedReader bR) throws IOException {
-        System.out.println("Début de la lecture");
-        String strCurrentLine;
-        while ((strCurrentLine = bR.readLine()) != null) {
-            System.out.println(strCurrentLine);
-            String[] splitStrCurrLine = strCurrentLine.split("/");
-            if (splitStrCurrLine[0].equals("DEBUT TREILLI")) {
-
-            } else if (splitStrCurrLine[0].equals("FIN TREILLI")) {
-
-            } else {
-                if (splitStrCurrLine[0].equals("DEBUT_Triangle_terrain")) {
-                    //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
-                    //on integrera la leture des segements qui lui appartiennent
-                } else if (splitStrCurrLine[0].toLowerCase().equals("debut_barre")) {
-                    for (int i = 1; i < splitStrCurrLine.length; i++) {
-                        //a finir plus tard car on a besoin d'une autre version de sa sauvegarde
-                    }
-                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_simple")) {
-                    Noeud_simple noeudSimple = new Noeud_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]));
-                    identificateur.getOrSetKey(noeudSimple);
-                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_simple")) {
-                    Appui_simple appuiSimple = new Appui_simple(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
-                    identificateur.getOrSetKey(appuiSimple);
-                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_double")) {
-                    Appui_double appuiDouble = new Appui_double(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
-                    identificateur.getOrSetKey(appuiDouble);
-                } else if (splitStrCurrLine[0].toLowerCase().equals("noeud_appui_encastre")) {
-                    Appui_encastre appuiEncastre = new Appui_encastre(Double.parseDouble(splitStrCurrLine[2]), Double.parseDouble(splitStrCurrLine[3]), (Segment_terrain) identificateur.getKetToObject().get(Integer.parseInt(splitStrCurrLine[4])));
-                    identificateur.getOrSetKey(appuiEncastre);
-                }
-            }
-
-        }
-    }
-
     public String[][] lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee) {
         //Création des matrices
         Matrice systeme = Force.creationMatrice(this);
@@ -338,6 +305,140 @@ public class Treillis {
 
         return resultats;
     }
-
+     public void ouvronsToutca(String fichier){
+         
+    try
+    {
+      File file = new File(fichier);
+      FileReader fr = new FileReader(file);          
+      BufferedReader br = new BufferedReader(fr);  
+      StringBuffer sb = new StringBuffer();    
+      String line;
+      
+      
+      
+      while((line = br.readLine()) != null)
+      {
+        final String separateur = ";";
+        String ligne[]=line.split(separateur);
+        if (ligne[0].equals("ZoneConstructible"))
+        {
+            Zone_constructible zone = new Zone_constructible(Double.parseDouble(ligne[1]),Double.parseDouble(ligne[2]),Double.parseDouble(ligne[3]),Double.parseDouble(ligne[4]));
+        
+        }
+        
+        else if(ligne[0].equals("Triangle"))
+        {
+            String coord1[] = ligne[2].split(",");
+            String coord2[] = ligne[3].split(",");
+            String coord3[] = ligne[4].split(",");
+            double X1 = Double.parseDouble(coord1[0].replace("(","").replace(")",""));
+            double Y1 = Double.parseDouble(coord1[1].replace("(","").replace(")",""));
+            double X2 = Double.parseDouble(coord2[0].replace("(","").replace(")",""));
+            double Y2 = Double.parseDouble(coord2[1].replace("(","").replace(")",""));
+            double X3 = Double.parseDouble(coord3[0].replace("(","").replace(")",""));
+            double Y3 = Double.parseDouble(coord3[1].replace("(","").replace(")",""));
+            
+            Point P1 = new Point(X1,Y1);
+            Point P2 = new Point(X2,Y2);
+            Point P3 = new Point(X3,Y3);
+            
+            Segment_terrain Seg1 = new Segment_terrain(P1,P2);
+            Segment_terrain Seg2 = new Segment_terrain(P2,P3);
+            Segment_terrain Seg3 = new Segment_terrain(P3,P1);
+            
+            Triangle_terrain T = new Triangle_terrain(Seg1,Seg2,Seg3);
+            this.identificateur.associe(Integer.parseInt(ligne[1]),T);
+            
+        }
+        else if(ligne[0].equals("Type"))
+        {
+           Type_de_barre type = new Type_de_barre("",Double.parseDouble(ligne[2]),Double.parseDouble(ligne[3]),0,Double.parseDouble(ligne[4]),Double.parseDouble(ligne[5]));
+           this.identificateurTypeBarre.associe(Integer.parseInt(ligne[1]),type);
+        
+        }
+        else if(ligne[0].equals("Appui_Simple"))
+        {
+            Map map = this.treillis.identificateur.getKetToObject();
+            Object triangle = map.get(Integer.parseInt(ligne[2]));
+            Segment_terrain SegA;
+            if(triangle.getClass() == Triangle_terrain.class){
+                if(ligne[3].equals("0")){
+                    SegA = ((Triangle_terrain) triangle).getSegment1();
+                }
+                else if(ligne[3].equals("1"))
+                {
+                    SegA = ((Triangle_terrain) triangle).getSegment2();
+                }
+                else
+                {
+                    SegA = ((Triangle_terrain) triangle).getSegment3();
+                }
+                Appui_simple noeud = new Appui_simple(Double.parseDouble(ligne[4]), SegA);
+                this.identificateur.associe(Integer.parseInt(ligne[1]),noeud);
+                this.treilliContientNoeudAppui.add(noeud);
+            }
+                
+            
+            
+        }
+        else if(ligne[0].equals("Appui_Double"))
+        {
+            Map map = this.treillis.identificateur.getKetToObject();
+            Object triangle = map.get(Integer.parseInt(ligne[2]));
+            Segment_terrain SegA;
+            if(triangle.getClass() == Triangle_terrain.class){
+                if(ligne[3].equals("0")){
+                    SegA = ((Triangle_terrain) triangle).getSegment1();
+                }
+                else if(ligne[3].equals("1"))
+                {
+                    SegA = ((Triangle_terrain) triangle).getSegment2();
+                }
+                else
+                {
+                    SegA = ((Triangle_terrain) triangle).getSegment3();
+                }
+                Appui_double noeud = new Appui_double(Double.parseDouble(ligne[4]), SegA);
+                this.identificateur.associe(Integer.parseInt(ligne[1]),noeud);
+                this.treilliContientNoeudAppui.add(noeud);
+            }
+            
+        }
+        else if(ligne[0].equals("NoeudSimple"))
+        {
+            String coord[] = ligne[2].split(",");
+            int id = Integer.parseInt(ligne[1]);
+            double X = Double.parseDouble(coord[0].replace("(","").replace(")",""));
+            double Y = Double.parseDouble(coord[1].replace("(","").replace(")",""));
+            Noeud_simple noeud = new Noeud_simple(X,Y);
+            this.identificateur.associe(id,noeud);
+            this.treilliContientNoeudSimple.add(noeud);
+           
+        }
+        else if(ligne[0].equals("Barre"))
+        {
+            Map map = this.treillis.identificateur.getKetToObject();
+            Object noeud1 = map.get(Integer.parseInt(ligne[3]));
+            Object noeud2 = map.get(Integer.parseInt(ligne[4]));
+            
+            if(noeud1.getClass() == Noeuds.class && noeud2.getClass() == Noeuds.class)
+            {
+                Barre barre = new Barre(((Noeuds) noeud1),((Noeuds) noeud2), this);
+                this.identificateur.associe(Integer.parseInt(ligne[1]),barre);
+                this.treilliContientBarre.add(barre);
+            }     
+            
+            
+        } 
+      
+        
+      }
+      fr.close(); 
+    }
+    catch(IOException e)
+    {
+      e.printStackTrace();
+}}
    
 }
