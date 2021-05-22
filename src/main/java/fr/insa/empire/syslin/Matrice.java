@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ Cette classe permet la création de matrice
+Elle comporte l'ensemble des fonctions modifiants une matrice
+Elle comprent aussi la résolution par le pivot de Gauss
  */
 package fr.insa.empire.syslin;
 
@@ -13,6 +13,8 @@ public class Matrice {
     private int nbrCol;
     private double[][] coeffs;
 
+    
+    //Constructeurs
     public Matrice(int nl, int nc) {
         this.nbrLig = nl;
         this.nbrCol = nc;
@@ -30,11 +32,7 @@ public class Matrice {
         this.coeffs = coeffs;
     }
     
-    public void setCoeffs(double[][] coeffs) {
-        this.coeffs = coeffs;
-    }
     
-
     public Matrice() {
         this.nbrLig = 1;
         this.nbrCol = 1;
@@ -42,6 +40,7 @@ public class Matrice {
         this.coeffs[0][0] = -404.02;
     }
     
+    //Méthode toString
     public String toString() {
         String s;
         s = "";
@@ -61,7 +60,7 @@ public class Matrice {
     }
 
 
-    //Get et Set
+    //Encapsulation
     public int getNbrLig() {
         return this.nbrLig;
     }
@@ -82,6 +81,9 @@ public class Matrice {
         return coeffs;
     }
     
+       public void setCoeffs(double[][] coeffs) {
+        this.coeffs = coeffs;
+    }
 
     //Concaténation
     public Matrice concatLig(Matrice n) {
@@ -129,7 +131,6 @@ public class Matrice {
             this.coeffs[i1][i] = this.coeffs[i2][i];
             this.coeffs[i2][i] = intermediaire;
         }
-        //System.out.println("Permutation de la ligne " + i1 + "avec la ligne " + i2 + " effectuée");
     }
 
     public void transvection(int lignePivot, int ligneModifiee) {
@@ -141,7 +142,6 @@ public class Matrice {
         }
 
         p = this.coeffs[ligneModifiee][lignePivot] / this.coeffs[lignePivot][lignePivot];
-        //System.out.println("p vaut " + p);
 
         for (int j = 0; j < this.nbrCol; j++) {
             if (j == lignePivot) {
@@ -150,8 +150,6 @@ public class Matrice {
                 this.coeffs[ligneModifiee][j] = this.coeffs[ligneModifiee][j] - (p * this.coeffs[lignePivot][j]);
             }
         }
-        //System.out.println("Transvection de la ligne " + ligneModifiee + " a l'aide du pivot " + this.coeffs[lignePivot][lignePivot] + " effectuée");
-       // System.out.println("Transvection \n " + this);
     }
 
    public int lignePlusGrandPivot(int e) {
@@ -184,15 +182,13 @@ public class Matrice {
 
             int j = i + 1;
             int lignePlusGrandPivot = lignePlusGrandPivot(i);
-            System.out.println("Ligne + grand pivot "+lignePlusGrandPivot);
-            if (lignePlusGrandPivot == -1) {
-                System.out.println("Matrice non inversible");
+
+            if (lignePlusGrandPivot == -1) { //La matrice n'est pas inversible
                 Matrice matErreur = new Matrice();
                 return matErreur;
             } else {
                 if ((lignePlusGrandPivot != i) && (lignePlusGrandPivot != -1)) {
                     permuteLigne(i, lignePlusGrandPivot);
-                    System.out.println("Lignes permutées \n " + this);
                 }
                 while (j < this.nbrLig) {
                     transvection(i, j);
@@ -201,7 +197,6 @@ public class Matrice {
               
             }
         }
-        System.out.println("Descente de Gauss effectuée ");
 
        return this;
     }
@@ -221,11 +216,10 @@ public class Matrice {
                     Montee.transvection(i, j);
             }
         }
-        System.out.println("après remontée : \n" + Montee);
         return Montee;
     }
 
-    //Diagonales en 1
+    //Transformation des diagonales de la matrice en 1 après descente et montée de Gauss
     public void transfoDiagonales1() {
 
         for (int i = 0; i < this.nbrLig; i++) {
@@ -235,7 +229,6 @@ public class Matrice {
                 this.coeffs[i][j] = this.coeffs[i][j] / diviseur;
             }
         }
-        System.out.println("Diagonales transformées");
     }
 
     //Recupération de la matrice solution
@@ -265,65 +258,5 @@ public class Matrice {
         }
         
         return this;
-//        //On parcout la matrice et on décalle les colonnes nulles vers la droite
-//        for (int i = 0; i < this.nbrCol; i++) {
-//            for (int j = 0; j < this.nbrLig; j++) {
-//                if(this.coeffs[j][i]==0){
-//                    nb0++;
-//                }
-//            }
-//            if(nb0==this.nbrCol-1){
-//               // System.out.println("La colonne "+i+" est remplie de 0");
-//                if(i != this.nbrCol-1){
-//                    listeRef.remove(i);
-//                    nbColNulle++;
-//                    this.decalageCol(i);
-//                    System.out.println("Décalage effectué");
-//                    System.out.println("Matrice actuelle :\n"+this.toString());
-//                    System.out.println(listeRef.toString());
-//                }
-//            }
-//            nb0=0;
-//        }
-//        
-//        //System.out.println("Nombre de colonnes nulles : "+(nbColNulle-1));
-//        
-//        Matrice newMatrice = new Matrice (this.nbrLig, this.nbrCol-nbColNulle);
-//        for (int i = 0; i < newMatrice.getNbrLig(); i++) {
-//            for (int j = 0; j < newMatrice.getNbrCol(); j++) {
-//                newMatrice.getCoeffs()[i][j]=this.coeffs[i][j];
-//            }
-//            
-//        }
-//        System.out.println("Matrice modifiée : \n"+newMatrice.toString());
-//        
-//        return newMatrice;
     }
-    
-    public void decalageCol(int i){
-        for (int k = i; k < this.nbrCol-1; k++) {
-            for (int j = 0; j < this.nbrLig; j++) {
-                if(j != this.nbrCol-1){
-                    //System.out.println("La case ["+j+"]["+k+"]"+this.coeffs[j][k]+" devient ["+j+"]["+(k+1)+"]"+this.coeffs[j][k+1]);
-                    this.coeffs[j][k]=this.coeffs[j][k+1];
-                }
-                else{
-                    //System.out.println("La case ["+j+"]["+k+"]"+this.coeffs[j][k]+" devient ["+j+"]["+(k+1)+"]"+this.coeffs[j][k+1]);
-                    this.coeffs[j][k] = 0;
-                }
-            }
-        }
-    }
-
-    
-/*
-    //Main
-    public static void main(String[] args) {
-        Matrice.testAlea();
-        Matrice.testGauss();
-        
-        Matrice inversible = matInversible();
-        inversible.testSyslin();
-    }
-*/
 }
