@@ -266,28 +266,15 @@ public class Controller {
                 this.changeEtat(etatPrecedent);
                 break;
             case 201:
-                
-                try {
-                        Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(0)));
-                        Stage fenetreInfosType = new Stage();
-                        fenetreInfosType.setTitle("Infos Types MeshApp");
-                        fenetreInfosType.setScene(sceneInfosType);
-                        fenetreInfosType.setX(500);
-                        fenetreInfosType.setY(800);
-                        fenetreInfosType.showAndWait();
-
-                    } catch (IOException ie) {
-                        System.out.println("Erreur de chargement");
-                    }
-                final URL imageURL = getClass().getResource("image.png");
-                final Image image = new Image(imageURL.toExternalForm());
+                final Image image = new Image("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
                 final ImageView imageView = new ImageView(image);
-                final Pane root = new Pane();
-                root.getChildren().setAll(imageView);
-                final Scene scene = new Scene(root, 350, 300);
-//                primaryStage.setTitle("Test d'affichage d'image");
-//                primaryStage.setScene(scene);
-//                primaryStage.show();
+                final Pane pane = new Pane();
+                pane.getChildren().setAll(imageView);
+                final Scene sceneApropos = new Scene(pane, 350, 300);
+                Stage fenetreApropos = new Stage();
+                fenetreApropos.setTitle("A propos de nous : MeshApp");
+                fenetreApropos.setScene(sceneApropos);
+                fenetreApropos.showAndWait();
                 break;
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");

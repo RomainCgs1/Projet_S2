@@ -16,8 +16,6 @@ import java.util.Set;
 
 public class Treillis {
 
-    public static Treillis treillis;
-
     private Zone_constructible appartient;
     public Identificateur identificateur;
     private Identificateur identificateurForce;
@@ -44,7 +42,6 @@ public class Treillis {
         this.idBarreTensionsCreees = new ArrayList<Integer>();
         this.idAppuiSimpleCrees = new ArrayList<Integer>();
         this.idAppuiDoubleCrees = new ArrayList<Integer>();
-        this.treillis = this;
     }
 
     //Calcul prix treilli
