@@ -51,16 +51,22 @@ public class Identificateur {
     //Cette méthode permet de donner à un objet un identifiant s'il n'en possède pas et de le renvoyer
     //Si l'objet possède déjà un identifiant, la fonction le renvoie également
     public int getOrSetKey (Object o) {
-        
+
         Integer val = this.objectToKey.get(o);
-        if (val != null){
+
+        if (val != null) {
             return val; //Car cela signifie que la clé existe déjà
         }
-        else{
-            this.objectToKey.put(o, this.valCur);
-            this.ketToObject.put(this.valCur, o);
-            this.valCur++;
-            return this.valCur-1;
+        else
+        {
+            int i = 1;
+            while (this.ketToObject.get(i) != null)
+            {
+                i++;
+            }
+            this.objectToKey.put(o, i);
+            this.ketToObject.put(i, o);
+            return i;
         }
     }
     

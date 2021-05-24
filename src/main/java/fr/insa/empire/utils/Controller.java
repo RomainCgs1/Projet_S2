@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -906,8 +905,6 @@ public class Controller {
 
         dialog.getDialogPane().setContent(grid);
 
-        // Request focus on the tfPYX field by default.
-        // Convert the result to a tfPYX-tfPY-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == validationButtonType) {
                 return null;
