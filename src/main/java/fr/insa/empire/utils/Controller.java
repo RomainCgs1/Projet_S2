@@ -282,6 +282,7 @@ public class Controller {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                changeEtat(etatPrecedent);
                 break;
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
