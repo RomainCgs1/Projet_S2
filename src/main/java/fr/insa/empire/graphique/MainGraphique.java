@@ -211,7 +211,7 @@ public class MainGraphique extends BorderPane {
 
         //Set up du splitMenuButton
 
-        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/noeudSansFond.png");
+        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/noeud.png");
         Image logoAppuiDouble = new Image(inputAppuiDouble);
         ImageView logoAppuiDoubleView = new ImageView(logoAppuiDouble);
 
@@ -269,7 +269,7 @@ public class MainGraphique extends BorderPane {
         logoPrixView.setFitWidth(40);
         logoPrixView.setFitHeight(40);
 
-        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/GommeGeneralAvecFond.png");
+        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/Gomme.png");
         Image logoGomme = new Image(inputGomme);
         ImageView logoGommeView = new ImageView(logoGomme);
 

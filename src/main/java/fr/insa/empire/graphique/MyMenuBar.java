@@ -67,7 +67,7 @@ public class MyMenuBar extends MenuBar {
                     Alert dBox = new Alert(Alert.AlertType.INFORMATION);
                     dBox.setTitle("Non disponible");
                     dBox.setHeaderText("Fonctionnalité uniquement disponile dans la version payante du logiciel.");
-                    dBox.setContentText("Nous espérons que la langue française vous convient tout de même.");
+                    dBox.setContentText("Nous espérons que la langue française vous convienne tout de même.");
                     //ButtonType btnSmall = new ButtonType("Small");
                     //ButtonType btnMedium = new ButtonType("Medium");
                     //ButtonType btnBig = new ButtonType("Big");
