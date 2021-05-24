@@ -323,6 +323,7 @@ public class Treillis {
                     zone.setIdentifiant(this.identificateur.getOrSetKey(zone));
                     this.setAppartient(zone);
                     System.out.println("Zone Constructible " + ligne[1] + ", " + ligne[2] + ", " + ligne[3] + "; " + ligne[4]);
+                    
                 } else if (ligne[0].equals("Triangle")) {
                     String coord1[] = ligne[2].split(",");
                     String coord2[] = ligne[3].split(",");
@@ -377,7 +378,7 @@ public class Treillis {
                             SegA = ((Triangle_terrain) triangle).getSegment3();
                         }
                         Appui_simple noeud = new Appui_simple(Double.parseDouble(ligne[4]), SegA);
-
+                        noeud.setIdentifiant(Integer.parseInt(ligne[1]));
                         this.identificateur.associe(Integer.parseInt(ligne[1]), noeud);
                         this.treilliContientNoeudAppui.add(noeud);
                         System.out.println("appui simple" + noeud.getID());
@@ -397,6 +398,7 @@ public class Treillis {
                             SegA = ((Triangle_terrain) triangle).getSegment3();
                         }
                         Appui_double noeud = new Appui_double(Double.parseDouble(ligne[4]), SegA);
+                        noeud.setIdentifiant(Integer.parseInt(ligne[1]));
                         this.identificateur.associe(Integer.parseInt(ligne[1]), noeud);
                         this.treilliContientNoeudAppui.add(noeud);
                         System.out.println("Appui double" + noeud.getID());
@@ -408,6 +410,7 @@ public class Treillis {
                     double X = Double.parseDouble(coord[0].replace("(", "").replace(")", ""));
                     double Y = Double.parseDouble(coord[1].replace("(", "").replace(")", ""));
                     Noeud_simple noeud = new Noeud_simple(X, Y);
+                    noeud.setIdentifiant(id);
                     this.identificateur.associe(id, noeud);
                     this.treilliContientNoeudSimple.add(noeud);
                     System.out.println("noeud simple" + noeud.getID());
@@ -428,26 +431,29 @@ public class Treillis {
                             Noeud_simple noeudF = ((Noeud_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_simple.class) {
                             Appui_simple noeudF = ((Appui_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_double.class) {
                             Appui_double noeudF = ((Appui_double) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         }
                     } else if (noeudDeb.getClass() == Appui_simple.class) {
                         Appui_simple noeudD = ((Appui_simple) noeudDeb);
@@ -456,26 +462,29 @@ public class Treillis {
                             Noeud_simple noeudF = ((Noeud_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_simple.class) {
                             Appui_simple noeudF = ((Appui_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_double.class) {
                             Appui_double noeudF = ((Appui_double) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         }
                     } else if (noeudDeb.getClass() == Appui_double.class) {
                         Appui_double noeudD = ((Appui_double) noeudDeb);
@@ -484,26 +493,29 @@ public class Treillis {
                             Noeud_simple noeudF = ((Noeud_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Noeud_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_simple.class) {
                             Appui_simple noeudF = ((Appui_simple) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_simple) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         } else if (noeudFin.getClass() == Appui_double.class) {
                             Appui_double noeudF = ((Appui_double) noeudFin);
                             Barre barre = new Barre(noeudD, noeudF, this);
                             barre.setType(typee);
+                            barre.setIdentifiant(id);
                             this.identificateur.associe(id, barre);
                             this.treilliContientBarre.add(barre);
-                            noeudD.getAppartientABarre().add(barre);
-                            noeudF.getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[3]))).getAppartientABarre().add(barre);
+                            ((Appui_double) this.identificateur.getObject(Integer.parseInt(ligne[4]))).getAppartientABarre().add(barre);
                         }
                     }
                 }
