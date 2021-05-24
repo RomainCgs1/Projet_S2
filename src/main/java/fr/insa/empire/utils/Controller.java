@@ -31,6 +31,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import javafx.scene.media.Media;
 
@@ -265,6 +266,33 @@ public class Controller {
                 break;
             case 200: //aide
                 this.changeEtat(etatPrecedent);
+                try{
+                    FileInputStream fileInputStream1 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-1.png");
+                    FileInputStream fileInputStream2 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-2.png");
+                    final Image image1 = new Image(fileInputStream1);
+                    final Image image2 = new Image(fileInputStream2);
+                    final ImageView imageView1 = new ImageView(image1);
+                    final ImageView imageView2 = new ImageView(image2);
+                    imageView1.setFitHeight(1000);
+                    imageView1.setPreserveRatio(true);
+                    imageView2.setFitHeight(1000);
+                    imageView2.setPreserveRatio(true);
+                    VBox box = new VBox();
+                    box.setSpacing(10);
+                    box.setPadding(new Insets(15,20, 10,10));
+                    box.getChildren().add(imageView1);
+                    box.getChildren().add(imageView2);
+                    ScrollPane scroll = new ScrollPane();
+                    scroll.setContent(box);
+                    final Scene sceneAide = new Scene(scroll,760,500);
+                    Stage fenetreAide = new Stage();
+                    fenetreAide.setTitle("Aide");
+                    fenetreAide.setScene(sceneAide);
+                    fenetreAide.show();
+                    
+                }catch(FileNotFoundException e){
+                    e.printStackTrace();
+                }
                 break;
             case 201:
                 try {

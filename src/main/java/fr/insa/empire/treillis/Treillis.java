@@ -313,7 +313,6 @@ public class Treillis {
             BufferedReader br = new BufferedReader(fr);
             StringBuffer sb = new StringBuffer();
             String line;
-
             while ((line = br.readLine()) != null) {
                 System.out.println("ligne suivante");
                 final String separateur = ";";
