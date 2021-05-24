@@ -252,7 +252,9 @@ public class MainGraphique extends BorderPane {
         logoCalcView.setFitHeight(40);
 
         this.mbLancerCalculs = new MyB("Lancer les calculs", logoCalcView);
-        ImageView logoTypeDeBarreView = new ImageView(logoBarre);
+        FileInputStream inputTypeDeBarre = new FileInputStream("src/main/java/fr/insa/empire/autres/typeDeBarre.png");
+        Image logoTypeDeBarre = new Image(inputTypeDeBarre);
+        ImageView logoTypeDeBarreView = new ImageView(logoTypeDeBarre);
         logoTypeDeBarreView.setFitHeight(40);
         logoTypeDeBarreView.setFitWidth(40);
         this.mbTypeDeBarre = new MenuButton("Type de Barre", logoTypeDeBarreView);
