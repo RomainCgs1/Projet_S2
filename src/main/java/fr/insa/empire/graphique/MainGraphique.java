@@ -242,7 +242,7 @@ public class MainGraphique extends BorderPane {
         ImageView logoTerrainView = new ImageView(logoTerrain);
         logoTerrainView.setFitWidth(40);
         logoTerrainView.setFitHeight(40);
-        this.mtbTerrain = new MyTB("Terrain", logoTerrainView);
+        this.mtbTerrain = new MyTB("Segment terrain", logoTerrainView);
 
         FileInputStream inputCalc = new FileInputStream("src/main/java/fr/insa/empire/autres/calculatriceSansFond.png");
         Image logoCalc = new Image(inputCalc);

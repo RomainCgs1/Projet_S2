@@ -27,7 +27,7 @@ public class MyMenuBar extends MenuBar {
     private MenuItem miOuvrir;
     private MenuItem miRecommencer;
     private MenuItem miAide;
-    private MenuItem miJeSaisPlusSonNom;
+    private MenuItem miAPropos;
 
     private MenuItem miLangue;
     private MenuItem miTheme;
@@ -162,8 +162,8 @@ public class MyMenuBar extends MenuBar {
                     controller.changeEtat(200);
                 }
         );
-        this.miJeSaisPlusSonNom = new MenuItem("Je sais plus quel nom on doit mettre ici");
-        this.mPlus.getItems().addAll(miJeSaisPlusSonNom, miAide);
+        this.miAPropos = new MenuItem("Je sais plus quel nom on doit mettre ici");
+        this.mPlus.getItems().addAll(miAPropos, miAide);
 
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
