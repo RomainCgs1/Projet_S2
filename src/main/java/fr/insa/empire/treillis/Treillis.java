@@ -236,7 +236,7 @@ public class Treillis {
 
     public String[][] lancerCalculGeneraux(Noeud_simple noeudSimple, Force fAjoutee) {
         //Création des matrices
-        Matrice systeme = Force.creationMatrice(this);
+        Matrice systeme = Force.creationMatrice(this); 
         Matrice vecteur = new Matrice(systeme.getNbrLig(), 1);
 
         //Création de l'Arraylist de ref
