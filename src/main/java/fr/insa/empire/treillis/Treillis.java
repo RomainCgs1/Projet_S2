@@ -515,6 +515,7 @@ public class Treillis {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("test");
     }
 
 }

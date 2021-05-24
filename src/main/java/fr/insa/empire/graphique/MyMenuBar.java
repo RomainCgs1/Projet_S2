@@ -139,13 +139,14 @@ public class MyMenuBar extends MenuBar {
         );
         this.miOuvrir.setOnAction(
                 action -> {
+                    this.controller.changeEtat(54);
                     String selectedFile = PickAFile.main();
                     try{
                         this.mainGraphique.treillis.lecture(selectedFile);
                     }catch(IOException e){
                         e.printStackTrace();
                     }
-                    this.controller.changeEtat(1000);
+                    this.controller.changeEtat(0);
                 }
         );
         
