@@ -25,6 +25,7 @@ public class MyMenuBar extends MenuBar {
     private Menu mPlus;
     private MenuItem miEnregistrer;
     private MenuItem miOuvrir;
+    private MenuItem miNouveau;
     private MenuItem miRecommencer;
     private MenuItem miAide;
     private MenuItem miAPropos;
@@ -41,8 +42,20 @@ public class MyMenuBar extends MenuBar {
         this.mFichier = new Menu("Fichier");
         this.miEnregistrer = new MenuItem("Enregistrer");
         this.miOuvrir = new MenuItem("Ouvrir");
+        this.miNouveau = new MenuItem("Nouveau");
         this.miRecommencer = new MenuItem("Recommencer");
-        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir, this.miRecommencer);
+        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir, this.miNouveau, this.miRecommencer);
+
+        this.miNouveau.setOnAction(
+                action -> {
+                    MainGraphApp graphApp = new MainGraphApp();
+                    try {
+                        graphApp.start(new Stage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
 
         this.mParametre = new Menu("Paramètres ");
         this.miLangue = new MenuItem("Langue");
