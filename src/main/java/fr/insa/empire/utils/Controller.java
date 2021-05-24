@@ -269,21 +269,21 @@ public class Controller {
                 break;
             case 201:
                 try {
-                    FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
-                    final Image image = new Image(fileInputStream);
-                    final ImageView imageView = new ImageView(image);
-                    final Pane pane = new Pane();
-                    pane.getChildren().setAll(imageView);
-                    final Scene sceneApropos = new Scene(pane, 350, 300);
-                    Stage fenetreApropos = new Stage();
-                    fenetreApropos.setTitle("A propos de nous : MeshApp");
-                    fenetreApropos.setScene(sceneApropos);
-                    fenetreApropos.showAndWait();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                changeEtat(etatPrecedent);
-                break;
+                FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
+                final Image image = new Image(fileInputStream);
+                final ImageView imageView = new ImageView(image);
+                final Pane pane = new Pane();
+                pane.getChildren().setAll(imageView);
+                final Scene sceneApropos = new Scene(pane, 350, 300);
+                Stage fenetreApropos = new Stage();
+                fenetreApropos.setTitle("A propos de nous : MeshApp");
+                fenetreApropos.setScene(sceneApropos);
+                fenetreApropos.showAndWait();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            changeEtat(etatPrecedent);
+            break;
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
                 this.vue.getMbNoeud().setText("Noeud");
