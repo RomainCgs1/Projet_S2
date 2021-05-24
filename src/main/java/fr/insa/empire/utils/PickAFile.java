@@ -1,25 +1,18 @@
 package fr.insa.empire.utils;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
 
 public class PickAFile {
-    
-    private String caca;
-    
-    
-    
-    public static String main(){
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "textes", "txt");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
-            
-        }
-        return chooser.getSelectedFile().getAbsolutePath();
+
+    public static String main()
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir le fichier à ouvir");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        System.out.println(selectedFile);
+        return selectedFile.getAbsolutePath();
     }
 }

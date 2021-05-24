@@ -257,7 +257,15 @@ public class MainGraphique extends BorderPane {
         logoTypeDeBarreView.setFitWidth(40);
         this.mbTypeDeBarre = new MenuButton("Type de Barre", logoTypeDeBarreView);
         this.mbReglages = new MyB("Réglages");
-        this.mbPrix = new MyB("Prix");
+
+        FileInputStream inputPrix = new FileInputStream("src/main/java/fr/insa/empire/autres/prix.png");
+        Image logoPrix = new Image(inputPrix);
+        ImageView logoPrixView = new ImageView(logoPrix);
+
+        this.mbPrix = new MyB("Prix", logoPrixView);
+
+        logoPrixView.setFitWidth(40);
+        logoPrixView.setFitHeight(40);
 
         FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/GommeGeneralAvecFond.png");
         Image logoGomme = new Image(inputGomme);

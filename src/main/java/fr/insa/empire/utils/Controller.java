@@ -258,14 +258,8 @@ public class Controller {
                 dialogPrix.setContentText(s);
                 dialogPrix.showAndWait();
                 break;
-            case 200: //thème
-                choixTheme();
-                changeEtat(etatPrecedent);
-                break;
-
-            case 300: //langue mais tests de transformation
-                //pas encore de transf
-                break;
+            case 200: //aide
+                this.changeEtat(etatPrecedent);
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
                 this.vue.getMbNoeud().setText("Noeud");
@@ -625,8 +619,8 @@ public class Controller {
                             break;
                         case 70:
                             //On sélectionne le noeud souhaité
-                            Noeud_simple noeudSimpleChoisit = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
-                            if (noeudSimpleChoisit == null) {
+                            Noeud_simple noeudSimpleChoisi = this.vue.getCanvas().getNoeud_simplePlusProche(px, py, this.vue.getTreillis().identificateur);
+                            if (noeudSimpleChoisi == null) {
                                 Alert diagAlertMauvaiseDonnee = new Alert(AlertType.ERROR);
                                 diagAlertMauvaiseDonnee.setTitle("Erreur Calcul");
                                 diagAlertMauvaiseDonnee.setHeaderText("Erreur Noeud Simple");
@@ -635,7 +629,7 @@ public class Controller {
                                 this.changeEtat(70);
                                 break;
                             }
-                            System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisit);
+                            System.out.println("Noeud simple le plus proche : " + noeudSimpleChoisi);
 
                             //On demande la valeur de la composante sur X de la force
                             TextInputDialog boiteDiagPX = new TextInputDialog();
@@ -690,14 +684,14 @@ public class Controller {
                                 double pyForce = Double.parseDouble(textPY.get());
 
                                 //On crée la force ajoutée
-                                Force forceAjoutee = new Force(noeudSimpleChoisit, pxForce, pyForce);
+                                Force forceAjoutee = new Force(noeudSimpleChoisi, pxForce, pyForce);
 
                                 //Calcul
                                 System.out.println("Lancement des calculs");
                                 System.out.println("Calculs en cours...");
 
                                 //On lance les calculs et on les récupère dans un tableau de String pour afficher les résultats
-                                String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisit, forceAjoutee);
+                                String[][] resultat = this.vue.getTreillis().lancerCalculGeneraux(noeudSimpleChoisi, forceAjoutee);
 
                                 //On regarde s'il y a une erreur
                                 if (resultat[0][0].contains("erreur")) {
@@ -719,8 +713,8 @@ public class Controller {
                                         Stage fenetreResultat = new Stage();
                                         fenetreResultat.setTitle("Résultat Calculs MeshApp");
                                         fenetreResultat.setScene(sceneResultat);
-                                        fenetreResultat.setX(500);
-                                        fenetreResultat.setY(800);
+                                        fenetreResultat.setWidth(800);
+                                        fenetreResultat.setHeight(600);
                                         fenetreResultat.showAndWait();
 
                                     } catch (IOException ie) {

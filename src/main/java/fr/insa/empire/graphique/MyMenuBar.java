@@ -22,10 +22,12 @@ public class MyMenuBar extends MenuBar {
 
     private Menu mFichier;
     private Menu mParametre;
-    private Menu mAide;
+    private Menu mPlus;
     private MenuItem miEnregistrer;
     private MenuItem miOuvrir;
     private MenuItem miRecommencer;
+    private MenuItem miAide;
+    private MenuItem miJeSaisPlusSonNom;
 
     private MenuItem miLangue;
     private MenuItem miTheme;
@@ -49,17 +51,17 @@ public class MyMenuBar extends MenuBar {
 
         this.miLangue.setOnAction(
                 event -> {
-                    Alert dBox = new Alert(Alert.AlertType.CONFIRMATION);
-                    dBox.setTitle("A confirmation dialog-box with custom actions");
-                    dBox.setHeaderText("Java-Pizza : The Very Best in Town !");
-                    dBox.setContentText("Choose your pizza size :");
-                    ButtonType btnSmall = new ButtonType("Small");
-                    ButtonType btnMedium = new ButtonType("Medium");
-                    ButtonType btnBig = new ButtonType("Big");
+                    Alert dBox = new Alert(Alert.AlertType.INFORMATION);
+                    dBox.setTitle("Non disponible");
+                    dBox.setHeaderText("Fonctionnalité uniquement disponile dans la version payante du logiciel.");
+                    dBox.setContentText("Nous espérons que la langue française vous convient tout de même.");
+                    //ButtonType btnSmall = new ButtonType("Small");
+                    //ButtonType btnMedium = new ButtonType("Medium");
+                    //ButtonType btnBig = new ButtonType("Big");
                     ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    dBox.getButtonTypes().setAll(btnSmall, btnMedium, btnBig, btnCancel);
+                    dBox.getButtonTypes().setAll(btnCancel);
                     Optional<ButtonType> choice = dBox.showAndWait();
-                    if (choice.get() == btnSmall) {
+                    /*if (choice.get() == btnSmall) {
                         System.out.println("User chose Small");
                     } else if (choice.get() == btnMedium) {
                         System.out.println("User chose Medium");
@@ -67,15 +69,22 @@ public class MyMenuBar extends MenuBar {
                         System.out.println("User chose Big");
                     } else {
                         System.out.println("Cancel or Close");
-                    }
+                    }*/
 
-                    controller.changeEtat(300);
+                    controller.changeEtat(0);
                 }
         );
 
         this.miTheme.setOnAction(
                 action -> {
-                    controller.changeEtat(200);
+                    Alert dBox = new Alert(Alert.AlertType.INFORMATION);
+                    dBox.setTitle("Non disponible");
+                    dBox.setHeaderText("Fonctionnalité uniquement disponile dans la version payante du logiciel.");
+                    dBox.setContentText("Nous espérons que le thème clair ne vous fait pas trop mal aux yeux.");
+                    ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    dBox.getButtonTypes().setAll(btnCancel);
+                    controller.changeEtat(0);
+                    dBox.showAndWait();
                 }
         );
 
@@ -146,12 +155,20 @@ public class MyMenuBar extends MenuBar {
                 }
         );
 
-        this.mAide = new Menu("Aide");
+        this.mPlus = new Menu("+");
+        this.miAide = new MenuItem("Aide");
+        this.miAide.setOnAction(
+                action -> {
+                    controller.changeEtat(200);
+                }
+        );
+        this.miJeSaisPlusSonNom = new MenuItem("Je sais plus quel nom on doit mettre ici");
+        this.mPlus.getItems().addAll(miJeSaisPlusSonNom, miAide);
 
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
             this.useSystemMenuBarProperty().set(true);
         }
-        this.getMenus().addAll(this.mFichier, this.mParametre, this.mAide);
+        this.getMenus().addAll(this.mFichier, this.mParametre, this.mPlus);
     }
 }
