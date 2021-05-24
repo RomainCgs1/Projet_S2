@@ -266,6 +266,15 @@ public class Controller {
             case 300: //langue mais tests de transformation
                 //pas encore de transf
                 break;
+            case 1000:
+                this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
+                this.vue.getMbNoeud().setText("Noeud");
+                this.vue.getMtbTerrain().setSelected(false);
+                this.vue.getMbGomme().setText("Gomme");
+                this.vue.getMtbBarre().setSelected(false);
+                this.vue.recontruction();
+                changeEtat(0);
+                break;
         }
 
     }

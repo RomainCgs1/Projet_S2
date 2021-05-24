@@ -68,7 +68,7 @@ public class Appui_double extends Noeud_appui {
 
     //Sauvegarde
     public void save(BufferedWriter bW, Identificateur idNum) throws IOException {
-        bW.append("Appui_Double/");
+        bW.append("Appui_Double;");
         super.save(bW, idNum);
     }
 

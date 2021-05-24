@@ -43,6 +43,10 @@ public class Noeud_appui extends Noeuds {
     public Noeud_appui(double position_alpha, Segment_terrain segment_appui) {
         this.position_alpha = position_alpha;
         this.segment_appui = segment_appui;
+        this.j = this.segment_appui.getAppartient().numerotation(segment_appui);
+        this.k = (this.j+1)%3;
+        this.appartientABarre = new ArrayList<Barre>();
+        this.segment_appui.addNASet(this);
     }
 
     //Encpasulation
