@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -266,15 +268,20 @@ public class Controller {
                 this.changeEtat(etatPrecedent);
                 break;
             case 201:
-                final Image image = new Image("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
-                final ImageView imageView = new ImageView(image);
-                final Pane pane = new Pane();
-                pane.getChildren().setAll(imageView);
-                final Scene sceneApropos = new Scene(pane, 350, 300);
-                Stage fenetreApropos = new Stage();
-                fenetreApropos.setTitle("A propos de nous : MeshApp");
-                fenetreApropos.setScene(sceneApropos);
-                fenetreApropos.showAndWait();
+                try {
+                    FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
+                    final Image image = new Image(fileInputStream);
+                    final ImageView imageView = new ImageView(image);
+                    final Pane pane = new Pane();
+                    pane.getChildren().setAll(imageView);
+                    final Scene sceneApropos = new Scene(pane, 350, 300);
+                    Stage fenetreApropos = new Stage();
+                    fenetreApropos.setTitle("A propos de nous : MeshApp");
+                    fenetreApropos.setScene(sceneApropos);
+                    fenetreApropos.showAndWait();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
