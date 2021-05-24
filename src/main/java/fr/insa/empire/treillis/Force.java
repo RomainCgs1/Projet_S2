@@ -20,7 +20,6 @@ public class Force {
     private Barre barreAssociee;
     private Appui_simple asAssocie;
     private Appui_double adAssocie;
-    private Treillis treilli = Treillis.treillis;
     private int identifiant;
 
     
@@ -34,57 +33,57 @@ public class Force {
     
     
     //Constructeur Tension
-    public Force(Barre barre, double angle_alpha) {
+    public Force(Barre barre, double angle_alpha, Treillis treilli) {
         this.typeDeForce = "Tension";
         this.barreAssociee = barre;
         this.fx = Math.cos(angle_alpha);
         this.fy = Math.sin(angle_alpha);
-        if (this.treilli.getIdBarreTensionsCreees().contains(barre.getIdentifiant())) {
+        if (treilli.getIdBarreTensionsCreees().contains(barre.getIdentifiant())) {
             this.identifiant = barre.getTensionBarre().getIdentifiant();
         } else {
-            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
-            this.treilli.getIdBarreTensionsCreees().add(barre.getIdentifiant());
+            this.identifiant = treilli.getIdentificateurForce().getOrSetKey(this);
+            treilli.getIdBarreTensionsCreees().add(barre.getIdentifiant());
             barre.setTensionBarre(this);
         }
     }
 
     //Constructeur Réaction appui-simple
-    public Force(Appui_simple appuiSimple, double angle_beta) {
+    public Force(Appui_simple appuiSimple, double angle_beta, Treillis treilli) {
         this.typeDeForce = "Reaction Simple";
         this.asAssocie = appuiSimple;
         this.fx = Math.cos(angle_beta);
         this.fy = Math.sin(angle_beta);
-        if (this.treilli.getIdAppuiSimpleCrees().contains(appuiSimple.getID())) {
+        if (treilli.getIdAppuiSimpleCrees().contains(appuiSimple.getID())) {
             this.identifiant = appuiSimple.getReactionAppuiSimple().getIdentifiant();
        } else {
-            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
-            this.treilli.getIdAppuiSimpleCrees().add(appuiSimple.getID());
+            this.identifiant = treilli.getIdentificateurForce().getOrSetKey(this);
+            treilli.getIdAppuiSimpleCrees().add(appuiSimple.getID());
             appuiSimple.setReactionAppuiSimple(this);
         }
     }
 
     //Constructeur Réaction appui-double
-    public Force(Appui_double appuiDouble) {
+    public Force(Appui_double appuiDouble, Treillis treilli) {
         this.typeDeForce = "Reaction Double";
         this .adAssocie = appuiDouble;
         this.fx = 1;
         this.fy = 1;
-        if (this.treilli.getIdAppuiDoubleCrees().contains(appuiDouble.getID())) {
+        if (treilli.getIdAppuiDoubleCrees().contains(appuiDouble.getID())) {
            this.identifiant = appuiDouble.getReactionAppuiDouble().getIdentifiant();
         } else {
-            this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
-            this.treilli.getIdAppuiDoubleCrees().add(appuiDouble.getID());
+            this.identifiant = treilli.getIdentificateurForce().getOrSetKey(this);
+            treilli.getIdAppuiDoubleCrees().add(appuiDouble.getID());
             appuiDouble.setReactionAppuiDouble(this);
         }
     }
 
     //Constructeur Force appliquée en Noeud Simple
-    public Force(Noeud_simple noeudSimple, double fx, double fy) {
+    public Force(Noeud_simple noeudSimple, double fx, double fy, Treillis treilli) {
         this.typeDeForce = "Ajout";
         this.fx = fx;
         this.fy = fy;
         this.norme = this.calculNormeForce();
-        this.identifiant = this.treilli.getIdentificateurForce().getOrSetKey(this);
+        this.identifiant = treilli.getIdentificateurForce().getOrSetKey(this);
     }
 
     //Encapsulation
@@ -120,10 +119,6 @@ public class Force {
         this.identifiant = identifiant;
     }
 
-    public void setTreilli(Treillis treilli) {
-        this.treilli = treilli;
-    }
-
     public String getTypeDeForce() {
         return typeDeForce;
     }
@@ -148,6 +143,7 @@ public class Force {
         this.typeDeForce = typeDeForce;
     }
 
+    
     //To String
     public String toString() {
         String s = "";
@@ -230,7 +226,7 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Noeud_simple) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        Force tension = new Force(((Noeud_simple) val).getAppartientABarre().get(i), ((Noeud_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(), treilli);
                         noeudsimpleTension.add(tension);
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
@@ -274,7 +270,7 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Appui_simple) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        Force tension = new Force(((Appui_simple) val).getAppartientABarre().get(i), ((Appui_simple) val).getAppartientABarre().get(i).calculAngleAlphaTension(),treilli);
                         appuiSimpleTension.add(tension);
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
@@ -299,7 +295,7 @@ public class Force {
                     tailleArrayIni = idForceLinkMatrice.size();
                     
                     //Création de la force de réaction de l'appui-simple
-                    Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta());
+                    Force reactionAS = new Force(((Appui_simple) val), ((Appui_simple) val).getSegment_appui().calculAngleBeta(), treilli);
                     idForceLinkMatrice.add(reactionAS.getIdentifiant());
                     systeme.getCoeffs()[l][tailleArrayIni] = reactionAS.getFx();
                     systeme.getCoeffs()[l + 1][tailleArrayIni] = reactionAS.getFy();
@@ -317,7 +313,7 @@ public class Force {
 
                     //Création des tensions
                     for (int i = 0; i < ((Appui_double) val).getAppartientABarre().size(); i++) {
-                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension());
+                        Force tension = new Force(((Appui_double) val).getAppartientABarre().get(i), ((Appui_double) val).getAppartientABarre().get(i).calculAngleAlphaTension(),treilli);
                         appuiDoubleTension.add(tension);
                         if (!idForceLinkMatrice.contains(tension.getIdentifiant())) {
                             idForceLinkMatrice.add(tension.getIdentifiant());
@@ -342,7 +338,7 @@ public class Force {
                     tailleArrayIni = idForceLinkMatrice.size();
                     
                     //Création de la force de réaction de l'appui-double
-                    Force reactionAD = new Force(((Appui_double) val));
+                    Force reactionAD = new Force(((Appui_double) val),treilli);
                     idForceLinkMatrice.add(reactionAD.getIdentifiant()); //On reconnaitra les composantes sur X
                     idForceLinkMatrice.add(-reactionAD.getIdentifiant()); //On reconnaitra les composantes sur Y
                     systeme.getCoeffs()[l][tailleArrayIni] = reactionAD.getFx();

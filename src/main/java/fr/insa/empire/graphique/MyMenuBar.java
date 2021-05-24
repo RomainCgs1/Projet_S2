@@ -162,7 +162,12 @@ public class MyMenuBar extends MenuBar {
                     controller.changeEtat(200);
                 }
         );
-        this.miAPropos = new MenuItem("Je sais plus quel nom on doit mettre ici");
+        this.miAPropos = new MenuItem("A propos de nous");
+        this.miAPropos.setOnAction(
+                action -> {
+                    controller.changeEtat(201);
+                }
+        );
         this.mPlus.getItems().addAll(miAPropos, miAide);
 
         final String os = System.getProperty("os.name");

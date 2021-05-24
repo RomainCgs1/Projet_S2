@@ -24,8 +24,12 @@ import javafx.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import javafx.scene.media.Media;
 
@@ -199,7 +203,7 @@ public class Controller {
                     type = this.vue.getTreillis().getCatalogue().getContient().get(0);
 
                 } else if (selectionType.get().contains("Acier")) { //C'est acier
-                     type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+                    type = this.vue.getTreillis().getCatalogue().getContient().get(1);
                 }
                 this.changeEtat(0);
                 break;
@@ -260,6 +264,31 @@ public class Controller {
                 break;
             case 200: //aide
                 this.changeEtat(etatPrecedent);
+                break;
+            case 201:
+                
+                try {
+                        Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(0)));
+                        Stage fenetreInfosType = new Stage();
+                        fenetreInfosType.setTitle("Infos Types MeshApp");
+                        fenetreInfosType.setScene(sceneInfosType);
+                        fenetreInfosType.setX(500);
+                        fenetreInfosType.setY(800);
+                        fenetreInfosType.showAndWait();
+
+                    } catch (IOException ie) {
+                        System.out.println("Erreur de chargement");
+                    }
+                final URL imageURL = getClass().getResource("image.png");
+                final Image image = new Image(imageURL.toExternalForm());
+                final ImageView imageView = new ImageView(image);
+                final Pane root = new Pane();
+                root.getChildren().setAll(imageView);
+                final Scene scene = new Scene(root, 350, 300);
+//                primaryStage.setTitle("Test d'affichage d'image");
+//                primaryStage.setScene(scene);
+//                primaryStage.show();
+                break;
             case 1000:
                 this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
                 this.vue.getMbNoeud().setText("Noeud");
@@ -684,7 +713,7 @@ public class Controller {
                                 double pyForce = Double.parseDouble(textPY.get());
 
                                 //On crée la force ajoutée
-                                Force forceAjoutee = new Force(noeudSimpleChoisi, pxForce, pyForce);
+                                Force forceAjoutee = new Force(noeudSimpleChoisi, pxForce, pyForce, this.vue.getTreillis());
 
                                 //Calcul
                                 System.out.println("Lancement des calculs");
