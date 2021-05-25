@@ -323,7 +323,7 @@ public class Controller {
                 break;
             case 201:
                 try {
-                FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_En_Pire.png");
+                FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_Empire.png");
                 final Image image = new Image(fileInputStream);
                 final ImageView imageView = new ImageView(image);
                 final Pane pane = new Pane();
