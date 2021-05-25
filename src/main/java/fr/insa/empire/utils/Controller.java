@@ -840,23 +840,23 @@ public class Controller {
                 if(longueur >= this.vue.getTreillis().getCurrentType().getLongMax())
                 {
                     graphicsContext.setStroke(Color.BLACK);
-                    graphicsContext.strokeRect(px + 2, py - 20, 150, 30);
+                    graphicsContext.strokeRect(px + 10, py - 20, 150, 30);
                     graphicsContext.setFill(Color.RED);
-                    graphicsContext.fillText("Barre trop longue : " + longueur, px + 5, py);
+                    graphicsContext.fillText("Barre trop longue : " + longueur, px + 13, py);
                 }
                 else if(longueur <= this.vue.getTreillis().getCurrentType().getLongMin())
                 {
                     graphicsContext.setStroke(Color.BLACK);
-                    graphicsContext.strokeRect(px + 2, py - 20, 150, 30);
+                    graphicsContext.strokeRect(px + 10, py - 20, 150, 30);
                     graphicsContext.setFill(Color.RED);
-                    graphicsContext.fillText("Barre trop courte : " + longueur, px + 5, py);
+                    graphicsContext.fillText("Barre trop courte : " + longueur, px + 13, py);
                 }
                 else
                 {
                     graphicsContext.setStroke(Color.BLACK);
-                    graphicsContext.strokeRect(px + 2, py - 20, 100, 30);
+                    graphicsContext.strokeRect(px + 10, py - 20, 100, 30);
                     graphicsContext.setFill(Color.BLACK);
-                    graphicsContext.fillText("Longueur : " + longueur, px + 5, py);
+                    graphicsContext.fillText("Longueur : " + longueur, px + 13, py);
                 }
 
                 break;
