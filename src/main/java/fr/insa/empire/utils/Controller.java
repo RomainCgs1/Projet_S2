@@ -263,6 +263,7 @@ public class Controller {
                 s = s + this.vue.getTreillis().calculPrixTreilli() + " €";
                 dialogPrix.setContentText(s);
                 dialogPrix.showAndWait();
+                changeEtat(etatPrecedent);
                 break;
             case 200: //aide
                 this.changeEtat(etatPrecedent);

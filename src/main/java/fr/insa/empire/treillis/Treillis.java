@@ -52,7 +52,9 @@ public class Treillis {
         for (int i = 0; i < this.getTreilliContientBarre().size(); i++) {
             prixTreilli = prixTreilli + this.getTreilliContientBarre().get(i).calculPrixBarre();
         }
-
+        prixTreilli = prixTreilli*100;
+        prixTreilli = Math.round(prixTreilli);
+        prixTreilli = prixTreilli/100;
         return prixTreilli;
     }
 
