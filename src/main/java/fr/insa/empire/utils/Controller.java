@@ -834,6 +834,31 @@ public class Controller {
             case 21:
                 graphicsContext.setStroke(Color.BLUE);
                 graphicsContext.strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), px, py);
+
+                double longueur = Barre.calculLongueurBarre(noeudDebut.getPx(), noeudDebut.getPy(), px, py);
+                longueur = Math.round(longueur*10)/10;
+                if(longueur >= this.vue.getTreillis().getCurrentType().getLongMax())
+                {
+                    graphicsContext.setStroke(Color.BLACK);
+                    graphicsContext.strokeRect(px + 2, py - 20, 150, 30);
+                    graphicsContext.setFill(Color.RED);
+                    graphicsContext.fillText("Barre trop longue : " + longueur, px + 5, py);
+                }
+                else if(longueur <= this.vue.getTreillis().getCurrentType().getLongMin())
+                {
+                    graphicsContext.setStroke(Color.BLACK);
+                    graphicsContext.strokeRect(px + 2, py - 20, 150, 30);
+                    graphicsContext.setFill(Color.RED);
+                    graphicsContext.fillText("Barre trop courte : " + longueur, px + 5, py);
+                }
+                else
+                {
+                    graphicsContext.setStroke(Color.BLACK);
+                    graphicsContext.strokeRect(px + 2, py - 20, 100, 30);
+                    graphicsContext.setFill(Color.BLACK);
+                    graphicsContext.fillText("Longueur : " + longueur, px + 5, py);
+                }
+
                 break;
 
             case 31:
@@ -899,7 +924,7 @@ public class Controller {
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
-        double longueur = Barre.calculLongueurSegmentT(noeudDebut, noeudFin);
+        double longueur = Barre.calculLongueurBarre(noeudDebut, noeudFin);
 
         if ((longueur <= this.vue.getTreillis().getCurrentType().getLongMax()) && (longueur >= this.vue.getTreillis().getCurrentType().getLongMin())) {
             Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());

@@ -180,8 +180,10 @@ public class Barre {
         return longeur;
     }
 
+
+
     //Calcul de la longueur
-    public static double calculLongueurSegmentT(Noeuds noeudDebut, Noeuds noeudFin) {
+    public static double calculLongueurBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
         double pxDeb = noeudDebut.getPx();
         double pyDeb = noeudDebut.getPy();
@@ -191,6 +193,18 @@ public class Barre {
         //On calcul les coordonnées du vecteur donné par les deux noeuds
         double segpX = pxFin - pxDeb;
         double segPy = pyFin - pyDeb;
+
+        //On calcul la norme de ce vecteur
+        double longeur = Math.sqrt(segpX * segpX + segPy * segPy);
+
+        return longeur;
+    }
+
+    public static double calculLongueurBarre(double px1, double py1, double px2, double py2) {
+
+        //On calcul les coordonnées du vecteur donné par les deux noeuds
+        double segpX = px2 - px1;
+        double segPy = py2 - py1;
 
         //On calcul la norme de ce vecteur
         double longeur = Math.sqrt(segpX * segpX + segPy * segPy);
