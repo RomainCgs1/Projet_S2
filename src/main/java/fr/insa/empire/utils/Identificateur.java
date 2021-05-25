@@ -74,8 +74,7 @@ public class Identificateur {
     public boolean objetPresent (Object o){
         return this.objectToKey.get(o) != null;
     }
- 
-    
+     
     //toString
     public String toString()
     {

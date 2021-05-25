@@ -44,7 +44,7 @@ public class MyMenuBar extends MenuBar {
         this.miOuvrir = new MenuItem("Ouvrir");
         this.miNouveau = new MenuItem("Nouveau");
         this.miRecommencer = new MenuItem("Recommencer");
-        mFichier.getItems().addAll(this.miEnregistrer, this.miOuvrir, this.miNouveau, this.miRecommencer);
+        mFichier.getItems().addAll(this.miNouveau, this.miOuvrir, this.miEnregistrer, this.miRecommencer);
 
         this.miNouveau.setOnAction(
                 action -> {
@@ -74,15 +74,7 @@ public class MyMenuBar extends MenuBar {
                     ButtonType btnCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
                     dBox.getButtonTypes().setAll(btnCancel);
                     Optional<ButtonType> choice = dBox.showAndWait();
-                    /*if (choice.get() == btnSmall) {
-                        System.out.println("User chose Small");
-                    } else if (choice.get() == btnMedium) {
-                        System.out.println("User chose Medium");
-                    } else if (choice.get() == btnBig) {
-                        System.out.println("User chose Big");
-                    } else {
-                        System.out.println("Cancel or Close");
-                    }*/
+
 
                     controller.changeEtat(0);
                 }
@@ -104,19 +96,6 @@ public class MyMenuBar extends MenuBar {
         //Action enregistrer PAS FINIE
         this.miEnregistrer.setOnAction(
                 Action -> {
-                    /*TextInputDialog inDialog = new TextInputDialog("Magnfique treilli");
-                    inDialog.setTitle("Enregistrer mon beau Treilli");
-                    inDialog.setHeaderText(null);
-                    inDialog.setContentText("Nom du fichier :");
-                    //inDialog.setGraphic(new ImageView("C:/Users/romai/OneDrive/Bureau/save.png"));
-                    Optional<String> textIn = inDialog.showAndWait();
-                    //Renvoie un boolean true si OK et ferme si false
-                    if (textIn.isPresent()) {
-                        System.out.println("Nom du fichier : " + textIn.get());
-                        System.out.println("Sauvegarde en cours");
-                        //MainGraphique.saveGenerale(tfNomFichier.getText());
-                        System.out.println("Sauvegarde terminee");
-                    }*/
 
                     //choisir un dossier pour l'enregistrement
                     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -132,7 +111,6 @@ public class MyMenuBar extends MenuBar {
                         inDialog.setTitle("Veuillez entrer le nom de votre treilli");
                         inDialog.setHeaderText(null);
                         inDialog.setContentText("Nom du fichier :");
-                        //inDialog.setGraphic(new ImageView("C:/Users/romai/OneDrive/Bureau/save.png"));
                         Optional<String> textIn = inDialog.showAndWait();
                         //Renvoie un boolean true si OK et ferme si false
                         if (textIn.isPresent()) {
@@ -182,7 +160,7 @@ public class MyMenuBar extends MenuBar {
                     controller.changeEtat(201);
                 }
         );
-        this.mPlus.getItems().addAll(miAPropos, miAide);
+        this.mPlus.getItems().addAll(miAide,miAPropos);
 
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {

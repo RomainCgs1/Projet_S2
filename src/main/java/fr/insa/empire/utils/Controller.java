@@ -173,7 +173,7 @@ public class Controller {
                 changeEtat(-10);
                 break;
             case 600:
-                String[] typeAll = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                String[] typeAll = {"Bois", "Acier", "Béton Armé"}; //On rentre le nom des différents types existants
                 ChoiceDialog<String> dialogTypeCurrent = new ChoiceDialog<>(typeAll[0], typeAll);
                 dialogTypeCurrent.setTitle("Choix Type de Barre");
                 dialogTypeCurrent.setHeaderText("Selectionnez un type de barre pour changer de type actif");
@@ -185,6 +185,8 @@ public class Controller {
 
                 } else if (selectionTypeCurrent.get().contains("Acier")) { //C'est acier
                     this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+                } else { // C'est Béton armé
+                    this.vue.getTreillis().setCurrentType(this.vue.getTreillis().getCatalogue().getContient().get(2));
                 }
                 this.changeEtat(20);
                 break;
@@ -192,7 +194,7 @@ public class Controller {
                 this.vue.getText().setText(" Sélectionnez une barre");
                 break;
             case 602:
-                String[] types = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                String[] types = {"Bois", "Acier", "Béton Armé"}; //On rentre le nom des différents types existants
                 ChoiceDialog<String> dialogType = new ChoiceDialog<>(types[0], types);
                 dialogType.setTitle("Choix Type de Barre");
                 dialogType.setHeaderText("Selectionnez un type de barre");
@@ -206,19 +208,29 @@ public class Controller {
 
                 } else if (selectionType.get().contains("Acier")) { //C'est acier
                     type = this.vue.getTreillis().getCatalogue().getContient().get(1);
+
+                } else if (selectionType.get().contains("Béton Armé")) { //C'est acier
+                    type = this.vue.getTreillis().getCatalogue().getContient().get(2);
                 }
+
+                for (int i = 0; i < this.vue.getTreillis().getTreilliContientBarre().size(); i++) {
+                    if ((this.vue.getTreillis().getTreilliContientBarre().get(i).getLongueur() <= type.getLongMax()) && (this.vue.getTreillis().getTreilliContientBarre().get(i).getLongueur() >= type.getLongMin())) {
+                        this.vue.getTreillis().getTreilliContientBarre().get(i).setType(type);
+                    }
+                }
+
                 this.changeEtat(0);
                 break;
             case 603:
-                String[] typesInfos = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                String[] typesInfos = {"Bois", "Acier", "Béton Armé"}; //On rentre le nom des différents types existants
                 ChoiceDialog<String> dialogInfosType = new ChoiceDialog<>(typesInfos[0], typesInfos);
                 dialogInfosType.setTitle("Choix Type de Barre");
                 dialogInfosType.setHeaderText("Selectionnez un type de barre");
                 dialogInfosType.setContentText("Types :");
-                Optional<String> slectionTypeInfos = dialogInfosType.showAndWait();
+                Optional<String> selectionTypeInfo = dialogInfosType.showAndWait();
 
-                if (slectionTypeInfos.get().contains("Bois")) {
-                    System.out.println("Le type " + slectionTypeInfos.get());
+                if (selectionTypeInfo.get().contains("Bois")) {
+                    System.out.println("Le type " + selectionTypeInfo.get());
                     try {
                         Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(0)));
                         Stage fenetreInfosType = new Stage();
@@ -232,10 +244,24 @@ public class Controller {
                         System.out.println("Erreur de chargement");
                     }
 
-                } else if (slectionTypeInfos.get().contains("Acier")) { //C'est acier
-                    System.out.println("Le type " + slectionTypeInfos.get());
+                } else if (selectionTypeInfo.get().contains("Acier")) { //C'est acier
+                    System.out.println("Le type " + selectionTypeInfo.get());
                     try {
                         Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(1)));
+                        Stage fenetreInfosType = new Stage();
+                        fenetreInfosType.setTitle("Infos Types MeshApp");
+                        fenetreInfosType.setScene(sceneInfosType);
+                        fenetreInfosType.setX(500);
+                        fenetreInfosType.setY(800);
+                        fenetreInfosType.showAndWait();
+
+                    } catch (IOException ie) {
+                        System.out.println("Erreur de chargement");
+                    }
+                } else { //C'est béton armé
+                    System.out.println("Le type " + selectionTypeInfo.get());
+                    try {
+                        Scene sceneInfosType = new Scene(new AfficheInfosTypeBarre(this.vue.getTreillis().getCatalogue().getContient().get(2)));
                         Stage fenetreInfosType = new Stage();
                         fenetreInfosType.setTitle("Infos Types MeshApp");
                         fenetreInfosType.setScene(sceneInfosType);
@@ -267,7 +293,7 @@ public class Controller {
                 break;
             case 200: //aide
                 this.changeEtat(etatPrecedent);
-                try{
+                try {
                     FileInputStream fileInputStream1 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-1.png");
                     FileInputStream fileInputStream2 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-2.png");
                     final Image image1 = new Image(fileInputStream1);
@@ -280,18 +306,18 @@ public class Controller {
                     imageView2.setPreserveRatio(true);
                     VBox box = new VBox();
                     box.setSpacing(10);
-                    box.setPadding(new Insets(15,20, 10,10));
+                    box.setPadding(new Insets(15, 20, 10, 10));
                     box.getChildren().add(imageView1);
                     box.getChildren().add(imageView2);
                     ScrollPane scroll = new ScrollPane();
                     scroll.setContent(box);
-                    final Scene sceneAide = new Scene(scroll,760,500);
+                    final Scene sceneAide = new Scene(scroll, 760, 500);
                     Stage fenetreAide = new Stage();
                     fenetreAide.setTitle("Aide");
                     fenetreAide.setScene(sceneAide);
                     fenetreAide.show();
-                    
-                }catch(FileNotFoundException e){
+
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -486,7 +512,7 @@ public class Controller {
                                     Appui_double appuiDouble = new Appui_double(temp.getPx(), temp.getPy(), segment_terrain1);
                                     appuiDouble.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(appuiDouble));
                                     System.out.println("test : " + appuiDouble);
-                                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.SILVER);
+                                    this.vue.getCanvas().getGraphicsContext2D().setStroke(Color.BLUE);
                                     this.vue.getCanvas().getGraphicsContext2D().strokeOval(appuiDouble.getPx() - 5, appuiDouble.getPy() - 5, 10, 10);
                                     System.out.println("Noeud appui double créé !");
                                 }
@@ -652,22 +678,26 @@ public class Controller {
                             }
                             System.out.println("Barre la plus proche : " + barreChoisie);
 
-                            String[] tabTypesExistants = {"Bois", "Acier"}; //On rentre le nom des différents types existants
+                            String[] tabTypesExistants = {"Bois", "Acier", "Béton Armé"}; //On rentre le nom des différents types existants
                             ChoiceDialog<String> dialogBoxTypeDeBarre = new ChoiceDialog<>(tabTypesExistants[0], tabTypesExistants);
                             dialogBoxTypeDeBarre.setTitle("Choix Type de Barre");
                             dialogBoxTypeDeBarre.setHeaderText("Selectionnez un type de barre");
                             dialogBoxTypeDeBarre.setContentText("Types :");
                             Optional<String> selection = dialogBoxTypeDeBarre.showAndWait();
 
-                            if (selection.get().contains("Bois")) {
+                            if ((selection.get().contains("Bois")) && (barreChoisie.getLongueur() <= this.vue.getTreillis().getCatalogue().getContient().get(0).getLongMax()) && (barreChoisie.getLongueur() >= this.vue.getTreillis().getCatalogue().getContient().get(0).getLongMin())) {
                                 System.out.println("Le type " + selection.get());
                                 barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(0));
-                            }
-
-                            if (selection.get().contains("Acier")) {
+                            } else if ((selection.get().contains("Acier")) && (barreChoisie.getLongueur() <= this.vue.getTreillis().getCatalogue().getContient().get(1).getLongMax()) && (barreChoisie.getLongueur() >= this.vue.getTreillis().getCatalogue().getContient().get(1).getLongMin())) {
                                 System.out.println("Le type " + selection.get());
                                 barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(1));
+                            } else if ((selection.get().contains("Béton Armé")) && (barreChoisie.getLongueur() <= this.vue.getTreillis().getCatalogue().getContient().get(2).getLongMax()) && (barreChoisie.getLongueur() >= this.vue.getTreillis().getCatalogue().getContient().get(2).getLongMin())) {
+                                System.out.println("Le type " + selection.get());
+                                barreChoisie.setType(this.vue.getTreillis().getCatalogue().getContient().get(2));
+                            } else {
+                                this.erreurLongeur();
                             }
+
                             break;
                         case 70:
                             //On sélectionne le noeud souhaité
@@ -869,12 +899,28 @@ public class Controller {
 
     private void creationBarre(Noeuds noeudDebut, Noeuds noeudFin) {
 
-        Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());
-        barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
-        barre.setType(this.vue.getTreillis().getCurrentType());
-        barre.draw(this.vue.getCanvas().getGraphicsContext2D());
+        double longueur = Barre.calculLongueurSegmentT(noeudDebut, noeudFin);
 
-        System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
+        if ((longueur <= this.vue.getTreillis().getCurrentType().getLongMax()) && (longueur >= this.vue.getTreillis().getCurrentType().getLongMin())) {
+            Barre barre = new Barre(noeudDebut, noeudFin, this.vue.getTreillis());
+            barre.setIdentifiant(this.vue.getTreillis().identificateur.getOrSetKey(barre));
+            barre.setType(this.vue.getTreillis().getCurrentType());
+            barre.draw(this.vue.getCanvas().getGraphicsContext2D());
+
+            System.out.println("barre n°" + barre.getIdentifiant() + " a été créé.");
+        } else {
+            this.erreurLongeur();
+        }
+
+    }
+
+    private void erreurLongeur() {
+        Alert diagAlertErreurTaille = new Alert(AlertType.ERROR);
+        diagAlertErreurTaille.setTitle("Erreur Longueur");
+        diagAlertErreurTaille.setHeaderText("Erreur Barre");
+        diagAlertErreurTaille.setContentText("Erreur : La longueur de la barre n'est pas valide");
+        diagAlertErreurTaille.showAndWait();
+        this.changeEtat(0);
     }
 
     private void eraseAll() {

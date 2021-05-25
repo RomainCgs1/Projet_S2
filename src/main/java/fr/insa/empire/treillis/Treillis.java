@@ -60,14 +60,19 @@ public class Treillis {
 
     public void creationTypeBarre() {
         Color marron = Color.rgb(181, 114, 0);
-        Type_de_barre bois = new Type_de_barre("bois", 5, 20, 1, 10000, 10000, marron);
+        Type_de_barre bois = new Type_de_barre("bois", 7, 200, 1, 30000, 10000, marron);
         bois.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(bois));
         this.getCatalogue().getContient().add(bois);
 
         Color grisAcier = Color.rgb(128, 128, 128);
-        Type_de_barre acier = new Type_de_barre("acier", 7, 30, 1, 20000, 20000, grisAcier);
+        Type_de_barre acier = new Type_de_barre("acier", 12, 300, 1, 220000, 200000, grisAcier);
         acier.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(acier));
         this.getCatalogue().getContient().add(acier);
+        
+        Color betonColor = Color.rgb(61, 61, 88);
+        Type_de_barre betonArme = new Type_de_barre("bronze", 10, 100, 1, 200000, 200000, betonColor);
+        betonArme.setIdentifiant(this.getIdentificateurTypeBarre().getOrSetKey(betonArme));
+        this.getCatalogue().getContient().add(betonArme);
 
     }
 

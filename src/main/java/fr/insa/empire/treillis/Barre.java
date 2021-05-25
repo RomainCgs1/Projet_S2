@@ -180,6 +180,24 @@ public class Barre {
         return longeur;
     }
 
+    //Calcul de la longueur
+    public static double calculLongueurSegmentT(Noeuds noeudDebut, Noeuds noeudFin) {
+
+        double pxDeb = noeudDebut.getPx();
+        double pyDeb = noeudDebut.getPy();
+        double pxFin = noeudFin.getPx();
+        double pyFin = noeudFin.getPy();
+
+        //On calcul les coordonnées du vecteur donné par les deux noeuds
+        double segpX = pxFin - pxDeb;
+        double segPy = pyFin - pyDeb;
+
+        //On calcul la norme de ce vecteur
+        double longeur = Math.sqrt(segpX * segpX + segPy * segPy);
+
+        return longeur;
+    }
+    
     //Calcul du prix barre
     public double calculPrixBarre() {
         return this.type.getCoutAuMetre() * this.longueur;

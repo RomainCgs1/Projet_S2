@@ -182,6 +182,7 @@ public class MainGraphique extends BorderPane {
         Separator separator = new Separator(Orientation.VERTICAL);
         Separator separator1 = new Separator(Orientation.VERTICAL);
         Separator separator2 = new Separator(Orientation.VERTICAL);
+        Separator separator3 = new Separator(Orientation.VERTICAL);
 
 
         //set du Canvas
@@ -279,7 +280,7 @@ public class MainGraphique extends BorderPane {
         this.mbGomme = new MenuButton("Gomme", logoGommeView);
 
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs, this.mbPrix);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs, separator3, this.mbPrix);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
@@ -442,7 +443,7 @@ public class MainGraphique extends BorderPane {
             if(val.getClass() == Appui_double.class)
             {
                 ((Appui_double) val).draw(graphicsContext);
-                graphicsContext.setStroke(Color.SILVER);
+                graphicsContext.setStroke(Color.BLUE);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
             }
             else if(val.getClass() == Appui_simple.class)

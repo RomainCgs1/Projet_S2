@@ -74,7 +74,7 @@ public class Appui_double extends Noeud_appui {
 
     //Fonction pour dessiner un appui-double
     public void draw(GraphicsContext graphicsContext) {
-        graphicsContext.setStroke(Color.SILVER);
+        graphicsContext.setStroke(Color.BLUE);
         graphicsContext.strokeOval(this.getPx() - 5, this.getPy() - 5, 10, 10);
     }
 }
