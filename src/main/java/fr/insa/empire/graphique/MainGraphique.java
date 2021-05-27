@@ -257,7 +257,7 @@ public class MainGraphique extends BorderPane {
         logoPrixView.setFitWidth(40);
         logoPrixView.setFitHeight(40);
 
-        ImageView logoGommeView = createImageView("autres/Gomme.png");
+        ImageView logoGommeView = createImageView("autres/gomme.png");
 
         logoGommeView.setFitWidth(40);
         logoGommeView.setFitHeight(40);

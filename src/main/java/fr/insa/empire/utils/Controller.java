@@ -701,33 +701,30 @@ public class Controller {
                             Optional<String> textPX = boiteDiagPX.showAndWait();
 
                             System.out.println(textPX.get());
-                            File filemedia = new File("src/main/java/fr/insa/empire/utils/aide/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
+                            System.out.println(this.getClass().getPackageName());
+                            URL path = this.getClass().getResource("aide/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
                             if (textPX.get().toLowerCase().contains("chat")) {
                                 Media media;
-                                try {
-                                    media = new Media(filemedia.toURI().toURL().toString());
-                                    MediaPlayer mediaPlayer = new MediaPlayer(media);
-                                    MediaView mediaView = new MediaView(mediaPlayer);
-                                    DoubleProperty mvw = mediaView.fitWidthProperty();
-                                    DoubleProperty mvh = mediaView.fitHeightProperty();
-                                    mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-                                    mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
-                                    mediaView.setPreserveRatio(true);
-                                    BorderPane borderPane = new BorderPane();
-                                    borderPane.setCenter(mediaView);
-                                    Scene scene = new Scene(borderPane, 1024, 590);
-                                    Stage stage = new Stage();
-                                    stage.setScene(scene);
-                                    stage.show();
-                                    stage.setOnCloseRequest(
-                                            event -> {
-                                                mediaPlayer.stop();
-                                            }
-                                    );
-                                    mediaPlayer.play();
-                                } catch (MalformedURLException ex) {
-                                    ex.printStackTrace();
-                                }
+                                media = new Media(path.toString());
+                                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                                MediaView mediaView = new MediaView(mediaPlayer);
+                                DoubleProperty mvw = mediaView.fitWidthProperty();
+                                DoubleProperty mvh = mediaView.fitHeightProperty();
+                                mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
+                                mvh.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
+                                mediaView.setPreserveRatio(true);
+                                BorderPane borderPane = new BorderPane();
+                                borderPane.setCenter(mediaView);
+                                Scene scene = new Scene(borderPane, 1024, 590);
+                                Stage stage = new Stage();
+                                stage.setScene(scene);
+                                stage.show();
+                                stage.setOnCloseRequest(
+                                        event -> {
+                                            mediaPlayer.stop();
+                                        }
+                                );
+                                mediaPlayer.play();
                                 changeEtat(0);
                             } else {
                                 double pxForce = Double.parseDouble(textPX.get());
