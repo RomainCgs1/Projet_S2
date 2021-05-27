@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.net.URL;
 import java.io.InputStream;
 import java.util.Map;
 import javafx.scene.paint.Color;
@@ -413,21 +414,34 @@ public class MainGraphique extends BorderPane {
         for (Map.Entry mapentry : this.treillis.identificateur.getKetToObject().entrySet()) {
             Object key = mapentry.getKey();
             Object val = mapentry.getValue();
-            if (val.getClass() == Appui_double.class) {
+            if(val.getClass() == Appui_double.class)
+            {
                 ((Appui_double) val).draw(graphicsContext);
                 graphicsContext.setStroke(Color.BLUE);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
-            } else if (val.getClass() == Appui_simple.class) {
+            }
+            else if(val.getClass() == Appui_simple.class)
+            {
                 ((Appui_simple) val).draw(graphicsContext);
-            } else if (val.getClass() == Noeud_appui.class) {
+            }
+            else if(val.getClass() == Noeud_appui.class)
+            {
                 //normalement on sera passé par appui double ou simple
-            } else if (val.getClass() == Noeud_simple.class) {
+            }
+            else if(val.getClass() == Noeud_simple.class)
+            {
                 ((Noeud_simple) val).draw(graphicsContext);
-            } else if (val.getClass() == Barre.class) {
+            }
+            else if(val.getClass() == Barre.class)
+            {
                 ((Barre) val).draw(graphicsContext);
-            } else if (val.getClass() == Triangle_terrain.class) {
+            }
+            else if(val.getClass() == Triangle_terrain.class)
+            {
                 ((Triangle_terrain) val).draw(graphicsContext);
-            } else if (val.getClass() == Zone_constructible.class) {
+            }
+            else if(val.getClass() == Zone_constructible.class)
+            {
                 ((Zone_constructible) val).draw(graphicsContext);
             }
         }
@@ -442,7 +456,8 @@ public class MainGraphique extends BorderPane {
         return this.theme;
     }
 
-    public void setTheme(String theme) {
+    public void setTheme(String theme)
+    {
         this.theme = theme;
     }
 
