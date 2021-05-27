@@ -18,8 +18,8 @@ public class MainGraphApp extends Application {
         stage.setTitle("MeshApp : L'application parfaite pour vos beaux treillis");
         Scene scene = new Scene(new MainGraphique());
         stage.setScene(scene);
-        stage.setWidth(1500);
-        stage.setHeight(800);
+        stage.setWidth(1200);
+        stage.setHeight(600);
         stage.centerOnScreen();
         stage.show();
     }

@@ -25,7 +25,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -293,39 +295,29 @@ public class Controller {
                 break;
             case 200: //aide
                 this.changeEtat(etatPrecedent);
-                try {
-                    FileInputStream fileInputStream1 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-1.png");
-                    FileInputStream fileInputStream2 = new FileInputStream("src/main/java/fr/insa/empire/autres/Aide-2.png");
-                    final Image image1 = new Image(fileInputStream1);
-                    final Image image2 = new Image(fileInputStream2);
-                    final ImageView imageView1 = new ImageView(image1);
-                    final ImageView imageView2 = new ImageView(image2);
-                    imageView1.setFitHeight(1000);
-                    imageView1.setPreserveRatio(true);
-                    imageView2.setFitHeight(1000);
-                    imageView2.setPreserveRatio(true);
-                    VBox box = new VBox();
-                    box.setSpacing(10);
-                    box.setPadding(new Insets(15, 20, 10, 10));
-                    box.getChildren().add(imageView1);
-                    box.getChildren().add(imageView2);
-                    ScrollPane scroll = new ScrollPane();
-                    scroll.setContent(box);
-                    final Scene sceneAide = new Scene(scroll, 760, 500);
-                    Stage fenetreAide = new Stage();
-                    fenetreAide.setTitle("Aide");
-                    fenetreAide.setScene(sceneAide);
-                    fenetreAide.show();
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                final ImageView imageView1 = this.createImageView("aide/Aide-1.png");
+                final ImageView imageView2 = this.createImageView("aide/Aide-2.png");
+                final ImageView imageView3 = this.createImageView("aide/Aide-3.png");
+                imageView1.setFitHeight(1000);
+                imageView1.setPreserveRatio(true);
+                imageView2.setFitHeight(1000);
+                imageView2.setPreserveRatio(true);
+                imageView3.setFitHeight(1000);
+                imageView3.setPreserveRatio(true);
+                VBox box = new VBox();
+                box.setSpacing(10);
+                box.setPadding(new Insets(15, 20, 10, 10));
+                box.getChildren().addAll(imageView1, imageView2, imageView3);
+                ScrollPane scroll = new ScrollPane();
+                scroll.setContent(box);
+                final Scene sceneAide = new Scene(scroll, 760, 500);
+                Stage fenetreAide = new Stage();
+                fenetreAide.setTitle("Aide : MeshApp");
+                fenetreAide.setScene(sceneAide);
+                fenetreAide.show();
                 break;
             case 201:
-                try {
-                FileInputStream fileInputStream = new FileInputStream("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/De_Pire_Empire.png");
-                final Image image = new Image(fileInputStream);
-                final ImageView imageView = new ImageView(image);
+                final ImageView imageView = this.createImageView("aide/secret/secrets_d'etat/easter_eggs/De_Pire_Empire.png");
                 final Pane pane = new Pane();
                 pane.getChildren().setAll(imageView);
                 final Scene sceneApropos = new Scene(pane, 350, 300);
@@ -333,19 +325,7 @@ public class Controller {
                 fenetreApropos.setTitle("A propos de nous : MeshApp");
                 fenetreApropos.setScene(sceneApropos);
                 fenetreApropos.showAndWait();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            changeEtat(etatPrecedent);
-            break;
-            case 1000:
-                this.vue.getText().setText(" Selectionnez un bouton et lancez vous !");
-                this.vue.getMbNoeud().setText("Noeud");
-                this.vue.getMtbTerrain().setSelected(false);
-                this.vue.getMbGomme().setText("Gomme");
-                this.vue.getMtbBarre().setSelected(false);
-                this.vue.recontruction();
-                changeEtat(0);
+                changeEtat(etatPrecedent);
                 break;
         }
 
@@ -721,13 +701,12 @@ public class Controller {
                             Optional<String> textPX = boiteDiagPX.showAndWait();
 
                             System.out.println(textPX.get());
+                            File filemedia = new File("src/main/java/fr/insa/empire/utils/aide/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
                             if (textPX.get().toLowerCase().contains("chat")) {
-                                File mediaFile = new File("src/main/java/fr/insa/empire/autres/secret/secrets_d'etat/easter_eggs/EEEAAAOOO.mp4");
                                 Media media;
                                 try {
-                                    media = new Media(mediaFile.toURI().toURL().toString());
+                                    media = new Media(filemedia.toURI().toURL().toString());
                                     MediaPlayer mediaPlayer = new MediaPlayer(media);
-
                                     MediaView mediaView = new MediaView(mediaPlayer);
                                     DoubleProperty mvw = mediaView.fitWidthProperty();
                                     DoubleProperty mvh = mediaView.fitHeightProperty();
@@ -737,21 +716,17 @@ public class Controller {
                                     BorderPane borderPane = new BorderPane();
                                     borderPane.setCenter(mediaView);
                                     Scene scene = new Scene(borderPane, 1024, 590);
-
                                     Stage stage = new Stage();
                                     stage.setScene(scene);
                                     stage.show();
-
                                     stage.setOnCloseRequest(
                                             event -> {
                                                 mediaPlayer.stop();
                                             }
                                     );
-
                                     mediaPlayer.play();
-
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
+                                } catch (MalformedURLException ex) {
+                                    ex.printStackTrace();
                                 }
                                 changeEtat(0);
                             } else {
@@ -836,23 +811,18 @@ public class Controller {
                 graphicsContext.strokeLine(noeudDebut.getPx(), noeudDebut.getPy(), px, py);
 
                 double longueur = Barre.calculLongueurBarre(noeudDebut.getPx(), noeudDebut.getPy(), px, py);
-                longueur = Math.round(longueur*10)/10;
-                if(longueur >= this.vue.getTreillis().getCurrentType().getLongMax())
-                {
+                longueur = Math.round(longueur * 10) / 10;
+                if (longueur >= this.vue.getTreillis().getCurrentType().getLongMax()) {
                     graphicsContext.setStroke(Color.BLACK);
                     graphicsContext.strokeRect(px + 10, py - 20, 150, 30);
                     graphicsContext.setFill(Color.RED);
                     graphicsContext.fillText("Barre trop longue : " + longueur, px + 13, py);
-                }
-                else if(longueur <= this.vue.getTreillis().getCurrentType().getLongMin())
-                {
+                } else if (longueur <= this.vue.getTreillis().getCurrentType().getLongMin()) {
                     graphicsContext.setStroke(Color.BLACK);
                     graphicsContext.strokeRect(px + 10, py - 20, 150, 30);
                     graphicsContext.setFill(Color.RED);
                     graphicsContext.fillText("Barre trop courte : " + longueur, px + 13, py);
-                }
-                else
-                {
+                } else {
                     graphicsContext.setStroke(Color.BLACK);
                     graphicsContext.strokeRect(px + 10, py - 20, 100, 30);
                     graphicsContext.setFill(Color.BLACK);
@@ -1023,5 +993,11 @@ public class Controller {
             System.out.println("px = " + tfPYXtfPY.getKey() + ", py = " + tfPYXtfPY.getValue());
             //à terminer
         });
+    }
+
+    private ImageView createImageView(String chemin) {
+        InputStream inputLogo = this.getClass().getResourceAsStream(chemin);
+        Image logo = new Image(inputLogo);
+        return new ImageView(logo);
     }
 }

@@ -15,8 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -54,7 +54,6 @@ public class MainGraphique extends BorderPane {
     private Text text;
 
     //private ScrollBar scrollBar;
-
     private String theme;
 
     private final MyMenuBar menuBar;
@@ -71,9 +70,13 @@ public class MainGraphique extends BorderPane {
         return miNoeudAppuiSimple;
     }
 
-    public MenuItem getChoix3() { return miNoeudAppuiDouble; }
+    public MenuItem getChoix3() {
+        return miNoeudAppuiDouble;
+    }
 
-    public MenuItem getChoix4() { return miNoeudAppuiEncastre; }
+    public MenuItem getChoix4() {
+        return miNoeudAppuiEncastre;
+    }
 
     public MenuButton getMbNoeud() {
         return mbNoeud;
@@ -163,8 +166,6 @@ public class MainGraphique extends BorderPane {
         return miTypeBarreInfos;
     }
 
-    
-    
     public MainGraphique() throws IOException {
 
         //controlleur :
@@ -184,13 +185,11 @@ public class MainGraphique extends BorderPane {
         Separator separator2 = new Separator(Orientation.VERTICAL);
         Separator separator3 = new Separator(Orientation.VERTICAL);
 
-
         //set du Canvas
         this.canvas = new MyCanvas(this);
-        
+
         canvas.setOnMouseClicked(
                 canvasMouseEvent -> {
-
                     Controller controller = this.controller;
                     controller.canvasClicked(canvasMouseEvent);
                 }
@@ -211,68 +210,53 @@ public class MainGraphique extends BorderPane {
         //this.setRight(this.scrollBar);
 
         //Set up du splitMenuButton
+        ImageView logoNoeudView = createImageView("autres/noeud.png");
 
-        FileInputStream inputAppuiDouble = new FileInputStream("src/main/java/fr/insa/empire/autres/noeud.png");
-        Image logoAppuiDouble = new Image(inputAppuiDouble);
-        ImageView logoAppuiDoubleView = new ImageView(logoAppuiDouble);
+        logoNoeudView.setFitWidth(40);
+        logoNoeudView.setFitHeight(40);
 
-        logoAppuiDoubleView.setFitWidth(40);
-        logoAppuiDoubleView.setFitHeight(40);
-
-        this.mbNoeud = new MenuButton("Noeud", logoAppuiDoubleView);
+        this.mbNoeud = new MenuButton("Noeud", logoNoeudView);
         this.mbNoeud.setText("Noeud");
         this.miNoeudSimple = new MenuItem("Noeud simple");
         this.miNoeudAppuiSimple = new MenuItem("Noeud Appui simple");
         this.miNoeudAppuiDouble = new MenuItem("Noeud Appui double");
         this.miNoeudAppuiEncastre = new MenuItem("Noeud Appui encastré");
-        this.mbNoeud.getItems().addAll(miNoeudSimple, miNoeudAppuiSimple,miNoeudAppuiDouble, miNoeudAppuiEncastre);
+        this.mbNoeud.getItems().addAll(miNoeudSimple, miNoeudAppuiSimple, miNoeudAppuiDouble, miNoeudAppuiEncastre);
 
         //menuBar
         this.menuBar = new MyMenuBar(this, controller);
-        FileInputStream inputBarre = new FileInputStream("src/main/java/fr/insa/empire/autres/barre.png");
-        Image logoBarre = new Image(inputBarre);
-        ImageView logoBarreView = new ImageView(logoBarre);
+        ImageView logoBarreView = createImageView("autres/barre.png");
 
         logoBarreView.setFitHeight(40);
         logoBarreView.setFitWidth(40);
 
         this.mtbBarre = new MyTB("Barre", logoBarreView);
 
-        FileInputStream inputTerrain = new FileInputStream("src/main/java/fr/insa/empire/autres/triangleTerrain.png");
-        Image logoTerrain = new Image(inputTerrain);
-        ImageView logoTerrainView = new ImageView(logoTerrain);
+        ImageView logoTerrainView = createImageView("autres/triangleTerrain.png");
         logoTerrainView.setFitWidth(40);
         logoTerrainView.setFitHeight(40);
         this.mtbTerrain = new MyTB("Segment terrain", logoTerrainView);
 
-        FileInputStream inputCalc = new FileInputStream("src/main/java/fr/insa/empire/autres/calculatriceSansFond.png");
-        Image logoCalc = new Image(inputCalc);
-        ImageView logoCalcView = new ImageView(logoCalc);
+        ImageView logoCalcView = createImageView("autres/calculatriceSansFond.png");
 
         logoCalcView.setFitWidth(30);
         logoCalcView.setFitHeight(40);
 
         this.mbLancerCalculs = new MyB("Lancer les calculs", logoCalcView);
-        FileInputStream inputTypeDeBarre = new FileInputStream("src/main/java/fr/insa/empire/autres/typeDeBarre.png");
-        Image logoTypeDeBarre = new Image(inputTypeDeBarre);
-        ImageView logoTypeDeBarreView = new ImageView(logoTypeDeBarre);
+        ImageView logoTypeDeBarreView = createImageView("autres/typeDeBarre.png");
         logoTypeDeBarreView.setFitHeight(40);
         logoTypeDeBarreView.setFitWidth(40);
         this.mbTypeDeBarre = new MenuButton("Type de Barre", logoTypeDeBarreView);
         this.mbReglages = new MyB("Réglages");
 
-        FileInputStream inputPrix = new FileInputStream("src/main/java/fr/insa/empire/autres/prix.png");
-        Image logoPrix = new Image(inputPrix);
-        ImageView logoPrixView = new ImageView(logoPrix);
+        ImageView logoPrixView = createImageView("autres/prix.png");
 
         this.mbPrix = new MyB("Prix", logoPrixView);
 
         logoPrixView.setFitWidth(40);
         logoPrixView.setFitHeight(40);
 
-        FileInputStream inputGomme = new FileInputStream("src/main/java/fr/insa/empire/autres/Gomme.png");
-        Image logoGomme = new Image(inputGomme);
-        ImageView logoGommeView = new ImageView(logoGomme);
+        ImageView logoGommeView = createImageView("autres/Gomme.png");
 
         logoGommeView.setFitWidth(40);
         logoGommeView.setFitHeight(40);
@@ -280,25 +264,21 @@ public class MainGraphique extends BorderPane {
         this.mbGomme = new MenuButton("Gomme", logoGommeView);
 
         this.hbConstruction = new HBox(this.mbNoeud, this.mtbBarre);
-        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1,this.mbGomme, separator2,this.mbTypeDeBarre, this.mbLancerCalculs, separator3, this.mbPrix);
+        this.hbIcones = new HBox(this.hbConstruction, separator, this.mtbTerrain, separator1, this.mbGomme, separator2, this.mbTypeDeBarre, this.mbLancerCalculs, separator3, this.mbPrix);
         this.hbIcones.setSpacing(10);
         this.vbUp = new VBox(this.menuBar, this.hbIcones);
         this.setTop(this.vbUp);
         this.vbUp.setSpacing(5);
         this.hbConstruction.setSpacing(5);
 
-
-        
-
         this.text = new Text();
         this.text.setFill(Color.BLACK);
         this.hbZoneText = new HBox(text);
         this.hbZoneText.setAlignment(Pos.CENTER_LEFT);
-        
+
         this.hbBottom = new HBox(hbZoneText);
         this.hbBottom.setAlignment(Pos.CENTER_LEFT);
         this.setBottom(hbBottom);
-
 
         controller.changeEtat(-10);
 
@@ -308,7 +288,6 @@ public class MainGraphique extends BorderPane {
                     controller.changeEtat(20);
                 }
         );
-
 
         //
         //Set up des actions du splitMenuButton
@@ -343,17 +322,13 @@ public class MainGraphique extends BorderPane {
         //action de Terrain
         this.mtbTerrain.setOnAction(
                 action -> {
-                    if(mtbTerrain.isSelected())
-                    {
+                    if (mtbTerrain.isSelected()) {
                         controller.changeEtat(30);
-                    }
-                    else
-                    {
+                    } else {
                         controller.changeEtat(0);
                     }
                 }
         );
-
 
         //action de Gomme
         miGommeNoeud = new MenuItem("Gomme : noeuds");
@@ -392,7 +367,7 @@ public class MainGraphique extends BorderPane {
         this.miTypeBarreSolo = new MenuItem("Type : barre seule");
         this.miTypeBarreTodos = new MenuItem("Type : Tout modifier");
         this.miTypeBarreInfos = new MenuItem("Informations Types");
-        this.mbTypeDeBarre.getItems().addAll(miTypeBarreCurrent,miTypeBarreSolo,miTypeBarreTodos,miTypeBarreInfos);
+        this.mbTypeDeBarre.getItems().addAll(miTypeBarreCurrent, miTypeBarreSolo, miTypeBarreTodos, miTypeBarreInfos);
         this.miTypeBarreCurrent.setOnAction(
                 action -> {
                     controller.changeEtat(600);
@@ -420,7 +395,7 @@ public class MainGraphique extends BorderPane {
                     controller.changeEtat(70);
                 }
         );
-        
+
         //action de prix
         this.mbPrix.setOnAction(
                 Action -> {
@@ -430,44 +405,29 @@ public class MainGraphique extends BorderPane {
 
     }
 
-    public void recontruction()
-    {
+    public void recontruction() {
         GraphicsContext graphicsContext = this.canvas.getGraphicsContext2D();
 
-        graphicsContext.clearRect(0,0, this.canvas.getWidth(), this.canvas.getHeight());
+        graphicsContext.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
-        for (Map.Entry mapentry : this.treillis.identificateur.getKetToObject().entrySet())
-        {
+        for (Map.Entry mapentry : this.treillis.identificateur.getKetToObject().entrySet()) {
             Object key = mapentry.getKey();
             Object val = mapentry.getValue();
-            if(val.getClass() == Appui_double.class)
-            {
+            if (val.getClass() == Appui_double.class) {
                 ((Appui_double) val).draw(graphicsContext);
                 graphicsContext.setStroke(Color.BLUE);
                 graphicsContext.strokeOval(((Appui_double) val).getPx() - 5, ((Appui_double) val).getPy() - 5, 10, 10);
-            }
-            else if(val.getClass() == Appui_simple.class)
-            {
+            } else if (val.getClass() == Appui_simple.class) {
                 ((Appui_simple) val).draw(graphicsContext);
-            }
-            else if(val.getClass() == Noeud_appui.class)
-            {
+            } else if (val.getClass() == Noeud_appui.class) {
                 //normalement on sera passé par appui double ou simple
-            }
-            else if(val.getClass() == Noeud_simple.class)
-            {
+            } else if (val.getClass() == Noeud_simple.class) {
                 ((Noeud_simple) val).draw(graphicsContext);
-            }
-            else if(val.getClass() == Barre.class)
-            {
+            } else if (val.getClass() == Barre.class) {
                 ((Barre) val).draw(graphicsContext);
-            }
-            else if(val.getClass() == Triangle_terrain.class)
-            {
+            } else if (val.getClass() == Triangle_terrain.class) {
                 ((Triangle_terrain) val).draw(graphicsContext);
-            }
-            else if(val.getClass() == Zone_constructible.class)
-            {
+            } else if (val.getClass() == Zone_constructible.class) {
                 ((Zone_constructible) val).draw(graphicsContext);
             }
         }
@@ -477,14 +437,18 @@ public class MainGraphique extends BorderPane {
 
     }
 
-    public String getTheme()
-    {
+    public String getTheme() {
         //à coder
         return this.theme;
     }
 
-    public void setTheme(String theme)
-    {
+    public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    private ImageView createImageView(String chemin) {
+        InputStream inputLogo = this.getClass().getResourceAsStream(chemin);
+        Image logo = new Image(inputLogo);
+        return new ImageView(logo);
     }
 }
