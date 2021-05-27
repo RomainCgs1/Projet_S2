@@ -362,7 +362,7 @@ public class Treillis {
                     System.out.println("Triangle " + T.getIdentifiant());
 
                 } else if (ligne[0].equals("Type")) {
-                    if (ligne[1].equals("1") || ligne[1].equals("2")) {
+                    if (ligne[1].equals("1") || ligne[1].equals("2") || ligne[1].equals("3")) {
 
                     } else {
                         Type_de_barre type = new Type_de_barre("", Double.parseDouble(ligne[2]), Double.parseDouble(ligne[3]), 0, Double.parseDouble(ligne[4]), Double.parseDouble(ligne[5]));

@@ -298,11 +298,11 @@ public class Controller {
                 final ImageView imageView1 = this.createImageView("aide/Aide-1.png");
                 final ImageView imageView2 = this.createImageView("aide/Aide-2.png");
                 final ImageView imageView3 = this.createImageView("aide/Aide-3.png");
-                imageView1.setFitHeight(1000);
+                imageView1.setFitHeight(1500);
                 imageView1.setPreserveRatio(true);
-                imageView2.setFitHeight(1000);
+                imageView2.setFitHeight(1500);
                 imageView2.setPreserveRatio(true);
-                imageView3.setFitHeight(1000);
+                imageView3.setFitHeight(1500);
                 imageView3.setPreserveRatio(true);
                 VBox box = new VBox();
                 box.setSpacing(10);
@@ -310,7 +310,7 @@ public class Controller {
                 box.getChildren().addAll(imageView1, imageView2, imageView3);
                 ScrollPane scroll = new ScrollPane();
                 scroll.setContent(box);
-                final Scene sceneAide = new Scene(scroll, 760, 500);
+                final Scene sceneAide = new Scene(scroll, 1100, 600);
                 Stage fenetreAide = new Stage();
                 fenetreAide.setTitle("Aide : MeshApp");
                 fenetreAide.setScene(sceneAide);
